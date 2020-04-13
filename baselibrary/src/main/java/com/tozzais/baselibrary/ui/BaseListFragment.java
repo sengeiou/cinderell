@@ -40,7 +40,6 @@ public abstract class BaseListFragment<T> extends BaseFragment {
     public void initView(Bundle savedInstanceState) {
         mRecyclerView = mRootView.findViewById(R.id.rv_list);
         swipeLayout = mRootView.findViewById(R.id.swipeLayout);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
     }
 
     @Override
@@ -95,9 +94,10 @@ public abstract class BaseListFragment<T> extends BaseFragment {
 
     protected void onRefresh() {
         // 这里的作用是防止下拉刷新的时候还可以上拉加载
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
-        page = DEFAULT_PAGE;
-        loadData();
+//        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
+//        page = DEFAULT_PAGE;
+//        loadData();
+        swipeLayout.setRefreshing(false);
     }
 
 
@@ -116,7 +116,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
              *  参数是 false的话 显示 没有更多数据
              *  参数是 true的话 不显示
              */
-            mAdapter.getLoadMoreModule().loadMoreEnd(isRefresh);
+            mAdapter.getLoadMoreModule().loadMoreEnd(false);
         } else {
             //自动加载下一个 显示加载中
             mAdapter.getLoadMoreModule().loadMoreComplete();

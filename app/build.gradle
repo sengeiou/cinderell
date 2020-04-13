@@ -46,4 +46,8 @@ dependencies {
     //webview加载经度框架
     implementation 'com.github.open-android:BridgeWebView:v1.0'
     implementation 'com.github.youlookwhat:WebProgress:1.1.0'
+
+    implementation 'com.github.xiaohaibin:XBanner:1.6.6'
+
+    implementation 'com.github.lishide:ScrollRecyclerView:v1.0.0'
 }

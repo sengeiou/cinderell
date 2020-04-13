@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@mipmap/home_bg" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/statusbar_view_height" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <com.cinderellavip.weight.MyTabLayout
+                android:id="@+id/tab_category"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                app:tabIndicatorHeight="0dp"
+                app:tabMode="scrollable"
+                app:tabTextColor="@color/white"
+                app:tabSelectedTextColor="@color/white"
+                />
+
+
+
+            <com.stx.xhb.xbanner.XBanner
+                android:id="@+id/xbanner"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                app:AutoPlayTime="3000"
+                app:isAutoPlay="true"
+                app:isClipChildrenMode="false"
+                app:isShowIndicatorOnlyOne="true"
+                app:pageChangeDuration="800"
+                app:pointContainerLeftRightPadding="20dp"
+                app:pointNormal="@mipmap/banner_default"
+                app:pointSelect="@mipmap/banner_select"
+                app:pointsContainerBackground="#00000000"
+                app:pointsPosition="RIGHT"
+                app:pointsVisibility="true"
+                app:tipTextSize="12sp" />
+
+
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/demo_syxcc"/>
+
+
+
+    <com.lishide.recyclerview.scroll.ScrollRecyclerView
+        android:id="@+id/scroll_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_indicator"
+        android:layout_width="40dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/shape_gray50">
+
+        <View
+            android:id="@+id/view_indicator"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_red50">
+
+        </View>
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+
+            <com.cinderellavip.weight.ScaleImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                app:scale="0.6084"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ad_home"
+                android:layout_marginRight="5dp"
+                />
+
+
+        <com.cinderellavip.weight.ScaleImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            app:scale="0.6084"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ad_home"
+            android:layout_marginLeft="5dp"
+            />
+
+
+    </LinearLayout>
+
+
+    <com.cinderellavip.weight.HomeTabLayout
+        android:id="@+id/tab_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        />
+
+
+</LinearLayout>
