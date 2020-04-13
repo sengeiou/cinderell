@@ -41,4 +41,9 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation project(path: ':baselibrary')
     implementation 'org.jetbrains:annotations:15.0'
+
+
+    //webview加载经度框架
+    implementation 'com.github.open-android:BridgeWebView:v1.0'
+    implementation 'com.github.youlookwhat:WebProgress:1.1.0'
 }
