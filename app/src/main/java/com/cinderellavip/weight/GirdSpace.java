@@ -46,6 +46,7 @@ public class GirdSpace extends RecyclerView.ItemDecoration {
             //第一项
             outRect.left = space;
             outRect.right = space/2;
+
         }else if (position % gridNumber == ((topNumber+(gridNumber - 1))%gridNumber)){
             //最后一个
             outRect.left = space/2;

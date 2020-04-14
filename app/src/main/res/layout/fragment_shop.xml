@@ -1,33 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
-
     <LinearLayout
-        android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@mipmap/home_bg"
         android:orientation="vertical">
         <View
             android:layout_width="match_parent"
@@ -70,7 +52,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/iv_kefu"
+                android:id="@+id/iv_category"
                 android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,17 +63,22 @@
 
         </LinearLayout>
 
+        <com.cinderellavip.weight.MyTabLayout
+            android:id="@+id/tab_category"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            />
+
 
     </LinearLayout>
-    <ImageView
-        android:id="@+id/iv_top"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="12dp"
-        android:visibility="gone"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:src="@mipmap/back_top_icon"/>
+  <androidx.viewpager.widget.ViewPager
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
 
-</RelativeLayout>
+</LinearLayout>

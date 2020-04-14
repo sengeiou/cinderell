@@ -21,6 +21,10 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 public class MyTabLayout extends TabLayout {
+    private ViewPager viewPager;
+
+
+
     private int DEAULT_POSITION = 0;
 
     private int magin = 0;
@@ -127,6 +131,9 @@ public class MyTabLayout extends TabLayout {
             }
             if (tab != null) {
                 tab.select();
+                if (viewPager != null) {
+                    viewPager.setCurrentItem(pos);
+                }
 
             }
 
@@ -147,7 +154,23 @@ public class MyTabLayout extends TabLayout {
 
     @Override
     public void setupWithViewPager(@Nullable ViewPager viewPager) {
+        this.viewPager = viewPager;
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                getTabAt(i).select();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
 

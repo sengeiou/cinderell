@@ -31,13 +31,5 @@
         
     </LinearLayout>
     
-    <View
-        android:id="@+id/view"
-        android:layout_width="1dp"
-        android:layout_height="20dp"
-        android:background="@color/grayText"/>
-
-   
-
 
 </LinearLayout>

@@ -47,6 +47,19 @@
         />
 
 
+    <TextView
+        android:id="@+id/tv_group_number"
+        style="@style/content_text_Style"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="2dp"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="已拼329件"
+        />
+
+
 
     <LinearLayout
         android:layout_marginLeft="12dp"
@@ -101,6 +114,7 @@
 
 
        <ImageView
+           android:id="@+id/iv_national_flag"
            android:layout_width="20dp"
            android:layout_height="20dp"
            android:src="@mipmap/national_flag_us"/>

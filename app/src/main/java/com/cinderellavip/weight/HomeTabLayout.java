@@ -74,12 +74,6 @@ public class HomeTabLayout extends TabLayout {
             tab.setCustomView(R.layout.tab_item_home_goods);
             if (tab.getCustomView() != null) {
                 TextView tab_text = tab.getCustomView().findViewById(R.id.tab_text);
-                View view = tab.getCustomView().findViewById(R.id.view);
-                if (i == titles.size() -1){
-                    view.setVisibility(INVISIBLE);
-                }else {
-                    view.setVisibility(VISIBLE);
-                }
                 tab_text.setText(title);
 
             }
@@ -100,8 +94,8 @@ public class HomeTabLayout extends TabLayout {
             ImageView iv_indicator = tab.getCustomView().findViewById(R.id.iv_indicator);
             TextPaint paint = tab_text.getPaint();
             paint.setFakeBoldText(isSelete);
-            tab_text.setTextColor(isSelete ? getResources().getColor(R.color.red) : getResources().getColor(R.color.black_title_color));
-            iv_indicator.setVisibility(isSelete ? VISIBLE : GONE);
+            tab_text.setTextColor(isSelete ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.black_title_color));
+            iv_indicator.setVisibility(isSelete ? VISIBLE : INVISIBLE);
         }
 
     }

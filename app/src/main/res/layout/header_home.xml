@@ -16,31 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@mipmap/home_bg" />
+            android:src="@mipmap/home_goods_bg" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/statusbar_view_height" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-
-            <com.cinderellavip.weight.MyTabLayout
-                android:id="@+id/tab_category"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                app:tabIndicatorHeight="0dp"
-                app:tabMode="scrollable"
-                app:tabTextColor="@color/white"
-                app:tabSelectedTextColor="@color/white"
-                />
-
 
 
             <com.stx.xhb.xbanner.XBanner
@@ -59,8 +40,6 @@
                 app:pointsPosition="RIGHT"
                 app:pointsVisibility="true"
                 app:tipTextSize="12sp" />
-
-
 
 
         </LinearLayout>
@@ -84,8 +63,8 @@
 
     <RelativeLayout
         android:id="@+id/rl_indicator"
-        android:layout_width="40dp"
-        android:layout_height="5dp"
+        android:layout_width="50dp"
+        android:layout_height="4dp"
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
@@ -141,6 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorHeight="0dp"
+        android:background="@color/gray_bg"
         app:tabMode="fixed"
         />
 
