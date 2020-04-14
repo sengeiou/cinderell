@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.CommonUtils;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -56,15 +59,15 @@ public class LoginActivity extends BaseActivity {
         if (TextUtils.isEmpty(phone)) {
             tsg("请输入手机号");
             return;
-        }
-//        else if (!CommonUtils.isMobileNO(phone)) {
-//            tsg("请输入正确的手机号");
-//            return;
-//        }
-        if (TextUtils.isEmpty(pass)) {
-            tsg("请输入密码");
+        } else if (!CommonUtils.isMobileNO(phone)) {
+            tsg("请输入正确的手机号");
             return;
         }
+        if (TextUtils.isEmpty(pass)) {
+            tsg("请输入登录密码");
+            return;
+        }
+        MainActivity.launch(mActivity);
 
     }
 
@@ -79,12 +82,37 @@ public class LoginActivity extends BaseActivity {
 
         }
     }
+
+
+
+
+    @OnClick({R.id.tv_forget, R.id.tv_register, R.id.tv_login, R.id.tv_switch, R.id.tv_weChat_login, R.id.tv_aLiPay_login})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_forget:
+                FastLoginActivity.launch(mActivity,FastLoginActivity.FORGET_PASS);
+                break;
+            case R.id.tv_register:
+                RegisterActivity.launch(mActivity);
+                break;
+            case R.id.tv_login:
+                login();
+                break;
+            case R.id.tv_switch:
+                FastLoginActivity.launch(mActivity,FastLoginActivity.FAST_LOGIN);
+                break;
+            case R.id.tv_weChat_login:
+                break;
+            case R.id.tv_aLiPay_login:
+                break;
+        }
+    }
+
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);
-
+        if (o instanceof LoginFinishSuccess){
+            finish();
+        }
     }
-
-
-
 }

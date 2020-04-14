@@ -6,17 +6,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.activity.WebViewActivity;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
-import com.tozzais.baselibrary.util.sign.SignUtil;
-
-import java.util.TreeMap;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  *
@@ -28,19 +29,16 @@ public class RegisterActivity extends BaseActivity {
     EditText etPass;
     @BindView(R.id.et_code)
     EditText etCode;
+    @BindView(R.id.et_recomment_code)
+    EditText et_recomment_code;
     @BindView(R.id.tv_code)
     TextView tvCode;
-    @BindView(R.id.tv_selete_phone)
-    TextView tv_selete_phone;
-    @BindView(R.id.tv_login)
-    TextView tvLogin;
+    @BindView(R.id.iv_agreement)
+    ImageView ivAgreement;
 
-    public static final int REGISTER = 1, FORGET = 2,MODIFY = 3;
-    private int type;
 
-    public static void launch(Activity activity, int type) {
+    public static void launch(Activity activity) {
         Intent intent = new Intent(activity, RegisterActivity.class);
-        intent.putExtra("type", type);
         activity.startActivityForResult(intent, 100);
     }
 
@@ -51,22 +49,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
-        type = getIntent().getIntExtra("type", REGISTER);
-        if (type == REGISTER) {
-            setBackTitle("注册");
-            tvLogin.setText("注册");
-            etPass.setHint("密码");
-        } else if (type == FORGET) {
-            setBackTitle("忘记密码");
-            tvLogin.setText("确定");
-            etPass.setHint("新密码");
-        }else if (type == MODIFY) {
-            setBackTitle("修改密码");
-            tvLogin.setText("确定");
-            etPass.setHint("新密码");
-        }
-
+        setBackTitle("注册");
     }
 
     @Override
@@ -81,9 +64,6 @@ public class RegisterActivity extends BaseActivity {
 
     private boolean isSelete = false;
 
-
-    String tag = "1";
-
     private void register() {
         String phone = etPhone.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
@@ -91,62 +71,28 @@ public class RegisterActivity extends BaseActivity {
         if (TextUtils.isEmpty(phone)) {
             tsg("请输入手机号");
             return;
+        } else if (!CommonUtils.isMobileNO(phone)) {
+            tsg("请输入正确的手机号");
+            return;
         }
-//        else if (!CommonUtils.isMobileNO(phone)) {
-//            tsg("请输入正确的手机号");
-//            return;
-//        }
         if (TextUtils.isEmpty(code)) {
             tsg("请输入短信验证码");
             return;
-        }if (TextUtils.isEmpty(pass)) {
-            tsg("请输入密码");
+        }
+        if (TextUtils.isEmpty(pass)) {
+            tsg("请输入登录密码密码");
             return;
         }
-
-        if (type == REGISTER && !isSelete){
-            tsg("请勾选用户协议");
+        if (!isSelete){
+            tsg("请勾选《用户协议》和《隐私条款》");
             return;
         }
-        TreeMap<String, String> hashMap = new TreeMap<>();
+        tsg("注册成功");
+        setResult(phone,pass);
 
-
-        if (type == REGISTER) {
-            hashMap.put("phone", phone);
-            hashMap.put("authCode", code);
-            hashMap.put("password", pass);
-            hashMap.put("parent_id","0");
-            hashMap.put("sign", SignUtil.getMd5(hashMap));
-            register(hashMap);
-        } else if (type == FORGET) {
-            hashMap.put("phone", phone);
-            hashMap.put("code", code);
-            hashMap.put("password", pass);
-            hashMap.put("sign", SignUtil.getMd5(hashMap));
-            forgetPass(hashMap);
-
-        }else if (type == MODIFY) {
-            hashMap.put("phone", phone);
-            hashMap.put("code", code);
-            hashMap.put("new_password", pass);
-            hashMap.put("sign", SignUtil.getMd5(hashMap));
-            modifyPass(hashMap);
-
-        }
 
     }
 
-    private void register(TreeMap<String, String> hashMap) {
-
-    }
-
-    private void forgetPass(TreeMap<String, String> hashMap) {
-
-    }
-
-    private void modifyPass(TreeMap<String, String> hashMap) {
-
-    }
 
     private void setResult(String phone, String pass) {
         Intent intent = new Intent();
@@ -166,27 +112,6 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-        TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("phone", phone);
-        String category = "1";
-        if (type == REGISTER){
-            category = "1";
-        }else if (type == FORGET){
-            category = "2";
-        }else if (type == MODIFY){
-            category = "5";
-        }
-        hashMap.put("category",  category);
-        hashMap.put("tag",  tag);
-        String area_code = "86";
-        if (tag.equals("1")){
-            area_code = "86";
-        }else {
-            area_code = "852";
-        }
-        hashMap.put("area_code",  area_code);
-//        hashMap.put("sign", SignUtil.getMd5(area_code+category+phone+tag));
-        hashMap.put("sign", SignUtil.getMd5(hashMap));
 
     }
 
@@ -197,14 +122,14 @@ public class RegisterActivity extends BaseActivity {
         public boolean handleMessage(Message msg) {
             if (time > 0) {
                 time--;
-                tvCode.setText(time + "s");
+                tvCode.setText("还剩"+time + "秒");
                 tvCode.setTextColor(getResources().getColor(R.color.grayText));
                 mHandler.sendEmptyMessageDelayed(1, 1000);
                 tvCode.setEnabled(false);
             } else {
                 time = 60;
                 tvCode.setTextColor(getResources().getColor(R.color.red));
-                tvCode.setText("获取");
+                tvCode.setText("获取验证码");
                 tvCode.setEnabled(true);
             }
             return false;
@@ -214,7 +139,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHandler != null){
+        if (mHandler != null) {
             mHandler.removeMessages(1);
         }
         mHandler = null;
@@ -222,4 +147,25 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
+    @OnClick({R.id.tv_code, R.id.iv_agreement, R.id.tv_register_agreement, R.id.tv_privacy, R.id.tv_register})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_code:
+                mHandler.sendEmptyMessage(1);
+                break;
+            case R.id.iv_agreement:
+                isSelete = !isSelete;
+                ivAgreement.setImageResource(isSelete?R.mipmap.agreement_selete_yes:R.mipmap.agreement_selete_no);
+                break;
+            case R.id.tv_register_agreement:
+                WebViewActivity.launch(mActivity,"用户协议","https://www.baidu.com");
+                break;
+            case R.id.tv_privacy:
+                WebViewActivity.launch(mActivity,"隐私条款","https://www.baidu.com");
+                break;
+            case R.id.tv_register:
+                register();
+                break;
+        }
+    }
 }

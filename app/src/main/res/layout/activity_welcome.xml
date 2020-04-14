@@ -19,12 +19,10 @@
         style="@style/title_text_Style"
         android:layout_weight="1"
         android:text="灰姑凉是多品类本地生活O2O生活服务平台，在30多个城市提供包括家政服务、同城运送、美业、洗车、月嫂等
-多项高品质生活。\n灰姑凉是多品类本地生活O2O生活服务平台，在30多个城市提供包括家政服务、同城运送、美业、洗车、月嫂等
-多项高品质生活。"
+多项高品质生活。\n\n保姆月嫂：设立培训讲座，为月嫂创造参加“记录教育”的机会和平台。此外，在月嫂的招募、级别评定和上岗服务等方面
+。\n\n家庭保洁：经过专业培训的服务人员上门，为用户提供家庭清洁、家具养护、家电清洗等生活服务。"
         android:padding="18dp"
-        android:lineSpacingExtra="5dp"
-
-
+        android:lineSpacingExtra="3dp"
         />
 
     <TextView
