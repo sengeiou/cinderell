@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.HomeCategoryItem;
+import com.cinderellavip.ui.activity.home.CardSaleActivity;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.dialog.RightDialogUtil;
 
@@ -42,6 +43,8 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
         helper.getView(R.id.rl_root).setOnClickListener(v -> {
             if (item.name.equals("更多")){
                 RightDialogUtil.showDialog(getContext(),s -> {});
+            }if (item.name.equals("大牌特卖")){
+                CardSaleActivity.launch(getContext());
             }
         });
 

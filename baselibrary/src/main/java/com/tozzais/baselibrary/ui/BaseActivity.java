@@ -152,7 +152,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     public abstract void loadData();
 
 
-    public abstract void initListener() ;
+    public  void initListener() {};
 
     public void setBackTitle(String title) {
         initToolbar(title, true);

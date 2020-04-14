@@ -82,7 +82,7 @@ public class ShopCategoryGoodsFragment extends BaseListFragment<HomeGoods> {
 
         homeCategoryAdapter.setNewData(DataUtil.getShopOtherCategory());
 
-        LogUtil.e("page = " + page + "," + "PageSize = " + PageSize);
+//        LogUtil.e("page = " + page + "," + "PageSize = " + PageSize);
         //这里只有通过Handler 已经到底啦 才会出来
         new Handler().postDelayed(() -> {
             setData(DataUtil.getHomeGoods(4));
@@ -101,7 +101,7 @@ public class ShopCategoryGoodsFragment extends BaseListFragment<HomeGoods> {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 totalDy += dy;
-                LogUtil.e("totalDy"+totalDy);
+//                LogUtil.e("totalDy"+totalDy);
                 if (totalDy > 100) {
                     iv_top.setVisibility(View.VISIBLE);
                 } else {

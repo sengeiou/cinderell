@@ -30,7 +30,8 @@
         <activity android:name=".ui.activity.account.FastLoginActivity"/>
         <activity android:name=".ui.activity.account.RegisterActivity"/>
         <activity android:name=".ui.activity.WebViewActivity"/>
-        <activity android:name=".ui.activity.mine.GoodsListActivity"/>
+        <activity android:name=".ui.activity.home.GoodsListActivity"/>
+        <activity android:name=".ui.activity.home.CardSaleActivity"/>
     </application>
 
 </manifest>

@@ -1,11 +1,9 @@
-package com.cinderellavip.ui.activity.mine;
+package com.cinderellavip.ui.activity.home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 

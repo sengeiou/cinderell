@@ -1,12 +1,11 @@
 package com.cinderellavip.adapter.recycleview;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.ui.activity.mine.GoodsListActivity;
+import com.cinderellavip.ui.activity.home.GoodsListActivity;
 
 
 public class FiltSecondAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
