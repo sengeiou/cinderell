@@ -5,8 +5,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:boy="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:orientation="vertical">
+    <View
+        android:id="@+id/space"
+        style="@style/base_space"
+        />
 
     <com.cinderellavip.weight.ScaleImageView
         android:layout_width="match_parent"
@@ -22,6 +26,8 @@
         android:id="@+id/rv_goods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
 
 
 

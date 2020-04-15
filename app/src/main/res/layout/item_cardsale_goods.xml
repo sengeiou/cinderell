@@ -1,63 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_white5"
-    android:id="@+id/ll_root"
-    android:paddingBottom="12dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="12dp">
 
-
-
-
-
-
-
-
-
-        <com.cinderellavip.weight.SquareImageView
-            android:id="@+id/iv_image"
-            android:layout_width="match_parent"
-            android:scaleType="centerCrop"
-            android:layout_height="0dp"
-            android:src="@mipmap/product"
-            android:layout_margin="20dp"
-            />
-
-
+    <com.cinderellavip.weight.SquareImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/demo_cardsale_banner1" />
 
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
-        android:maxLines="2"
-        android:lines="2"
         android:ellipsize="end"
-        android:textColor="@color/black_title_color"
+        android:lines="2"
+        android:maxLines="2"
         android:text="冬季婴儿夹棉连体0~3岁宝宝加厚保暖"
-        />
-
-
-
+        android:textColor="@color/black_title_color"
+        android:textSize="14sp" />
 
 
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_gravity="center_vertical"
-        android:textColor="@color/baseColor"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="5dp"
-        android:text="￥238"/>
+        android:text="￥238"
+        android:textColor="@color/baseColor"
 
-
+        android:textSize="16sp" />
 
 
 
