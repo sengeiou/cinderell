@@ -37,6 +37,10 @@
         <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
         <activity android:name=".ui.BigImageActivity"/>
         <activity android:name=".ui.activity.home.BrandDetailActivity"/>
+        <activity android:name=".ui.activity.home.ShopDetailActivity"/>
+        <activity android:name=".ui.activity.home.EnsureOrderActivity"/>
+        <activity android:name=".ui.activity.mine.MineAddressActivity"/>
+        <activity android:name=".ui.activity.mine.SeleteCouponActivity"/>
     </application>
 
 </manifest>

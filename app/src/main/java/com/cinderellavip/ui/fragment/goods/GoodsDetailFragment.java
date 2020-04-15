@@ -2,7 +2,6 @@ package com.cinderellavip.ui.fragment.goods;
 
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,32 +9,32 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CommentAdapter;
 import com.cinderellavip.adapter.recycleview.RecommentGoodsAdapter;
-import com.cinderellavip.banner.BannerUtil;
+import com.cinderellavip.adapter.viewpager.DetailBannerAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
-import com.cinderellavip.global.GlobalParam;
-import com.cinderellavip.global.ImageUtil;
-import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.bean.local.GoodsDetialBanner;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.home.BrandDetailActivity;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.util.DataUtil;
-import com.stx.xhb.xbanner.XBanner;
+import com.cinderellavip.weight.CountDownView;
+import com.cinderellavip.weight.MyIndicator;
 import com.tozzais.baselibrary.ui.BaseFragment;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class GoodsDetailFragment extends BaseFragment {
-
     @BindView(R.id.xbanner)
-    XBanner xbanner;//banner
+    ViewPager xbanner;
+    @BindView(R.id.indicator)
+    MyIndicator indicator;
+
     @BindView(R.id.tv_goods_name)
     TextView tvGoodsName; //名称
     @BindView(R.id.tv_price)
@@ -63,6 +62,11 @@ public class GoodsDetailFragment extends BaseFragment {
     RecyclerView rlComment; //评价
     @BindView(R.id.rl_recommend)
     RecyclerView rlRecommend;//推荐
+
+    @BindView(R.id.tv_group_old_price)
+    TextView tvGroupOldPrice;
+    @BindView(R.id.time_view)
+    CountDownView timeView;
 
 
     private int id;
@@ -106,10 +110,23 @@ public class GoodsDetailFragment extends BaseFragment {
     }
 
     public void setData() {
-        BannerUtil.initBanner(mActivity, xbanner, "details.pics;details.pics;details.pics");
+//        BannerUtil.initBanner(mActivity, xbanner, "details.pics;details.pics;details.pics");
+        String[] pics = "details.pics;details.pics;details.pics".split(";");
+        List<GoodsDetialBanner> bannerList = new ArrayList<>();
+        for (String s : pics) {
+            bannerList.add(new GoodsDetialBanner(s, false));
+        }
+        xbanner.setAdapter(new DetailBannerAdapter(bannerList, mActivity, true));
+        indicator.bindViewPager(xbanner, bannerList.size());
+
+        tvGroupOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+        timeView.startTime(16*3600+18*60+58);
+
+
         tvGoodsName.setText("MAC 魅可 时尚唇膏 口红 3克小辣椒牛血麻辣鸡丝西柚都是");
         tvPrice.setText("178");
-        tvAdvancePrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+        tvAdvancePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+
 
 
         commentInAdapter.setNewData(DataUtil.getData(2));
@@ -124,7 +141,7 @@ public class GoodsDetailFragment extends BaseFragment {
                 list.add(new CouponsBean(CouponsBean.RECEIVED));
                 list.add(new CouponsBean(CouponsBean.NO_HAVE));
                 list.add(new CouponsBean(CouponsBean.NORMAL));
-                DialogUtil.showReceiveCouponDialog(mActivity,list);
+                DialogUtil.showReceiveCouponDialog(mActivity, list);
 
                 break;
             case R.id.ll_comment:

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+        <View
+            style="@style/base_space"
+            />
+
+        <LinearLayout
+            style="@style/base_hor_style_input"
+            >
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="收件人："
+                />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入真实姓名"
+                android:inputType="text"
+                android:maxLength="16"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:gravity="top"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:text="何珍珍"
+                />
+
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_light"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            />
+
+        <LinearLayout
+            style="@style/base_hor_style_input"
+
+            >
+            <TextView
+                style="@style/base_text_style"
+                android:text="手机号码："
+                />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入联系号码"
+                android:inputType="number"
+                android:maxLength="11"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:gravity="top"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:text="13166015579"/>
+
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_light"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            />
+
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_address"
+            style="@style/base_hor_style_input"
+            >
+            <TextView
+                style="@style/base_text_style"
+                android:text="所在城市："
+                />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请选择"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:gravity="right"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:text="上海-上海-闵行区"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/right_black_icon"
+                android:layout_gravity="center_vertical"/>
+
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_light"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            />
+
+        <LinearLayout
+            style="@style/base_hor_style_input"
+            >
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="详细地址："
+                />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入如：街道，门牌号等"
+                android:minHeight="100dp"
+                android:maxLength="16"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:gravity="top"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:text="红点城"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+        <View
+            style="@style/base_space"
+            />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/base_text_style"
+                android:layout_weight="1"
+                android:text="设置为默认收货地址："
+                />
+            <CheckBox
+                android:id="@+id/cb_default_address"
+                style="@style/base_text_style"
+                android:textColor="@color/grayText"
+                android:button="@drawable/selector_checkbox_style"
+                android:padding="10dp"
+                android:layout_marginLeft="12dp"
+                />
+
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/gray_bg"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_sava"
+                android:layout_width="match_parent"
+                android:layout_margin="12dp"
+                style="@style/base_btn_style_large"
+                android:text="添加收货地址"
+                android:layout_alignParentBottom="true"
+                android:padding="12dp"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+

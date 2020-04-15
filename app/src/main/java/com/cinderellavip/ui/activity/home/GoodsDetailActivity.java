@@ -182,12 +182,15 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
             case R.id.tv_service:
                 break;
             case R.id.tv_shop:
+                ShopDetailActivity.launch(mActivity);
                 break;
             case R.id.ll_buy_left_btn:
                 DialogUtil.showSpeciSpecialDialog(mContext,payString -> {});
                 break;
             case R.id.ll_buy_right_btn:
-                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {});
+                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {
+                    EnsureOrderActivity.launch(mActivity);
+                });
                 break;
         }
     }

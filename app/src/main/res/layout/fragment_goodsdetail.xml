@@ -12,20 +12,18 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <com.stx.xhb.xbanner.XBanner
-        android:id="@+id/xbanner"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="360dp"
-        app:AutoPlayTime="3000"
-        app:isAutoPlay="false"
-        app:isShowIndicatorOnlyOne="true"
-        app:pageChangeDuration="800"
-        app:pointNormal="@mipmap/banner_goods_default"
-        app:pointSelect="@mipmap/banner_goods_select"
-        app:pointsContainerBackground="#00000000"
-        app:pointsPosition="CENTER"
-        app:pointsVisibility="true"
-        app:tipTextSize="12sp" />
+        android:layout_height="360dp">
+
+        <include
+            layout="@layout/layout_banner_graphic_and_text"/>
+
+
+
+    </RelativeLayout>
+
+
 
     <TextView
         android:id="@+id/tv_goods_name"
