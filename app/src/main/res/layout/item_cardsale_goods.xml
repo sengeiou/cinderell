@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
         android:ellipsize="end"
         android:lines="2"
         android:maxLines="2"
-        android:text="冬季婴儿夹棉连体0~3岁宝宝加厚保暖"
+        android:text="夹心口味吐司 营养早餐休闲食品"
         android:textColor="@color/black_title_color"
         android:textSize="14sp" />
 
@@ -37,11 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
         android:text="￥238"
         android:textColor="@color/baseColor"
-
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
 
 

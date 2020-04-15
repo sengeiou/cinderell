@@ -32,11 +32,11 @@ public class ImageUtil {
 
     }
     public static  void loadNet(Context mContext, ImageView imageView, String path){
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.drawable.shape_gray5)//图片加载出来前，显示的图片
-                .fallback(R.drawable.shape_gray5) //url为空的时候,显示的图片
-                .error(R.drawable.shape_gray5);//图片加载失败后，显示的图片
-        Glide.with(mContext).load(path).apply(options).into(imageView);
+//        RequestOptions options = new RequestOptions()
+//                .placeholder(R.drawable.shape_gray5)//图片加载出来前，显示的图片
+//                .fallback(R.drawable.shape_gray5) //url为空的时候,显示的图片
+//                .error(R.drawable.shape_gray5);//图片加载失败后，显示的图片
+//        Glide.with(mContext).load(path).apply(options).into(imageView);
     }
     public static  void loadGauss(Context mContext, ImageView imageView, String path){
 

@@ -1,6 +1,7 @@
 package com.cinderellavip.adapter.recycleview;
 
 
+import android.app.Activity;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -71,5 +73,9 @@ public class HomeGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
            tv_former_price.setText("￥128");
            tv_former_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //取消划线
        }
+
+        baseViewHolder.getView(R.id.ll_root).setOnClickListener(v -> {
+            GoodsDetailActivity.launch((Activity) getContext(),0);
+        });
     }
 }

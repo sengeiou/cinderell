@@ -34,6 +34,8 @@
         <activity android:name=".ui.activity.home.CardSaleActivity"/>
         <activity android:name=".ui.activity.home.SearchActivity"/>
         <activity android:name=".ui.activity.home.SearchResultActivity"/>
+        <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
+        <activity android:name=".ui.BigImageActivity"/>
     </application>
 
 </manifest>
