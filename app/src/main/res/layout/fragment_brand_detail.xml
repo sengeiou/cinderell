@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:boy="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:elevation="0dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_scrollFlags="scroll"
+                    android:orientation="vertical">
+
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/demo_brand_image"/>
+
+                    <TextView
+                        style="@style/base_text_style_gray_small"
+                        android:text="三只松鼠股份有限公司成立于2012年，公司总部在安徽芜湖，是中国第一家定位于纯互联网食品品牌的企业，也是当前中国销售规模最大的食品电商企业，其主营业务覆盖了坚果、肉脯、果干、膨化等全品类休闲零食"
+                        android:padding="12dp"
+                        android:lineSpacingExtra="4dp"
+                        />
+
+                    <View
+                        style="@style/base_space"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="180dp">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/demo_brand_vedio"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/play"/>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <com.cinderellavip.weight.FilterView
+                    android:id="@+id/tab_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    app:tabIndicatorHeight="0dp"
+                    android:background="@color/gray_bg"
+                    app:tabMode="fixed"
+                    />
+
+
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="12dp"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/back_top_icon"/>
+
+
+</RelativeLayout>

@@ -11,15 +11,20 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CommentAdapter;
 import com.cinderellavip.adapter.recycleview.RecommentGoodsAdapter;
 import com.cinderellavip.banner.BannerUtil;
+import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.toast.DialogUtil;
+import com.cinderellavip.ui.activity.home.BrandDetailActivity;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.util.DataUtil;
 import com.stx.xhb.xbanner.XBanner;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.util.sign.SignUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -115,12 +120,18 @@ public class GoodsDetailFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_coupon:
+                List<CouponsBean> list = new ArrayList<>();
+                list.add(new CouponsBean(CouponsBean.RECEIVED));
+                list.add(new CouponsBean(CouponsBean.NO_HAVE));
+                list.add(new CouponsBean(CouponsBean.NORMAL));
+                DialogUtil.showReceiveCouponDialog(mActivity,list);
 
                 break;
             case R.id.ll_comment:
                 ((GoodsDetailActivity) mActivity).setCurrent(2);
                 break;
             case R.id.ll_merchant:
+                BrandDetailActivity.launch(mActivity);
 //                MerchantDetailForNewActivity.launch(mActivity, (int) merchantName.getTag());
                 break;
         }

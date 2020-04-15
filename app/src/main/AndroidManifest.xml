@@ -36,6 +36,7 @@
         <activity android:name=".ui.activity.home.SearchResultActivity"/>
         <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
         <activity android:name=".ui.BigImageActivity"/>
+        <activity android:name=".ui.activity.home.BrandDetailActivity"/>
     </application>
 
 </manifest>

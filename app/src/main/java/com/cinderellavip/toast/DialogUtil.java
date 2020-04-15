@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.adapter.recycleview.CouponReceiveDialogAdapter;
+import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.weight.FlowLayout;
 import com.cinderellavip.weight.SquareRoundImageView;
@@ -108,6 +110,25 @@ public class DialogUtil {
     }
 
 
+    public  static void showReceiveCouponDialog(Context context, List<CouponsBean> data) {
+        View view = View.inflate(context, R.layout.pop_bottom_selete_coupon, null);
+        dialog = DialogUtils.getBottomDialog(context,view);
+        ImageView iv_close = view.findViewById(R.id.iv_close);
+        RecyclerView rv_coupon = view.findViewById(R.id.rv_coupon);
+        rv_coupon.setLayoutManager(new LinearLayoutManager(context));
+
+        CouponReceiveDialogAdapter adpter = new CouponReceiveDialogAdapter();
+        rv_coupon.setAdapter(adpter);
+        adpter.setNewData(data);
+
+
+        iv_close.setOnClickListener(v -> {
+            dialog.dismiss();
+            dialog = null;
+        });
+
+
+    }
 
     public interface onSelectListener {
         void onFinish(String payString);
