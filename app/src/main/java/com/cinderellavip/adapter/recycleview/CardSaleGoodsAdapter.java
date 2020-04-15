@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.util.ScreenUtil;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,10 @@ public class CardSaleGoodsAdapter extends BaseQuickAdapter<String, BaseViewHolde
         int screenWidth = ScreenUtil.getScreenWidth((Activity) getContext());
         linearParams.width = screenWidth/3;// 控件的宽强制设成30
         ll_root.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+
+        helper.getView(R.id.ll_root).setOnClickListener(v -> {
+            GoodsDetailActivity.launch((Activity) getContext(),0);
+        });
 
 
 

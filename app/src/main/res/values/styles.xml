@@ -19,6 +19,12 @@
         <item name="android:textColor">@color/grayText</item>
     </style>
 
+
+    <style name="base_text_style_gray_small" parent="base_text_style">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/grayText</item>
+    </style>
+
     <style name="base_text_style" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -44,6 +50,16 @@
         <item name="android:background">@color/gray_bg</item>
 
     </style>
+    <style name="base_hor_style_input" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:background">@drawable/touch_bg</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
 
     <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@drawable/photo_choose_bg</item>
@@ -56,6 +72,53 @@
     <style name="PopupAnimation1" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/right_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/right_exit_anim</item>
+    </style>
+
+    <style name="base_hor_style" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:background">@drawable/touch_bg</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="MyTablayoutstyle" parent="Base.Widget.Design.TabLayout">
+        <item name="tabBackground">@color/white</item>
+        <item name="tabIndicatorColor">@color/baseColor</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabSelectedTextColor">@color/black_title_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray_bg</item>
+    </style>
+    <style name="base_btn_style" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:background">@drawable/shape_red50</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="base_btn_style_large" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">35dp</item>
+        <item name="android:paddingRight">35dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:background">@drawable/shape_basecolor50</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

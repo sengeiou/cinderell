@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_bg"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:tabIndicatorColor="@color/baseColor"
+            app:tabTextColor="@color/black_title_color"
+            app:tabSelectedTextColor="@color/baseColor"
+            style="@style/MyTablayoutstyle"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:id="@+id/rv_cart"
+                style="@style/click_toolbar_style"
+                android:layout_width="50dp"
+                android:layout_height="40dp">
+                <ImageView
+                    android:id="@+id/iv_cart"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="match_parent"
+                    style="@style/HomeTabImageStyle"
+                    android:src="@mipmap/icon_kefu" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/tv_cart_number"
+                    app:rv_backgroundPressColor="@color/red"
+                    app:rv_backgroundColor="@color/red"
+                    app:rv_isRadiusHalfHeight="true"
+                    style="@style/cart_number_style"
+                    android:text="3"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:src="@mipmap/icon_share"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:padding="12dp"
+                style="@style/click_toolbar_style"
+                />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+   <com.cinderellavip.weight.VerticalViewPager
+       android:id="@+id/viewpager"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1"/>
+
+
+    <View
+        style="@style/line_light"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp">
+            <TextView
+                android:id="@+id/tv_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/touch_bg"
+                android:textColor="@color/grayText"
+                android:drawableTop="@mipmap/icon_cart"
+                android:drawablePadding="2dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="客服"/>
+            <TextView
+                android:id="@+id/tv_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/touch_bg"
+                android:textColor="@color/grayText"
+                android:drawableTop="@mipmap/icon_shop"
+                android:drawablePadding="2dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="店铺"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_buy_left_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@color/gray_deep"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_left_price"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:text="￥278"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:text="单独购买"
+                    android:textSize="12sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_buy_right_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@color/baseColor"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_right_price"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:text="￥200"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:text="单独购买"
+                    android:textSize="12sp"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

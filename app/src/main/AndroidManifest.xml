@@ -32,6 +32,15 @@
         <activity android:name=".ui.activity.WebViewActivity"/>
         <activity android:name=".ui.activity.home.GoodsListActivity"/>
         <activity android:name=".ui.activity.home.CardSaleActivity"/>
+        <activity android:name=".ui.activity.home.SearchActivity"/>
+        <activity android:name=".ui.activity.home.SearchResultActivity"/>
+        <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
+        <activity android:name=".ui.BigImageActivity"/>
+        <activity android:name=".ui.activity.home.BrandDetailActivity"/>
+        <activity android:name=".ui.activity.home.ShopDetailActivity"/>
+        <activity android:name=".ui.activity.home.EnsureOrderActivity"/>
+        <activity android:name=".ui.activity.mine.MineAddressActivity"/>
+        <activity android:name=".ui.activity.mine.SeleteCouponActivity"/>
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.GirdSpace;
+import com.cinderellavip.weight.LinearSpace;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 

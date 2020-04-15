@@ -58,6 +58,11 @@ public class CardSaleActivity extends BaseActivity {
         return R.layout.layout_content;
     }
 
-
-
+    @Override
+    public void initListener() {
+        super.initListener();
+        iv_right_icon.setOnClickListener(v -> {
+            SearchActivity.launch(mActivity);
+        });
+    }
 }

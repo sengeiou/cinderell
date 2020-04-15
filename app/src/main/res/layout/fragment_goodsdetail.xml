@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.cinderellavip.weight.BottomDownScorllerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sv_root"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="360dp">
+
+        <include
+            layout="@layout/layout_banner_graphic_and_text"/>
+
+
+
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:id="@+id/tv_goods_name"
+        style="@style/base_text_style"
+        tools:text="MAC 魅可 时尚唇膏 口红 3克小辣椒牛血麻辣鸡丝西柚都是"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:textSize="15sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/base_text_style"
+            android:textColor="@color/baseColor"
+            android:textSize="12sp"
+            android:layout_marginLeft="12dp"
+            android:text="￥"
+            />
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/base_text_style"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="12dp"
+            android:textColor="@color/baseColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="278" />
+        <TextView
+            android:id="@+id/tv_advance_price"
+            style="@style/base_text_style_gray_small"
+            android:text="￥52.0"
+            android:textSize="12sp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_ship"
+            style="@style/base_text_style_gray_small"
+            android:text="运费：不包邮"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/tv_tax"
+            style="@style/base_text_style_gray_small"
+            android:text="销量：1328件"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_intro"
+            style="@style/base_text_style_gray_small"
+            android:text="发货：上海"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+
+
+        <View
+            style="@style/base_space"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_coupon"
+            android:background="@drawable/touch_bg"
+            style="@style/base_hor_style">
+            <TextView
+                style="@style/base_text_style_gray_small"
+                android:text="优惠"
+                />
+
+            <TextView
+                android:id="@+id/tv_coupon_text"
+                style="@style/base_text_style_gray_small"
+                android:text="满500减100 满300减80 满100减30"
+                android:textColor="@color/red"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/right_black_icon"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_promotion"
+        android:background="@drawable/touch_bg"
+        style="@style/base_hor_style">
+        <TextView
+            style="@style/base_text_style_gray_small"
+            android:text="促销"
+            />
+
+        <TextView
+            android:id="@+id/tv_promotion_text"
+            style="@style/base_text_style_gray_small"
+            android:text="满500减100"
+            android:textColor="@color/red"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ll_recommet_cookbook_space"
+        style="@style/base_space"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_merchant"
+        android:background="@drawable/touch_bg"
+        style="@style/base_hor_style"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:gravity="center_vertical">
+
+        <com.cinderellavip.weight.CircleImageView
+            android:id="@+id/merchant_icon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/demo_brand_avater"/>
+        <TextView
+            android:id="@+id/merchant_name"
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="三只松鼠"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_black_icon"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"/>
+
+
+    </LinearLayout>
+
+
+    <View
+        style="@style/base_space"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/ll_address"
+        android:background="@drawable/touch_bg"
+        style="@style/base_hor_style">
+        <TextView
+            style="@style/base_text_style_gray_small"
+            android:text="配送"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_address"
+                android:drawableLeft="@mipmap/icon_address_red"
+                style="@style/base_text_style"
+                android:text="上海市青浦区华徐公路888号3号楼703室"
+                android:drawablePadding="5dp"
+                android:lines="1"
+                android:maxLines="1"
+                android:ellipsize="end"
+                />
+
+        </LinearLayout>
+
+
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_black_icon"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+
+    <View
+        style="@style/base_space"
+        />
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_comment"
+        android:background="@drawable/touch_bg"
+        style="@style/base_hor_style">
+        <TextView
+            android:id="@+id/tv_comment_number"
+            style="@style/base_text_style"
+            android:text="商品评价(4672)"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_black_icon"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <View
+        style="@style/line_light"
+        android:layout_marginLeft="12dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rl_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+    </RelativeLayout>
+
+
+    <View
+        style="@style/base_space"
+        />
+
+    <LinearLayout
+        style="@style/base_hor_style">
+        <TextView
+            style="@style/base_text_style"
+            android:text="相关推荐"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rl_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/gray_bg">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/refresh_header_top_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_centerInParent="true"
+            android:text="向上滑动，查看图文详情"/>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
+</com.cinderellavip.weight.BottomDownScorllerView>
