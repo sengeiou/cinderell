@@ -68,7 +68,8 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
         setLayoutManager();
 
 
-        setEmptyView("暂无商品信息");
+
+        setEmptyView("没有更多商品，换个关键字试试");
 
     }
 

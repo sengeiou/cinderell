@@ -32,6 +32,8 @@
         <activity android:name=".ui.activity.WebViewActivity"/>
         <activity android:name=".ui.activity.home.GoodsListActivity"/>
         <activity android:name=".ui.activity.home.CardSaleActivity"/>
+        <activity android:name=".ui.activity.home.SearchActivity"/>
+        <activity android:name=".ui.activity.home.SearchResultActivity"/>
     </application>
 
 </manifest>
