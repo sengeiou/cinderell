@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/gray_bg"
-    android:orientation="vertical">
-
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/statusbar_view_height"-->
-        <!--android:background="@color/white"-->
-        <!--/>-->
-
-
-    <LinearLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    app:popupTheme="@style/AppTheme.PopupOverlay">
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
@@ -36,7 +25,6 @@
 
         <LinearLayout
             android:id="@+id/ll_search"
-            android:layout_marginRight="12dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:background="@drawable/shape_gray50"
@@ -72,26 +60,24 @@
 
 
 
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black_title_color"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center_vertical"
+            android:text="取消"
+            style="@style/click_toolbar_style"
+            />
+
 
     </LinearLayout>
 
-    <com.cinderellavip.weight.FilterView
-        android:id="@+id/filter_view"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"/>
-
-    <View
-        style="@style/line_light"
-        />
-
-
-    <FrameLayout
-        android:id="@+id/fl_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
 
 
 
-</LinearLayout>
+

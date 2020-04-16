@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+    <com.cinderellavip.weight.SquareImageView
+        android:id="@+id/iv_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/demo_cardsale_banner1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2"
+            android:maxLines="2"
+            android:text="夹心口味吐司 营养早餐休闲食品夹心口味吐司 营养早餐休闲食品"
+            android:textColor="@color/black_title_color"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥238"
+            android:textColor="@color/baseColor"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</LinearLayout>
+
+    <View
+        style="@style/line_light"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+</LinearLayout>

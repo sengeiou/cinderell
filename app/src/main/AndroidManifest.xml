@@ -89,6 +89,8 @@
         <activity android:name=".ui.activity.find.SearchFindResultActivity"/>
         <activity android:name=".ui.activity.find.PublishTopicActivity"/>
         <activity android:name=".ui.activity.find.PublishPostActivity"/>
+        <activity android:name=".ui.activity.find.SearchGoodsForPublishPostActivity"/>
+        <activity android:name=".ui.activity.find.SearchTopicForPublishPostActivity"/>
 
 
         <provider

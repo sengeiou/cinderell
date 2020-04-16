@@ -1,48 +1,53 @@
 package com.cinderellavip.ui.activity.find;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.adapter.recycleview.HorizontalAdapter;
+import com.cinderellavip.bean.local.PublishImageBean;
+import com.cinderellavip.imagepick.CustomImgPickerPresenter;
+import com.cinderellavip.listener.OnPublishImageListener;
 import com.cinderellavip.util.PhotoUtils;
-import com.cinderellavip.util.address.LocalCityUtil3s;
+import com.cinderellavip.weight.GirdSpaceRight;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
-import com.tozzais.baselibrary.util.CommonUtils;
+import com.tozzais.baselibrary.util.DpUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
+import com.ypx.imagepicker.ImagePicker;
+import com.ypx.imagepicker.bean.ImageItem;
+import com.ypx.imagepicker.bean.MimeType;
+import com.ypx.imagepicker.bean.SelectMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * 发布话题
  */
-public class PublishTopicActivity extends CheckPermissionActivity {
-    public static final int ADD = 1, EDIT = 2;
-    public static final int REQUESTCODE = 101;
-    @BindView(R.id.et_name)
-    EditText etName;
-    @BindView(R.id.et_phone)
-    EditText etPhone;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
-    @BindView(R.id.et_address)
-    EditText etAddress;
-    @BindView(R.id.cb_default_address)
-    CheckBox cbDefaultAddress;
-    @BindView(R.id.tv_sava)
-    TextView tvSava;
+public class PublishTopicActivity extends CheckPermissionActivity  implements OnPublishImageListener {
 
-    private int type;
+    @BindView(R.id.et_title)
+    EditText etTitle;
+    @BindView(R.id.et_content)
+    EditText etContent;
+    @BindView(R.id.rv_image)
+    RecyclerView rvImage;
 
-    //只有地址编辑的时候 才会有这个数据
-    private NetCityBean item;
+    private HorizontalAdapter publishImageAdapter;
+    private List<PublishImageBean> imageBeanList = new ArrayList<>();
+    public int imageTotal = 9;
+    private ArrayList<ImageItem> picList = new ArrayList<>();
+
+
+
 
 
     public static void launch(Context activity) {
@@ -50,27 +55,25 @@ public class PublishTopicActivity extends CheckPermissionActivity {
         activity.startActivity(intent);
     }
 
-    public static void launch(Activity activity, int type, NetCityBean item) {
-        Intent intent = new Intent(activity, PublishTopicActivity.class);
-        intent.putExtra("type", type);
-        intent.putExtra("item", item);
-        activity.startActivityForResult(intent, REQUESTCODE);
-    }
-
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        type = getIntent().getIntExtra("type", ADD);
-        if (type == ADD) {
-            tvSava.setText("添加收货地址");
-            setBackTitle("新增地址");
-        } else {
-            tvSava.setText("修改收货地址");
-            item = getIntent().getParcelableExtra("item");
-            setBackTitle("编辑地址");
-            setRightText("删除");
-            setData();
-        }
+        setLineVisibility();
+        setBackTitle("发布话题");
+
+
+
+
+        rvImage.addItemDecoration(new GirdSpaceRight(DpUtil.dip2px(mActivity, 8)));
+        publishImageAdapter = new HorizontalAdapter(mActivity,imageBeanList,this);
+        LinearLayoutManager managerHorizontal = new LinearLayoutManager(this);
+        managerHorizontal.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvImage.setLayoutManager(managerHorizontal);
+        rvImage.setHasFixedSize(true);
+        rvImage.setAdapter(publishImageAdapter);
+
+
+
     }
 
     @Override
@@ -81,107 +84,74 @@ public class PublishTopicActivity extends CheckPermissionActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_address_edit;
-    }
-
-
-    private void setData() {
-//        etName.setText(item.truename);
-//        etPhone.setText(item.phone);
-//        tvAddress.setText(String.format("%s %s %s", item.prov, item.city, item.dist));
-//        etAddress.setText(item.detail);
-//        cbDefaultAddress.setChecked(item.isDefault());
-
-
-    }
-
-    @OnClick({R.id.ll_address, R.id.tv_sava, R.id.tv_right})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_address:
-                getCity();
-                break;
-            case R.id.tv_sava:
-                commit();
-                break;
-            case R.id.tv_right:
-//                CenterDialogUtil.showTwo(mContext, "确定要删除收货地址吗？",
-//                        "删除后不可恢复，请谨慎操作。", "暂不删除", "确认删除", type1 -> {
-//                            if (type1 == 1) {
-//                                TreeMap<String, String> hashMap = new TreeMap<>();
-//                                hashMap.put("user_id", GlobalParam.getUserId());
-//                                hashMap.put("address_id", item.address_id + "");
-//                                hashMap.put("sign", SignUtil.getMd5(hashMap));
-//
-//                                new RxHttp<BaseResult>().send(ApiManager.getService().removeAddress(hashMap),
-//                                        new Response<BaseResult>(mContext) {
-//                                            @Override
-//                                            public void onSuccess(BaseResult result) {
-//                                                tsg("删除成功");
-//                                                EventBus.getDefault().post(new UpdateAddress());
-//                                                finish();
-//                                            }
-//                                        });
-//                            }
-//                        });
-
-                break;
-
-
-        }
-    }
-
-    private void getCity() {
-        LocalCityUtil3s.getInstance().showSelectDialog(mContext, ((province, city, county) -> {
-            tvAddress.setText(province.name + "-" + city.name + "-" + county.name);
-        }));
+        return R.layout.activity_publish_topic;
     }
 
 
     @Override
     public void permissionGranted() {
-        PhotoUtils.getInstance().selectPic(mActivity);
+        ImagePicker.withMulti( new CustomImgPickerPresenter())//指定presenter
+                .setMaxCount(imageTotal)//设置选择的最大数
+                .setColumnCount(4)//设置列数
+                .setOriginal(true)
+                .mimeTypes(MimeType.ofImage())//设置要加载的文件类型，可指定单一类型
+                .filterMimeTypes(MimeType.GIF)//设置需要过滤掉加载的文件类型
+                .setSelectMode(SelectMode.MODE_MULTI)
+                .setPreviewVideo(false)
+                .showCamera(true)//显示拍照
+                .setPreview(false)//是否开启预览
+                .setVideoSinglePick(true)//设置视频单选
+                .setSinglePickWithAutoComplete(true)
+                .setSinglePickImageOrVideoType(true)//设置图片和视频单一类型选择
+                .setMaxVideoDuration(120000L)//设置视频可选取的最大时长
+                .setMinVideoDuration(5000L)
+                .setLastImageList(picList)//设置上一次操作的图片列表，下次选择时默认恢复上一次选择的状态
+                .setShieldList(null)//设置需要屏蔽掉的图片列表，下次选择时已屏蔽的文件不可选择
+                .pick(this, items -> {
+                    picList.clear();
+                    picList.addAll(items);
+                    imageBeanList.clear();
+                    for (ImageItem imageItem:picList){
+                        LogUtil.e(imageItem.path);
+                        imageBeanList.add(new PublishImageBean(imageItem.path));
+                    }
+                    publishImageAdapter.notifyDataSetChanged();
+                });
     }
 
 
-    private void commit() {
-        String name = etName.getText().toString().trim();
-        String phone = etPhone.getText().toString().trim();
-        String address = tvAddress.getText().toString().trim();
-        String addressDetail = etAddress.getText().toString().trim();
-        if (TextUtils.isEmpty(name)) {
-            tsg("请输入真实姓名");
-            return;
-        }
-        if (TextUtils.isEmpty(phone)) {
-            tsg("请输入联系号码");
-            return;
-        } else if (!CommonUtils.isMobileNO(phone)) {
-            tsg("手机号码格式不正确");
-            return;
-        }
-        if (TextUtils.isEmpty(address)) {
-            tsg("请选择所在城市");
-            return;
-        }
-        if (TextUtils.isEmpty(addressDetail)) {
-            tsg("请填写详细地址");
-            return;
-        }
-        success();
+    @OnClick({R.id.iv_add_image, R.id.tv_sava})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_add_image:
+                checkPermissions(PhotoUtils.needPermissions);
+                break;
 
+            case R.id.tv_sava:
+                commit();
+                break;
 
+        }
     }
 
-    private void success() {
-        if (type == ADD) {
-            tsg("新增成功");
-        } else {
-            tsg("修改成功");
-        }
+    public void commit(){
+        tsg("发布成功");
         finish();
     }
 
+
+    @Override
+    public void onImageClick(int position) {
+
+    }
+
+    @Override
+    public void onImageRemove(int position) {
+        imageBeanList.remove(position);
+        publishImageAdapter.notifyDataSetChanged();
+
+
+    }
 
 
 

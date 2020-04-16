@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray_bg"
+    android:orientation="vertical">
+
+
+
+   <include
+       layout="@layout/layout_title_search"/>
+
+
+
+    <View
+        style="@style/line_light"
+        />
+
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_not_join"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:background="@color/gray_line">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_not_join"/>
+        <TextView
+            style="@style/base_text_style"
+            android:textColor="@color/baseColor"
+            android:layout_marginLeft="8dp"
+            android:text="不参与任何话题"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
