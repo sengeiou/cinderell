@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_root"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <com.cinderellavip.weight.CircleImageView
+                android:id="@+id/iv_avater"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/avater"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/black_title_color"
+                    android:text="陈思妥"/>
+
+            </LinearLayout>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="专门使用过来评价的 第一次不会用 没涂凝胶 那感觉是一个酸爽，赶紧去联系了客服"
+            android:layout_marginLeft="12dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/gray_black_text"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            />
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/grayText"
+        android:text="12-2 14:00"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="12dp"
+        />
+
+    <View
+        style="@style/line_light"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+
+
+
+
+
+
+
+</LinearLayout>

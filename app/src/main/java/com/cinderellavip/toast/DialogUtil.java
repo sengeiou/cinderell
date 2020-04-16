@@ -130,6 +130,29 @@ public class DialogUtil {
 
     }
 
+    public static void showReportDialog(Context context, onSelectListener listener) {
+        View view = View.inflate(context, R.layout.pop_bottom_report, null);
+        dialog = DialogUtils.getBottomDialog(context, view);
+        LinearLayout ll_pullback = view.findViewById(R.id.ll_pullback);
+        LinearLayout ll_report = view.findViewById(R.id.ll_report);
+        ImageView iv_close = view.findViewById(R.id.iv_close);
+        iv_close.setOnClickListener(v -> {
+            dialog.dismiss();
+            dialog = null;
+        });
+        ll_pullback.setOnClickListener(v -> {
+            listener.onFinish("1");
+            dialog.dismiss();
+            dialog = null;
+        });
+        ll_report.setOnClickListener(v -> {
+            listener.onFinish("0");
+            dialog.dismiss();
+            dialog = null;
+        });
+
+    }
+
     public interface onSelectListener {
         void onFinish(String payString);
     }

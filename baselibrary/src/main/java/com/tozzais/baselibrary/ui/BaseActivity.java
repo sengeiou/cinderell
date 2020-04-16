@@ -36,6 +36,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     protected ProgressLayout progress_layout;
     protected TextView tv_right;
     protected ImageView iv_right_icon;
+    protected View line;
 
     protected boolean isLoad = false;
 
@@ -52,6 +53,8 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(getBaseLayout());
+
+        line = findViewById(R.id.line);
         //设置只能屏幕方向
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -85,6 +88,10 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         initListener();
 
 
+    }
+
+    protected void setLineVisibility(){
+        line.setVisibility(View.VISIBLE);
     }
 
     public void back(){
