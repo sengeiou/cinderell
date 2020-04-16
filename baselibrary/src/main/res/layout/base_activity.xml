@@ -12,6 +12,12 @@
         android:layout_height="wrap_content"
         app:elevation="0dp"/>
 
+    <View
+        android:id="@+id/line"
+        android:visibility="gone"
+        style="@style/line_light"
+        />
+
     <include layout="@layout/base_content" />
 
 </LinearLayout>

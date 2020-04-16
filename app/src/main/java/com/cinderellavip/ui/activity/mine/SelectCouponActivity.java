@@ -9,11 +9,11 @@ import com.cinderellavip.ui.fragment.mine.SeleteCouponFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
-public class SeleteCouponActivity extends BaseActivity {
+public class SelectCouponActivity extends BaseActivity {
 
 
     public static void launch(Activity activity) {
-        Intent intent = new Intent(activity, SeleteCouponActivity.class);
+        Intent intent = new Intent(activity, SelectCouponActivity.class);
         activity.startActivityForResult(intent,11);
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.JsonSyntaxException;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.tozzais.baselibrary.R;
 import com.tozzais.baselibrary.util.NetworkUtil;
 
@@ -11,78 +12,51 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.adapter.rxjava.HttpException;
-
 
 public abstract class BaseListActivity<T> extends BaseActivity {
 
-    protected BaseQuickAdapter mAdapter;
+    protected int PageSize = 10;
     protected int DEFAULT_PAGE = 0;
     protected int page = DEFAULT_PAGE;
-    protected int PageSize = 10;
-    public SwipeRefreshLayout swipeLayout;
+    protected BaseQuickAdapter mAdapter;
+
+
+
     public RecyclerView mRecyclerView;
-
-
-
+    public SmartRefreshLayout swipeLayout;
     @Override
     public void initView(Bundle savedInstanceState) {
         mRecyclerView = findViewById(R.id.rv_list);
         swipeLayout = findViewById(R.id.swipeLayout);
-    }
 
+    }
 
     @Override
     public void initListener() {
-
-            //刷新
-            swipeLayout.setOnRefreshListener(this::onRefresh);
-            //加载更多
+        //刷新
+        if (swipeLayout != null)
+        swipeLayout.setOnRefreshListener(refreshLayout -> onRefresh());
+        //加载更多
+        if (mAdapter.getLoadMoreModule() != null){
             mAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
                 loadData();
             });
-            mAdapter.getLoadMoreModule().setAutoLoadMore(true);
+            mAdapter.getLoadMoreModule().setAutoLoadMore(false);
             //当自动加载开启，同时数据不满一屏时，是否继续执行自动加载更多(默认为true)
             mAdapter.getLoadMoreModule().setEnableLoadMoreIfNotFullPage(false);
+        }
+
 
     }
+
 
     protected void onRefresh() {
         // 这里的作用是防止下拉刷新的时候还可以上拉加载
-//        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
-//        page = DEFAULT_PAGE;
-//        loadData();
-        swipeLayout.setRefreshing(false);
-    }
-
-
-    protected void setData(boolean isRefresh, List<T> data) {
-        showContent();
-        int size = data == null ? 0 : data.size();
-        if (isRefresh) {
-            mAdapter.setNewData(data);
-        } else {
-            if (size > 0) {
-                mAdapter.addData(data);
-            }
-        }
-        if (size < PageSize) {
-            /**
-             *  参数是 false的话 显示 没有更多数据
-             *  参数是 true的话 不显示
-             */
-            mAdapter.getLoadMoreModule().loadMoreEnd(false);
-        } else {
-            //自动加载下一个 显示加载中
-            mAdapter.getLoadMoreModule().loadMoreComplete();
-        }
-        isLoad = true;
-        page++;
-    }
-
-    protected void setData(List<T> data) {
-        setData(page == DEFAULT_PAGE, data);
+        if (mAdapter.getLoadMoreModule() != null)
+            mAdapter.getLoadMoreModule().setEnableLoadMore(false);
+        page = DEFAULT_PAGE;
+        loadData();
     }
 
 
@@ -92,10 +66,10 @@ public abstract class BaseListActivity<T> extends BaseActivity {
      * @param e
      */
     public void onErrorResult(Throwable e) {
-        if (swipeLayout != null)
-            swipeLayout.setRefreshing(false);
         String s = "";
         if (page != DEFAULT_PAGE) {
+            page--;
+            if (mAdapter.getLoadMoreModule() != null)
             mAdapter.getLoadMoreModule().loadMoreFail();
             return;
         } else if (!NetworkUtil.isNetworkAvailable(mActivity)) {
@@ -106,7 +80,7 @@ public abstract class BaseListActivity<T> extends BaseActivity {
             s = getResources().getString(R.string.error_syntax);
         } else if (e != null && e instanceof HttpException) {
             s = getResources().getString(R.string.error_http);
-        } else {
+        }else {
             s = e.getMessage();
         }
         if (!isLoad) {
@@ -117,21 +91,26 @@ public abstract class BaseListActivity<T> extends BaseActivity {
 
     }
 
-    //返回数据 code不等于500的
-    public void onErrorResult(String s) {
-        if (swipeLayout != null)
-            swipeLayout.setRefreshing(false);
-        if (page != DEFAULT_PAGE) {
-            mAdapter.getLoadMoreModule().loadMoreFail();
-            return;
-        }
-        if (!isLoad) {
-            showError(s);
+    protected void setData(boolean isRefresh, List<T> data) {
+        final int size = data == null ? 0 : data.size();
+        if (isRefresh) {
+            mAdapter.setNewData(data);
         } else {
-            tsg(s);
+            if (size > 0) {
+                mAdapter.addData(data);
+            }
         }
-
+        if (size < PageSize) {
+            if (mAdapter.getLoadMoreModule() != null)
+            mAdapter.getLoadMoreModule().loadMoreEnd(isRefresh);
+        } else {
+            if (mAdapter.getLoadMoreModule() != null)
+            mAdapter.getLoadMoreModule().loadMoreComplete();
+        }
+        isLoad = true;
     }
 
-
+    protected void setData(List<T> data) {
+        setData(page == DEFAULT_PAGE, data);
+    }
 }

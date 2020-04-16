@@ -3,19 +3,16 @@ package com.cinderellavip.ui.activity.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.listview.EnsureOrderAdapter;
-import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.net.NetCityBean;
-import com.cinderellavip.global.Constant;
-import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
-import com.cinderellavip.ui.activity.mine.SeleteCouponActivity;
+import com.cinderellavip.ui.activity.mine.SelectCouponActivity;
+import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyListView;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -130,6 +127,7 @@ public class EnsureOrderActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.tv_commit:
+                SelectPayWayActivity.launch(mActivity,0,"");
 //                DialogUtil.getInstance().showRealNameDialog(mContext,payString -> {
 
 //                });
@@ -138,7 +136,7 @@ public class EnsureOrderActivity extends BaseActivity {
                 MineAddressActivity.launch(mActivity, MineAddressActivity.SELETE, "");
                 break;
             case R.id.ll_coupon:
-                SeleteCouponActivity.launch(mActivity);
+                SelectCouponActivity.launch(mActivity);
                 break;
 
         }

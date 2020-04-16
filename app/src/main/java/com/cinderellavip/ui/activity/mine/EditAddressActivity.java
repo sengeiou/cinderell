@@ -3,6 +3,7 @@ package com.cinderellavip.ui.activity.mine;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,24 +12,21 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.global.GlobalParam;
-import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.address.LocalCityUtil3s;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
+import com.tozzais.baselibrary.util.CommonUtils;
+import com.tozzais.baselibrary.util.sign.SignUtil;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 public class EditAddressActivity extends CheckPermissionActivity {
     public static final int ADD = 1, EDIT = 2;
@@ -103,13 +101,6 @@ public class EditAddressActivity extends CheckPermissionActivity {
 
     }
 
-
-
-
-
-
-
-
     @OnClick({R.id.ll_address, R.id.tv_sava, R.id.tv_right})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -117,6 +108,7 @@ public class EditAddressActivity extends CheckPermissionActivity {
                 getCity();
                 break;
             case R.id.tv_sava:
+                commit();
                 break;
             case R.id.tv_right:
 //                CenterDialogUtil.showTwo(mContext, "确定要删除收货地址吗？",
@@ -146,15 +138,54 @@ public class EditAddressActivity extends CheckPermissionActivity {
     }
 
     private void getCity() {
-
-
-//
+        LocalCityUtil3s.getInstance().showSelectDialog(mContext, ((province, city, county) -> {
+            tvAddress.setText(province.name + "-" + city.name + "-" + county.name);
+        }));
     }
 
 
     @Override
     public void permissionGranted() {
         PhotoUtils.getInstance().selectPic(mActivity);
+    }
+
+
+    private void commit() {
+        String name = etName.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
+        String address = tvAddress.getText().toString().trim();
+        String addressDetail = etAddress.getText().toString().trim();
+        if (TextUtils.isEmpty(name)) {
+            tsg("请输入真实姓名");
+            return;
+        }
+        if (TextUtils.isEmpty(phone)) {
+            tsg("请输入联系号码");
+            return;
+        } else if (!CommonUtils.isMobileNO(phone)) {
+            tsg("手机号码格式不正确");
+            return;
+        }
+        if (TextUtils.isEmpty(address)) {
+            tsg("请选择所在城市");
+            return;
+        }
+        if (TextUtils.isEmpty(addressDetail)) {
+            tsg("请填写详细地址");
+            return;
+        }
+        success();
+
+
+    }
+
+    private void success() {
+        if (type == ADD) {
+            tsg("新增成功");
+        } else {
+            tsg("修改成功");
+        }
+        finish();
     }
 
 
