@@ -57,6 +57,7 @@
         android:lines="1"
         android:ellipsize="end"
         android:text="已拼329件"
+        android:visibility="gone"
         />
 
 
@@ -117,6 +118,7 @@
            android:id="@+id/iv_national_flag"
            android:layout_width="20dp"
            android:layout_height="20dp"
+           android:visibility="gone"
            android:src="@mipmap/national_flag_us"/>
     </LinearLayout>
 

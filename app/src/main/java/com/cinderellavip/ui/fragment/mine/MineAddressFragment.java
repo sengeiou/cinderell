@@ -13,6 +13,7 @@ import com.cinderellavip.adapter.recycleview.MineAddressAdpter;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.ui.activity.mine.EditAddressActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.sign.SignUtil;
@@ -106,7 +107,7 @@ public class MineAddressFragment extends BaseListFragment<NetCityBean> {
     @OnClick(R.id.tv_add)
     public void onClick() {
         if (type == MineAddressActivity.LOOK || type == MineAddressActivity.SELETE ) {
-//            EditAddressActivity.launch(mActivity, EditAddressActivity.ADD);
+            EditAddressActivity.launch(mActivity, EditAddressActivity.ADD);
         } else if (type == MineAddressActivity.EXCHANGE) {
 
             if (netCityBean == null) {

@@ -55,7 +55,13 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
         context.finish();
+    }
 
+    public static void launch(Activity context,int mPosition) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("position",mPosition);
+        context.startActivity(intent);
+        context.finish();
 
     }
 

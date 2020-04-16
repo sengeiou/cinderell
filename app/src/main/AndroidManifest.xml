@@ -25,7 +25,8 @@
         </activity>
 
         <activity android:name=".ui.activity.account.WelcomeActivity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.account.LoginActivity"/>
         <activity android:name=".ui.activity.account.FastLoginActivity"/>
         <activity android:name=".ui.activity.account.RegisterActivity"/>
@@ -40,7 +41,10 @@
         <activity android:name=".ui.activity.home.ShopDetailActivity"/>
         <activity android:name=".ui.activity.home.EnsureOrderActivity"/>
         <activity android:name=".ui.activity.mine.MineAddressActivity"/>
-        <activity android:name=".ui.activity.mine.SeleteCouponActivity"/>
+        <activity android:name=".ui.activity.mine.SelectCouponActivity"/>
+        <activity android:name=".ui.activity.mine.EditAddressActivity"/>
+        <activity android:name=".ui.activity.order.SelectPayWayActivity"/>
+        <activity android:name=".ui.activity.order.PayResultActivity"/>
     </application>
 
 </manifest>

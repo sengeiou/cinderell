@@ -1,0 +1,24 @@
+package com.cinderellavip.util.address;
+
+public class CityBean {
+
+	public String pid;
+	public String name;
+	public String id;
+	public String hot;
+	public boolean isCheck;
+
+	public CityBean(String pid, String name) {
+		super();
+		this.pid = pid;
+		this.name = name;
+	}
+
+	public CityBean() {
+		super();
+	}
+
+
+
+
+}

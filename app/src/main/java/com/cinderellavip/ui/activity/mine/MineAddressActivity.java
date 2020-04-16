@@ -63,7 +63,7 @@ public class MineAddressActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         tv_right.setOnClickListener(v -> {
-//            EditAddressActivity.launch(mActivity, EditAddressActivity.ADD);
+            EditAddressActivity.launch(mActivity, EditAddressActivity.ADD);
         });
     }
 }
