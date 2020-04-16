@@ -17,6 +17,8 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CouponReceiveDialogAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.activity.find.PublishPostActivity;
+import com.cinderellavip.ui.activity.find.PublishTopicActivity;
 import com.cinderellavip.weight.FlowLayout;
 import com.cinderellavip.weight.SquareRoundImageView;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -147,6 +149,30 @@ public class DialogUtil {
         });
         ll_report.setOnClickListener(v -> {
             listener.onFinish("0");
+            dialog.dismiss();
+            dialog = null;
+        });
+
+    }
+
+    public static void showPublishDialog(Context context) {
+        View view = View.inflate(context, R.layout.pop_bottom_publish, null);
+        dialog = DialogUtils.getBottomDialog(context, view);
+        LinearLayout ll_pullback = view.findViewById(R.id.ll_pullback);
+        LinearLayout ll_report = view.findViewById(R.id.ll_report);
+        ImageView iv_close = view.findViewById(R.id.iv_close);
+        iv_close.setOnClickListener(v -> {
+            dialog.dismiss();
+            dialog = null;
+        });
+        ll_pullback.setOnClickListener(v -> {
+            PublishTopicActivity.launch(context);
+            dialog.dismiss();
+            dialog = null;
+        });
+        ll_report.setOnClickListener(v -> {
+            PublishPostActivity.launch(context);
+
             dialog.dismiss();
             dialog = null;
         });

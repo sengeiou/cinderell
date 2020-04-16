@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.fragment.CartFragment;
 import com.cinderellavip.ui.fragment.FindFragment;
 import com.cinderellavip.ui.fragment.ShopFragment;
@@ -122,7 +123,11 @@ public class MainActivity extends BaseActivity {
                 selectFragment(LIFE);
                 break;
             case R.id.ll_find:
-                selectFragment(FIND);
+                if (mPosition == FIND){
+                    DialogUtil.showPublishDialog(mContext);
+                }else {
+                    selectFragment(FIND);
+                }
                 break;
             case R.id.ll_cart:
                 selectFragment(CART);
