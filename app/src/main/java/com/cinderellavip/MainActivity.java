@@ -226,7 +226,7 @@ public class MainActivity extends BaseActivity {
 
             case CART:
                 if (cartFragment == null) {
-                    cartFragment = new CartFragment();
+                    cartFragment = CartFragment.newInstance(CartFragment.HAVA_TITLE);
                     transaction.add(R.id.fl_container, cartFragment, TAG_CART);
                 } else {
                     transaction.show(cartFragment);

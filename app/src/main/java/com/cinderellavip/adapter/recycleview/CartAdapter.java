@@ -1,28 +1,13 @@
 package com.cinderellavip.adapter.recycleview;
 
-import android.app.Activity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.CartItem;
-import com.cinderellavip.global.GlobalParam;
-import com.cinderellavip.global.ImageUtil;
-import com.cinderellavip.http.ApiManager;
-import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.listener.CartClickListener;
-import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
-import com.tozzais.baselibrary.http.RxHttp;
-import com.tozzais.baselibrary.ui.BaseActivity;
-import com.tozzais.baselibrary.util.sign.SignUtil;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.TreeMap;
 
 
 public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
@@ -35,13 +20,13 @@ public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
 
 
     @Override
-    protected void convert(final BaseViewHolder helper, final CartItem item) {
+    protected void convert( BaseViewHolder helper, CartItem item) {
         int position = helper.getAdapterPosition();
         ImageView iv_product = helper.getView(R.id.iv_product);
 //        ImageUtil.loadNetRound(mContext,iv_product,item.getLogo());
 //        helper.setText(R.id.tv_title,item.getProduct_name());
 //        helper.setText(R.id.tv_specification,"规格："+item.getNorm());
-//        helper.setText(R.id.tv_price,"￥"+item.getShowPrice());
+        helper.setText(R.id.tv_price,"￥"+item.getShowPrice());
 
         //特色产品的标签
 
@@ -97,6 +82,7 @@ public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
         });
         helper.getView(R.id.iv_delete).setOnClickListener(v -> {
            remove(position);
+            cartClickListener.onHavaData(getData().size() != 0);
         });
         helper.getView(R.id.ll_root).setOnClickListener(v -> {
         });
