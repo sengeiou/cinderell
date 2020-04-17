@@ -11,6 +11,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.ui.activity.mine.MineDataActivity;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.GirdSpace;
@@ -79,9 +80,13 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     }
 
 
-    @OnClick({R.id.tv_to_be_cinderell, R.id.rl_unpay})
+    @OnClick({R.id.vi_image, R.id.tv_to_be_cinderell, R.id.rl_unpay})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.vi_image:
+                MineDataActivity.launch(mActivity);
+
+                break;
             case R.id.tv_to_be_cinderell:
                 CenterDialogUtil.showBulletin(mActivity);
                 break;

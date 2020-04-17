@@ -91,6 +91,8 @@
         <activity android:name=".ui.activity.find.PublishPostActivity"/>
         <activity android:name=".ui.activity.find.SearchGoodsForPublishPostActivity"/>
         <activity android:name=".ui.activity.find.SearchTopicForPublishPostActivity"/>
+        <activity android:name=".ui.activity.mine.MineDataActivity"/>
+        <activity android:name=".ui.activity.mine.ModifyNickNameActivity"/>
 
 
         <provider

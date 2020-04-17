@@ -179,6 +179,25 @@ public class DialogUtil {
 
     }
 
+
+    public static void showSexDialog(Context context, onSelectListener listener) {
+        View view = View.inflate(context, R.layout.pop_bottom_sex, null);
+        dialog = DialogUtils.getBottomDialog(context, view);
+        ImageView iv_woman = view.findViewById(R.id.iv_woman);
+        ImageView iv_man = view.findViewById(R.id.iv_man);
+        iv_woman.setOnClickListener(v -> {
+            listener.onFinish("灰姑娘");
+            dialog.dismiss();
+            dialog = null;
+        });
+        iv_man.setOnClickListener(v -> {
+            listener.onFinish("灰小伙");
+            dialog.dismiss();
+            dialog = null;
+        });
+
+    }
+
     public interface onSelectListener {
         void onFinish(String payString);
     }
