@@ -36,6 +36,10 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="base_click_style2" >
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
 
     <style name="line_light">
         <item name="android:layout_width">match_parent</item>

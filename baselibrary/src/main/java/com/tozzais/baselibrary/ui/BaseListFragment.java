@@ -58,6 +58,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
     @Override
     public void initListener() {
         //刷新
+        if (swipeLayout != null)
         swipeLayout.setOnRefreshListener(this::onRefresh);
         //加载更多
         if (mAdapter.getLoadMoreModule() != null){
@@ -100,6 +101,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
 //        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
 //        page = DEFAULT_PAGE;
 //        loadData();
+        if (swipeLayout != null)
         swipeLayout.setRefreshing(false);
     }
 
