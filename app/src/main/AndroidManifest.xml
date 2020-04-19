@@ -93,6 +93,8 @@
         <activity android:name=".ui.activity.find.SearchTopicForPublishPostActivity"/>
         <activity android:name=".ui.activity.mine.MineDataActivity"/>
         <activity android:name=".ui.activity.mine.ModifyNickNameActivity"/>
+        <activity android:name=".ui.activity.mine.MineOrderActivity"/>
+        <activity android:name=".ui.activity.order.OrderDetailActivity"/>
 
 
         <provider

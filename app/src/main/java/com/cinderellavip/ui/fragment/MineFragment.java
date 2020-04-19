@@ -3,7 +3,6 @@ package com.cinderellavip.ui.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,6 +11,8 @@ import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.mine.MineDataActivity;
+import com.cinderellavip.ui.activity.mine.MineOrderActivity;
+import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.GirdSpace;
@@ -80,7 +81,13 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     }
 
 
-    @OnClick({R.id.vi_image, R.id.tv_to_be_cinderell, R.id.rl_unpay})
+    @OnClick({R.id.vi_image, R.id.tv_to_be_cinderell
+            , R.id.tv_all_order
+            , R.id.rl_unpay
+            , R.id.rl_unsend
+            , R.id.rl_unreceive
+            , R.id.rl_finish
+            })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.vi_image:
@@ -90,7 +97,20 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             case R.id.tv_to_be_cinderell:
                 CenterDialogUtil.showBulletin(mActivity);
                 break;
+            case R.id.tv_all_order:
+                MineOrderActivity.launch(mActivity, OrderFragment.ALL);
+                break;
             case R.id.rl_unpay:
+                MineOrderActivity.launch(mActivity, OrderFragment.UNPAY);
+                break;
+            case R.id.rl_unsend:
+                MineOrderActivity.launch(mActivity, OrderFragment.UNSEND);
+                break;
+            case R.id.rl_unreceive:
+                MineOrderActivity.launch(mActivity, OrderFragment.UNRECEIVE);
+                break;
+            case R.id.rl_finish:
+                MineOrderActivity.launch(mActivity, OrderFragment.FINISH);
                 break;
         }
     }
