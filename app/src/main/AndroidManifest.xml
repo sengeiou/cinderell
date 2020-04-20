@@ -98,6 +98,8 @@
         <activity android:name=".ui.activity.mine.LogisticsActivity"/>
         <activity android:name=".ui.activity.order.OrderCommentActivity"/>
         <activity android:name=".ui.activity.order.ApplyReturnActivity"/>
+        <activity android:name=".ui.activity.order.ReturnListActivity"/>
+        <activity android:name=".ui.activity.order.RefundDetailActivity"/>
 
 
         <provider

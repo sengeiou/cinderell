@@ -12,6 +12,8 @@ import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.mine.MineDataActivity;
 import com.cinderellavip.ui.activity.mine.MineOrderActivity;
+import com.cinderellavip.ui.activity.order.ApplyReturnActivity;
+import com.cinderellavip.ui.activity.order.ReturnListActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.CircleImageView;
@@ -87,6 +89,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             , R.id.rl_unsend
             , R.id.rl_unreceive
             , R.id.rl_finish
+            , R.id.rl_return
             })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -111,6 +114,9 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 break;
             case R.id.rl_finish:
                 MineOrderActivity.launch(mActivity, OrderFragment.FINISH);
+                break;
+            case R.id.rl_return:
+                ReturnListActivity.launch(mActivity);
                 break;
         }
     }
