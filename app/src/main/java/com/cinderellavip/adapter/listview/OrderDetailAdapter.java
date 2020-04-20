@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.base.BaseAdapter;
+import com.cinderellavip.ui.activity.order.ApplyReturnActivity;
 
 import java.util.List;
 
@@ -48,6 +49,9 @@ public class OrderDetailAdapter extends BaseAdapter<String> {
             hodler.tvBtn1.setVisibility(View.GONE);
 
         }
+        hodler.tvBtn1.setOnClickListener(v -> {
+            ApplyReturnActivity.launch(context,1);
+        });
 
 
         return convertView;

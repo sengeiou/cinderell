@@ -97,6 +97,7 @@
         <activity android:name=".ui.activity.order.OrderDetailActivity"/>
         <activity android:name=".ui.activity.mine.LogisticsActivity"/>
         <activity android:name=".ui.activity.order.OrderCommentActivity"/>
+        <activity android:name=".ui.activity.order.ApplyReturnActivity"/>
 
 
         <provider

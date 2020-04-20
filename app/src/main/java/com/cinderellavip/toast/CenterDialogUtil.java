@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.listener.OnGetStringListener;
+import com.cinderellavip.listener.OnSureClickListener;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 
@@ -70,6 +71,20 @@ public class CenterDialogUtil {
         });
     }
 
+
+    public static void showCommitSuccess(Context context,
+                                         OnSureClickListener listener) {
+        View messageView = View.inflate(context, R.layout.pop_commit_success, null);
+        TextView tv_login = messageView.findViewById(R.id.tv_login);
+        tv_login.setOnClickListener(v -> {
+            if (listener != null){
+                listener.onSure();
+            }
+            cityDialog.dismiss();
+            cityDialog = null;
+        });
+        cityDialog = DialogUtils.getCenterDialog(context, messageView, false);
+    }
 
 
 
