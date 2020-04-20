@@ -346,6 +346,28 @@
 
                    />
 
+                <TextView
+                    android:id="@+id/tv_send_time"
+                    style="@style/base_text_style_gray_small"
+                    android:text="发货时间：2018.05.08 10:13:49"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="-6dp"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_receive_time"
+                    style="@style/base_text_style_gray_small"
+                    android:text="收货时间：2018.05.08 10:13:49"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="-6dp"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
+                    />
+
+
+
 
 
 

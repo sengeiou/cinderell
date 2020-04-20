@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.listview.OrderDetailAdapter;
+import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.ui.activity.mine.LogisticsActivity;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyListView;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -39,6 +41,10 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvBtnBottom1;
     @BindView(R.id.tv_btn_bottom2)
     TextView tvBtnBottom2;
+    @BindView(R.id.tv_send_time)
+    TextView tv_send_time; //发货时间
+    @BindView(R.id.tv_receive_time)
+    TextView tv_receive_time; //发货时间
     @BindView(R.id.tv_pay_way)
     TextView tv_pay_way; //支付方式
     @BindView(R.id.ll_bottom)
@@ -73,7 +79,8 @@ public class OrderDetailActivity extends BaseActivity {
     public void loadData() {
         List<String> list = new ArrayList<>();
 
-        lvGoods.setAdapter(new OrderDetailAdapter(DataUtil.getData(2), mContext));
+        lvGoods.setAdapter(new OrderDetailAdapter(
+                DataUtil.getData(2), mContext,status == COMPLETE || status == EVALUATION));
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
 //        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -104,30 +111,45 @@ public class OrderDetailActivity extends BaseActivity {
                 tvBtnBottom2.setVisibility(View.GONE);
                 tvBtnBottom1.setText("申请退款");
                 tv_pay_way.setVisibility(View.VISIBLE);
+                llBottom.setVisibility(View.GONE);
                 break;
             case RECEIVE:
-                tvStatus.setText("商品邮寄中");
-
+                tvStatus.setText("待收货");
                 tvStatus1.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 tv_pay_way.setVisibility(View.VISIBLE);
-                llBottom.setVisibility(View.GONE);
+                tv_send_time.setVisibility(View.VISIBLE);
+
+                llBottom.setVisibility(View.VISIBLE);
+                tvBtnBottom1.setVisibility(View.VISIBLE);
+                tvBtnBottom2.setVisibility(View.VISIBLE);
+                tvBtnBottom1.setText("查看物流");
+                tvBtnBottom2.setText("确认收货");
                 break;
             case COMPLETE:
                 tvStatus.setText("交易完成");
                 tvStatus1.setVisibility(View.GONE);
-                llBottom.setVisibility(View.GONE);
+                llBottom.setVisibility(View.VISIBLE);
+                tv_receive_time.setVisibility(View.VISIBLE);
+                tv_send_time.setVisibility(View.VISIBLE);
                 tv_pay_way.setVisibility(View.VISIBLE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
+                llBottom.setVisibility(View.VISIBLE);
+                tvBtnBottom2.setVisibility(View.GONE);
+                tvBtnBottom1.setVisibility(View.VISIBLE);
+                tvBtnBottom1.setText("查看物流");
                 break;
             case EVALUATION:
-                tvStatus.setText("待用户评价");
+                tvStatus.setText("待评价");
                 tvStatus1.setVisibility(View.GONE);
-                tvBtnBottom1.setVisibility(View.GONE);
+                tvBtnBottom1.setVisibility(View.VISIBLE);
                 tvBtnBottom2.setVisibility(View.VISIBLE);
-                tvBtnBottom2.setText("立即评价");
+                tvBtnBottom1.setText("查看物流");
+                tvBtnBottom2.setText("去评价");
+                tv_receive_time.setVisibility(View.VISIBLE);
+                tv_send_time.setVisibility(View.VISIBLE);
+                tv_pay_way.setVisibility(View.VISIBLE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
-
                 break;
 
 
@@ -140,15 +162,23 @@ public class OrderDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_btn_bottom1:
-                if (status == PAY){
-
-//                    ApplyRetrunActivity.launch(mActivity,1);
+                if (status == RECEIVE){
+                    LogisticsActivity.launch(mActivity,"1");
+                }else if (status == COMPLETE ||status == EVALUATION ){
+                    LogisticsActivity.launch(mActivity,"1");
                 }
                 break;
             case R.id.tv_btn_bottom2:
                 if (status == PAY){
                     SelectPayWayActivity.launch(mActivity,1,"");
 //                    OrderCommentActivity.launch(mActivity,1);
+                }else if (status == RECEIVE){
+                    CenterDialogUtil.showTwo(mContext,"是否确认收货？",
+                            "请确保已经收到商品，确认收货后，不可撤销，请谨慎操作。"
+                            ,"暂不收货","确定收货", type1 -> {
+                    });
+                }else if (status == EVALUATION){
+                    OrderCommentActivity.launch(mActivity,1);
                 }
                 break;
         }

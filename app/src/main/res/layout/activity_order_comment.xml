@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_bg"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cinderellavip.weight.MyListView
+                android:id="@+id/lv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/gray_line"
+                android:dividerHeight="1px"
+                android:listSelector="@android:color/transparent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/base_text_style"
+                    android:padding="12dp"
+                    android:text="综合评分"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@mipmap/icon_rating_complex"
+                    />
+                <View
+                    style="@style/line_light"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    >
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:text="描述相符"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <com.cinderellavip.weight.RatingBarView
+                        android:id="@+id/rb_logistics_score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:starCount="5"
+                        app:starImageSize="25dp"
+                        app:starFill="@mipmap/icon_comment_select"
+                        app:starEmpty="@mipmap/icon_comment_default"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="12dp"
+                    >
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:text="物流服务"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <com.cinderellavip.weight.RatingBarView
+                        android:id="@+id/rb_logistics_service"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:starCount="5"
+                        app:starImageSize="25dp"
+                        app:starFill="@mipmap/icon_comment_select"
+                        app:starEmpty="@mipmap/icon_comment_default"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    >
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:text="服务态度"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <com.cinderellavip.weight.RatingBarView
+                        android:id="@+id/rb_attitude_score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:starCount="5"
+                        app:starImageSize="25dp"
+                        app:starFill="@mipmap/icon_comment_select"
+                        app:starEmpty="@mipmap/icon_comment_default"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <View
+        style="@style/line_light"
+        />
+    <TextView
+        android:id="@+id/tv_btn_bottom3"
+        style="@style/login_btn_style"
+        android:layout_marginBottom="12dp"
+        android:text="立即发表" />
+
+
+</LinearLayout>

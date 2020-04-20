@@ -61,12 +61,6 @@ public class BigImageActivity extends BaseActivity {
         tv_pic_number.setText(pointIndex + 1 + "/" + data.length);
 
         viewpager.setAdapter(new BigImageAdapter(data, mActivity));
-//        viewpager.setOnPageChangeListener(new BannerPagerListener() {
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//        });
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

@@ -45,7 +45,7 @@ public class BigImageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = View.inflate(mContext, R.layout.item_big_image,null);
         PhotoView photoView = view.findViewById(R.id.photoView);
-        ImageUtil.loadNet(mContext,photoView,mList[position]);
+        ImageUtil.loadLocal(mContext,photoView,mList[position]);
         photoView.setClickListener(()->{
             ((Activity)mContext).finish();
         });

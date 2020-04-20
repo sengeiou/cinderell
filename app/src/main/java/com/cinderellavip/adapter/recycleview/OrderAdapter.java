@@ -56,7 +56,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
             case OrderFragment.UNRECEIVE:
                 tv_status.setText("待收货");
                 tv_btn1.setText("物流");
-                tv_btn1.setText("收货");
+                tv_btn2.setText("收货");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.VISIBLE);
                 break;

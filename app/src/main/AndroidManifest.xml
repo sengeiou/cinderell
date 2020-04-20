@@ -95,6 +95,8 @@
         <activity android:name=".ui.activity.mine.ModifyNickNameActivity"/>
         <activity android:name=".ui.activity.mine.MineOrderActivity"/>
         <activity android:name=".ui.activity.order.OrderDetailActivity"/>
+        <activity android:name=".ui.activity.mine.LogisticsActivity"/>
+        <activity android:name=".ui.activity.order.OrderCommentActivity"/>
 
 
         <provider
