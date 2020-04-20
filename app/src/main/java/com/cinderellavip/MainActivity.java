@@ -104,6 +104,7 @@ public class MainActivity extends BaseActivity {
     private static final String TAG_CART = "tag_cart";
     private static final String TAG_MINE = "tag_mine";
 
+
     private int mPosition;//当前选中的底部菜单
     private FragmentManager fragmentManager;
     private ShopFragment shopFragment;
