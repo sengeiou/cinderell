@@ -10,9 +10,18 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.ui.activity.life.LongServiceOrderListActivity;
+import com.cinderellavip.ui.activity.life.SingleServiceOrderListActivity;
+import com.cinderellavip.ui.activity.mine.ApplyProductSupplierResultActivity;
+import com.cinderellavip.ui.activity.mine.CouponCenterActivity;
+import com.cinderellavip.ui.activity.mine.MineAddressActivity;
+import com.cinderellavip.ui.activity.mine.MineBalanceActivity;
+import com.cinderellavip.ui.activity.mine.MineCollectActivity;
 import com.cinderellavip.ui.activity.mine.MineDataActivity;
+import com.cinderellavip.ui.activity.mine.MineGroupActivity;
 import com.cinderellavip.ui.activity.mine.MineOrderActivity;
-import com.cinderellavip.ui.activity.order.ApplyReturnActivity;
+import com.cinderellavip.ui.activity.mine.RecommentListActivity;
+import com.cinderellavip.ui.activity.mine.SmallVaultActivity;
 import com.cinderellavip.ui.activity.order.ReturnListActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.DataUtil;
@@ -84,12 +93,12 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
 
 
     @OnClick({R.id.vi_image, R.id.tv_to_be_cinderell
-            , R.id.tv_all_order
-            , R.id.rl_unpay
-            , R.id.rl_unsend
-            , R.id.rl_unreceive
-            , R.id.rl_finish
-            , R.id.rl_return
+            , R.id.tv_all_order, R.id.rl_unpay, R.id.rl_unsend , R.id.rl_unreceive, R.id.rl_finish, R.id.rl_return
+            , R.id.tv_all_order_first, R.id.rl_unpay_first, R.id.rl_unservice__first, R.id.rl_uncomment_first
+            , R.id.tv_all_order_long, R.id.rl_to_be_confirm_long,R.id.rl_unpay_long, R.id.rl_serviceing_long, R.id.rl_complete_long
+            , R.id.rl_xiaohui_recomment, R.id.rl_mine_service2, R.id.rl_mine_service3, R.id.rl_mine_service4
+            , R.id.rl_mine_service5, R.id.rl_mine_service6, R.id.rl_mine_service7, R.id.rl_mine_service8
+            , R.id.rl_mine_service9, R.id.rl_mine_service10, R.id.rl_mine_service11
             })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -117,6 +126,66 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 break;
             case R.id.rl_return:
                 ReturnListActivity.launch(mActivity);
+                break;
+            case R.id.tv_all_order_first:
+                SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.ALL);
+                break;
+            case R.id.rl_unpay_first:
+                SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.PAY);
+                break;
+            case R.id.rl_unservice__first:
+                SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.SERVICE);
+                break;
+            case R.id.rl_uncomment_first:
+                SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.COMMENT);
+                break;
+            case R.id.tv_all_order_long:
+                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.ALL);
+                break;
+            case R.id.rl_to_be_confirm_long:
+                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.CONFIRM);
+                break;
+            case R.id.rl_unpay_long:
+                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.PAY);
+                break;
+            case R.id.rl_serviceing_long:
+                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.SERVICE);
+                break;
+            case R.id.rl_complete_long:
+                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.COMPLETE);
+                break;
+            case R.id.rl_xiaohui_recomment:
+                RecommentListActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_service2:
+                SmallVaultActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_service3:
+                CouponCenterActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_service4:
+                MineBalanceActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_service5:
+                MineGroupActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_service6:
+                MineAddressActivity.launch(mActivity,MineAddressActivity.LOOK);
+                break;
+            case R.id.rl_mine_service7:
+                ApplyProductSupplierResultActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_service8:
+                //申请成为劳务用户
+                break;
+            case R.id.rl_mine_service9:
+                //商家入驻
+                break;
+            case R.id.rl_mine_service10:
+                MineCollectActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_service11:
+
                 break;
         }
     }

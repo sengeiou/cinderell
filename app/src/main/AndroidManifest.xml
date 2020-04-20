@@ -100,6 +100,46 @@
         <activity android:name=".ui.activity.order.ApplyReturnActivity"/>
         <activity android:name=".ui.activity.order.ReturnListActivity"/>
         <activity android:name=".ui.activity.order.RefundDetailActivity"/>
+        <activity android:name=".ui.activity.mine.ApplyProductSupplierActivity"/>
+        <activity android:name=".ui.activity.mine.ApplyProductSupplierResultActivity"/>
+        <activity android:name=".ui.activity.mine.BlackListActivity"/>
+        <activity android:name=".ui.activity.mine.CouponCenterActivity"/>
+        <activity android:name=".ui.activity.mine.HistoricalRankingActivity"/>
+        <activity android:name=".ui.activity.mine.LeaderboardActivity"/>
+        <activity android:name=".ui.activity.mine.MessageActivity"/>
+        <activity android:name=".ui.activity.mine.MineAssetsActivity"/>
+        <activity android:name=".ui.activity.mine.MineBalanceActivity"/>
+        <activity android:name=".ui.activity.mine.MineCollectActivity"/>
+        <activity android:name=".ui.activity.mine.MineCouponActivity"/>
+        <activity android:name=".ui.activity.mine.MineGroupActivity"/>
+        <activity android:name=".ui.activity.mine.MineGroupDetailActivity"/>
+        <activity android:name=".ui.activity.mine.OrderTransactionActivity"/>
+        <activity android:name=".ui.activity.mine.RecommentListActivity"/>
+        <activity android:name=".ui.activity.mine.SettingActivity"/>
+        <activity android:name=".ui.activity.mine.SmallVaultActivity"/>
+        <activity android:name=".ui.activity.mine.WithDrawActivity"/>
+        <activity android:name=".ui.activity.mine.WithDrawHistoryActivity"/>
+        <activity android:name=".ui.activity.life.AddServiceAddressActivity"/>
+        <activity android:name=".ui.activity.life.BuyLongServiceActivity"/>
+        <activity android:name=".ui.activity.life.BuyServiceActivity"/>
+        <activity android:name=".ui.activity.life.DirectAppointmentActivity"/>
+        <activity android:name=".ui.activity.life.DirectAppointmentProjectDetailActivity"/>
+        <activity android:name=".ui.activity.life.DirectAppointmentTechnicianCommentActivity"/>
+        <activity android:name=".ui.activity.life.DirectAppointmentTechnicianDetailActivity"/>
+        <activity android:name=".ui.activity.life.LongServiceOrderDetailActivity"/>
+        <activity android:name=".ui.activity.life.LongServiceOrderListActivity"/>
+        <activity android:name=".ui.activity.life.PayCheckoutCounterActivity"/>
+        <activity android:name=".ui.activity.life.SelectCityActivity"/>
+        <activity android:name=".ui.activity.life.SelectLocationActivity"/>
+        <activity android:name=".ui.activity.life.SelectServiceAddressActivity"/>
+        <activity android:name=".ui.activity.life.SelectServiceResultActivity"/>
+        <activity android:name=".ui.activity.life.SelectServiceTimeActivity"/>
+        <activity android:name=".ui.activity.life.ServiceDetailActivity"/>
+        <activity android:name=".ui.activity.life.ServiceListActivity"/>
+        <activity android:name=".ui.activity.life.ServiceOrderCommentActivity"/>
+        <activity android:name=".ui.activity.life.ServiceSelectCouponActivity"/>
+        <activity android:name=".ui.activity.life.SingleServiceOrderListActivity"/>
+        <activity android:name=".ui.activity.life.SingleServiceOrderDetailActivity"/>
 
 
         <provider
