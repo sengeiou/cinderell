@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_space"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@color/gray_bg" />
+
+    <LinearLayout
+        android:background="@drawable/touch_bg"
+        android:id="@+id/ll_root"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        >
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:text="3人团，参团人数不够"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/base_text_style"
+            android:textColor="@color/baseColor"
+            android:layout_gravity="center_vertical"
+            android:text="未成团"/>
+    </LinearLayout>
+
+    <View
+        style="@style/line_light"
+        />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <View
+            style="@style/line_light"
+            />
+
+
+        <LinearLayout
+            style="@style/base_hor_style"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:paddingTop="12dp"
+            >
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="共2件 应付金额：" />
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="￥188.00" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/base_hor_style"
+            android:gravity="right"
+            android:paddingTop="0dp"
+            android:paddingBottom="12dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_btn1"
+                style="@style/base_btn_style"
+                android:background="@drawable/shape_line_blacktitle50"
+                android:textColor="@color/black_title_color"
+                android:text="详情" />
+
+            <TextView
+                android:id="@+id/tv_btn2"
+                style="@style/base_btn_style"
+                android:background="@drawable/shape_line_red50"
+                android:textColor="@color/red"
+                android:layout_marginLeft="12dp"
+                android:text="邀请" />
+        </LinearLayout>
+
+
+</LinearLayout>
+</LinearLayout>

@@ -5,4 +5,6 @@
     <color name="gray_black_text">#666666</color>
 
     <color name="yellow">#FDF4ED</color>
+    <color name="yellow_shadow">#FFDCC5</color>
+    <color name="yellow_deep">#EE6000</color>
 </resources>

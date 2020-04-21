@@ -12,7 +12,7 @@ public class OrderGoodsAdapter extends BaseQuickAdapter<String, BaseViewHolder> 
     public OrderGoodsAdapter() {
         super(R.layout.item_order_goods, null);
     }
-    //退款列表
+    //退款列表 拼团列表
     public static final int RETURN = 1;
     int type;
     public OrderGoodsAdapter(int type) {
