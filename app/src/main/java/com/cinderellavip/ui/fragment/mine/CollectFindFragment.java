@@ -1,4 +1,4 @@
-package com.cinderellavip.ui.fragment.find;
+package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,11 +13,15 @@ import com.tozzais.baselibrary.util.DpUtil;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 
-public class FindAttentionFragment extends BaseListFragment<String> {
+/**
+ *
+ */
+public class CollectFindFragment extends BaseListFragment<String> {
 
 
-    public static FindAttentionFragment newInstance() {
-        FindAttentionFragment cartFragment = new FindAttentionFragment();
+
+    public static CollectFindFragment newInstance() {
+        CollectFindFragment cartFragment = new CollectFindFragment();
         Bundle bundle = new Bundle();
         cartFragment.setArguments(bundle);
         return cartFragment;
@@ -25,26 +29,13 @@ public class FindAttentionFragment extends BaseListFragment<String> {
 
 
 
-    /**
-     *
-     * @param keyword 所搜页面进入
-     * @return
-     */
-    private String keyword;
-    public static FindAttentionFragment newInstance(String keyword) {
-        FindAttentionFragment cartFragment = new FindAttentionFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", keyword);
-        cartFragment.setArguments(bundle);
-        return cartFragment;
-    }
+
 
 
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
 
-        keyword = getArguments().getString("keyword");
         GirdSpaceStag girdSpace = new GirdSpaceStag(DpUtil.dip2px(mActivity, 10),2,0,true);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.addItemDecoration(girdSpace);
@@ -76,4 +67,5 @@ public class FindAttentionFragment extends BaseListFragment<String> {
             PostDetailActivity.launch(mActivity);
         });
     }
+
 }
