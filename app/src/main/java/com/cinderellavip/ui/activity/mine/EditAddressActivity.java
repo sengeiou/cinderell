@@ -68,12 +68,12 @@ public class EditAddressActivity extends CheckPermissionActivity {
     public void initView(Bundle savedInstanceState) {
         type = getIntent().getIntExtra("type", ADD);
         if (type == ADD) {
-            tvSava.setText("添加收货地址");
-            setBackTitle("新增地址");
+            tvSava.setText("保存");
+            setBackTitle("我的收货地址");
         } else {
             tvSava.setText("修改收货地址");
             item = getIntent().getParcelableExtra("item");
-            setBackTitle("编辑地址");
+            setBackTitle("保存");
             setRightText("删除");
             setData();
         }

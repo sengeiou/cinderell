@@ -92,6 +92,7 @@ public class MineAddressFragment extends BaseListFragment<NetCityBean> {
                 mActivity.setResult(Activity.RESULT_OK, intent);
                 mActivity.finish();
             } else if (type == MineAddressActivity.LOOK) {
+                EditAddressActivity.launch(mActivity, EditAddressActivity.EDIT);
 //                EditAddressActivity.launch(mActivity, EditAddressActivity.EDIT, data.get(position));
             } else if (type == MineAddressActivity.EXCHANGE) {
                 for (int i = 0; i < data.size(); i++) {

@@ -44,7 +44,7 @@ public class MineAddressActivity extends BaseActivity {
                 setRightText("新增");
             }
         }else {
-            setBackTitle("地址管理");
+            setBackTitle("我的收货地址");
         }
         MineAddressFragment mineAddressFragment = new MineAddressFragment();
         Bundle bundle = new Bundle();
