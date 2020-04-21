@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        >
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -47,15 +39,95 @@
                         />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white5"
                         android:padding="12dp">
 
-                        <ImageView
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:src="@mipmap/code"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="消费积分"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                />
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="18236"
+                                android:textSize="16sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/white"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="推荐积分"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                />
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="18236"
+                                android:textSize="16sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/white"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="月冠积分"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                />
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="18236"
+                                android:textSize="16sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/white"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="利息积分"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                />
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="18236"
+                                android:textSize="16sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/white"
+                                />
+                        </LinearLayout>
+
+
                     </LinearLayout>
 
                     <TextView
@@ -64,7 +136,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_width="120dp"
                         android:padding="10dp"
-                        android:text="立即邀请好友"
+                        android:text="月冠排行"
                         android:id="@+id/tv_invite"
                         android:textColor="@color/baseColor"/>
 
@@ -75,16 +147,18 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tab_label"
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tablayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
+                    android:layout_gravity="center"
+                    app:tabIndicatorColor="@color/baseColor"
+                    app:tabTextColor="@color/grayText"
+                    app:tabSelectedTextColor="@color/black_title_color"
+                    app:tabIndicatorFullWidth="false"
                     android:background="@color/white"
-                    android:text="我推荐的好友（88）"
-                    android:textSize="14sp"
-                    android:textColor="@color/black_title_color"
                     />
+
 
                 <View
                     style="@style/line_light"
@@ -95,17 +169,15 @@
             </com.google.android.material.appbar.AppBarLayout>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_list"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_height="match_parent">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"/>
 
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 

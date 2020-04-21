@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.ui.fragment.mine.SmallVaultFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -24,18 +26,14 @@ public class SmallVaultActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
         setBackTitle("小金库");
-//        setRightIcon(R.mipmap.icon_search_black);
-
-
-
+        setRightIcon(R.mipmap.icon_rule);
     }
 
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        SmallVaultFragment fragment = new SmallVaultFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 
@@ -45,4 +43,11 @@ public class SmallVaultActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void initListener() {
+        super.initListener();
+        iv_right_icon.setOnClickListener(v -> {
+            WebViewActivity.launch(mActivity,"规则说明","https://www.baidu.com");
+        });
+    }
 }

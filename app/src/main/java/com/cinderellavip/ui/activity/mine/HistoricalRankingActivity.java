@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.fragment.mine.SmallVaultHistoryRankFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -24,7 +25,7 @@ public class HistoricalRankingActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        setLineVisibility();
         setBackTitle("历史排行");
 //        setRightIcon(R.mipmap.icon_search_black);
 
@@ -35,7 +36,7 @@ public class HistoricalRankingActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        SmallVaultHistoryRankFragment fragment = new SmallVaultHistoryRankFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 

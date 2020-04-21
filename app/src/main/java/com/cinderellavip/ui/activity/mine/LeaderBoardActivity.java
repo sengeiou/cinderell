@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.fragment.mine.LeaderBoardFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -12,20 +13,21 @@ import com.tozzais.baselibrary.ui.BaseActivity;
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class LeaderboardActivity extends BaseActivity {
+public class LeaderBoardActivity extends BaseActivity {
 
 
 
     public static void launch(Context from) {
-        Intent intent = new Intent(from, LeaderboardActivity.class);
+        Intent intent = new Intent(from, LeaderBoardActivity.class);
         from.startActivity(intent);
     }
 
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        setLineVisibility();
         setBackTitle("月冠排行");
+        setRightText("历史排行榜");
 //        setRightIcon(R.mipmap.icon_search_black);
 
 
@@ -35,7 +37,7 @@ public class LeaderboardActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        LeaderBoardFragment fragment = new LeaderBoardFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 
@@ -45,4 +47,12 @@ public class LeaderboardActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void initListener() {
+        super.initListener();
+        tv_right.setOnClickListener(v -> {
+            HistoricalRankingActivity.launch(mActivity);
+        });
+
+    }
 }

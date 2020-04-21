@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.cinderellavip.R;
+import com.cinderellavip.adapter.recycleview.SmallVaultLeaderBoardAdapter;
 import com.cinderellavip.adapter.recycleview.XiaohuiRecommentAdapter;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.util.DataUtil;
@@ -18,16 +19,7 @@ import butterknife.OnClick;
 /**
  * 小金推荐
  */
-public class XiaoHuiRecommentFragment extends BaseListFragment<String> {
-
-
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
-
-    @Override
-    public int setLayout() {
-        return R.layout.fragment_xiaohui_recommed;
-    }
+public class LeaderBoardFragment extends BaseListFragment<String> {
 
     @Override
     public void loadData() {
@@ -44,14 +36,6 @@ public class XiaoHuiRecommentFragment extends BaseListFragment<String> {
         swipeLayout.setEnabled(true);
         mAdapter.getLoadMoreModule().setEnableLoadMore(false);
 
-        //SwipeRefreshLayout和CoordinatorLayout滑动冲突
-        appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
-            if (i >= 0) {
-                swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
-            } else {
-                swipeLayout.setEnabled(false); //否则关闭
-            }
-        });
 
     }
 
@@ -61,26 +45,10 @@ public class XiaoHuiRecommentFragment extends BaseListFragment<String> {
         super.initView(savedInstanceState);
         //设置商品
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mAdapter = new XiaohuiRecommentAdapter();
+        mAdapter = new SmallVaultLeaderBoardAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 
 
-    @OnClick(R.id.tv_invite)
-    public void onClick() {
-        SecondDialogUtil.showRecommendDialog(mActivity, (payString1, bitmap) -> {
-            switch (payString1){
-                case "1":
-                    tsg("分享微信");
-                    break;
-                case "2":
-                    tsg("分享朋友圈");
-                    break;
-                case "down":
-                    tsg("保存成功");
-                    break;
-            }
 
-        });
-    }
 }

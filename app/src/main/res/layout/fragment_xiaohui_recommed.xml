@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        >
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:elevation="0dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_scrollFlags="scroll"
+                    android:background="@color/baseColor"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:text="我的推荐码"
+                        android:textColor="@color/white"
+                        />
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:text="876982"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_margin="8dp"
+                        android:textColor="@color/white"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_white5"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@mipmap/code"/>
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/base_btn_style_large"
+                        android:background="@drawable/shape_white50"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="120dp"
+                        android:padding="10dp"
+                        android:text="立即邀请好友"
+                        android:id="@+id/tv_invite"
+                        android:textColor="@color/baseColor"/>
+
+
+
+
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tab_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@color/white"
+                    android:text="我推荐的好友（88）"
+                    android:textSize="14sp"
+                    android:textColor="@color/black_title_color"
+                    />
+
+                <View
+                    style="@style/line_light"
+                    />
+
+
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+

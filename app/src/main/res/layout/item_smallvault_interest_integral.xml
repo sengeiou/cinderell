@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_root"
+    android:paddingRight="12dp"
+    android:paddingTop="15dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="2020年10月"
+            />
+
+
+
+        <TextView
+            style="@style/base_text_style_gray_small"
+            android:layout_marginLeft="12dp"
+            android:textColor="@color/baseColor"
+            android:maxLines="1"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="+200"
+            />
+
+
+    </LinearLayout>
+
+
+
+    <View
+        android:id="@+id/view_linea"
+        style="@style/line_light"
+        android:layout_marginTop="15dp"
+        />
+
+
+</LinearLayout>
