@@ -57,6 +57,39 @@ public class SecondDialogUtil {
 
     }
 
+    public static void showRecommendDialog(Context context,  onSelectListener listener) {
+        View view = View.inflate(context, R.layout.pop_bottom_recommend, null);
+        dialog = DialogUtils.getCenterDialog(context, view);
+
+        LinearLayout ll_poster = view.findViewById(R.id.ll_poster);
+        ll_poster.setDrawingCacheEnabled(true);
+        ll_poster.buildDrawingCache();
+
+        view.findViewById(R.id.ll_root).setOnClickListener(v -> {
+            dialog.dismiss();
+            dialog = null;
+
+        });
+        view.findViewById(R.id.iv_down).setOnClickListener(v -> {
+            Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
+            boolean isSuccess = ImgUtils.saveImageToGallery(context, bitmap);
+            if (isSuccess) {
+                listener.onFinish("down",null);
+                dialog.dismiss();
+                dialog = null;
+            }
+        });
+        view.findViewById(R.id.iv_weChat).setOnClickListener(v -> {
+            Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
+            listener.onFinish("1",bitmap);
+        });
+        view.findViewById(R.id.iv_weChat_circle).setOnClickListener(v -> {
+            Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
+            listener.onFinish("2",bitmap);
+        });
+
+    }
+
 
     public interface onSelectListener {
         void onFinish(String payString, Bitmap bitmap);

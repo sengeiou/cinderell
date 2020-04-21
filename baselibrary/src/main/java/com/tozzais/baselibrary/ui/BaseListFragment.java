@@ -32,7 +32,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
     protected BaseQuickAdapter mAdapter;
     protected int DEFAULT_PAGE = 0;
     protected int page = DEFAULT_PAGE;
-    protected int PageSize = 10;
+    protected int PageSize = 20;
 
     public RecyclerView mRecyclerView;
     public SwipeRefreshLayout swipeLayout;
