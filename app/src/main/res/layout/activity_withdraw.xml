@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp"
+        android:text="到账支付宝"
+        android:textColor="@color/black_title_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="输入支付宝账号"
+        android:inputType="number"
+        android:maxLength="11"
+        android:paddingBottom="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp"
+        android:textColor="@color/black_title_color"
+        android:textColorHint="@color/grayText"
+        android:textSize="14sp" />
+
+    <View
+        style="@style/base_space"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp"
+        android:text="提现金额"
+        android:textColor="@color/black_title_color"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="12dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/shape_gray5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="￥"
+            android:textSize="20sp"
+            style="@style/base_text_style" />
+
+
+        <EditText
+            android:id="@+id/et_money"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="0"
+            android:inputType="number"
+            android:maxLength="11"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/black_title_color"
+            android:textColorHint="@color/grayText"
+            android:textSize="20sp" />
+
+        <TextView
+            android:text="100~1000元"
+            android:textSize="14sp"
+            style="@style/base_text_style_gray_small" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:text="账户余额：￥2457.00"
+        android:textColor="@color/black_title_color"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:text="到账时间：1~2个工作日"
+        android:textColor="@color/grayText"
+        android:textSize="12sp" />
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg">
+        <TextView
+            android:id="@+id/tv_login"
+            style="@style/login_btn_style"
+            android:layout_marginTop="30dp"
+            android:text="确认提现" />
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>

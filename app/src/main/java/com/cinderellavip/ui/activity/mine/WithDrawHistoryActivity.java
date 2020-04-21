@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.fragment.mine.WithDrawHistoryFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -25,7 +26,7 @@ public class WithDrawHistoryActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        setBackTitle("提现厉害");
+        setBackTitle("提现记录");
 //        setRightIcon(R.mipmap.icon_search_black);
 
 
@@ -35,7 +36,7 @@ public class WithDrawHistoryActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        WithDrawHistoryFragment fragment = new WithDrawHistoryFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 
