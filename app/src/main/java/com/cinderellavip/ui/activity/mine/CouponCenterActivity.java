@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.fragment.mine.CouponCenterFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -35,7 +36,7 @@ public class CouponCenterActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        CouponCenterFragment fragment = CouponCenterFragment.newInstance(1);
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 
