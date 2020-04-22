@@ -58,8 +58,7 @@
                             style="@style/base_click_style2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/my_msg_icon_white"
-                            />
+                            android:src="@mipmap/my_msg_icon_white" />
 
                         <View
                             android:id="@+id/dot_message"

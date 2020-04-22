@@ -212,13 +212,27 @@
                 android:text="门店照片"
                 />
 
-            <ImageView
+            <RelativeLayout
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_marginLeft="12dp">
+                <ImageView
+                    android:id="@+id/iv_store"
+                    android:layout_width="80dp"
+                    android:scaleType="centerCrop"
+                    android:layout_height="80dp"
+                    android:layout_alignParentBottom="true"
+                    android:src="@mipmap/add_upload_image"/>
 
-                android:id="@+id/iv_store"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="12dp"
-                android:src="@mipmap/add_upload_image"/>
+                <ImageView
+                    android:id="@+id/iv_delete_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone"
+                    android:src="@mipmap/cha"/>
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -239,12 +253,28 @@
                     />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iv_business_license"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="12dp"
-                android:src="@mipmap/add_upload_image"/>
+            <RelativeLayout
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_marginLeft="12dp">
+                <ImageView
+                    android:id="@+id/iv_business_license"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:layout_alignParentBottom="true"
+                    android:src="@mipmap/add_upload_image"/>
+
+                <ImageView
+                    android:id="@+id/iv_delete_business_license"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone"
+                    android:src="@mipmap/cha"/>
+            </RelativeLayout>
+
+
 
             <TextView
                 style="@style/base_text_style"
@@ -257,17 +287,50 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginBottom="20dp">
-                <ImageView
-                    android:id="@+id/iv_id_card_front"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@mipmap/add_upload_image"/>
-                <ImageView
-                    android:id="@+id/iv_id_card_back"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+
+                <RelativeLayout
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_id_card_front"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/add_upload_image"/>
+
+                    <ImageView
+                        android:id="@+id/iv_delete_id_card_front"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone"
+                        android:src="@mipmap/cha"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:layout_marginLeft="12dp"
-                    android:src="@mipmap/add_upload_image"/>
+                    >
+                    <ImageView
+                        android:id="@+id/iv_id_card_back"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/add_upload_image"/>
+
+
+                    <ImageView
+                        android:id="@+id/iv_delete_id_card_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone"
+                        android:src="@mipmap/cha"/>
+                </RelativeLayout>
+
+
             </LinearLayout>
 
 

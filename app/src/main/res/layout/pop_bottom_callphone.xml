@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ll_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white5"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:padding="15dp">
+        <TextView
+            android:id="@+id/tv_phone"
+            style="@style/base_text_style_gray_small"
+            android:text="呼叫(021)69765809"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/green"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white5"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="15dp">
+        <TextView
+            style="@style/base_text_style_gray_small"
+            android:text="取消"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/green"
+            />
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

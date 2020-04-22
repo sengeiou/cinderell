@@ -100,8 +100,8 @@
         <activity android:name=".ui.activity.order.ApplyReturnActivity"/>
         <activity android:name=".ui.activity.order.ReturnListActivity"/>
         <activity android:name=".ui.activity.order.RefundDetailActivity"/>
-        <activity android:name=".ui.activity.mine.ApplyProductSupplierActivity"/>
         <activity android:name=".ui.activity.mine.ApplyProductSupplierResultActivity"/>
+        <activity android:name=".ui.activity.mine.ApplyProductSupplierActivity"/>
         <activity android:name=".ui.activity.mine.BlackListActivity"/>
         <activity android:name=".ui.activity.mine.CouponCenterActivity"/>
         <activity android:name=".ui.activity.mine.HistoricalRankingActivity"/>

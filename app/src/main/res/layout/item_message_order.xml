@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_root"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/base_text_style_gray_small"
+        android:layout_margin="12dp"
+        android:layout_gravity="center_horizontal"
+        android:text="10:00"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_merchant"
+        android:background="@drawable/shape_white5"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        style="@style/base_hor_style"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/base_text_style"
+                android:layout_weight="1"
+                android:text="商城订单通知"
+                />
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="已发货"
+                />
+
+
+        </LinearLayout>
+
+
+
+
+        <View
+            style="@style/line_light"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/demo_order_goods"/>
+
+            <TextView
+                style="@style/base_text_style_gray_small"
+                android:layout_weight="1"
+                android:text="您有一张价值20元的优惠券您有一张价值20元的优惠券您有一张价值20元的优惠券"
+                android:layout_marginLeft="12dp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="5dp"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

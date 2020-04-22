@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_root"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_space"
+        style="@style/base_space"
+        />
+    <LinearLayout
+        android:id="@+id/ll_merchant"
+        android:background="@drawable/touch_bg"
+        style="@style/base_hor_style"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center_vertical">
+
+        <com.cinderellavip.weight.CircleImageView
+            android:id="@+id/merchant_icon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/avater"/>
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:text="南殊黎"
+            android:layout_marginLeft="12dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/base_text_style"
+            android:text="接触拉黑"
+            android:textColor="@color/baseColor"
+            android:layout_marginLeft="12dp"
+            />
+
+
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_linea"
+        style="@style/line_light"
+        android:layout_marginLeft="12dp"
+        />
+
+
+</LinearLayout>

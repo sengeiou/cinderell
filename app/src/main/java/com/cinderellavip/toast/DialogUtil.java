@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
@@ -21,6 +22,7 @@ import com.cinderellavip.ui.activity.find.PublishPostActivity;
 import com.cinderellavip.ui.activity.find.PublishTopicActivity;
 import com.cinderellavip.weight.FlowLayout;
 import com.cinderellavip.weight.SquareRoundImageView;
+import com.tozzais.baselibrary.util.CommonUtils;
 import com.tozzais.baselibrary.util.DpUtil;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
@@ -198,6 +200,23 @@ public class DialogUtil {
 
     }
 
+    public static void showCallPhoneDialog(Context context) {
+        View view = View.inflate(context, R.layout.pop_bottom_callphone, null);
+        dialog = DialogUtils.getBottomDialog(context, view);
+        TextView tv_phone = view.findViewById(R.id.tv_phone);
+        RelativeLayout ll_phone = view.findViewById(R.id.ll_phone);
+        RelativeLayout tv_cancel = view.findViewById(R.id.tv_cancel);
+        ll_phone.setOnClickListener(v -> {
+            CommonUtils.callPhone(context,"69765809");
+            dialog.dismiss();
+            dialog = null;
+        });
+        tv_cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+            dialog = null;
+        });
+
+    }
     public interface onSelectListener {
         void onFinish(String payString);
     }

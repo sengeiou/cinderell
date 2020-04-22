@@ -41,7 +41,6 @@ public class LocalCityUtil3s implements OnWheelChangedListener {
 	private WheelView mViewCounty;
 	private TextView mBtnConfirm;
 	private Context context;
-//	private CityDao cityDao;
 	private ArrayList<LocalCity> localCities;
 	private ProvinceWheelAdapter provinceAdapter;
 	private CityWheelAdapter cityAdapter;

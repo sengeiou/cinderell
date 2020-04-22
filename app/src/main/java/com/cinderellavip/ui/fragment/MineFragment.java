@@ -10,10 +10,13 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.life.LongServiceOrderListActivity;
 import com.cinderellavip.ui.activity.life.SingleServiceOrderListActivity;
+import com.cinderellavip.ui.activity.mine.ApplyProductSupplierActivity;
 import com.cinderellavip.ui.activity.mine.ApplyProductSupplierResultActivity;
 import com.cinderellavip.ui.activity.mine.CouponCenterActivity;
+import com.cinderellavip.ui.activity.mine.MessageActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
 import com.cinderellavip.ui.activity.mine.MineBalanceActivity;
 import com.cinderellavip.ui.activity.mine.MineCollectActivity;
@@ -21,6 +24,7 @@ import com.cinderellavip.ui.activity.mine.MineDataActivity;
 import com.cinderellavip.ui.activity.mine.MineGroupActivity;
 import com.cinderellavip.ui.activity.mine.MineOrderActivity;
 import com.cinderellavip.ui.activity.mine.RecommentListActivity;
+import com.cinderellavip.ui.activity.mine.SettingActivity;
 import com.cinderellavip.ui.activity.mine.SmallVaultActivity;
 import com.cinderellavip.ui.activity.order.ReturnListActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
@@ -99,6 +103,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             , R.id.rl_xiaohui_recomment, R.id.rl_mine_service2, R.id.rl_mine_service3, R.id.rl_mine_service4
             , R.id.rl_mine_service5, R.id.rl_mine_service6, R.id.rl_mine_service7, R.id.rl_mine_service8
             , R.id.rl_mine_service9, R.id.rl_mine_service10, R.id.rl_mine_service11
+            , R.id.iv_message1, R.id.iv_message, R.id.iv_setting1, R.id.iv_setting
             })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -173,10 +178,13 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MineAddressActivity.launch(mActivity,MineAddressActivity.LOOK);
                 break;
             case R.id.rl_mine_service7:
-                ApplyProductSupplierResultActivity.launch(mActivity);
+                ApplyProductSupplierActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service8:
                 //申请成为劳务用户
+                CenterDialogUtil.showApplyService(mActivity,()->{
+
+                });
                 break;
             case R.id.rl_mine_service9:
                 //商家入驻
@@ -185,6 +193,16 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MineCollectActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service11:
+                DialogUtil.showCallPhoneDialog(mActivity);
+
+                break;
+            case R.id.iv_message1:
+            case R.id.iv_message:
+                MessageActivity.launch(mActivity);
+                break;
+            case R.id.iv_setting1:
+            case R.id.iv_setting:
+                SettingActivity.launch(mActivity);
 
                 break;
         }
