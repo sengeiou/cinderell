@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.LifeAdapter;
+import com.cinderellavip.adapter.recycleview.LifeCategoryAdapter;
 import com.cinderellavip.bean.HomeBanner;
 import com.cinderellavip.bean.local.HomeCategoryItem;
+import com.cinderellavip.ui.activity.life.SearchLifeActivity;
 import com.cinderellavip.util.ColorUtil;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
@@ -31,12 +33,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class LifeFragment extends BaseListFragment<String> {
 
     @BindView(R.id.ll_title)
     LinearLayout llTitle; //最上面的标题
+    @BindView(R.id.tv_search)
+    TextView tv_search;
 
     @Override
     public int setLayout() {
@@ -60,10 +65,11 @@ public class LifeFragment extends BaseListFragment<String> {
     //首页的分类
     private ScrollRecyclerView mBannerRecyclerView;
     //首页的分类的适配器
-    private HomeCategoryAdapter homeCategoryAdapter;
+    private LifeCategoryAdapter homeCategoryAdapter;
     //首页分类的指示器
     private View viewIndicator;
     private RelativeLayout rlIndicator;
+
     private void initHeadView() {
         View headerView = View.inflate(mActivity, R.layout.header_life, null);
         mBannerRecyclerView = headerView.findViewById(R.id.scroll_recycler_view);
@@ -73,7 +79,7 @@ public class LifeFragment extends BaseListFragment<String> {
         mBannerRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mBannerRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.HORIZONTAL));
-        homeCategoryAdapter = new HomeCategoryAdapter();
+        homeCategoryAdapter = new LifeCategoryAdapter();
         mBannerRecyclerView.setAdapter(homeCategoryAdapter);
 
         mAdapter.addHeaderView(headerView);
@@ -82,6 +88,7 @@ public class LifeFragment extends BaseListFragment<String> {
     }
 
     int categoryNumber = 0;
+
     private void setViewIndicator(int total, int precent) {
         int width = rlIndicator.getWidth();
         int width1 = viewIndicator.getWidth();
@@ -91,6 +98,7 @@ public class LifeFragment extends BaseListFragment<String> {
         viewIndicator.setLayoutParams(layoutParams);
 
     }
+
     @Override
     public void loadData() {
         super.loadData();
@@ -99,13 +107,13 @@ public class LifeFragment extends BaseListFragment<String> {
 
         List<HomeCategoryItem> typeList = DataUtil.getLifeCategory();
         homeCategoryAdapter.setNewData(typeList);
-        if (typeList == null || typeList.size()<=10){
+        if (typeList == null || typeList.size() <= 10) {
             //如果小于10则 宽度一样
             ViewGroup.LayoutParams linearParams = viewIndicator.getLayoutParams();
             ViewGroup.LayoutParams linearParams1 = rlIndicator.getLayoutParams();
             linearParams1.width = linearParams.width;
             rlIndicator.setLayoutParams(linearParams1);
-        }else {
+        } else {
             //为了计算大于10的时候 滑动的距离
             categoryNumber = typeList.size();
         }
@@ -133,12 +141,13 @@ public class LifeFragment extends BaseListFragment<String> {
         mAdapter.getLoadMoreModule().setEnableLoadMore(false);
         mBannerRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 totalDy += dx;
-                if (categoryNumber>10){
+                if (categoryNumber > 10) {
                     int screenWidth = ScreenUtil.getScreenWidth(mActivity);
-                    setViewIndicator(((categoryNumber-10)%2+(categoryNumber-10)/2) * screenWidth / 5, totalDy);
+                    setViewIndicator(((categoryNumber - 10) % 2 + (categoryNumber - 10) / 2) * screenWidth / 5, totalDy);
                 }
 
             }
@@ -147,6 +156,7 @@ public class LifeFragment extends BaseListFragment<String> {
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 totalDy += dy;
@@ -158,8 +168,17 @@ public class LifeFragment extends BaseListFragment<String> {
         });
 
 
-
     }
 
 
+    @OnClick({R.id.tv_address, R.id.tv_search})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_address:
+                break;
+            case R.id.tv_search:
+                SearchLifeActivity.launch(mActivity);
+                break;
+        }
+    }
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.cinderellavip.weight.ScaleImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:scale="0.5492"
+        android:src="@mipmap/demo_banner_service_list"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_discount"/>
+
+        <TextView
+            style="@style/base_text_style"
+            android:text="新客首单立减30元"
+            android:textSize="12sp"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/life_btn_shape50_yellow_deep"
+            android:text="立即领取"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/life_yellow_deep"
+            android:background="@drawable/shape_line_life_yellow_deep5"
+            android:textSize="12sp"
+            />
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+    <com.cinderellavip.weight.ScaleImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        app:scale="0.3777"
+        android:src="@mipmap/servicelist_banner"/>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

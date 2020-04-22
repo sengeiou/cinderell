@@ -60,6 +60,9 @@
                     android:src="@mipmap/icon_address_red_life"/>
 
                 <TextView
+                    android:id="@+id/tv_address"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="上海市"
@@ -84,9 +87,11 @@
                     android:src="@mipmap/search_gray1"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="上门保洁"
+                    android:gravity="center_vertical"
                     android:textSize="12sp"
                     android:textColor="@color/grayText"
                     android:layout_gravity="center_vertical"/>

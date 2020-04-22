@@ -141,6 +141,7 @@
         <activity android:name=".ui.activity.life.ServiceSelectCouponActivity"/>
         <activity android:name=".ui.activity.life.SingleServiceOrderListActivity"/>
         <activity android:name=".ui.activity.life.SingleServiceOrderDetailActivity"/>
+        <activity android:name=".ui.activity.life.SearchLifeActivity"/>
 
 
         <provider

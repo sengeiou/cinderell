@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.ui.fragment.life.ServiceListFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -16,16 +16,19 @@ public class ServiceListActivity extends BaseActivity {
 
 
 
-    public static void launch(Context from) {
+    public static void launch(Context from,String name) {
         Intent intent = new Intent(from, ServiceListActivity.class);
+        intent.putExtra("name",name);
         from.startActivity(intent);
     }
 
+    private String name;
 
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        setBackTitle("发送成功");
+        name = getIntent().getStringExtra("name");
+        setBackTitle(name);
 
 
 
@@ -34,7 +37,7 @@ public class ServiceListActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        ServiceListFragment fragment = new ServiceListFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 
