@@ -2,6 +2,7 @@ package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
 
+import com.cinderellavip.adapter.recycleview.BlackListAdapter;
 import com.cinderellavip.adapter.recycleview.RefundAdapter;
 import com.cinderellavip.bean.local.OrderBean;
 import com.tozzais.baselibrary.ui.BaseListFragment;
@@ -28,7 +29,7 @@ public class BlackListFragment extends BaseListFragment<OrderBean> {
         super.initView(savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 //        mRecyclerView.addItemDecoration(new LineItemDecoration(2, R.color.line));
-        mAdapter = new RefundAdapter();
+        mAdapter = new BlackListAdapter();
         mRecyclerView.setAdapter(mAdapter);
         setEmptyView("暂无黑名单");
 

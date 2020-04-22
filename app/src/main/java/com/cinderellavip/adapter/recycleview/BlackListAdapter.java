@@ -1,6 +1,7 @@
 package com.cinderellavip.adapter.recycleview;
 
 
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -13,13 +14,15 @@ public class BlackListAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder
 
 
     public BlackListAdapter() {
-        super(R.layout.item_refund, null);
+        super(R.layout.item_black_list, null);
     }
 
     @Override
     protected void convert(BaseViewHolder helper,  OrderBean item) {
         int position = helper.getAdapterPosition();
 
+        View view_space = helper.getView(R.id.view_space);
+        view_space.setVisibility(position ==0?View.VISIBLE:View.GONE);
 
 
 

@@ -64,6 +64,7 @@
         <activity android:name=".ui.activity.account.WelcomeActivity"/>
         <activity android:name=".MainActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.activity.account.ModifyPassActivity"/>
         <activity android:name=".ui.activity.account.LoginActivity"/>
         <activity android:name=".ui.activity.account.FastLoginActivity"/>
         <activity android:name=".ui.activity.account.RegisterActivity"/>

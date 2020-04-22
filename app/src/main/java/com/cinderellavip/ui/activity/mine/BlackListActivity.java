@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.fragment.mine.BlackListFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -34,7 +35,7 @@ public class BlackListActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        BlackListFragment fragment = new BlackListFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 

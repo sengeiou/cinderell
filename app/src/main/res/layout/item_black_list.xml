@@ -35,7 +35,7 @@
         <TextView
             android:id="@+id/tv_status"
             style="@style/base_text_style"
-            android:text="接触拉黑"
+            android:text="解除拉黑"
             android:textColor="@color/baseColor"
             android:layout_marginLeft="12dp"
             />
