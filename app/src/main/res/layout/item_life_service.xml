@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_white5"
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingBottom="12dp">
+
+    <com.cinderellavip.weight.SquareRoundImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/demo_life" />
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="物品整理"
+        android:textColor="@color/black_title_color"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="170元/次"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/baseColor"
+        android:textSize="14sp" />
+
+
+
+
+
+</LinearLayout>

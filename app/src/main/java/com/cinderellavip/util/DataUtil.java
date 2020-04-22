@@ -43,6 +43,32 @@ public class DataUtil {
         return data;
     }
 
+    public static List<HomeCategoryItem> getLifeCategory(){
+        List<HomeCategoryItem> data = new ArrayList<>();
+        data.add(new HomeCategoryItem("日常保洁", R.mipmap.life_banner1));
+        data.add(new HomeCategoryItem("家电维修", R.mipmap.life_banner2));
+        data.add(new HomeCategoryItem("清洗养护", R.mipmap.life_banner3));
+        data.add(new HomeCategoryItem("房屋维修", R.mipmap.life_banner4));
+        data.add(new HomeCategoryItem("保姆", R.mipmap.life_banner5));
+        data.add(new HomeCategoryItem("家教", R.mipmap.life_banner6));
+        data.add(new HomeCategoryItem("月嫂", R.mipmap.life_banner7));
+        data.add(new HomeCategoryItem("服务清单", R.mipmap.life_banner8));
+        data.add(new HomeCategoryItem("育儿嫂", R.mipmap.life_banner9));
+        data.add(new HomeCategoryItem("直约", R.mipmap.life_banner10));
+        data.add(new HomeCategoryItem("日常保洁", R.mipmap.life_banner1));
+        data.add(new HomeCategoryItem("家电维修", R.mipmap.life_banner2));
+        data.add(new HomeCategoryItem("清洗养护", R.mipmap.life_banner3));
+        data.add(new HomeCategoryItem("房屋维修", R.mipmap.life_banner4));
+        data.add(new HomeCategoryItem("保姆", R.mipmap.life_banner5));
+        data.add(new HomeCategoryItem("家教", R.mipmap.life_banner6));
+        data.add(new HomeCategoryItem("月嫂", R.mipmap.life_banner7));
+        data.add(new HomeCategoryItem("服务清单", R.mipmap.life_banner8));
+        data.add(new HomeCategoryItem("育儿嫂", R.mipmap.life_banner9));
+        data.add(new HomeCategoryItem("直约", R.mipmap.life_banner10));
+
+        return data;
+    }
+
     public static List<HomeCategoryItem> getShopOtherCategory(){
         List<HomeCategoryItem> data = new ArrayList<>();
         data.add(new HomeCategoryItem("食品", R.mipmap.shipin));

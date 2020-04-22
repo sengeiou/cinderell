@@ -7,4 +7,6 @@
     <color name="yellow">#FDF4ED</color>
     <color name="yellow_shadow">#FFDCC5</color>
     <color name="yellow_deep">#EE6000</color>
+    <color name="life_yellow_deep">#F07700</color>
+    <color name="life_yellow_shadow">#FFA853</color>
 </resources>

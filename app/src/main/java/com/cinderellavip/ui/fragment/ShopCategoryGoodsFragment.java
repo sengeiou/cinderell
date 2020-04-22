@@ -52,7 +52,6 @@ public class ShopCategoryGoodsFragment extends BaseListFragment<HomeGoods> {
     @BindView(R.id.appbar)
     AppBarLayout appbar;
 
-    int number = 11;
 
     private HomeCategoryAdapter homeCategoryAdapter;
 
