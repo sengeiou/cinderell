@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.ui.activity.life.ServiceDetailActivity;
 
 
 public class ServiceListProjectAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
@@ -23,6 +24,12 @@ public class ServiceListProjectAdapter extends BaseQuickAdapter<String, BaseView
         view_space.setVisibility(View.GONE);
         else
         view_space.setVisibility(View.VISIBLE);
+
+        helper.getView(R.id.tv_buy).setOnClickListener(view -> {
+            ServiceDetailActivity.launch(getContext());
+        });
+
+
     }
 
 

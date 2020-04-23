@@ -2,11 +2,13 @@ package com.cinderellavip.ui.activity.life;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.life.ServiceListFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.DpUtil;
 
 
 /**
@@ -30,7 +32,13 @@ public class ServiceListActivity extends BaseActivity {
         name = getIntent().getStringExtra("name");
         setBackTitle(name);
 
+
         setRightText("上海");
+
+        Drawable nav_up =getResources().getDrawable(R.mipmap.icon_arrow_down);
+        nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+        tv_right.setCompoundDrawables(null, null, nav_up, null);
+        tv_right.setCompoundDrawablePadding(DpUtil.dip2px(mContext,5));
 
 
 

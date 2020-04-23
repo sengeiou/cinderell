@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
-
 import com.chad.library.adapter.base.module.LoadMoreModuleConfig;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -14,6 +13,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tozzais.baselibrary.weight.loadmore.CustomLoadMoreView;
+import com.ycbjie.webviewlib.X5WebUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -26,6 +26,8 @@ public class CinderellApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        X5WebUtils.init(this);
 
         // 在 Application 中配置全局自定义的 LoadMoreView
         LoadMoreModuleConfig.setDefLoadMoreView(new CustomLoadMoreView());

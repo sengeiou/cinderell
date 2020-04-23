@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
-import com.tozzais.baselibrary.ui.BaseActivity;
+import com.cinderellavip.ui.BaseWebViewActivity;
 
 
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class ServiceDetailActivity extends BaseActivity {
+public class ServiceDetailActivity extends BaseWebViewActivity {
 
 
 
@@ -24,9 +23,8 @@ public class ServiceDetailActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        super.initView(savedInstanceState);
         setBackTitle("物品整理服务");
-
 
 
     }
@@ -34,13 +32,13 @@ public class ServiceDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
+        loadUrl(url);
+
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.layout_content;
+        return R.layout.activity_service_detail;
     }
 
 
