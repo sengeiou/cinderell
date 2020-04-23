@@ -30,6 +30,8 @@ public class ServiceListActivity extends BaseActivity {
         name = getIntent().getStringExtra("name");
         setBackTitle(name);
 
+        setRightText("上海");
+
 
 
     }
