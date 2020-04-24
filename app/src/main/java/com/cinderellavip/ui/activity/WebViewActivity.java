@@ -73,6 +73,8 @@ public class WebViewActivity extends BaseActivity {
 
         WebSettings webSettings = web_view.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setDomStorageEnabled(true);
         if (status == 1) {
             web_view.loadUrl(url);
             //监听WebView是否加载完成网页
