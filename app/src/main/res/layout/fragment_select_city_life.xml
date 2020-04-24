@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.lwkandroid.widget.indexbar.IndexBar
+        android:id="@+id/indexBar"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        app:bg_color_normal="@android:color/transparent"
+        app:bg_color_pressed="@android:color/transparent"
+        app:text_color_normal="@color/black_title_color"
+        app:text_color_pressed="@color/yellow_deep"
+        app:text_size_normal="12sp"
+        android:layout_marginBottom="50dp"
+        app:text_size_pressed="14sp"/>
+
+
+</FrameLayout>

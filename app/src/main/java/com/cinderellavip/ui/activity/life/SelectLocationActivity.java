@@ -1,12 +1,16 @@
 package com.cinderellavip.ui.activity.life;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.ui.fragment.life.SelectLocationFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import androidx.annotation.Nullable;
 
 
 /**
@@ -27,14 +31,12 @@ public class SelectLocationActivity extends BaseActivity {
 
         setBackTitle("选择地点");
 
-
-
     }
 
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        fragment = new SelectLocationFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 
@@ -44,4 +46,12 @@ public class SelectLocationActivity extends BaseActivity {
     }
 
 
+    SelectLocationFragment fragment;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestCode.request_city && resultCode == Activity.RESULT_OK){
+            fragment.setAddress(data.getStringExtra("name"));
+        }
+    }
 }

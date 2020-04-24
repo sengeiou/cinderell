@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:paddingBottom="50dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/buy_service_success"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginBottom="12dp"
+        android:textStyle="bold"
+        android:text="发送成功"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/base_text_style"
+        android:layout_marginBottom="12dp"
+        android:lineSpacingExtra="6dp"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="您购买的月嫂-母婴护理长期服务已经提交，我们会有专人与您联系，与您确认长期服务相关信息，确认后，会生成长期服务订单。请您注意接听电话哦"
+        android:layout_marginTop="15dp"/>
+    <TextView
+        android:id="@+id/tv_sure"
+        android:padding="12dp"
+        android:layout_width="120dp"
+        style="@style/life_base_btn"
+        android:text="我知道了"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        />
+
+</LinearLayout>
+

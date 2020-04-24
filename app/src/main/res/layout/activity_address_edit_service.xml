@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+        <View
+            style="@style/base_space"
+            />
+
+        <LinearLayout
+            style="@style/base_hor_style_input"
+            >
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="联系人"
+                android:layout_width="70dp"
+                />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="姓名"
+                android:inputType="text"
+                android:maxLength="16"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:gravity="top"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:text=""
+                />
+
+
+
+        </LinearLayout>
+
+    <View
+        style="@style/line_light"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/rg_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rb_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/selector_life"
+            android:text="先生"
+            android:textSize="14sp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:drawablePadding="12dp"
+            android:textColor="@color/black_title_color" />
+
+        <RadioButton
+            android:id="@+id/rb_woman"
+            android:layout_marginLeft="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/selector_life"
+            android:text="女"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:drawablePadding="12dp"
+            android:textSize="14sp"
+            android:textColor="@color/black_title_color" />
+
+    </RadioGroup>
+
+        <LinearLayout
+            style="@style/base_hor_style_input"
+
+            >
+            <TextView
+                style="@style/base_text_style"
+                android:text="手机号码"
+                android:layout_width="70dp"
+                />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="手机号"
+                android:inputType="number"
+                android:maxLength="11"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:gravity="top"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:text=""/>
+
+            <TextView
+                android:id="@+id/tv_select_address_book"
+                style="@style/base_text_style"
+                android:text="通讯录"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="12sp"
+                android:drawableLeft="@mipmap/address_book"
+                android:drawablePadding="5dp"
+                android:textColor="@color/green"
+                />
+
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_light"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            />
+
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_address"
+            style="@style/base_hor_style_input"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            >
+            <TextView
+                style="@style/base_text_style"
+                android:text="地址"
+                android:layout_width="70dp"
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    style="@style/base_text_style"
+                    android:text="中国·梦古"
+                    android:drawableLeft="@mipmap/address_green"
+                    android:drawablePadding="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_address_detail"
+                    style="@style/base_text_style_gray_small"
+                    android:lines="1"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:text="上海市青浦区华徐公路888号1楼号2楼ipd"/>
+
+            </LinearLayout>
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/right_black_icon"
+                android:layout_gravity="center_vertical"/>
+
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_light"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            />
+
+    <LinearLayout
+        style="@style/base_hor_style_input"
+        >
+
+        <TextView
+            style="@style/base_text_style"
+            android:text="门牌号"
+            android:layout_width="70dp"
+            />
+
+        <EditText
+            android:id="@+id/et_house_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="例：1号楼一单元101室"
+            android:textSize="14sp"
+            android:textColor="@color/black_title_color"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            tools:text=""
+            />
+
+    </LinearLayout>
+
+    <View
+        style="@style/line_light"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/base_text_style"
+                android:layout_weight="1"
+                android:text="设为默认地址"
+                />
+            <CheckBox
+                android:id="@+id/cb_default_address"
+                style="@style/base_text_style"
+                android:textColor="@color/grayText"
+                android:button="@mipmap/agreement_selete_no"
+                android:padding="10dp"
+                />
+
+        </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        >
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="30dp"
+            android:padding="10dp"
+            style="@style/life_base_btn"
+            android:text="保存"
+            />
+
+    </RelativeLayout>
+
+    </LinearLayout>
+

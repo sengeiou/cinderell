@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_root"
+    android:background="@drawable/touch_bg"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:paddingTop="15dp"
+        android:paddingRight="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/base_text_style"
+            android:text="中国·梦古"/>
+
+
+        <TextView
+            android:id="@+id/tv_id_number"
+            style="@style/base_text_style_gray_small"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:text="上海市青浦徐华徐公路888号 1号楼2楼IPD"/>
+
+
+
+    </LinearLayout>
+
+       <View
+           style="@style/line_light"
+           android:layout_marginLeft="12dp"
+           android:layout_marginRight="12dp"
+           android:layout_marginTop="15dp"
+           />
+
+
+
+
+</LinearLayout>

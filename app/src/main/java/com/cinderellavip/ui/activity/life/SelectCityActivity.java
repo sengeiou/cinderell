@@ -1,10 +1,13 @@
 package com.cinderellavip.ui.activity.life;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.ui.fragment.life.SelectCityFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -16,9 +19,9 @@ public class SelectCityActivity extends BaseActivity {
 
 
 
-    public static void launch(Context from) {
+    public static void launch(Activity from) {
         Intent intent = new Intent(from, SelectCityActivity.class);
-        from.startActivity(intent);
+        from.startActivityForResult(intent, RequestCode.request_city);
     }
 
 
@@ -27,20 +30,18 @@ public class SelectCityActivity extends BaseActivity {
 
         setBackTitle("选择城市");
 
-
-
     }
 
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
+        SelectCityFragment fragment = new SelectCityFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_list, fragment).commit();
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.layout_content;
+        return R.layout.activity_select_city;
     }
 
 

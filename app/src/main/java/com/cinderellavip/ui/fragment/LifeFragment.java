@@ -17,6 +17,7 @@ import com.cinderellavip.adapter.recycleview.LifeCategoryAdapter;
 import com.cinderellavip.bean.HomeBanner;
 import com.cinderellavip.bean.local.HomeCategoryItem;
 import com.cinderellavip.ui.activity.life.SearchLifeActivity;
+import com.cinderellavip.ui.activity.life.SelectCityActivity;
 import com.cinderellavip.util.ColorUtil;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
@@ -175,6 +176,7 @@ public class LifeFragment extends BaseListFragment<String> {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_address:
+                SelectCityActivity.launch(mActivity);
                 break;
             case R.id.tv_search:
                 SearchLifeActivity.launch(mActivity);

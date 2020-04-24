@@ -31,6 +31,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA"/>
 
+    <!-- 允许程序读取通讯录权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
 
 
     <uses-feature android:name="android.hardware.camera"
@@ -130,10 +133,10 @@
         <activity android:name=".ui.activity.life.LongServiceOrderDetailActivity"/>
         <activity android:name=".ui.activity.life.LongServiceOrderListActivity"/>
         <activity android:name=".ui.activity.life.PayCheckoutCounterActivity"/>
+        <activity android:name=".ui.activity.life.SelectServiceAddressActivity"/>
         <activity android:name=".ui.activity.life.SelectCityActivity"/>
         <activity android:name=".ui.activity.life.SelectLocationActivity"/>
-        <activity android:name=".ui.activity.life.SelectServiceAddressActivity"/>
-        <activity android:name=".ui.activity.life.SelectServiceResultActivity"/>
+        <activity android:name=".ui.activity.life.BuyServiceResultActivity"/>
         <activity android:name=".ui.activity.life.SelectServiceTimeActivity"/>
         <activity android:name=".ui.activity.life.ServiceDetailActivity"/>
         <activity android:name=".ui.activity.life.ServiceListActivity"/>

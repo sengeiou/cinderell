@@ -12,12 +12,12 @@ import com.tozzais.baselibrary.ui.BaseActivity;
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class SelectServiceResultActivity extends BaseActivity {
+public class BuyServiceResultActivity extends BaseActivity {
 
 
 
     public static void launch(Context from) {
-        Intent intent = new Intent(from, SelectServiceResultActivity.class);
+        Intent intent = new Intent(from, BuyServiceResultActivity.class);
         from.startActivity(intent);
     }
 
@@ -34,13 +34,11 @@ public class SelectServiceResultActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.layout_content;
+        return R.layout.activity_buy_service_result;
     }
 
 
