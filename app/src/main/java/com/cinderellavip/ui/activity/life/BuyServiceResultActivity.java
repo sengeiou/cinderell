@@ -3,10 +3,13 @@ package com.cinderellavip.ui.activity.life;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -15,6 +18,8 @@ import com.tozzais.baselibrary.ui.BaseActivity;
 public class BuyServiceResultActivity extends BaseActivity {
 
 
+    @BindView(R.id.tv_content)
+    TextView tvContent;
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, BuyServiceResultActivity.class);
@@ -24,16 +29,13 @@ public class BuyServiceResultActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
         setBackTitle("发送成功");
-
-
-
     }
 
 
     @Override
     public void loadData() {
+
     }
 
     @Override
@@ -42,4 +44,8 @@ public class BuyServiceResultActivity extends BaseActivity {
     }
 
 
+    @OnClick(R.id.tv_sure)
+    public void onClick() {
+        finish();
+    }
 }

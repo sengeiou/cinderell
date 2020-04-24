@@ -95,6 +95,10 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         setEmptyView(R.mipmap.empty_view, tip, null, null);
     }
 
+    protected void setEmptyView(int res, String tip) {
+        setEmptyView(res, tip, null, null);
+    }
+
 
     protected void onRefresh() {
         // 这里的作用是防止下拉刷新的时候还可以上拉加载

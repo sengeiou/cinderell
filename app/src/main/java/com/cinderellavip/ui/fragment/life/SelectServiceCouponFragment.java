@@ -1,34 +1,28 @@
-package com.cinderellavip.ui.fragment.mine;
+package com.cinderellavip.ui.fragment.life;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-
 
 import com.cinderellavip.R;
+import com.cinderellavip.adapter.recycleview.SelectServiceCouponAdapter;
 import com.cinderellavip.adapter.recycleview.SeleteCoupondapter;
 import com.cinderellavip.bean.local.CouponsBean;
-import com.cinderellavip.bean.net.NetCityBean;
-import com.cinderellavip.global.GlobalParam;
-import com.cinderellavip.http.ApiManager;
 import com.tozzais.baselibrary.ui.BaseListFragment;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.OnClick;
 
 
-public class SeleteCouponFragment extends BaseListFragment<CouponsBean> {
+public class SelectServiceCouponFragment extends BaseListFragment<CouponsBean> {
 
 
-    public static SeleteCouponFragment newInstance( ) {
-        SeleteCouponFragment cartFragment = new SeleteCouponFragment();
+    public static SelectServiceCouponFragment newInstance( ) {
+        SelectServiceCouponFragment cartFragment = new SelectServiceCouponFragment();
         Bundle bundle = new Bundle();
 
         return cartFragment;
@@ -37,7 +31,7 @@ public class SeleteCouponFragment extends BaseListFragment<CouponsBean> {
 
     @Override
     public int setLayout() {
-        return R.layout.fragment_selete_coupon;
+        return R.layout.fragment_selete_coupon_for_service;
     }
 
 
@@ -46,10 +40,10 @@ public class SeleteCouponFragment extends BaseListFragment<CouponsBean> {
         super.initView(savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 //        mRecyclerView.addItemDecoration(new LineItemDecoration(2, R.color.line));
-        mAdapter = new SeleteCoupondapter();
+        mAdapter = new SelectServiceCouponAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView("暂无优惠券可使用");
+        setEmptyView(R.mipmap.empty_view_coupon,"您还没有优惠券哦~");
 
 
     }
@@ -86,12 +80,9 @@ public class SeleteCouponFragment extends BaseListFragment<CouponsBean> {
 
     }
 
-    @OnClick(R.id.tv_btn_nouse)
+    @OnClick(R.id.tv_btn_no_use)
     public void onClick() {
-        CouponsBean couponsBean = new CouponsBean();
-        Intent intent = new Intent();
-        intent.putExtra("couponsBean", couponsBean);
-        mActivity.setResult(Activity.RESULT_OK, intent);
+        mActivity.setResult(Activity.RESULT_OK, null);
         mActivity.finish();
 
     }

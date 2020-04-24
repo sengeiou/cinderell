@@ -73,16 +73,16 @@
 
 
     <LinearLayout
-        android:id="@+id/ll_service_period"
+        android:id="@+id/ll_service_time"
         style="@style/base_hor_style_input"
         >
         <TextView
             style="@style/base_text_style"
-            android:text="服务周期"
+            android:text="服务时间"
             />
 
         <TextView
-            android:id="@+id/tv_service_period"
+            android:id="@+id/tv_service_time"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -113,16 +113,15 @@
         />
 
     <LinearLayout
-        android:id="@+id/ll_service_type"
+        android:id="@+id/ll_service_coupon"
         style="@style/base_hor_style_input"
         >
         <TextView
             style="@style/base_text_style"
-            android:text="服务类型"
+            android:text="优惠券"
             />
-
         <TextView
-            android:id="@+id/tv_service_type"
+            android:id="@+id/tv_service_coupon"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -147,42 +146,85 @@
     </LinearLayout>
 
     <View
-        style="@style/line_light"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        style="@style/base_space"
         />
 
     <LinearLayout
         style="@style/base_hor_style_input"
-        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp"
+        android:paddingRight="12dp"
         >
-
         <TextView
             style="@style/base_text_style"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:text="服务要求"
+            android:text="订单金额"
             />
-
-        <EditText
-            android:id="@+id/et_address"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_order_money"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入您的服务要求内容"
-            android:minHeight="100dp"
-            android:maxLength="16"
-            android:textSize="14sp"
-            android:textColorHint="@color/grayText"
+            android:hint="170元"
+            android:textSize="12sp"
             android:textColor="@color/black_title_color"
-            android:gravity="top"
-            android:paddingRight="12dp"
-            android:paddingBottom="12dp"
-            tools:text=""/>
-
+            android:gravity="right"
+            tools:text="170元"/>
 
 
     </LinearLayout>
+
+    <LinearLayout
+        style="@style/base_hor_style_input"
+        android:paddingLeft="12dp"
+        android:paddingTop="8dp"
+        android:paddingRight="12dp"
+        >
+        <TextView
+            style="@style/base_text_style"
+            android:text="优惠金额"
+            />
+        <TextView
+            android:id="@+id/tv_coupon_money"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="-0元"
+            android:textSize="12sp"
+            android:textColor="@color/black_title_color"
+            android:gravity="right"
+            tools:text="170元"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/base_hor_style_input"
+        android:paddingLeft="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:paddingRight="12dp"
+        >
+        <TextView
+            style="@style/base_text_style"
+            android:text="实付金额"
+            />
+        <TextView
+            android:id="@+id/tv_pay_money"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="170元"
+            android:textSize="12sp"
+            android:textColor="@color/yellow_deep"
+            android:gravity="right"
+            android:text="170元"/>
+
+
+    </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -240,22 +282,39 @@
 
         </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp"
         >
+        <TextView
+            style="@style/base_text_style"
+            android:text="实付金额："
+            />
+
+        <TextView
+            style="@style/base_text_style"
+            android:text="170元"
+            android:layout_marginLeft="12dp"
+            android:textColor="@color/yellow_deep"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
 
         <TextView
             android:id="@+id/tv_buy"
-            android:layout_width="match_parent"
-            android:layout_margin="12dp"
+            android:layout_width="120dp"
             android:padding="10dp"
             style="@style/life_base_btn"
             android:text="立即购买"
             android:layout_centerInParent="true"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     </LinearLayout>

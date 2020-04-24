@@ -20,6 +20,8 @@ public class SeleteCoupondapter extends BaseQuickAdapter<CouponsBean, BaseViewHo
     }
 
 
+
+
     @Override
     protected void convert(final BaseViewHolder helper, final CouponsBean item) {
         int position = helper.getAdapterPosition();

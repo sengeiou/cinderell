@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.find.PostDetailFragment;
 import com.cinderellavip.ui.fragment.find.TopicDetailFragment;
-import com.cinderellavip.ui.fragment.mine.SeleteCouponFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 /**

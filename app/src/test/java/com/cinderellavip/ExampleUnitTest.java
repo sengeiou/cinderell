@@ -2,6 +2,9 @@ package com.cinderellavip;
 
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +15,18 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        System.out.println(getDaysOfMonth(2020,5));
+    }
+
+    public int getDaysOfMonth(int year, int month) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(sdf.parse(year + "-" + month + "-01"));
+            return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        } catch (Exception e) {
+            return 0;
+        }
+
     }
 }

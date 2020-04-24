@@ -1,11 +1,14 @@
 package com.cinderellavip.ui.activity.life;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.ui.fragment.life.SelectServiceCouponFragment;
+import com.cinderellavip.ui.fragment.mine.SelectCouponFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -16,9 +19,9 @@ public class ServiceSelectCouponActivity extends BaseActivity {
 
 
 
-    public static void launch(Context from) {
+    public static void launch(Activity from) {
         Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
-        from.startActivity(intent);
+        from.startActivityForResult(intent, RequestCode.request_service_coupon);
     }
 
 
@@ -34,8 +37,8 @@ public class ServiceSelectCouponActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.content_container,
+                SelectServiceCouponFragment.newInstance()).commit();
     }
 
     @Override

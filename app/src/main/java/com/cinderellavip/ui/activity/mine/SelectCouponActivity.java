@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.mine.SeleteCouponFragment;
+import com.cinderellavip.ui.fragment.mine.SelectCouponFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -31,7 +31,7 @@ public class SelectCouponActivity extends BaseActivity {
     @Override
     public void loadData() {
 
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, SeleteCouponFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.content_container, SelectCouponFragment.newInstance()).commit();
 
 
     }

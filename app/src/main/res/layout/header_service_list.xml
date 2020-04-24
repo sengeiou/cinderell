@@ -34,7 +34,7 @@
             />
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_receive_coupon"
             style="@style/life_btn_shape50_yellow_deep"
             android:text="立即领取"
             android:paddingLeft="10dp"
