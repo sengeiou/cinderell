@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/ll_main"
+    android:background="@color/white"
+    >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/statusbar_view_height"
+        />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="直约"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/shape_line_life_yellow_deep5">
+
+            <TextView
+                android:id="@+id/tv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textSize="12sp"
+                android:text="地图"
+                android:background="@drawable/shape_solid_left5"
+                />
+
+            <TextView
+                android:id="@+id/tv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/life_yellow_deep"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textSize="12sp"
+                android:text="列表"
+                />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:tabIndicatorColor="@color/yellow_deep"
+        app:tabTextColor="@color/black_title_color"
+        app:tabSelectedTextColor="@color/yellow_deep"
+        app:tabIndicatorFullWidth="false"
+        android:background="@color/white"
+        app:tabMode="scrollable"
+        />
+    <View
+        style="@style/line_light"
+        />
+
+
+
+
+
+        <com.cinderellavip.weight.IndexViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+
+
+
+
+
+
+</LinearLayout>

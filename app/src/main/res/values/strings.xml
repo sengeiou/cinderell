@@ -2,4 +2,5 @@
     <string name="app_name">灰姑娘会员</string>
 
     <string name="behavior_sample_title">com.cinderellavip.weight.behavior.SampleTitleBehavior</string>
+    <string name="technical_detail_title">com.cinderellavip.weight.behavior.TechnicalDetailTitleBehavior</string>
 </resources>

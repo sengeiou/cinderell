@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="12dp"
+        android:orientation="horizontal">
+
+
+
+        <com.cinderellavip.weight.CircleImageView
+            android:id="@+id/iv_product"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/demo_avatar"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="王孟云"
+            />
+
+        <com.cinderellavip.weight.RatingBarView
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:starCount="5"
+            app:starImageSize="20dp"
+            app:starFill="@mipmap/comment_life_select"
+            app:starEmpty="@mipmap/comment_life_default"/>
+
+
+
+
+    </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_category"
+            style="@style/base_text_style_gray_small"
+            android:lines="1"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:text="芳香经典SPA"
+            />
+
+
+
+</LinearLayout>
+
+    <com.cinderellavip.weight.FlowLayout
+        android:id="@+id/fl_flag"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/base_text_style"
+        android:layout_weight="1"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="手法娴熟，按完身体很舒服，手法专业，按的挺棒的"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/tv_address"
+            style="@style/base_text_style_gray_small"
+            android:layout_weight="1"
+            android:text="上海-环林东路"
+            />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/base_text_style_gray_small"
+            android:text="2020-04-25"
+            />
+
+    </LinearLayout>
+
+    <View
+        style="@style/line_light"
+        />
+</LinearLayout>

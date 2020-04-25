@@ -1,5 +1,6 @@
 package com.cinderellavip;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,15 +10,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.fragment.CartFragment;
 import com.cinderellavip.ui.fragment.FindFragment;
-import com.cinderellavip.ui.fragment.ShopFragment;
 import com.cinderellavip.ui.fragment.LifeFragment;
 import com.cinderellavip.ui.fragment.MineFragment;
+import com.cinderellavip.ui.fragment.ShopFragment;
 import com.flyco.roundview.RoundTextView;
-import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 
 import androidx.fragment.app.FragmentManager;
@@ -25,7 +25,11 @@ import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends CheckPermissionActivity {
+
+    public static String[] needPermissions = {
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
     @BindView(R.id.iv_shop)
     ImageView ivShop;
@@ -84,6 +88,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        checkPermissions(needPermissions);
 
     }
 
@@ -307,6 +312,12 @@ public class MainActivity extends BaseActivity {
 
 
     private long mExitTime;
+
+    @Override
+    public void permissionGranted() {
+
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="12dp"
+        android:id="@+id/ll_root"
+        android:gravity="center_vertical"
+        android:background="@drawable/touch_bg"
+        android:orientation="horizontal">
+
+
+
+        <com.cinderellavip.weight.CircleImageView
+            android:id="@+id/iv_product"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/demo_avatar"/>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:lines="1"
+                android:ellipsize="end"
+                android:layout_height="wrap_content"
+                android:text="王孟云"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"/>
+
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="今日可约"
+                android:textSize="10sp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@drawable/shape_line_life_yellow_deep5"
+                android:textColor="@color/yellow_deep"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.cinderellavip.weight.RatingBarView
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:starCount="5"
+                app:starImageSize="20dp"
+                app:starFill="@mipmap/comment_life_select"
+                app:starEmpty="@mipmap/comment_life_default"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp"/>
+
+
+            <TextView
+                style="@style/base_text_style_gray_small"
+                android:text="1.6km"
+                android:drawableLeft="@mipmap/address_direct"
+                android:drawablePadding="2dp"
+                    />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/base_text_style_gray_small"
+            android:lines="2"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3dp"
+            android:text="正规绿色服务！从业八年，持有高级按摩技师证，手法柔软、舒适、熟练、擅长经络疏通和经络spa。"
+            />
+
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+    <View
+        style="@style/line_light"
+        />
+</LinearLayout>

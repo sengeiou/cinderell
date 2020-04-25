@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.ui.fragment.life.DirectAppointmentCommentFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -17,8 +17,15 @@ public class DirectAppointmentTechnicianCommentActivity extends BaseActivity {
 
 
 
-    public static void launch(Context from) {
+
+    public static final int comment_technical = 1;
+    public static final int comment_project = 2;
+    private int type ;
+
+
+    public static void launch(Context from,int type) {
         Intent intent = new Intent(from, DirectAppointmentTechnicianCommentActivity.class);
+        intent.putExtra("type",type);
         from.startActivity(intent);
     }
 
@@ -26,7 +33,12 @@ public class DirectAppointmentTechnicianCommentActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        setBackTitle("直约");
+        type = getIntent().getIntExtra("type",comment_technical);
+        if (type == comment_technical){
+            setBackTitle("对TA的评价");
+        }else {
+            setBackTitle("用户评价");
+        }
 
 
 
@@ -35,7 +47,7 @@ public class DirectAppointmentTechnicianCommentActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
+        DirectAppointmentCommentFragment fragment = new DirectAppointmentCommentFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 

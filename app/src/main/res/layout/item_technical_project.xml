@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="12dp"
+        android:id="@+id/ll_root"
+        android:gravity="center_vertical"
+        android:background="@drawable/touch_bg"
+        android:orientation="horizontal">
+
+
+    <RelativeLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        >
+        <com.cinderellavip.weight.RoundImageView
+            android:id="@+id/iv_product"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/demo_life"/>
+
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="物品整理"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/right_black_icon"/>
+
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_specification"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时"
+            android:textSize="12sp"
+            android:maxLines="2"
+            android:lines="2"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/grayText"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="3dp"
+                android:layout_height="wrap_content"
+                android:text="170元/次"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/yellowText"/>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+
+    <View
+        style="@style/line_light"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+
+</LinearLayout>
