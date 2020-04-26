@@ -9,4 +9,8 @@
     <color name="yellow_deep">#EE6000</color>
     <color name="life_yellow_deep">#F07700</color>
     <color name="life_yellow_shadow">#FFA853</color>
+
+    <color name="gray_progress">#CCCCCC</color>
+
+    <color name="yellow_progress">#F07701</color>
 </resources>

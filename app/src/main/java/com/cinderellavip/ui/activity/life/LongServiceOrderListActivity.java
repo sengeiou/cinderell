@@ -5,8 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
+import com.cinderellavip.ui.fragment.order.LongServiceOrderFragment;
+import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.ui.BaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
 
 
 /**
@@ -16,38 +25,51 @@ public class LongServiceOrderListActivity extends BaseActivity {
 
 
 
-    public static final int ALL = 0;
-    public static final int CONFIRM = 1;
-    public static final int PAY = 2;
-    public static final int SERVICE = 3;
-    public static final int COMPLETE = 4;
+
+
+    @BindView(R.id.viewpager)
+    ViewPager viewpager;
+    @BindView(R.id.tablayout)
+    TabLayout tablayout;
+
+    private GoodsDetailPagerAdapter adapter;
+    private List<BaseFragment> fragmentList = new ArrayList<>();
 
     public static void launch(Activity activity, int type) {
         Intent intent = new Intent(activity, LongServiceOrderListActivity.class);
         intent.putExtra("type",type);
         activity.startActivity(intent);
     }
-
-
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        tablayout.setSelectedTabIndicatorColor(getColor(R.color.yellow_deep));
+        tablayout.setTabTextColors(getColor(R.color.black_title_color),getColor(R.color.yellow_deep));
         setBackTitle("全部订单");
-
-
-
     }
-
-
     @Override
     public void loadData() {
-        RefundFragment fragment = new RefundFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
+        fragmentList.add(LongServiceOrderFragment.newInstance(0));
+        fragmentList.add(LongServiceOrderFragment.newInstance(1));
+        fragmentList.add(LongServiceOrderFragment.newInstance(2));
+        fragmentList.add(LongServiceOrderFragment.newInstance(3));
+        fragmentList.add(LongServiceOrderFragment.newInstance(4));
+        List<String> list = new ArrayList<>();
+        list.add("全部");
+        list.add("待确认");
+        list.add("待支付");
+        list.add("服务中");
+        list.add("已完成");
+        adapter = new GoodsDetailPagerAdapter(getSupportFragmentManager(), fragmentList,list);
+        viewpager.setAdapter(adapter);
+        tablayout.setupWithViewPager(viewpager);
+
+        viewpager.setCurrentItem(getIntent().getIntExtra("type",0));
+        viewpager.setOffscreenPageLimit(4);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.layout_content;
+        return R.layout.activity_collect;
     }
 
 

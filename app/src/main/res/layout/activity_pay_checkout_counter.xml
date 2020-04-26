@@ -8,6 +8,53 @@
 
 
 
+    <LinearLayout
+        android:id="@+id/ll_coupon"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            style="@style/base_space"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_service_coupon"
+            style="@style/base_hor_style_input"
+            >
+            <TextView
+                style="@style/base_text_style"
+                android:text="优惠券"
+                />
+            <TextView
+                android:id="@+id/tv_service_coupon"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请选择"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:gravity="right"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:text=""/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/right_black_icon"
+                android:layout_gravity="center_vertical"/>
+
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/base_space"
+            />
+    </LinearLayout>
 
 
     <LinearLayout

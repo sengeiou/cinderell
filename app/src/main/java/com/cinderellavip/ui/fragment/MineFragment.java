@@ -14,7 +14,6 @@ import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.life.LongServiceOrderListActivity;
 import com.cinderellavip.ui.activity.life.SingleServiceOrderListActivity;
 import com.cinderellavip.ui.activity.mine.ApplyProductSupplierActivity;
-import com.cinderellavip.ui.activity.mine.ApplyProductSupplierResultActivity;
 import com.cinderellavip.ui.activity.mine.CouponCenterActivity;
 import com.cinderellavip.ui.activity.mine.MessageActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
@@ -145,19 +144,19 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.COMMENT);
                 break;
             case R.id.tv_all_order_long:
-                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.ALL);
+                LongServiceOrderListActivity.launch(mActivity,0);
                 break;
             case R.id.rl_to_be_confirm_long:
-                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.CONFIRM);
+                LongServiceOrderListActivity.launch(mActivity,1);
                 break;
             case R.id.rl_unpay_long:
-                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.PAY);
+                LongServiceOrderListActivity.launch(mActivity,2);
                 break;
             case R.id.rl_serviceing_long:
-                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.SERVICE);
+                LongServiceOrderListActivity.launch(mActivity,3);
                 break;
             case R.id.rl_complete_long:
-                LongServiceOrderListActivity.launch(mActivity,LongServiceOrderListActivity.COMPLETE);
+                LongServiceOrderListActivity.launch(mActivity,4);
                 break;
             case R.id.rl_xiaohui_recomment:
                 RecommentListActivity.launch(mActivity);
