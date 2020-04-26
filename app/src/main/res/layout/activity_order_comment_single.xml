@@ -19,6 +19,7 @@
             android:orientation="vertical">
 
            <EditText
+               android:id="@+id/et_comment"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:background="@null"
@@ -53,6 +54,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_image"
+                android:layout_marginLeft="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -61,6 +63,7 @@
                 style="@style/line_light"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
                 />
 
             <TextView
@@ -153,7 +156,7 @@
             android:layout_margin="12dp"
             android:padding="10dp"
             style="@style/life_base_btn"
-            android:text="立即购买"
+            android:text="提交"
             android:layout_centerInParent="true"
             />
 

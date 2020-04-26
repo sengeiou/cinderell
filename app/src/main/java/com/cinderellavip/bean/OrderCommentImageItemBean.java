@@ -9,6 +9,9 @@ public class OrderCommentImageItemBean implements Parcelable {
     public String path;
     public String netPath;
 
+    public OrderCommentImageItemBean(String path) {
+        this.path = path;
+    }
 
     @Override
     public int describeContents() {
