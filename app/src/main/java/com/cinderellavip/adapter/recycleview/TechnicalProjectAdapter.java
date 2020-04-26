@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.ui.activity.life.ServiceDetailActivity;
+import com.cinderellavip.ui.activity.life.ServiceProjectDetailActivity;
 
 
 public class TechnicalProjectAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
@@ -19,7 +20,8 @@ public class TechnicalProjectAdapter extends BaseQuickAdapter<String, BaseViewHo
         int position = helper.getAdapterPosition();
 
         helper.getView(R.id.ll_root).setOnClickListener(view -> {
-            ServiceDetailActivity.launch(getContext());
+            ServiceProjectDetailActivity.launch(getContext(),
+                    ServiceProjectDetailActivity.package_service);
         });
 
 

@@ -4,18 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cinderellavip.R;
 import com.cinderellavip.listener.ShareClickListener;
+import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.ui.BaseWebViewActivity;
+
+import butterknife.OnClick;
 
 
 /**
  * Created by Administrator on 2016/9/8.
  */
 public class ServiceDetailActivity extends BaseWebViewActivity {
-
 
 
     public static void launch(Context from) {
@@ -31,6 +34,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
         setRightIcon(R.mipmap.share_service);
 
     }
+
     @Override
     public void loadData() {
         loadUrl(url);
@@ -52,11 +56,24 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
                 public void onWeChatClick(Bitmap bitmap) {
 
                 }
+
                 @Override
                 public void onWeChatCircleClick(Bitmap bitmap) {
 
                 }
             });
         });
+    }
+
+    @OnClick({R.id.tv_service, R.id.tv_buy})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_service:
+                DialogUtil.showCallPhoneDialog(mActivity);
+                break;
+            case R.id.tv_buy:
+                BuyServiceActivity.launch(mActivity);
+                break;
+        }
     }
 }

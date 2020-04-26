@@ -56,5 +56,11 @@ public class ServiceListActivity extends BaseActivity {
         return R.layout.layout_content;
     }
 
-
+    @Override
+    public void initListener() {
+        super.initListener();
+        tv_right.setOnClickListener(v -> {
+            SelectCityActivity.launch(mActivity);
+        });
+    }
 }

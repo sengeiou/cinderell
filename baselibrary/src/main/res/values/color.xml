@@ -10,6 +10,7 @@
 
     <color name="black">#111111</color>
     <color name="black_title_color">#333333</color>
+    <color name="black_title_color_second">#666666</color>
 
     <color name="gray_line">#dddddd</color>
     <color name="main_tab_gray_text_color">#292929</color>

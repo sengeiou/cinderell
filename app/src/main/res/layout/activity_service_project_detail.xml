@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        >
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/layout_graphic_and_text"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="12dp"
+                    android:paddingLeft="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:text="芳香经典SPA"
+                        android:textColor="@color/black"
+                        style="@style/base_text_style"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="12dp"
+
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/base_text_style"
+                        android:textSize="18sp"
+                        android:textColor="@color/yellow_deep"
+                        android:text="398"/>
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:textColor="@color/yellow_deep"
+                        android:textSize="12sp"
+                        android:layout_marginLeft="5dp"
+                        android:text="元/次"/>
+
+
+
+
+
+                    <TextView
+                        android:text="100分钟"
+                        android:drawableLeft="@mipmap/project_detail_time"
+                        android:drawablePadding="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="14sp"
+                        style="@style/base_text_style_gray_small"/>
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="12dp"
+                    android:paddingBottom="12dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/base_text_style"
+                        android:textColor="@color/grayText"
+                        android:text="保障"/>
+
+
+
+                    <TextView
+                        android:text="无额外收费"
+                        android:drawableLeft="@mipmap/project_flag1"
+                        android:drawablePadding="5dp"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="12sp"
+                        style="@style/base_text_style_gray_small"/>
+
+                    <TextView
+                        android:text="爽约包赔"
+                        android:drawableLeft="@mipmap/project_flag2"
+                        android:drawablePadding="5dp"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="12sp"
+                        style="@style/base_text_style_gray_small"/>
+
+
+                    <TextView
+                        android:text="不满意重服务"
+                        android:drawableLeft="@mipmap/project_flag3"
+                        android:drawablePadding="5dp"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="12sp"
+                        style="@style/base_text_style_gray_small"/>
+
+                </LinearLayout>
+
+                <View
+                    style="@style/base_space"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_select_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingTop="12dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:text="可预约时间"
+                        android:layout_weight="1"
+                        android:textColor="@color/black_title_color_second"
+                        style="@style/base_text_style"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_select_time_tip"
+                        style="@style/base_text_style"
+                        android:text="最早可约"
+                        android:textSize="12sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_select_time"
+                        style="@style/base_text_style"
+                        android:text="今日 16:30"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/yellow_deep"
+                        android:textSize="12sp"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:src="@mipmap/right_black_icon"/>
+
+
+
+
+                </LinearLayout>
+
+                <View
+                    style="@style/base_space"
+                    />
+
+                <TextView
+                    style="@style/base_text_style"
+                    android:text="服务内容"
+                    android:textColor="@color/black_title_color_second"
+                    android:padding="12dp"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_service_content1"
+                        style="@style/base_text_style_gray_small"
+                        android:text="服务时长：100分钟"
+                        android:lineSpacingExtra="5dp"
+                        android:textColor="@color/black_title_color_second"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_service_content2"
+                        style="@style/base_text_style_gray_small"
+                        android:text="服务姿势：卧姿"
+                        android:lineSpacingExtra="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black_title_color_second"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/tv_service_content3"
+                        style="@style/base_text_style_gray_small"
+                        android:text="原理功效：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
+                        android:lineSpacingExtra="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black_title_color_second"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_service_content4"
+                        style="@style/base_text_style_gray_small"
+                        android:text="不宜人群：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
+                        android:lineSpacingExtra="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black_title_color_second"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_service_content5"
+                        style="@style/base_text_style_gray_small"
+                        android:text="服务流程：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
+                        android:lineSpacingExtra="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black_title_color_second"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_service_content6"
+                        style="@style/base_text_style_gray_small"
+                        android:text="服务用品：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
+                        android:lineSpacingExtra="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black_title_color_second"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <View
+                    style="@style/base_space"
+                    />
+
+                <TextView
+                    style="@style/base_text_style"
+                    android:text="收费标准"
+                    android:textColor="@color/black_title_color_second"
+                    android:padding="12dp"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="#ECF1F6"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:text="服务项目"
+                            android:textColor="@color/black_title_color"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:text="服务价格"
+                            android:textColor="@color/black_title_color"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_service_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"/>
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+                <View
+                    style="@style/base_space"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/ll_comment"
+                    android:background="@drawable/touch_bg"
+                    style="@style/base_hor_style">
+                    <TextView
+                        android:id="@+id/tv_comment_number"
+                        style="@style/base_text_style"
+                        android:text="用户评价"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/right_black_icon"
+                        android:layout_gravity="center_vertical"/>
+
+
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"/>
+
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/title"
+            android:background="#00000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior=".weight.behavior.TechnicalDetailTitleBehavior"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/statusbar_view_height"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="12dp"
+                >
+                <ImageView
+                    android:id="@+id/view_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/back_technical"
+                    android:layout_centerVertical="true"
+                    style="@style/click_toolbar_style"
+                    />
+                <TextView
+                    android:id="@+id/tv_technical_title"
+                    style="@style/base_text_style"
+                    android:textColor="#00000000"
+                    android:layout_height="wrap_content"
+                    android:text="服务项目详情"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"/>
+
+
+
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+    <View
+        style="@style/line_light"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp">
+            <TextView
+                android:id="@+id/tv_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/touch_bg"
+                android:textColor="@color/grayText"
+                android:drawableTop="@mipmap/icon_phone"
+                android:drawablePadding="2dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="客服"/>
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_buy"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@color/yellow_deep"
+            android:layout_height="match_parent"
+            android:text="立即购买"
+            android:textSize="14sp"
+            />
+
+
+
+
+    </LinearLayout>
+</LinearLayout>
+

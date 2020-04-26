@@ -105,7 +105,7 @@ public class BuyServiceActivity extends BaseActivity {
                 break;
             case R.id.ll_service_time:
                 TimeUtil3s.getInstance().showSelectDialog(mContext,(year, month, day) -> {
-
+                    tvServiceTime.setText("1月6号 今天 18:00");
                 });
 //                SelectServiceTimeActivity.launch(mActivity);
                 break;

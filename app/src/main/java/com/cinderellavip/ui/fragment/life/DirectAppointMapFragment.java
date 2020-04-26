@@ -20,6 +20,8 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.MapItem;
+import com.cinderellavip.ui.activity.life.DirectAppointmentTechnicianCommentActivity;
+import com.cinderellavip.ui.activity.life.DirectAppointmentTechnicianDetailActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
 import java.util.HashMap;
@@ -213,6 +215,8 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        DirectAppointmentTechnicianDetailActivity.launch(getContext(),
+                DirectAppointmentTechnicianCommentActivity.comment_technical);
         return false;
     }
 
