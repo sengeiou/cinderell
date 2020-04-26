@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
+    android:background="@drawable/shape_white5"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定要兑换商品吗？"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:textColor="@color/black_title_color"
+            />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="40dp"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:lineSpacingExtra="5dp"
+            android:text="是否使用200积分兑换改商品？"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textColor="@color/black_title_color"
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@drawable/shape_graydeep50"
+                android:textColor="@color/white"
+
+                />
+
+
+            <TextView
+                android:id="@+id/tv_sure"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@drawable/shape_yellow50_life_deep"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/white"
+                />
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

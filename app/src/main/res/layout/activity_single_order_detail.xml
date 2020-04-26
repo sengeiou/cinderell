@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <View
+        style="@style/base_space"/>
+
+
+    <TextView
+        style="@style/base_text_style"
+        android:text="订单信息"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginLeft="12dp"
+        android:text="服务编号：20022115611032156165"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginLeft="12dp"
+        android:text="服务类型：日常保洁-物品清理"
+        android:layout_marginTop="6dp"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginLeft="12dp"
+        android:text="服务时间：2019-12-28 11:00"
+        android:layout_marginTop="6dp"
+        />
+
+    <View
+        style="@style/line_light"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+
+    <TextView
+        style="@style/base_text_style"
+        android:text="服务信息"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginLeft="12dp"
+        android:text="服务城市：上海-上海市"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginLeft="12dp"
+        android:text="服务地市：华徐公路888号中国梦古1号楼2楼"
+        android:layout_marginTop="6dp"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginLeft="12dp"
+        android:text="联系电话：13166015580"
+        android:layout_marginTop="6dp"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:layout_marginLeft="12dp"
+        android:text="联系人：王明"
+        android:layout_marginTop="6dp"
+        />
+
+    <View
+        style="@style/line_light"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+    <TextView
+        style="@style/base_text_style"
+        android:text="订单费用"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:text="服务费用："
+            />
+        <TextView
+            style="@style/base_text_style"
+            android:text="150元"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:text="优惠金额："
+            />
+        <TextView
+            style="@style/base_text_style"
+            android:text="-0元"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:paddingLeft="12dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            style="@style/base_text_style"
+            android:layout_weight="1"
+            android:text="实付金额："
+            />
+        <TextView
+            style="@style/base_text_style"
+            android:text="150元"
+            android:textColor="@color/yellow_deep"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/gray_bg"/>
+
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        style="@style/base_hor_style"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center_vertical"
+        >
+
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:id="@+id/tv_btn1"
+            style="@style/base_btn_style"
+            android:background="@drawable/shape_line_gray5"
+            android:textColor="@color/black_title_color"
+            android:text="取消" />
+
+        <TextView
+            android:id="@+id/tv_btn2"
+            style="@style/base_btn_style"
+            android:background="@drawable/shape_line_life_yellow_deep5"
+            android:textColor="@color/yellow_deep"
+            android:layout_marginLeft="12dp"
+            android:text="支付" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
