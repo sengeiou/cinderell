@@ -14,7 +14,6 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.tozzais.baselibrary.util.log.LogUtil;
 import com.tozzais.baselibrary.weight.loadmore.CustomLoadMoreView;
 import com.ycbjie.webviewlib.X5WebUtils;
 
@@ -31,6 +30,7 @@ public class CinderellApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
 
         X5WebUtils.init(this);
 

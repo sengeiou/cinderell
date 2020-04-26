@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.toast.DialogUtil;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -75,9 +76,17 @@ public class SingleServiceOrderDetailActivity extends BaseActivity {
                 if (type == 1){
                     PayCheckoutCounterActivity.launch(mActivity);
                 }else if (type == 3){
-
+                    ServiceOrderCommentActivity.launch(mActivity);
                 }
                 break;
         }
+    }
+
+    @Override
+    public void initListener() {
+        super.initListener();
+        tv_right.setOnClickListener(v -> {
+            DialogUtil.showCallPhoneDialog(mActivity);
+        });
     }
 }
