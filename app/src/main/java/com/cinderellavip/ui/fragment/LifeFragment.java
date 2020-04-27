@@ -16,6 +16,7 @@ import com.cinderellavip.adapter.recycleview.LifeAdapter;
 import com.cinderellavip.adapter.recycleview.LifeCategoryAdapter;
 import com.cinderellavip.bean.HomeBanner;
 import com.cinderellavip.bean.local.HomeCategoryItem;
+import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.activity.life.SearchLifeActivity;
 import com.cinderellavip.ui.activity.life.SelectCityActivity;
 import com.cinderellavip.util.ColorUtil;
@@ -132,7 +133,10 @@ public class LifeFragment extends BaseListFragment<String> {
         xbanner.loadImage(((banner, model, view, position) -> {
             ImageView image = view.findViewById(R.id.image);
             image.setImageResource(R.mipmap.banner_life);
-        }
+            image.setOnClickListener(v -> {
+                WebViewActivity.launch(mActivity,"详情","https://www.baidu.com");
+            });
+            }
         ));
     }
 

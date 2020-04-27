@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
+import com.cinderellavip.ui.activity.life.ServiceDetailActivity;
 import com.cinderellavip.util.ScreenUtil;
 
 
@@ -30,6 +31,7 @@ public class LifeServiceAdapter extends BaseQuickAdapter<String, BaseViewHolder>
         ll_root.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
 
         helper.getView(R.id.ll_root).setOnClickListener(v -> {
+            ServiceDetailActivity.launch(getContext());
 //            GoodsDetailActivity.launch((Activity) getContext(),0);
         });
 

@@ -335,6 +335,7 @@
                     android:textColor="@color/black"
                     />
                 <TextView
+                    android:id="@+id/tv_cost_explain"
                     style="@style/base_text_style"
                     android:text="订单说明"
                     android:padding="12dp"

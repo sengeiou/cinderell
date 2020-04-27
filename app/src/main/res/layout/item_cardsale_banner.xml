@@ -33,6 +33,7 @@
             />
 
         <TextView
+            android:id="@+id/tv_more"
             style="@style/base_text_style_gray_small"
             android:text="更多"
             android:padding="12dp"

@@ -140,6 +140,7 @@
         <activity android:name=".ui.activity.life.SingleServiceOrderDetailActivity"/>
         <activity android:name=".ui.activity.life.SearchLifeActivity"/>
         <activity android:name=".ui.activity.life.ServiceProjectDetailActivity"/>
+        <activity android:name=".ui.activity.life.ServiceCheckListActivity"/>
 
 
         <provider

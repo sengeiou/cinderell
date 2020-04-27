@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.HomeCategoryItem;
 import com.cinderellavip.ui.activity.life.DirectAppointmentActivity;
+import com.cinderellavip.ui.activity.life.ServiceCheckListActivity;
 import com.cinderellavip.ui.activity.life.ServiceListActivity;
 import com.cinderellavip.util.ScreenUtil;
 
@@ -43,6 +44,8 @@ public class LifeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
         helper.getView(R.id.rl_root).setOnClickListener(v -> {
             if ("直约".equals(item.name)){
                 DirectAppointmentActivity.launch(getContext());
+            }else  if ("服务清单".equals(item.name)){
+                ServiceCheckListActivity.launch((Activity) getContext());
             }else {
                 ServiceListActivity.launch(getContext(),item.name);
             }

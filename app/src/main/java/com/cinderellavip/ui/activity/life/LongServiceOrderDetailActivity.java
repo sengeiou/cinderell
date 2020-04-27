@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
+import com.cinderellavip.ui.activity.WebViewActivity;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -64,9 +65,15 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_btn1, R.id.tv_btn2})
+    @OnClick({R.id.tv_btn1, R.id.tv_btn2, R.id.tv_look, R.id.tv_cost_explain})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_cost_explain:
+                CenterDialogUtil.showCostExplain(mActivity,s -> {});
+            break;
+            case R.id.tv_look:
+                WebViewActivity.launch(mActivity,"服务签约电子合同","https://www.baidu.com");
+                break;
             case R.id.tv_btn1:
                 if (type == 1 || type == 2) {
                     CenterDialogUtil.showServiceOrder(mActivity, "操作提示", "您确定要取消订单吗？\n取消后不可撤回"

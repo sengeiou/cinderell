@@ -103,6 +103,19 @@ public class CenterDialogUtil {
         });
     }
 
+    public static void showCostExplain(Context context,final OnGetStringListener listener) {
+        View messageView = View.inflate(context, R.layout.pop_cost_explain, null);
+        cityDialog = DialogUtils.getCenterDialog(context, messageView);
+        TextView tv_title = messageView.findViewById(R.id.tv_title);
+        TextView tv_content = messageView.findViewById(R.id.tv_content);
+        TextView tv_sure = messageView.findViewById(R.id.tv_sure);
+        tv_sure.setOnClickListener(v -> {
+            listener.getString("1");
+            cityDialog.dismiss();
+            cityDialog = null;
+        });
+    }
+
     public static void showServiceOrder(Context context,
                                String title, String content, String btnCancel, String btnSure
             , final OnGetStringListener listener) {

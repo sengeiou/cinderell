@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.ui.activity.life.ServiceListActivity;
 import com.cinderellavip.util.DataUtil;
 
 import org.w3c.dom.Text;
@@ -35,20 +36,40 @@ public class LifeAdapter extends BaseQuickAdapter<String, BaseViewHolder> implem
         rv_goods.setAdapter(adapter);
         adapter.setNewData(DataUtil.getData(3));
 
+        String name = "";
         if (position == 0){
-            tv_title.setText("日常养护");
+            name = "日常养护";
         }else if (position == 1){
-            tv_title.setText("保姆");
+            name = "保姆";
         }else if (position == 2){
-            tv_title.setText("清洗服务");
+            name = "清洗服务";
         }else if (position == 3){
-            tv_title.setText("房屋维修");
+            name = "房屋维修";
         }else if (position == 4){
-            tv_title.setText("家电维修");
-        }else if (position == 5){
-            tv_title.setText("家具维修");
+            name = "家电维修";
+        }else {
+            name = "家具维修";
         }
+        tv_title.setText(name);
 
+        helper.getView(R.id.tv_more).setOnClickListener(v -> {
+            String name1 = "";
+            if (position == 0){
+                name1 = "日常养护";
+            }else if (position == 1){
+                name1 = "保姆";
+            }else if (position == 2){
+                name1 = "清洗服务";
+            }else if (position == 3){
+                name1 = "房屋维修";
+            }else if (position == 4){
+                name1 = "家电维修";
+            }else{
+                name1 = "家具维修";
+            }
+            ServiceListActivity.launch(getContext(),name1);
+
+        });
 
 
 

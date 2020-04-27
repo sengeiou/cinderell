@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    android:id="@+id/ll_root"
+    android:background="@drawable/touch_bg"
+    android:paddingTop="10dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/demo_category"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:maxLines="1"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:layout_height="wrap_content"
+        android:text="物品整理"
+        android:singleLine="true"
+        android:textColor="@color/black_title_color"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        />
+
+
+
+</LinearLayout>
