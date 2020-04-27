@@ -3,6 +3,7 @@ package com.cinderellavip.ui.fragment;
 import android.view.View;
 
 import com.cinderellavip.R;
+import com.cinderellavip.ui.activity.home.HomeCategoryListActivity;
 import com.cinderellavip.weight.MyTabLayout;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
@@ -85,6 +86,7 @@ public class ShopFragment extends BaseFragment {
             case R.id.ll_search:
                 break;
             case R.id.iv_category:
+                HomeCategoryListActivity.launch(mActivity);
                 break;
         }
     }
