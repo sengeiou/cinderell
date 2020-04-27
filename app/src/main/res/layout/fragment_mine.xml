@@ -9,6 +9,7 @@
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     app:elevation="0dp">
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/toolbar_layout"
@@ -187,7 +188,9 @@
     android:id="@+id/rv_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+    />
 
 
 
@@ -196,7 +199,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/behavior_sample_title"
+        app:layout_behavior=".weight.behavior.SampleTitleBehavior"
         android:orientation="vertical">
         <View
             android:layout_width="match_parent"

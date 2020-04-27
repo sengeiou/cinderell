@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class LifeAdapter extends BaseQuickAdapter<String, BaseViewHolder> implements LoadMoreModule {
 
     public LifeAdapter() {
-        super(R.layout.item_cardsale_banner, null);
+        super(R.layout.item_life, null);
     }
 
 

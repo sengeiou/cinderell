@@ -100,7 +100,7 @@ public class GoodsListActivity extends BaseActivity implements OnFilterListener 
                 finish();
                 break;
             case R.id.iv_search:
-//                SearchActivity.launch(mActivity);
+                SearchActivity.launch(mActivity);
                 break;
         }
     }

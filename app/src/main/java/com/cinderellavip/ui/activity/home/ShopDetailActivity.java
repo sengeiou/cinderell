@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.BrandDetailFragment;
 import com.cinderellavip.ui.fragment.ShopDetailFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -75,6 +74,7 @@ public class ShopDetailActivity extends BaseActivity{
                 finish();
                 break;
             case R.id.iv_search:
+                SearchActivity.launch(mActivity);
                 break;
             case R.id.iv_collect:
                 break;

@@ -12,35 +12,15 @@
         style="@style/base_space"
         />
 
-    <LinearLayout
+    <com.cinderellavip.weight.ScaleImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_life_more"/>
-
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/base_text_style"
-            android:text="日常保洁"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            />
-
-        <TextView
-            android:id="@+id/tv_more"
-            style="@style/base_text_style_gray_small"
-            android:text="更多"
-            android:padding="12dp"
-            android:drawableRight="@mipmap/right_black_icon"
-            android:drawablePadding="5dp"
-            />
-    </LinearLayout>
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        app:scale="0.465317919"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/banner_card_sale"
+        android:layout_margin="12dp"
+        />
 
 
 

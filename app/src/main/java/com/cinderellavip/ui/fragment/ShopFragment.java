@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.activity.home.HomeCategoryListActivity;
+import com.cinderellavip.ui.activity.home.SearchActivity;
 import com.cinderellavip.weight.MyTabLayout;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
@@ -84,6 +85,7 @@ public class ShopFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_search:
+                SearchActivity.launch(mActivity);
                 break;
             case R.id.iv_category:
                 HomeCategoryListActivity.launch(mActivity);

@@ -76,6 +76,7 @@
                 android:id="@+id/tv_unpay"
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
+
                 android:text="3"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
@@ -110,7 +111,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
-
+                android:visibility="gone"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
         <RelativeLayout
@@ -144,6 +145,7 @@
             style="@style/cart_number_style"
             android:background="@drawable/shape_oval_red"
             android:text="3"
+            android:visibility="gone"
             android:layout_margin="5dp"/>
     </RelativeLayout>
         <RelativeLayout
@@ -177,6 +179,7 @@
             style="@style/cart_number_style"
             android:background="@drawable/shape_oval_red"
             android:text="3"
+            android:visibility="gone"
             android:layout_margin="5dp"/>
     </RelativeLayout>
         <RelativeLayout
@@ -210,6 +213,7 @@
             style="@style/cart_number_style"
             android:background="@drawable/shape_oval_red"
             android:text="3"
+            android:visibility="gone"
             android:layout_margin="5dp"
             />
     </RelativeLayout>
@@ -283,6 +287,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
+                android:visibility="gone"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
         <RelativeLayout
@@ -316,6 +321,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
+                android:visibility="gone"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
         <RelativeLayout
@@ -349,6 +355,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
+                android:visibility="gone"
                 android:layout_margin="5dp"
                 />
         </RelativeLayout>
@@ -425,6 +432,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
+                android:visibility="gone"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
         <RelativeLayout
@@ -491,6 +499,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
+                android:visibility="gone"
                 android:layout_margin="5dp"
                 />
         </RelativeLayout>
@@ -525,6 +534,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
+                android:visibility="gone"
                 android:layout_margin="5dp"
                 />
         </RelativeLayout>

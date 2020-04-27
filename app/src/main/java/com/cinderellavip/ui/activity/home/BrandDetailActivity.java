@@ -8,9 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.listener.OnFilterListener;
 import com.cinderellavip.ui.fragment.BrandDetailFragment;
-import com.cinderellavip.ui.fragment.home.SearchResultFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -75,6 +73,7 @@ public class BrandDetailActivity extends BaseActivity{
                 finish();
                 break;
             case R.id.iv_search:
+                SearchActivity.launch(mActivity);
                 break;
             case R.id.iv_collect:
                 break;
