@@ -50,8 +50,20 @@ public class CinderellApplication extends Application {
         closeAndroidPDialog();
 
 
+    }
 
-
+    public  static int getStatusBarByReflex() {
+        int statusBarHeight = 0;
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
+            int height = Integer.parseInt(clazz.getField("status_bar_height")
+                    .get(object).toString());
+            statusBarHeight = mContext.getResources().getDimensionPixelSize(height);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return statusBarHeight;
     }
 
     public static String sHA1(Context context) {

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.listener.OnDialogClickListener;
+import com.cinderellavip.toast.PrivacyUtil;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 
@@ -59,7 +61,17 @@ public class GuideActivity extends BaseActivity {
         }
         boolean firstUse = GlobalParam.getFirstUse();
         if (!firstUse) {
-            WelcomeActivity.launch(mActivity);
+            PrivacyUtil.showTwo(mActivity, new OnDialogClickListener() {
+                @Override
+                public void onSure() {
+                    GlobalParam.setFirstUse(true);
+                    MainActivity.launch(mActivity);
+                }
+                @Override
+                public void onCancel() {
+                    finish();
+                }
+            });
         }else {
             MainActivity.launch(mActivity);
         }

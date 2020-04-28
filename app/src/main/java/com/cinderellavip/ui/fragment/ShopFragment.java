@@ -1,11 +1,15 @@
 package com.cinderellavip.ui.fragment;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.activity.home.HomeCategoryListActivity;
 import com.cinderellavip.ui.activity.home.SearchActivity;
 import com.cinderellavip.weight.MyTabLayout;
+import com.cinderellavip.weight.StatusBarHeightView;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
 import java.util.ArrayList;
@@ -25,9 +29,34 @@ public class ShopFragment extends BaseFragment {
     MyTabLayout tabCategory;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    @BindView(R.id.status)
+    StatusBarHeightView status;
 
     private List<String>myTitle;
     private List<BaseFragment>myFragment;
+
+
+    @Override
+    public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
+        LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) status.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
+        linearParams.height = getStatusBarByReflex(mActivity);// 控件的宽强制设成30
+        status.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+    }
+
+    private  int getStatusBarByReflex(Context context) {
+        int statusBarHeight = 0;
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
+            int height = Integer.parseInt(clazz.getField("status_bar_height")
+                    .get(object).toString());
+            statusBarHeight = context.getResources().getDimensionPixelSize(height);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return statusBarHeight;
+    }
 
     @Override
     public int setLayout() {
