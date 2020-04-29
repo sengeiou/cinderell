@@ -79,7 +79,6 @@ public class CategoryFragment extends BaseListFragment<String> implements Catego
 
         List<String> data1 = new ArrayList<>();
         data1.add("常用分类");
-        data1.add("热门品牌");
         mAdapter.setNewData(data1);
     }
 

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.adapter.recycleview.SearchGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.GirdSpace;
@@ -20,9 +21,10 @@ import butterknife.BindView;
 public class SearchResultFragment extends BaseListFragment<HomeGoods> {
 
 
-
-
-
+    @Override
+    public int setLayout() {
+        return R.layout.fragment_recycleview_search_result;
+    }
 
     public String sort = "0",area = "0",type_child_ids = "";
     /**
@@ -146,7 +148,7 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
     private void setLayoutManager(){
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         mRecyclerView.addItemDecoration(girdSpace);
-        mAdapter = new HomeGoodsAdapter();
+        mAdapter = new SearchGoodsAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 

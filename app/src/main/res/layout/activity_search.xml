@@ -6,9 +6,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-
-
-
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -23,7 +20,6 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/back"
             android:padding="10dp"
-            android:layout_marginTop="4dp"
             style="@style/click_toolbar_style"
             android:layout_gravity="center_vertical"/>
 
@@ -34,7 +30,7 @@
             android:background="@drawable/shape_gray50"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="10dp"
             >
 
             <ImageView
@@ -68,7 +64,6 @@
             android:textColor="@color/black_title_color"
             android:padding="12dp"
             android:textSize="14sp"
-            android:layout_marginTop="4dp"
             android:layout_gravity="center_vertical"
             android:text="取消"
             style="@style/click_toolbar_style"

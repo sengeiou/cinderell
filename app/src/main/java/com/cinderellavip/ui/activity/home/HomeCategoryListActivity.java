@@ -36,25 +36,21 @@ public class HomeCategoryListActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container,
+        getSupportFragmentManager().beginTransaction().add(R.id.content_container1,
                 new CategoryFragment()).commit();
     }
 
     @Override
-    public int getLayoutId() {
+    public int getToolbarLayout() {
         return -1;
     }
 
     @Override
-    protected int getBaseLayout() {
+    public int getLayoutId() {
         return R.layout.activity_home_category;
     }
 
-    @Override
-    protected void setStatusBar() {
-        StatusBarUtil.setTransparentForImageViewInFragment(HomeCategoryListActivity.this, null);
-        StatusBarUtil.setLightMode(this);
-    }
+
 
     @Override
     public void initListener() {

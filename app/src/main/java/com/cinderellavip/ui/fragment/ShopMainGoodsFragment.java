@@ -98,10 +98,7 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
         data1.add("实惠");
         tabLabel.setTitle(data1);
 
-        LinearLayout linearLayout = (LinearLayout) tabLabel.getChildAt(0);
-        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        linearLayout.setDividerDrawable(ContextCompat.getDrawable(mActivity, R.drawable.tablayout_divider_vertical));
-        linearLayout.setDividerPadding(DpUtil.dip2px(mActivity, 10));
+
 
         List<HomeCategoryItem> typeList = DataUtil.getShopHomeCategory();
         homeCategoryAdapter.setNewData(typeList);

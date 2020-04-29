@@ -1,23 +1,21 @@
 package com.cinderellavip.weight;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.util.ScreenUtil;
 import com.google.android.material.tabs.TabLayout;
+import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 public class HomeTabLayout extends TabLayout {
@@ -86,6 +84,14 @@ public class HomeTabLayout extends TabLayout {
             }
             this.addTab(tab);
         }
+        setDivider();
+    }
+
+    private void setDivider(){
+        LinearLayout linearLayout = (LinearLayout) getChildAt(0);
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        linearLayout.setDividerDrawable(ContextCompat.getDrawable(getContext(), R.drawable.tablayout_divider_vertical));
+        linearLayout.setDividerPadding(DpUtil.dip2px(getContext(), 16));
     }
 
     private void setTagSelete(Tab tab, boolean isSelete) {
