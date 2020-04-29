@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/shape_white5"
+        android:orientation="vertical">
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
+
+          <TextView
+              style="@style/base_text_style"
+              android:text="去微信分享"
+              android:textSize="14sp"
+              android:textStyle="bold"
+              android:padding="12dp"
+              android:layout_centerHorizontal="true"
+              android:layout_marginLeft="12dp"/>
+
+          <ImageView
+              android:id="@+id/iv_close"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:padding="12dp"
+              android:src="@mipmap/share_close"/>
+
+
+
+      </RelativeLayout>
+
+
+        <TextView
+            style="@style/base_text_style"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginTop="20dp"
+            android:text="1，文案信息已复制成功，长按或双击可粘贴\n
+2，素材图片已下载至手机相册\n
+3，打开微信分享给好友或发布到朋友圈"
+            />
+
+
+
+
+
+        <TextView
+            android:id="@+id/tv_login"
+            style="@style/login_btn_style"
+            android:layout_marginTop="30dp"
+            android:layout_width="180dp"
+            android:text="打开微信分享"/>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

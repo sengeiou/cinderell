@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        style="@style/base_text_style"
+        android:text="文案信息："
+        android:paddingLeft="12dp"
+        android:paddingTop="20dp"
+        />
+
+    <TextView
+        style="@style/base_text_style_gray_small"
+        android:lineSpacingExtra="4dp"
+        android:text="球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp"
+        android:paddingRight="12dp"
+        />
+
+    <TextView
+        style="@style/base_text_style_gray_small"
+        android:lineSpacingExtra="4dp"
+        android:text="原件：￥178.00&#160;&#160;灰姑娘会员价：￥158.00"
+        android:paddingLeft="12dp"
+        android:paddingTop="20dp"
+        android:paddingRight="12dp"
+        />
+
+    <TextView
+        style="@style/base_btn_style"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:textColor="@color/black_title_color"
+        android:layout_margin="12dp"
+        android:background="@drawable/shape_gray5"
+        android:text="分享后将自动复制文案，长按或双击即可复制"/>
+
+    <TextView
+        style="@style/base_text_style"
+        android:text="素材图片："
+        android:paddingLeft="12dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="12dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:gravity="center_vertical">
+        <View
+            style="@style/line_light"
+            android:layout_weight="1"
+            />
+        <TextView
+            style="@style/base_text_style_gray_small"
+            android:text="选择分享方式"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            />
+        <View
+            style="@style/line_light"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_share1"
+            android:layout_width="0dp"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/share1"/>
+
+                <TextView
+                    style="@style/base_text_style_gray_small"
+                    android:text="分享海报"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_oval_red"
+                android:text="3"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_share2"
+            android:layout_width="0dp"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/share2"/>
+
+                <TextView
+                    style="@style/base_text_style_gray_small"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:text="分享素材"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_oval_red"
+                android:text="13"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_share3"
+            android:layout_width="0dp"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/share3"/>
+
+                <TextView
+                    style="@style/base_text_style_gray_small"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:text="分享朋友圈"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_oval_red"
+                android:text="3"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_share4"
+            android:layout_width="0dp"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/share4"/>
+
+                <TextView
+                    style="@style/base_text_style_gray_small"
+                    android:text="保存图片"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_oval_red"
+                android:text="3"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

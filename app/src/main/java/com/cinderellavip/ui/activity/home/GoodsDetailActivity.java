@@ -165,22 +165,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
                 break;
             case R.id.iv_share:
-                SecondDialogUtil.showPosterDialog(mContext, (payString1, bitmap) -> {
-                    switch (payString1){
-                        case "1":
-                            tsg("分享微信");
-//                            shareImage(SHARE_MEDIA.WEIXIN,bitmap);
-                            break;
-                        case "2":
-                            tsg("分享朋友圈");
-//                            shareImage(SHARE_MEDIA.WEIXIN_CIRCLE,bitmap);
-                            break;
-                        case "down":
-                            tsg("保存成功");
-                            break;
-                    }
-
-                });
+                ShareActivity.launch(mActivity,0);
                 break;
             case R.id.tv_service:
                 DialogUtil.showCallPhoneDialog(mActivity);
