@@ -6,51 +6,52 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.bean.local.CartGoodsItem;
 import com.cinderellavip.bean.local.CartItem;
 import com.cinderellavip.listener.CartClickListener;
+import com.cinderellavip.listener.CartGoodsClickListener;
+import com.cinderellavip.ui.activity.home.ShopDetailActivity;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
 
-    private CartClickListener cartClickListener;
-    public CartAdapter(CartClickListener cartClickListener) {
+    private CartGoodsClickListener cartClickListener;
+    public CartAdapter(CartGoodsClickListener cartClickListener) {
         super(R.layout.item_cart, null);
         this.cartClickListener = cartClickListener;
     }
 
 
     @Override
-    protected void convert( BaseViewHolder helper, CartItem item) {
+    protected void convert( BaseViewHolder helper,final CartItem item) {
         int position = helper.getAdapterPosition();
-        ImageView iv_product = helper.getView(R.id.iv_product);
-//        ImageUtil.loadNetRound(mContext,iv_product,item.getLogo());
-//        helper.setText(R.id.tv_title,item.getProduct_name());
-//        helper.setText(R.id.tv_specification,"规格："+item.getNorm());
-        helper.setText(R.id.tv_price,"￥"+item.getShowPrice());
-
-        //特色产品的标签
-
+        RecyclerView rv_list = helper.getView(R.id.rv_list);
         ImageView iv_selete = helper.getView(R.id.iv_selete);
-        TextView tv_numer = helper.getView(R.id.tv_number);
-        tv_numer.setText(item.getNum()+"");
-//        tv_numer.setOnClickListener(v -> {
-//
-//            View view;
-//            if (getContext() instanceof MainActivity){
-//                MainActivity mContext = (MainActivity) this.mContext;
-//                view = mContext.ll_main;
-//            }else  {
-//                BaseActivity mContext = (BaseActivity) this.mContext;
-//                view = mContext.parentView;
-//            }
-//            BaseActivity mContext = (BaseActivity) this.mContext;
-//            PopUtil.showUpdateNumber(this.mContext,mContext.getWindow(),view,item.getNum()+"",number -> {
-//                modifyData(item,number);
-//            });
-//
-//        });
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        rv_list.setLayoutManager(manager);
+        CartGoodsAdapter cartGoodsAdapter =  new CartGoodsAdapter(position1 -> {
+            if (item.list.size() == 0){
+                //全部删除
+                remove(position);
+            }else {
+                boolean allSelect = true;
+                for (CartGoodsItem cartItem:item.list){
+                    if (!cartItem.isCheck){
+                        allSelect = false;
+                        break;
+                    }
+                }
+                item.isCheck = allSelect;
+                notifyDataSetChanged();
+            }
+            cartClickListener.onClick(position);
 
-
+        });
+        rv_list.setAdapter(cartGoodsAdapter);
+        cartGoodsAdapter.setNewData(item.list);
         if (item.isCheck){
             iv_selete.setImageResource(R.mipmap.gwcxz);
         }else {
@@ -58,34 +59,16 @@ public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
         }
         iv_selete.setOnClickListener(v -> {
             item.isCheck = !item.isCheck;
-            boolean isSeleteAll = true;
-            for (CartItem cartItem:getData()){
-                if (cartItem.isCheck){
-                    continue;
-                }else {
-                    isSeleteAll = false;
-                    break;
-                }
+            for (CartGoodsItem cartItem:item.list){
+                cartItem.isCheck = item.isCheck;
             }
-            cartClickListener.onChildSelete(isSeleteAll);
             notifyDataSetChanged();
+            cartClickListener.onClick(position);
         });
-        helper.getView(R.id.iv_reduce).setOnClickListener(v -> {
-            if (item.getNum()>1){
-                item.setNum(item.getNum()-1);
-                notifyDataSetChanged();
-            }
+        helper.getView(R.id.tv_shop).setOnClickListener(v -> {
+            ShopDetailActivity.launch(getContext());
         });
-        helper.getView(R.id.iv_add).setOnClickListener(v -> {
-            item.setNum(item.getNum()+1);
-            notifyDataSetChanged();
-        });
-        helper.getView(R.id.iv_delete).setOnClickListener(v -> {
-           remove(position);
-            cartClickListener.onHavaData(getData().size() != 0);
-        });
-        helper.getView(R.id.ll_root).setOnClickListener(v -> {
-        });
+
 
 
     }

@@ -1,6 +1,7 @@
 package com.cinderellavip.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,17 +12,20 @@ import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CartAdapter;
 import com.cinderellavip.adapter.recycleview.CartEmptyAdapter;
+import com.cinderellavip.bean.local.CartGoodsItem;
 import com.cinderellavip.bean.local.CartItem;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.listener.CartClickListener;
+import com.cinderellavip.listener.CartGoodsClickListener;
 import com.cinderellavip.ui.activity.home.EnsureOrderActivity;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.PriceFormat;
 import com.cinderellavip.weight.MarginDecorationextendsHeader;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
 import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import java.util.ArrayList;
@@ -34,7 +38,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CartFragment extends BaseListFragment<HomeGoods> implements CartClickListener {
+public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoodsClickListener {
 
     public static final int NOT_TITLE = 0, HAVA_TITLE = 1;
     private int type;
@@ -116,14 +120,23 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartCli
 
     private void getData() {
         super.loadData();
-        onHavaData(true);
+
         List<CartItem> list = new ArrayList<>();
-        list.add(new CartItem(false,188.00,1));
-        list.add(new CartItem(false,399.00,1));
+        List<CartGoodsItem> dataList = new ArrayList<>();
+        dataList.add(new CartGoodsItem(false));
+        dataList.add(new CartGoodsItem(false));
+
+        List<CartGoodsItem> dataList2 = new ArrayList<>();
+        dataList2.add(new CartGoodsItem(false));
+        dataList2.add(new CartGoodsItem(false));
+        dataList2.add(new CartGoodsItem(false));
+
+        list.add(new CartItem(false,dataList));
+        list.add(new CartItem(false,dataList2));
         cartAdapter.setNewData(list);
         setData(DataUtil.getHomeGoods(4));
         //解决删除购物车后不重置的bug。放在setData后面，解决刷新不重置总价格的bug
-        onChildSelete(true);
+        onClick(1);
 
     }
 
@@ -138,6 +151,9 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartCli
                 ivSeleteAll.setImageResource(isSeleteAll ? R.mipmap.gwcxz : R.mipmap.gwcmx);
                 List<CartItem> mdata = cartAdapter.getData();
                 for (CartItem cartItem : mdata) {
+                    for (CartGoodsItem cartGoodsItem:cartItem.list){
+                        cartGoodsItem.isCheck = isSeleteAll;
+                    }
                     cartItem.isCheck = isSeleteAll;
                 }
                 cartAdapter.notifyDataSetChanged();
@@ -158,33 +174,16 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartCli
 
         }
     }
-    @Override
-    public void onChildSelete(boolean isSeleteAll) {
-        this.isSeleteAll = isSeleteAll;
-        ivSeleteAll.setImageResource(isSeleteAll ?  R.mipmap.gwcxz : R.mipmap.gwcmx);
-        calculateMoney();
-
-
-    }
-
-    @Override
-    public void onHavaData(boolean isHavaData) {
-        rv_cart.setVisibility(isHavaData ? View.VISIBLE : View.GONE);
-        ll_bottom.setVisibility(isHavaData ? View.VISIBLE : View.GONE);
-        ll_empty.setVisibility(!isHavaData ? View.VISIBLE : View.GONE);
-        calculateMoney();
-
-    }
 
     private void calculateMoney(){
-        List<CartItem> data = cartAdapter.getData();
-        double money = 0;
-        for (CartItem cartItem : data) {
-            if (cartItem.isCheck) {
-                money += cartItem.price * cartItem.getNum();
-            }
-        }
-        tvTotalPrice.setText("" + PriceFormat.getPeice(money));
+//        List<CartItem> data = cartAdapter.getData();
+//        double money = 0;
+//        for (CartItem cartItem : data) {
+//            if (cartItem.isCheck) {
+//                money += cartItem.price * cartItem.getNum();
+//            }
+//        }
+//        tvTotalPrice.setText("" + PriceFormat.getPeice(money));
     }
 
     private void calculateCarts(){
@@ -213,5 +212,29 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartCli
 //        }
 //        return stringBuffer.toString();
 
+    }
+
+    @Override
+    public void onClick(int position) {
+        this.isSeleteAll = true;
+        for (CartItem cartItem:cartAdapter.getData()){
+            boolean allSelect = true;
+            for (CartGoodsItem goodsItem:cartItem.list){
+                if (!cartItem.isCheck){
+                    isSeleteAll = false;
+                    allSelect = false;
+                    break;
+                }
+            }
+            if (!allSelect){
+                break;
+            }
+        }
+        ivSeleteAll.setImageResource(isSeleteAll ?  R.mipmap.gwcxz : R.mipmap.gwcmx);
+        boolean isHavaData = !(cartAdapter.getData().size() == 0);
+        rv_cart.setVisibility(isHavaData ? View.VISIBLE : View.GONE);
+        ll_bottom.setVisibility(isHavaData ? View.VISIBLE : View.GONE);
+        ll_empty.setVisibility(!isHavaData ? View.VISIBLE : View.GONE);
+        calculateMoney();
     }
 }
