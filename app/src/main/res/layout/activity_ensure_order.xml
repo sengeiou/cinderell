@@ -3,13 +3,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/gray_bg"
+
     android:orientation="vertical">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/gray_bg"
         android:layout_weight="1">
 
         <LinearLayout
@@ -56,6 +56,7 @@
                                     android:id="@+id/tv_name"
                                     style="@style/base_text_style"
                                     android:layout_marginTop="8dp"
+                                    android:textSize="12sp"
                                     android:text="李逸   131****5579"/>
 
                                 <TextView
@@ -83,7 +84,7 @@
 
                                 <TextView
                                     style="@style/base_text_style"
-                                    android:textSize="12sp"
+                                    android:textSize="14sp"
                                     android:layout_marginLeft="8dp"
                                     android:text="选择收货地址"/>
 
@@ -118,82 +119,106 @@
 
 
 
-            <com.cinderellavip.weight.MyListView
-                android:id="@+id/lv_goods"
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rv_goods"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:overScrollMode="never"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@color/gray_line"
-                android:dividerHeight="0px"
-                android:listSelector="@android:color/transparent"/>
+                android:background="@color/white"
+                android:paddingBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/base_text_style"
+                    android:layout_weight="1"
+                    android:padding="12dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:text="订单费用合计" />
+
+                <LinearLayout
+                    style="@style/base_hor_style"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/touch_bg">
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:text="运费合计" />
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:textSize="12sp"
+                        android:text="￥0.00" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/base_hor_style"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/touch_bg">
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:text="优惠合计" />
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:textSize="12sp"
+                        android:text="0.00" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/base_hor_style"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/touch_bg">
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:layout_weight="1"
+                        android:text="商品合计"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:textSize="12sp"
+                        android:text="￥488" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/base_hor_style"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/touch_bg">
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:layout_weight="1"
+                        android:text="订单总计"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_goods_money"
+                        style="@style/base_text_style"
+                        android:text="￥488" />
+                </LinearLayout>
+            </LinearLayout>
 
 
             <View
                 style="@style/base_space"
                 />
 
-            <LinearLayout
-                style="@style/base_hor_style"
-                android:background="@drawable/touch_bg">
-
-                <TextView
-                    style="@style/base_text_style"
-                    android:layout_weight="1"
-                    android:text="商品合计" />
-
-                <TextView
-                    android:id="@+id/tv_goods_money"
-                    style="@style/base_text_style"
-                    android:text="￥488" />
-            </LinearLayout>
-
-            <View
-                style="@style/line_light"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                />
-
-
-            <LinearLayout
-                style="@style/base_hor_style"
-                android:background="@drawable/touch_bg"
-
-                >
-
-                <TextView
-                    style="@style/base_text_style"
-                    android:layout_weight="1"
-                    android:text="运费" />
-
-                <TextView
-                    android:id="@+id/tv_freight"
-                    style="@style/base_text_style_gray_small"
-                    android:text="￥5.0" />
-            </LinearLayout>
 
 
 
-            <View
-                style="@style/line_light"
-                />
-
-            <LinearLayout
-                android:id="@+id/ll_coupon"
-                style="@style/base_hor_style"
-                android:background="@drawable/touch_bg"
-                >
-
-                <TextView
-                    style="@style/base_text_style"
-                    android:layout_weight="1"
-                    android:text="优惠券" />
-
-                <TextView
-                    android:id="@+id/tv_coupon_money"
-                    style="@style/base_text_style_gray_small"
-                    android:drawableRight="@mipmap/right_black_icon"
-                    android:drawablePadding="5dp"
-                    android:text="暂无可用优惠券" />
-            </LinearLayout>
 
 
 
@@ -210,7 +235,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 

@@ -46,8 +46,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_margin="12dp"
-        android:paddingTop="25dp"
-        android:paddingBottom="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:background="@drawable/shape_gray5"
@@ -64,9 +64,11 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:hint="0"
             android:inputType="number"
-            android:maxLength="11"
+            android:maxLength="5"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/black_title_color"
@@ -74,8 +76,8 @@
             android:textSize="20sp" />
 
         <TextView
-            android:text="100~1000元"
-            android:textSize="14sp"
+            android:text="不得小于100元"
+            android:textSize="12sp"
             style="@style/base_text_style_gray_small" />
     </LinearLayout>
 

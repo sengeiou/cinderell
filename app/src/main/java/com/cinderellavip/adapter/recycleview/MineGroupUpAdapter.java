@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.mine.MineGroupDetailActivity;
 import com.cinderellavip.util.DataUtil;
 
@@ -28,7 +29,6 @@ public class MineGroupUpAdapter extends BaseQuickAdapter<String, BaseViewHolder>
     @Override
     protected void convert(BaseViewHolder helper,String item) {
         LinearLayout ll_root = helper.getView(R.id.ll_root);
-        TextView tv_name = helper.getView(R.id.tv_name);
         TextView tv_status = helper.getView(R.id.tv_status);
         TextView tv_btn1 = helper.getView(R.id.tv_btn1);
         TextView tv_btn2 = helper.getView(R.id.tv_btn2);
@@ -43,28 +43,32 @@ public class MineGroupUpAdapter extends BaseQuickAdapter<String, BaseViewHolder>
             MineGroupDetailActivity.launch(getContext(),item);
 
         });
-        ll_root.setOnTouchListener(new View.OnTouchListener() {
+        rv_goods.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ll_root.performClick();  //模拟父控件的点击
+                }
                 return false;
             }
         });
+
+        helper.getView(R.id.tv_shop).setOnClickListener(view -> {
+            ShopDetailActivity.launch(getContext());
+        });
         if (item.equals("0")){
-            tv_name.setText("5人团，还差2人");
             tv_status.setText("待成团");
             tv_btn1.setText("详情");
             tv_btn2.setText("邀请");
             tv_btn2.setVisibility(View.VISIBLE);
 
         }else if (item.equals("1")){
-            tv_name.setText("5人团，拼团成功");
             tv_status.setText("已成团");
             tv_btn1.setText("详情");
             tv_btn2.setText("邀请");
             tv_btn2.setVisibility(View.GONE);
 
         }else if (item.equals("2")){
-            tv_name.setText("5人团，拼团失败");
             tv_status.setText("未成团");
             tv_btn1.setText("详情");
             tv_btn2.setText("邀请");

@@ -11,6 +11,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.GroupDetailUserAdapter;
 import com.cinderellavip.adapter.recycleview.OrderGoodsAdapter;
 import com.cinderellavip.toast.SecondDialogUtil;
+import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.CountDownView;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -45,8 +46,6 @@ public class MineGroupDetailActivity extends BaseActivity {
     RecyclerView rvUser;
     @BindView(R.id.tv_invite)
     TextView tvInvite;
-    @BindView(R.id.tv_goods_number)
-    TextView tvGoodsNumber;
     @BindView(R.id.lv_goods)
     RecyclerView lvGoods;
     @BindView(R.id.tv_goods_price)
@@ -140,23 +139,31 @@ public class MineGroupDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.tv_invite)
-    public void onClick() {
-        SecondDialogUtil.showPosterDialog(mContext, (payString1, bitmap) -> {
-            switch (payString1){
-                case "1":
-                    tsg("分享微信");
+    @OnClick({R.id.tv_shop,R.id.tv_invite})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_shop:
+                ShopDetailActivity.launch(mActivity);
+                break;
+            case R.id.tv_invite:
+                SecondDialogUtil.showPosterDialog(mContext, (payString1, bitmap) -> {
+                    switch (payString1){
+                        case "1":
+                            tsg("分享微信");
 //                            shareImage(SHARE_MEDIA.WEIXIN,bitmap);
-                    break;
-                case "2":
-                    tsg("分享朋友圈");
+                            break;
+                        case "2":
+                            tsg("分享朋友圈");
 //                            shareImage(SHARE_MEDIA.WEIXIN_CIRCLE,bitmap);
-                    break;
-                case "down":
-                    tsg("保存成功");
-                    break;
-            }
+                            break;
+                        case "down":
+                            tsg("保存成功");
+                            break;
+                    }
 
-        });
+                });
+                break;
+        }
+
     }
 }

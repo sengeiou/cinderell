@@ -150,17 +150,44 @@
             android:orientation="vertical"
             android:layout_marginTop="8dp"
             android:paddingLeft="12dp"
-            android:paddingTop="12dp"
             android:paddingRight="12dp">
 
-            <TextView
-                android:id="@+id/tv_goods_number"
-                style="@style/base_text_style"
-                android:text="商品信息（共2件）" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:src="@mipmap/icon_shop_forcart"/>
+
+                <TextView
+                    android:id="@+id/tv_shop"
+                    style="@style/base_text_style"
+                    android:text="夺伊服装店"
+                    android:padding="12dp"
+                    android:drawableRight="@mipmap/right_black_icon"
+                    android:drawablePadding="5dp"
+                    android:src="@mipmap/icon_shop_forcart"/>
+
+
+
+                <TextView
+                    style="@style/base_text_style"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_marginRight="12dp"
+                    android:textSize="12sp"
+                    android:text="（共计2件）" />
+
+            </LinearLayout>
 
             <View
                 style="@style/line_light"
-                android:layout_marginTop="12dp" />
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lv_goods"

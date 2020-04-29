@@ -11,9 +11,9 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class EnsureOrderAdapter extends BaseAdapter<String> {
+public class EnsureOrderGoodsAdapter extends BaseAdapter<String> {
 
-    public EnsureOrderAdapter(List<String> mList, Context context) {
+    public EnsureOrderGoodsAdapter(List<String> mList, Context context) {
         super(mList, context);
     }
 

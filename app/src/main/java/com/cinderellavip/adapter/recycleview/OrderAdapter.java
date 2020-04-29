@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.order.OrderDetailActivity;
 import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
@@ -36,7 +37,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
         TextView tv_btn2 = helper.getView(R.id.tv_btn2);
         RecyclerView rv_goods = helper.getView(R.id.rv_goods);
         rv_goods.setLayoutManager(new LinearLayoutManager(getContext()));
-        OrderGoodsAdapter adapter = new OrderGoodsAdapter();
+        OrderGoodsAdapter adapter = new OrderGoodsAdapter(1);
         rv_goods.setAdapter(adapter);
         adapter.setNewData(DataUtil.getData(2));
         switch (item.type){
@@ -86,18 +87,34 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
                     break;
             }
         });
+        tv_btn2.setOnClickListener(view -> {
+
+        });
+        helper.getView(R.id.tv_shop).setOnClickListener(view -> {
+            ShopDetailActivity.launch(getContext());
+        });
 
 
         LinearLayout ll_root = helper.getView(R.id.ll_root);
         ll_root.setOnClickListener(v -> {
             OrderDetailActivity.launch(getContext(),item.type);
         });
-        ll_root.setOnTouchListener(new View.OnTouchListener() {
+//        ll_root.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return false;
+//            }
+//        });
+        rv_goods.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ll_root.performClick();  //模拟父控件的点击
+                }
                 return false;
             }
         });
+
 
 
     }

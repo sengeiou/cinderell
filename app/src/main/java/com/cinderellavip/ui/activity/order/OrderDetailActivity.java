@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.listview.OrderDetailAdapter;
 import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.mine.LogisticsActivity;
+import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyListView;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -158,9 +160,15 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_btn_bottom1, R.id.tv_btn_bottom2})
+    @OnClick({R.id.tv_btn_bottom1, R.id.tv_btn_bottom2, R.id.tv_shop, R.id.tv_copy})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_copy:
+                ClipBoardUtil.copy(mActivity,"12312412351351");
+                break;
+            case R.id.tv_shop:
+                ShopDetailActivity.launch(mActivity);
+                break;
             case R.id.tv_btn_bottom1:
                 if (status == RECEIVE){
                     LogisticsActivity.launch(mActivity,"1");

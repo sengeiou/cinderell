@@ -117,7 +117,8 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_look_order:
-                back();
+                OrderDetailActivity.launch(mActivity,1);
+                finish();
                 break;
             case R.id.tv_go_home:
                 MainActivity.launch(mActivity,MainActivity.SHOP);

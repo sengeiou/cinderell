@@ -3,7 +3,9 @@ package com.cinderellavip.ui.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -81,6 +83,30 @@ public class WithDrawActivity extends BaseActivity {
         super.initListener();
         tv_right.setOnClickListener(v -> {
             WebViewActivity.launch(mActivity,"提现规则","https://www.baidu.com");
+        });
+        etMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String trim = editable.toString().trim();
+                if (Integer.parseInt(trim)>99990){
+                    tsg("单次最多提现9999元");
+                }
+                if (trim.length()>4){
+                    etMoney.setText("9999");
+                    etMoney.setSelection(4);
+                }
+
+            }
         });
     }
 }

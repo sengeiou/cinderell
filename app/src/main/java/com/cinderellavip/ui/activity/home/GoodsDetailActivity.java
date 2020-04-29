@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.toast.DialogUtil;
-import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.ui.activity.order.CartActivity;
 import com.cinderellavip.ui.fragment.goods.CommentFragment;
 import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
@@ -174,7 +173,9 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 ShopDetailActivity.launch(mActivity);
                 break;
             case R.id.ll_buy_left_btn:
-                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {});
+                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {
+                    EnsureOrderActivity.launch(mActivity);
+                });
                 break;
             case R.id.ll_buy_right_btn:
                 DialogUtil.showSpeciSpecialDialog(mContext,payString -> {

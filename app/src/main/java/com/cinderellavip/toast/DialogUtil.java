@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,10 +16,10 @@ import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.net.SpecialItem;
 import com.cinderellavip.ui.activity.find.PublishPostActivity;
 import com.cinderellavip.ui.activity.find.PublishTopicActivity;
+import com.cinderellavip.weight.CartNumberView;
 import com.cinderellavip.weight.SquareRoundImageView;
 import com.nex3z.flowlayout.FlowLayout;
 import com.tozzais.baselibrary.util.CommonUtils;
-import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,12 +73,13 @@ public class DialogUtil {
         TextView tv_sure = view.findViewById(R.id.tv_sure);
 
         SquareRoundImageView iv_image = view.findViewById(R.id.iv_image);
+        CartNumberView cart_view = view.findViewById(R.id.cart_view);
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_former_price = view.findViewById(R.id.tv_former_price);
         TextView tv_specification = view.findViewById(R.id.tv_specification);
         tv_former_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         tv_sure.setOnClickListener(v -> {
-//            listener.onFinish(tv_number.getText().toString().trim());
+            listener.onFinish(cart_view.getTv_number().getText().toString().trim());
             dialog.dismiss();
             dialog = null;
         });

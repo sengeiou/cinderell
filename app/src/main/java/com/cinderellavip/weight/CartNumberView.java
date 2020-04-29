@@ -9,12 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.listener.OnFilterListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +27,10 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
     private RelativeLayout rl_reduce;
     private RelativeLayout rl_add;
     private ImageView iv_reduce;
+
+    public EditText getTv_number() {
+        return tv_number;
+    }
 
     public CartNumberView(@NonNull Context context) {
         super(context);

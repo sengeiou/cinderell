@@ -8,16 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.adapter.listview.EnsureOrderAdapter;
+import com.cinderellavip.adapter.recycleview.EnsureOrderAdapter;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
-import com.cinderellavip.ui.activity.mine.SelectCouponActivity;
 import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.util.DataUtil;
-import com.cinderellavip.weight.MyListView;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -27,16 +27,10 @@ import butterknife.OnClick;
 public class EnsureOrderActivity extends BaseActivity {
 
 
-    @BindView(R.id.lv_goods)
-    MyListView lvGoods;
+    @BindView(R.id.rv_goods)
+    RecyclerView rv_goods;
 
 
-    @BindView(R.id.tv_freight)
-    TextView tvFreight;
-    @BindView(R.id.tv_coupon_money)
-    TextView tvCouponMoney;
-    @BindView(R.id.tv_pay_monet)
-    TextView tvPayMonet;
 
     //收货地址有关
     @BindView(R.id.tv_name)
@@ -61,6 +55,7 @@ public class EnsureOrderActivity extends BaseActivity {
     }
 
 
+    private EnsureOrderAdapter ensureOrderAdapter;
     @Override
     public int getLayoutId() {
         return R.layout.activity_ensure_order;
@@ -69,14 +64,19 @@ public class EnsureOrderActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setBackTitle("确认订单");
+        rv_goods.setLayoutManager(new LinearLayoutManager(mActivity));
+        ensureOrderAdapter = new EnsureOrderAdapter();
+        rv_goods.setAdapter(ensureOrderAdapter);
+
 
     }
 
-    EnsureOrderAdapter ensureOrderAdapter;
 
     @Override
     public void loadData() {
        setData();
+
+        ensureOrderAdapter.setNewData(DataUtil.getData(2));
     }
 
 
@@ -88,8 +88,7 @@ public class EnsureOrderActivity extends BaseActivity {
 
         setAddress(null);
 
-        ensureOrderAdapter = new EnsureOrderAdapter(DataUtil.getData(2), mContext);
-        lvGoods.setAdapter(ensureOrderAdapter);
+
 
 
 
@@ -115,19 +114,20 @@ public class EnsureOrderActivity extends BaseActivity {
         if (requestCode == MineAddressActivity.REQUESTCODE && resultCode == RESULT_OK) {
            setAddress(new NetCityBean(true));
         } else if (requestCode == 11 && resultCode == RESULT_OK) {
-            tvCouponMoney.setText("-￥20");
+//            tvCouponMoney.setText("-￥20");
         }
     }
 
 
 
     @OnClick({R.id.tv_commit
-            , R.id.ll_selete_address, R.id.ll_coupon})
+            , R.id.ll_selete_address})
     public void onClick(View view) {
         switch (view.getId()) {
 
             case R.id.tv_commit:
                 SelectPayWayActivity.launch(mActivity,0,"");
+                finish();
 //                DialogUtil.getInstance().showRealNameDialog(mContext,payString -> {
 
 //                });
@@ -135,9 +135,9 @@ public class EnsureOrderActivity extends BaseActivity {
             case R.id.ll_selete_address:
                 MineAddressActivity.launch(mActivity, MineAddressActivity.SELETE, "");
                 break;
-            case R.id.ll_coupon:
-                SelectCouponActivity.launch(mActivity);
-                break;
+//            case R.id.ll_coupon:
+//                SelectCouponActivity.launch(mActivity);
+//                break;
 
         }
     }

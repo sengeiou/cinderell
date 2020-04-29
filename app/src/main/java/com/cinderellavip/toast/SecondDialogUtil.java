@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.listener.ShareClickListener;
+import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.util.image.ImgUtils;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
@@ -100,6 +101,10 @@ public class SecondDialogUtil {
         view.findViewById(R.id.ll_root).setOnClickListener(v -> {
             dialog.dismiss();
             dialog = null;
+
+        });
+        view.findViewById(R.id.tv_copy_code).setOnClickListener(v -> {
+            ClipBoardUtil.copy(context,"245523");
 
         });
         view.findViewById(R.id.iv_down).setOnClickListener(v -> {

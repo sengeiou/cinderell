@@ -78,7 +78,21 @@
                     android:textSize="18sp"
                     />
 
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_copy_code"
+                style="@style/base_text_style"
+                android:text="复制推荐码"
+                android:layout_marginTop="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@drawable/shape_line_gray50"
+                android:textSize="12sp"
+                />
 
         </LinearLayout>
 
