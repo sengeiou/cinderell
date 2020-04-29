@@ -103,6 +103,7 @@
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="12dp"
+                        android:textSize="12sp"
                         />
 
                     <View
@@ -147,7 +148,7 @@
                     <TextView
                         style="@style/base_text_style"
                         android:textStyle="bold"
-                        android:text="回复 143"
+                        android:text="评价 143"
                         android:layout_marginLeft="5dp"/>
 
                 </LinearLayout>
