@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.BigImageAdapter;
 import com.cinderellavip.util.DonwloadSaveImg;
@@ -22,29 +21,27 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/4/18.
  */
 
-public class BigImageActivity extends BaseActivity {
+public class BigImageActivity1 extends BaseActivity {
 
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     @BindView(R.id.tv_pic_number)
     TextView tv_pic_number;
 
-    public static void launch(Context form, String[] data, int position) {
-        Intent intent = new Intent(form, BigImageActivity.class);
+
+    /**
+     * 本地资源文件
+     * @param form
+     * @param data
+     * @param position
+     */
+    public static void launch(Context form, ArrayList<Integer> data, int position) {
+        Intent intent = new Intent(form, BigImageActivity1.class);
         intent.putExtra("data", data);
         intent.putExtra("position", position);
         form.startActivity(intent);
     }
 
-
-
-    public static void launch(Context form, String data) {
-        Intent intent = new Intent(form, BigImageActivity.class);
-        String[] array = new String[]{data};
-        intent.putExtra("data", array);
-        intent.putExtra("position", 0);
-        form.startActivity(intent);
-    }
 
 
     @Override
@@ -56,16 +53,16 @@ public class BigImageActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
     }
 
-    private String[] data;
+    private ArrayList<Integer> data;
 
     @Override
     public void loadData() {
         Intent intent = getIntent();
+            data = intent.getIntegerArrayListExtra("data");
+            viewpager.setAdapter(new BigImageAdapter(data, mActivity,true));
 
-            data = intent.getStringArrayExtra("data");
-            viewpager.setAdapter(new BigImageAdapter(data, mActivity));
         pointIndex = intent.getIntExtra("position", 0);
-        tv_pic_number.setText(pointIndex + 1 + "/" + data.length);
+        tv_pic_number.setText(pointIndex + 1 + "/" + data.size());
 
 
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -77,7 +74,7 @@ public class BigImageActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 int newPosition = position;
-                tv_pic_number.setText(position + 1 + "/" + data.length);
+                tv_pic_number.setText(position + 1 + "/" + data.size());
                 // 更新标志位
                 pointIndex = newPosition;
             }
@@ -105,12 +102,12 @@ public class BigImageActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTransparentForImageViewInFragment(BigImageActivity.this, null);
+        StatusBarUtil.setTransparentForImageViewInFragment(BigImageActivity1.this, null);
         StatusBarUtil.setDarkMode(this);
     }
 
     @OnClick(R.id.tv_sava)
     public void onClick() {
-        DonwloadSaveImg.donwloadImg(mActivity, data[pointIndex]);
+//        DonwloadSaveImg.donwloadImg(mActivity, data[pointIndex]);
     }
 }

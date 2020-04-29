@@ -14,7 +14,7 @@ import com.cinderellavip.util.ScreenUtil;
 public class RecommentGoodsAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     public RecommentGoodsAdapter() {
-        super(R.layout.item_cardsale_goods, null);
+        super(R.layout.item_recommend_goods, null);
     }
 
 

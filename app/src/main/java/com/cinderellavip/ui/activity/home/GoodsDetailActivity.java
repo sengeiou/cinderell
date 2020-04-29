@@ -11,6 +11,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.toast.SecondDialogUtil;
+import com.cinderellavip.ui.activity.order.CartActivity;
 import com.cinderellavip.ui.fragment.goods.CommentFragment;
 import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
 import com.cinderellavip.ui.fragment.goods.GraphicFragment;
@@ -160,6 +161,8 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rv_cart:
+                CartActivity.launch(mActivity);
+
                 break;
             case R.id.iv_share:
                 SecondDialogUtil.showPosterDialog(mContext, (payString1, bitmap) -> {
@@ -180,6 +183,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 });
                 break;
             case R.id.tv_service:
+                DialogUtil.showCallPhoneDialog(mActivity);
                 break;
             case R.id.tv_shop:
                 ShopDetailActivity.launch(mActivity);

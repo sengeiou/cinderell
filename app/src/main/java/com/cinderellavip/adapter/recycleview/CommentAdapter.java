@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.weight.RatingBarView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,9 @@ public class CommentAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     protected void convert(BaseViewHolder helper,String item) {
         int position = helper.getAdapterPosition();
         View space = helper.getView(R.id.space);
+        RatingBarView ratingbar = helper.getView(R.id.ratingbar);
+        ratingbar.setClickable(false);
+        ratingbar.setStar(3,false);
         if (havaTopSpace && position == 0){
             space.setVisibility(View.VISIBLE);
         }else {

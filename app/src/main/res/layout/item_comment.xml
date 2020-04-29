@@ -19,7 +19,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <com.cinderellavip.weight.CircleImageView
@@ -60,6 +60,8 @@
                 android:layout_height="wrap_content"
                 app:starCount="5"
                 app:starImageSize="20dp"
+                android:layout_marginRight="12dp"
+                android:clickable="false"
                 app:starFill="@mipmap/icon_comment_select"
                 app:starEmpty="@mipmap/icon_comment_default"/>
 

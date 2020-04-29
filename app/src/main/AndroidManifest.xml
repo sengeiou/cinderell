@@ -74,6 +74,8 @@
         <activity android:name=".ui.activity.home.SearchResultActivity"/>
         <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
         <activity android:name=".ui.BigImageActivity"/>
+        <activity android:name=".ui.BigImageActivity1"/>
+        <activity android:name=".ui.activity.order.CartActivity"/>
         <activity android:name=".ui.activity.home.HomeCategoryListActivity"/>
         <activity android:name=".ui.activity.home.BrandDetailActivity"/>
         <activity android:name=".ui.activity.home.ShopDetailActivity"/>

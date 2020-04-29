@@ -111,8 +111,9 @@ public class GoodsDetailFragment extends BaseFragment {
 
     public void setData() {
 //        BannerUtil.initBanner(mActivity, xbanner, "details.pics;details.pics;details.pics");
-        String[] pics = "details.pics;details.pics;details.pics".split(";");
+        String[] pics = "details.mp4;details.pics;details.pics".split(";");
         List<GoodsDetialBanner> bannerList = new ArrayList<>();
+        bannerList.add(new GoodsDetialBanner("s", true));
         for (String s : pics) {
             bannerList.add(new GoodsDetialBanner(s, false));
         }

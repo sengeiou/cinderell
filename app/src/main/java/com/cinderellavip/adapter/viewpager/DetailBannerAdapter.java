@@ -64,7 +64,6 @@ public class DetailBannerAdapter extends PagerAdapter {
         View view;
         if (bean.isVideo){
              view = View.inflate(mContext, R.layout.item_detail_video,null);
-             VideoView videoView = view.findViewById(R.id.video);
 //            StandardVideoController mController = new StandardVideoController(mContext);
 //            ImageView thumb = mController.getThumb();
 //            mController.setEnableOrientation(true);
