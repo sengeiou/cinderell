@@ -55,12 +55,12 @@ public class ShareActivity extends CheckPermissionActivity {
     @Override
     public void loadData() {
         List<ShareImageItem> list = new ArrayList<>();
-        list.add(new ShareImageItem(false));
-        list.add(new ShareImageItem(false));
-        list.add(new ShareImageItem(false));
-        list.add(new ShareImageItem(false));
-        list.add(new ShareImageItem(false));
-        list.add(new ShareImageItem(false));
+        list.add(new ShareImageItem(true));
+        list.add(new ShareImageItem(true));
+        list.add(new ShareImageItem(true));
+        list.add(new ShareImageItem(true));
+        list.add(new ShareImageItem(true));
+        list.add(new ShareImageItem(true));
         imageShareAdapter.setNewData(list);
     }
 
@@ -77,6 +77,11 @@ public class ShareActivity extends CheckPermissionActivity {
                 share();
                 break;
             case R.id.rl_share2:
+                Intent textIntent = new Intent(Intent.ACTION_SEND);
+                textIntent.setType("text/plain");
+                textIntent.putExtra(Intent.EXTRA_TEXT, "这是一段分享的文字");
+                startActivity(Intent.createChooser(textIntent, "分享"));
+                break;
             case R.id.rl_share3:
                 CenterDialogUtil.showShare(mActivity,()->{
 

@@ -78,9 +78,13 @@
                 android:id="@+id/tv_use"
                 style="@style/base_btn_style"
                 android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:paddingTop="3dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
                 android:paddingBottom="3dp"
-                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:textSize="12sp"
                 android:text="立即领取"/>
 
             <ImageView

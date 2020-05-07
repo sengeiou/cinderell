@@ -79,6 +79,16 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
             @Override
             public void afterTextChanged(Editable s) {
                 String content = s.toString();
+                if (content.length()>4){
+                    content = "9999";
+                    tv_number.setText("9999");
+                    tv_number.setSelection(tv_number.getText().toString().length());
+                }
+                if (TextUtils.isEmpty(content)){
+                    tv_number.setText("1");
+                    tv_number.setSelection(tv_number.getText().toString().length());
+                    return;
+                }
                 try {
                     number = Integer.parseInt(content);
                     if (number>1){
@@ -88,6 +98,7 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
                         rl_reduce.setEnabled(false);
                         iv_reduce.setImageResource(R.mipmap.caer_reduce_unclick);
                     }
+
                 }catch (Exception e){
 
                 }
@@ -103,7 +114,7 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
         int id = v.getId();
         String content = tv_number.getText().toString().trim();
         if (TextUtils.isEmpty(content)){
-            number = 0;
+            number = 1;
         }else {
             number = Integer.parseInt(content);
         }
@@ -113,14 +124,16 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
         } else if (id == R.id.rl_add) {
             number++;
         }
-        tv_number.setText(number+"");
-        tv_number.setSelection(tv_number.getText().toString().length());
+        setNumber(number);
     }
 
     private int number = 1;
     public void setNumber(int number) {
         this.number = number;
+        tv_number.setText(number+"");
+        tv_number.setSelection(tv_number.getText().toString().length());
     }
+
 
 
 

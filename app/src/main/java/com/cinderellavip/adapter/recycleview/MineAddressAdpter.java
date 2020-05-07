@@ -13,6 +13,7 @@ import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.ui.activity.mine.EditAddressActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.sign.SignUtil;
@@ -40,7 +41,7 @@ public class MineAddressAdpter extends BaseQuickAdapter<NetCityBean, BaseViewHol
                         ? View.VISIBLE : View.GONE);
 //
         iv_edit.setOnClickListener(v -> {
-//            EditAddressActivity.launch((Activity) mContext, EditAddressActivity.EDIT, item);
+            EditAddressActivity.launch((Activity) getContext(), EditAddressActivity.EDIT, item);
         });
 //        TextView tv_name = helper.getView(R.id.tv_name);
 //        TextView tv_phone = helper.getView(R.id.tv_phone);

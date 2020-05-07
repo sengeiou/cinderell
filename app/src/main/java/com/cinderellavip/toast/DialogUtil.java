@@ -74,6 +74,7 @@ public class DialogUtil {
 
         SquareRoundImageView iv_image = view.findViewById(R.id.iv_image);
         CartNumberView cart_view = view.findViewById(R.id.cart_view);
+        cart_view.setNumber(1);
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_former_price = view.findViewById(R.id.tv_former_price);
         TextView tv_specification = view.findViewById(R.id.tv_specification);
