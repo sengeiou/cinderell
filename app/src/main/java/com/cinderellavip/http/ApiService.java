@@ -1,12 +1,14 @@
 package com.cinderellavip.http;
 
 
+import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.bean.net.UserInfo;
 
 import java.util.TreeMap;
 
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -44,5 +46,9 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult>
     getForgetPass(@FieldMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.home_category)
+    Observable<BaseResult<HomeCategoryResult>>
+    getHomeCategory();
 
 }

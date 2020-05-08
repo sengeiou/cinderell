@@ -6,10 +6,16 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.HomeCategoryItem;
+import com.cinderellavip.bean.net.HomeCategoryResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.home.HomeCategoryListActivity;
 import com.cinderellavip.ui.activity.home.SearchActivity;
 import com.cinderellavip.weight.MyTabLayout;
 import com.cinderellavip.weight.StatusBarHeightView;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
 import java.util.ArrayList;
@@ -65,26 +71,46 @@ public class ShopFragment extends BaseFragment {
 
     @Override
     public void loadData() {
+        getCategory();
+
+    }
+
+    @OnClick({R.id.ll_search, R.id.iv_category})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_search:
+                SearchActivity.launch(mActivity);
+                break;
+            case R.id.iv_category:
+                HomeCategoryListActivity.launch(mActivity);
+                break;
+        }
+    }
+
+    /**
+     * 获取一级分类
+     */
+    private void getCategory(){
+        new RxHttp<BaseResult<HomeCategoryResult>>().send(ApiManager.getService().getHomeCategory(),
+                new Response<BaseResult<HomeCategoryResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<HomeCategoryResult> result) {
+                        setTabCategory(result.data.list);
+                    }
+                });
+
+    }
+
+    private void  setTabCategory(List<HomeCategoryItem> category){
         myTitle = new ArrayList<>();
-        myTitle.add("首页");
-        myTitle.add("食品生鲜");
-        myTitle.add("居家百货");
-        myTitle.add("美妆日化");
-        myTitle.add("数码电气");
-        myTitle.add("母婴产品");
-        myTitle.add("休闲娱乐");
-        tabCategory.setTitle(myTitle);
-
-
         myFragment = new ArrayList<>();
+        myTitle.add("首页");
         myFragment.add(new ShopMainGoodsFragment());
-        myFragment.add(new ShopCategoryGoodsFragment());
-        myFragment.add(new ShopCategoryGoodsFragment());
-        myFragment.add(new ShopCategoryGoodsFragment());
-        myFragment.add(new ShopCategoryGoodsFragment());
-        myFragment.add(new ShopCategoryGoodsFragment());
-        myFragment.add(new ShopCategoryGoodsFragment());
-
+        for (HomeCategoryItem category1:category){
+            myTitle.add(category1.name);
+            myFragment.add(new ShopCategoryGoodsFragment());
+        }
+        tabCategory.setTitle(myTitle);
         //预加载
         viewPager.setOffscreenPageLimit(myFragment.size());
         //适配器（容器都需要适配器）
@@ -107,18 +133,5 @@ public class ShopFragment extends BaseFragment {
         });
 
         tabCategory.setupWithViewPager(viewPager);
-
-    }
-
-    @OnClick({R.id.ll_search, R.id.iv_category})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_search:
-                SearchActivity.launch(mActivity);
-                break;
-            case R.id.iv_category:
-                HomeCategoryListActivity.launch(mActivity);
-                break;
-        }
     }
 }
