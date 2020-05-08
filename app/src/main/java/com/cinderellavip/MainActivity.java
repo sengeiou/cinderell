@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.toast.DialogUtil;
+import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.fragment.CartFragment;
 import com.cinderellavip.ui.fragment.FindFragment;
 import com.cinderellavip.ui.fragment.LifeFragment;
@@ -136,7 +138,11 @@ public class MainActivity extends CheckPermissionActivity {
                 }
                 break;
             case R.id.ll_cart:
-                selectFragment(CART);
+                if (GlobalParam.getUserLogin()){
+                    selectFragment(CART);
+                }else {
+                    LoginActivity.launch(mActivity);
+                }
                 break;
             case R.id.ll_mine:
                 selectFragment(MINE);

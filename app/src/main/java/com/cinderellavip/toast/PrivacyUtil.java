@@ -14,8 +14,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.listener.OnDialogClickListener;
-import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 
 
 public class PrivacyUtil {
@@ -40,7 +41,8 @@ public class PrivacyUtil {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                WebViewActivity.launch(context,"服务协议","https://www.baidu.com");
+                AgreementWebViewActivity.launch(context, Constant.H5_SERVICE);
+//                WebViewActivity.launch(context,"服务协议","https://www.baidu.com");
             }
 
             @Override
@@ -55,7 +57,7 @@ public class PrivacyUtil {
         ClickableSpan clickableSpan1 = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                WebViewActivity.launch(context,"隐私条款","https://www.baidu.com");
+                AgreementWebViewActivity.launch(context, Constant.H5_PRIVACY);
             }
 
             @Override

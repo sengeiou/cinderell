@@ -1,6 +1,7 @@
 package com.cinderellavip.global;
 
 
+import com.cinderellavip.bean.net.UserInfo;
 import com.tozzais.baselibrary.util.SharedPreferencesUtil;
 
 
@@ -38,6 +39,31 @@ public class GlobalParam {
     public static boolean getUserLogin() {
         return SharedPreferencesUtil.getBooleanData(CinderellApplication.mContext, Constant.user_login,false);
     }
+
+    //存 用户的token
+    public static void setUserId(String userid) {
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.user_id, userid);
+    }
+    //取 用户的用户的token
+    public static String getUserId() {
+        return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.user_id,"");
+    }
+
+
+    //存 用户 信息
+    public static void setUserInfo(UserInfo userInfo) {
+        setUserLogin(true);
+       setUserToken(userInfo.token);
+       setUserId(userInfo.user_id+"");
+    }
+
+    //存 用户 信息
+    public static void exitLogin() {
+        setUserLogin(false);
+        setUserToken("");
+        setUserId("");
+    }
+
 
 
 }

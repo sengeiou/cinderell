@@ -76,16 +76,17 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("account", phone);
+        hashMap.put("mobile", phone);
         hashMap.put("password", pass);
         new RxHttp<BaseResult<UserInfo>>().send(ApiManager.getService().getLogin(hashMap),
                 new Response<BaseResult<UserInfo>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<UserInfo> result) {
+                        UserInfo userInfo = result.data;
+                        GlobalParam.setUserInfo(userInfo);
                         MainActivity.launch(mActivity);
                     }
                 });
-
 
     }
 

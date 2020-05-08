@@ -1,14 +1,13 @@
 package com.cinderellavip.http;
 
 
-
 import com.cinderellavip.bean.net.UserInfo;
 
 import java.util.TreeMap;
 
-import retrofit2.http.GET;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.QueryMap;
 import rx.Observable;
 
 
@@ -22,8 +21,9 @@ public interface ApiService {
      * @param
      * @return
      */
-    @GET(HttpUrl.login)
+    @POST(HttpUrl.login)
+    @FormUrlEncoded
     Observable<BaseResult<UserInfo>>
-    getLogin(@QueryMap TreeMap<String, String> map);
+    getLogin(@FieldMap TreeMap<String, String> map);
 
 }

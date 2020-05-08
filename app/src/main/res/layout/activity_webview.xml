@@ -12,12 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
-        <com.itheima.view.BridgeWebView
-            android:id="@+id/web_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.itheima.view.BridgeWebView>
+    <com.ycbjie.webviewlib.X5WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 
     </LinearLayout>
