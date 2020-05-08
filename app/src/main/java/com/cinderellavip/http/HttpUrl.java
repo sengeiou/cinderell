@@ -6,10 +6,14 @@ package com.cinderellavip.http;
 public interface HttpUrl {
 
 
-    String server_url = "https://hongkong-shopping.cn/";
+    String server_url = "https://api.huiguniangvip.com/";
     String image_url = server_url+"gp/profile/";
 
-    String login = "api/app_user/login";  //登录
+    String login = "api/seller/login/pas";  //用户名登录
+    String get_code = "api/store/sms/send";  //获取验证码
+    String code_login = "api/seller/login/sms";  //短信验证码登录
+    String forget_pass = "api/seller/forget/pas";  //忘记密码
+    String home = "api/seller/index";  //首页
 
 
 

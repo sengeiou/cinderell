@@ -22,5 +22,22 @@ public class GlobalParam {
     }
 
 
+    //存 用户的token
+    public static void setUserToken(String userid) {
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.user_token, userid);
+    }
+    //取 用户的用户的token
+    public static String getUserToken() {
+        return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.user_token,"");
+    }
+
+    //是否登录
+    public static void setUserLogin(boolean userid) {
+        SharedPreferencesUtil.saveBooleanData(CinderellApplication.mContext, Constant.user_login, userid);
+    }
+    public static boolean getUserLogin() {
+        return SharedPreferencesUtil.getBooleanData(CinderellApplication.mContext, Constant.user_login,false);
+    }
+
 
 }

@@ -1,6 +1,5 @@
 package com.cinderellavip.http;
 
-import com.tozzais.baselibrary.http.OkHttpUtils;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

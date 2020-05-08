@@ -1,9 +1,12 @@
 package com.cinderellavip.http;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 
+import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.google.gson.JsonSyntaxException;
 import com.tozzais.baselibrary.util.NetworkUtil;
 import com.tozzais.baselibrary.util.progress.LoadingUtils;
@@ -104,23 +107,22 @@ public class Response<T> extends Subscriber<T> {
 
         if (str instanceof BaseResult){
             BaseResult base = (BaseResult) str;
-            if (0 == base.code || "0".equals(base.code)){
+            if (200 == base.code ){
                 onSuccess(str);
-            }else if (20000 == base.code || "20000".equals(base.code)){
+            }else if (20001 == base.code || 20014 == base.code || 20015 == base.code ){
                 /**
                  * 单点登录  是首页的时候  都要走newIntent
                  *  不是首页的时候
                  */
-//                GlobalParam.setUserLogin(false);
+                GlobalParam.setUserLogin(false);
 //                GlobalParam.setUserId("0");
-//                EventBus.getDefault().post(new UpdateMineInfo());
-//                SelectLoginWayActivity.launch(true,(Activity) mContext);
+                LoginActivity.launch((Activity) mContext);
             }else {
-                if (!TextUtils.isEmpty(base.msg)){
+                if (!TextUtils.isEmpty(base.message)){
                     if (mNeedReturn && !isLoad){
-                        onErrorShow(base.msg);
+                        onErrorShow(base.message);
                     }if (mNeedTip){
-                        onToast(base.msg);
+                        onToast(base.message);
                     }
                 }
             }

@@ -7,5 +7,5 @@ package com.cinderellavip.http;
 public class BaseResult<T>{
     public T data;
     public int code;
-    public String msg;
+    public String message;
 }

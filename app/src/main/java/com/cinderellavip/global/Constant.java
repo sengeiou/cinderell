@@ -16,13 +16,13 @@ public class Constant {
             .getExternalStorageDirectory() + "/hk_fight";
 
 
-    public static String user_login = "hk_user_login";
+    public static String user_login = "cinder_user_login";
     public static String search_history = "hk_search_history";
     public static String user_id = "hk_user_id";
     public static String user_nickname = "hk_user_nickname";
-    public static String user_token = "hk_user_token";
+    public static String user_token = "cinder_user_token";
     public static String user_bean_string = "hk_user_bean_string";
-    public static String user_first_use = "hk_user_first_use";
+    public static String user_first_use = "cinder_user_first_use";
     public static String user_login_finish = "hk_user_login_finish";
     public static String user_agree_privacy = "hk_user_agree_privacy";
     public static String user_auth = "hk_user_auth";

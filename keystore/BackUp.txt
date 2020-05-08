@@ -1,0 +1,8 @@
+灰姑娘用户端：
+用户端接口地址：https://apizza.net/pro/#/project/751da3558b7849538bf9e99a0bf613a9/browse
+商家端接口地址：https://apizza.net/pro/#/project/56bd956776bf9eefee25b3442459539b/browse
+商家测试账号：
+18516634528 123456
+
+
+商家端UI地址：https://lanhuapp.com/web/#/item/project/board?type=share_mark&pid=83f8ef0f-5d8f-41e2-8da6-4245eaeccf20&activeSectionId=&teamId=a4c70b0d-3824-4971-92c2-03e4164c4900&param=bdc4a6ef-84c8-4d7f-a0f2-8b9411b5bf2f

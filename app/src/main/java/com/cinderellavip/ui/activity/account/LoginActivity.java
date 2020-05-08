@@ -11,8 +11,16 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
+import com.cinderellavip.bean.net.UserInfo;
+import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
+
+import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -67,7 +75,17 @@ public class LoginActivity extends BaseActivity {
             tsg("请输入登录密码");
             return;
         }
-        MainActivity.launch(mActivity);
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("account", phone);
+        hashMap.put("password", pass);
+        new RxHttp<BaseResult<UserInfo>>().send(ApiManager.getService().getLogin(hashMap),
+                new Response<BaseResult<UserInfo>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<UserInfo> result) {
+                        MainActivity.launch(mActivity);
+                    }
+                });
+
 
     }
 
