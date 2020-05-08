@@ -25,5 +25,24 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult<UserInfo>>
     getLogin(@FieldMap TreeMap<String, String> map);
+    @POST(HttpUrl.get_code)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    getCode(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.code_login)
+    @FormUrlEncoded
+    Observable<BaseResult<UserInfo>>
+    getCodeLogin(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.register)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    getRegister(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.forget_pass)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    getForgetPass(@FieldMap TreeMap<String, String> map);
 
 }

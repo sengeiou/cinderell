@@ -12,9 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.global.Constant;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -68,6 +75,7 @@ public class RegisterActivity extends BaseActivity {
         String phone = etPhone.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
         String code = etCode.getText().toString().trim();
+        String invite_code = et_recomment_code.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             tsg("请输入手机号");
             return;
@@ -87,8 +95,21 @@ public class RegisterActivity extends BaseActivity {
             tsg("请勾选《用户协议》和《隐私条款》");
             return;
         }
-        tsg("注册成功");
-        setResult(phone,pass);
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("mobile", phone);
+        hashMap.put("sms_code", code);
+        hashMap.put("password", pass);
+        hashMap.put("invite_code", invite_code);
+
+        new RxHttp<BaseResult>().send(ApiManager.getService().getRegister(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        tsg("注册成功");
+                        setResult(phone,pass);
+                    }
+                });
+
 
 
     }
@@ -111,6 +132,18 @@ public class RegisterActivity extends BaseActivity {
             tsg("请输入正确的手机号");
             return;
         }
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("mobile", phone);
+            hashMap.put("type", "1");
+
+        new RxHttp<BaseResult>().send(ApiManager.getService().getCode(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        tsg("验证码发送成功");
+                        mHandler.sendEmptyMessage(1);
+                    }
+                });
 
 
     }
@@ -151,17 +184,17 @@ public class RegisterActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_code:
-                mHandler.sendEmptyMessage(1);
+                getCode();
                 break;
             case R.id.iv_agreement:
                 isSelete = !isSelete;
                 ivAgreement.setImageResource(isSelete?R.mipmap.agreement_selete_yes:R.mipmap.agreement_selete_no);
                 break;
             case R.id.tv_register_agreement:
-                WebViewActivity.launch(mActivity,"用户协议","https://www.baidu.com");
+                AgreementWebViewActivity.launch(mActivity, Constant.H5_SERVICE);
                 break;
             case R.id.tv_privacy:
-                WebViewActivity.launch(mActivity,"隐私条款","https://www.baidu.com");
+                AgreementWebViewActivity.launch(mActivity, Constant.H5_PRIVACY);
                 break;
             case R.id.tv_register:
                 register();

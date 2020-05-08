@@ -13,12 +13,14 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
+import com.cinderellavip.bean.net.UserInfo;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -148,35 +150,24 @@ public class FastLoginActivity extends BaseActivity {
             return;
         }
 
-//        TreeMap<String, String> hashMap = new TreeMap<>();
-//        hashMap.put("phone", phone);
-//        String category = "1";
-//        if (type == REGISTER){
-//            category = "1";
-//        }else if (type == FORGET){
-//            category = "2";
-//        }else if (type == MODIFY){
-//            category = "5";
-//        }
-//        hashMap.put("category",  category);
-//        hashMap.put("tag",  tag);
-//        String area_code = "86";
-//        if (tag.equals("1")){
-//            area_code = "86";
-//        }else {
-//            area_code = "852";
-//        }
-//        hashMap.put("area_code",  area_code);
-////        hashMap.put("sign", SignUtil.getMd5(area_code+category+phone+tag));
-//        hashMap.put("sign", SignUtil.getMd5(hashMap));
-//        new RxHttp<BaseResult>().send(ApiManager.getService().getCode(hashMap),
-//                new Response<BaseResult>(mActivity) {
-//                    @Override
-//                    public void onSuccess(BaseResult result) {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("mobile", phone);
+        if (type == FAST_LOGIN) {
+            hashMap.put("type", "6");
+        } else if (type == BIND_PHONE) {
+            hashMap.put("type", "10");
+        } else if (type == FORGET_PASS) {
+            hashMap.put("type", "3");
+        }
+
+        new RxHttp<BaseResult>().send(ApiManager.getService().getCode(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
                         tsg("验证码发送成功");
                         mHandler.sendEmptyMessage(1);
-//                    }
-//                });
+                    }
+                });
     }
 
 
@@ -220,19 +211,57 @@ public class FastLoginActivity extends BaseActivity {
 
         }
         if (type == FAST_LOGIN) {
-            EventBus.getDefault().post(new LoginFinishSuccess());
-            tsg("登录成功");
-            MainActivity.launch(mActivity);
-
+            codeLogin(phone,code);
         } else if (type == BIND_PHONE) {
             EventBus.getDefault().post(new LoginFinishSuccess());
             tsg("绑定成功");
             MainActivity.launch(mActivity);
         } else if (type == FORGET_PASS) {
-            tsg("修改成功");
-            setResult();
+            forgetPass(phone,code,pass);
+
         }
 
+    }
+
+    /**
+     * 验证码登录
+     * @param mobile
+     * @param sms_code
+     */
+    private void codeLogin(String mobile,String sms_code){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("mobile", mobile);
+        hashMap.put("sms_code", sms_code);
+        new RxHttp<BaseResult<UserInfo>>().send(ApiManager.getService().getCodeLogin(hashMap),
+                new Response<BaseResult<UserInfo>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<UserInfo> result) {
+                        EventBus.getDefault().post(new LoginFinishSuccess());
+                        UserInfo userInfo = result.data;
+                        GlobalParam.setUserInfo(userInfo);
+                        MainActivity.launch(mActivity);
+                    }
+                });
+    }
+
+    /**
+     * 忘记密码
+     * @param mobile
+     * @param sms_code
+     */
+    private void forgetPass(String mobile,String sms_code,String new_password){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("mobile", mobile);
+        hashMap.put("sms_code", sms_code);
+        hashMap.put("new_password", new_password);
+        new RxHttp<BaseResult<UserInfo>>().send(ApiManager.getService().getCodeLogin(hashMap),
+                new Response<BaseResult<UserInfo>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<UserInfo> result) {
+                        tsg("修改成功");
+                        setResult();
+                    }
+                });
     }
 
     private void setResult() {
