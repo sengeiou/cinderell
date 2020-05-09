@@ -73,6 +73,7 @@ public class ShopFragment extends BaseFragment {
         myTitle.add("数码电气");
         myTitle.add("母婴产品");
         myTitle.add("休闲娱乐");
+
         tabCategory.setTitle(myTitle);
 
 
