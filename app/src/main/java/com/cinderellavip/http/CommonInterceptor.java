@@ -3,7 +3,6 @@ package com.cinderellavip.http;
 import android.text.TextUtils;
 
 import com.cinderellavip.global.GlobalParam;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -96,7 +95,7 @@ public class CommonInterceptor implements Interceptor {
         } else {
             newRequest = request;
         }
-        LogUtil.e("requestUrl: " + newRequest.url().toString());
+//        LogUtil.e("requestUrl: " + newRequest.url().toString());
         return newRequest;
     }
 
@@ -110,7 +109,7 @@ public class CommonInterceptor implements Interceptor {
                 // 先复制原来的参数
                 for (int i = 0; i < formBody.size(); i++) {
                     signParams.put(formBody.encodedName(i), formBody.encodedValue(i));
-                    LogUtil.e( formBody.encodedName(i)+"==="+formBody.encodedValue(i));
+//                    LogUtil.e( formBody.encodedName(i)+"==="+formBody.encodedValue(i));
                 }
 
                 String time = "" + System.currentTimeMillis() / 1000;
@@ -144,7 +143,7 @@ public class CommonInterceptor implements Interceptor {
         String url = request.url().toString();
         int separatorIndex = url.lastIndexOf("?");
 
-        LogUtil.e(url);
+//        LogUtil.e(url);
         StringBuilder sb = new StringBuilder(url);
         String string = sb.toString();
         Request.Builder requestBuilder = request.newBuilder();

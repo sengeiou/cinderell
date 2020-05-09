@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,8 +13,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.LifeAdapter;
 import com.cinderellavip.adapter.recycleview.LifeCategoryAdapter;
-import com.cinderellavip.bean.HomeBanner;
-import com.cinderellavip.bean.local.HomeCategoryItem;
+import com.cinderellavip.bean.net.home.HomeBanner;
 import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.activity.life.SearchLifeActivity;
 import com.cinderellavip.ui.activity.life.SelectCityActivity;
@@ -107,18 +105,18 @@ public class LifeFragment extends BaseListFragment<String> {
 
         initBanner(DataUtil.getBannerData(4));
 
-        List<HomeCategoryItem> typeList = DataUtil.getLifeCategory();
-        homeCategoryAdapter.setNewData(typeList);
-        if (typeList == null || typeList.size() <= 10) {
-            //如果小于10则 宽度一样
-            ViewGroup.LayoutParams linearParams = viewIndicator.getLayoutParams();
-            ViewGroup.LayoutParams linearParams1 = rlIndicator.getLayoutParams();
-            linearParams1.width = linearParams.width;
-            rlIndicator.setLayoutParams(linearParams1);
-        } else {
-            //为了计算大于10的时候 滑动的距离
-            categoryNumber = typeList.size();
-        }
+//        List<HomeCategoryItem> typeList = DataUtil.getLifeCategory();
+//        homeCategoryAdapter.setNewData(typeList);
+//        if (typeList == null || typeList.size() <= 10) {
+//            //如果小于10则 宽度一样
+//            ViewGroup.LayoutParams linearParams = viewIndicator.getLayoutParams();
+//            ViewGroup.LayoutParams linearParams1 = rlIndicator.getLayoutParams();
+//            linearParams1.width = linearParams.width;
+//            rlIndicator.setLayoutParams(linearParams1);
+//        } else {
+//            //为了计算大于10的时候 滑动的距离
+//            categoryNumber = typeList.size();
+//        }
 
 
         //这里只有通过Handler 已经到底啦 才会出来

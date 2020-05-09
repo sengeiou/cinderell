@@ -4,7 +4,7 @@ package com.cinderellavip.bean.net;
 public class HomeCategoryItem {
 
 
-    public String id;
+    public int id;
     public String name;
     public String image;
 

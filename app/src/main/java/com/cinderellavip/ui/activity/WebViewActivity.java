@@ -44,9 +44,8 @@ public class WebViewActivity extends BaseActivity {
     }
 
 
-    public static void launch(Context from, String title, String url, int status) {
+    public static void launch(Context from,  String url, int status) {
         Intent intent = new Intent(from, WebViewActivity.class);
-        intent.putExtra("title", title);
         intent.putExtra("url", url);
         intent.putExtra("status", status);
         from.startActivity(intent);
@@ -66,7 +65,6 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        String title = getIntent().getStringExtra("title");
         url = getIntent().getStringExtra("url");
         status = getIntent().getIntExtra("status", 1);
 
@@ -78,18 +76,15 @@ public class WebViewActivity extends BaseActivity {
         if (status == 1) {
             web_view.loadUrl(url);
             //监听WebView是否加载完成网页
-//            web_view.setWebViewClient(new WebViewClient() {
-//                @Override
-//                public void onPageFinished(WebView view, String url) {
-//                    super.onPageFinished(view, url);
-//                    setBackTitle(view.getTitle());
-//                }
-//
-//            });
-            setBackTitle(title);
+            web_view.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    setBackTitle(view.getTitle());
+                }
 
+            });
         } else if (status == GRAPHIC) {
-            setBackTitle(title);
 //            String data = Html.fromHtml(url).toString();
             String varjs = "<script type='text/javascript'> \nwindow.onload = function()\n{var $img = document.getElementsByTagName('img');for(var p in  $img){$img[p].style.width = '100%'; $img[p].style.height ='auto'}}</script>";
             web_view.loadDataWithBaseURL("", varjs + url, "text/html", "UTF-8", null);
@@ -105,6 +100,7 @@ public class WebViewActivity extends BaseActivity {
                         mProgress.hide();
                     }
                     super.onPageFinished(view, url);
+                    setBackTitle(view.getTitle());
                 }
 
 

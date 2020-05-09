@@ -45,13 +45,18 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     private List<String> list_Title;
 
 
+    public static void launch(Activity activity, String id) {
+        Intent intent = new Intent(activity, GoodsDetailActivity.class);
+        intent.putExtra("id", id);
+        activity.startActivity(intent);
+    }
     public static void launch(Activity activity, int id) {
         Intent intent = new Intent(activity, GoodsDetailActivity.class);
         intent.putExtra("id", id);
         activity.startActivity(intent);
     }
 
-    private int id;
+    private String id;
 
     @Override
     protected int getToolbarLayout() {
@@ -68,20 +73,20 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     public void initView(Bundle savedInstanceState) {
         toolbar.setNavigationIcon(R.mipmap.back);
         toolbar.setNavigationOnClickListener(view -> finish());
-        id = getIntent().getIntExtra("id", 0);
+        id = getIntent().getStringExtra("id");
 
         fragmentList = new ArrayList<>();
         list_Title = new ArrayList<>();
         goodsDetailGoodsFragment = new GoodsDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("id", id);
+        bundle.putString("id", id);
         goodsDetailGoodsFragment.setArguments(bundle);
         fragmentList.add(goodsDetailGoodsFragment);
         graphicFragment = new GraphicFragment();
         fragmentList.add(graphicFragment);
         CommentFragment commentFragment = new CommentFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putInt("id", id);
+        bundle1.putString("id", id);
         commentFragment.setArguments(bundle1);
         fragmentList.add(commentFragment);
         list_Title.add("商品");

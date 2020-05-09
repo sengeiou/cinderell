@@ -10,7 +10,8 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.HomeCategoryItem;
+import com.cinderellavip.bean.net.HomeCategoryItem;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.home.CardSaleActivity;
 import com.cinderellavip.ui.activity.home.GoodsListActivity;
 import com.cinderellavip.util.ScreenUtil;
@@ -30,7 +31,7 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
 //        helper.setText(R.id.tv_number,item);
         ImageView iv_image = helper.getView(R.id.iv_image);
         TextView tv_number = helper.getView(R.id.tv_number);
-        iv_image.setImageResource(item.res);
+        ImageUtil.load(getContext(),iv_image,item.image);
         tv_number.setText(item.name);
 
         LinearLayout rl_root = helper.getView(R.id.rl_root);

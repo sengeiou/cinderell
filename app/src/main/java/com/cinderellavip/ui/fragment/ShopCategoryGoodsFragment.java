@@ -4,17 +4,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
-import com.cinderellavip.bean.HomeBanner;
+import com.cinderellavip.bean.net.home.HomeBanner;
 import com.cinderellavip.bean.local.HomeGoods;
-import com.cinderellavip.util.ColorUtil;
 import com.cinderellavip.util.DataUtil;
-import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.GirdSpace;
 import com.cinderellavip.weight.HomeTabLayout;
 import com.google.android.material.appbar.AppBarLayout;
@@ -22,14 +18,12 @@ import com.lishide.recyclerview.scroll.ScrollRecyclerView;
 import com.stx.xhb.xbanner.XBanner;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,7 +67,7 @@ public class ShopCategoryGoodsFragment extends BaseListFragment<HomeGoods> {
         data1.add("实惠");
         tabLabel.setTitle(data1);
 
-        homeCategoryAdapter.setNewData(DataUtil.getShopOtherCategory());
+//        homeCategoryAdapter.setNewData(DataUtil.getShopOtherCategory());
 
 //        LogUtil.e("page = " + page + "," + "PageSize = " + PageSize);
         //这里只有通过Handler 已经到底啦 才会出来

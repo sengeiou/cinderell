@@ -6,7 +6,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.HomeCategoryItem;
 import com.cinderellavip.util.DataUtil;
 
 import androidx.recyclerview.widget.LinearLayoutManager;

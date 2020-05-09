@@ -1,4 +1,4 @@
-package com.cinderellavip.bean;
+package com.cinderellavip.bean.net.home;
 
 import com.stx.xhb.xbanner.entity.SimpleBannerInfo;
 
@@ -7,7 +7,10 @@ public class HomeBanner extends SimpleBannerInfo {
     
 
 
-    public String logo;
+    public String id;
+    public String img;
+    public int type;
+    public String value;
 
 
 
@@ -15,7 +18,7 @@ public class HomeBanner extends SimpleBannerInfo {
 
     @Override
     public String getXBannerUrl() {
-        return logo;
+        return img;
     }
 
 
