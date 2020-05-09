@@ -1,27 +1,36 @@
 package com.cinderellavip.bean.local;
 
+import com.cinderellavip.util.ArithmeticUtil;
+
 public class HomeGoods {
 
-    //精选
-    public static final int FEATURED = 0;
-    //拼团
-    public static final int FIGHT = 1;
-    //进口
-    public static final int INLET = 2;
-    //实惠
-    public static final int AFFORDABLE = 3;
 
-    public int type;
 
-    public HomeGoods(int type) {
-        this.type = type;
+
+
+
+    public int id;
+    public String name;
+    public String thumb;
+    public double price;
+    public double old_price;
+    public int number;
+    public double buy_price;
+    public double group_price;
+
+    public String getPrice() {
+        return ArithmeticUtil.convert(price);
     }
 
-    public int getType() {
-        return type;
+    public String getOld_price() {
+        return ArithmeticUtil.convert(old_price);
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public String getBuy_price() {
+        return ArithmeticUtil.convert(buy_price);
+    }
+
+    public String getGroup_price() {
+        return ArithmeticUtil.convert(group_price);
     }
 }

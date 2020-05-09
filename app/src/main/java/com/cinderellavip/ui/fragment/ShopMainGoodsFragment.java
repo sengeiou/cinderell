@@ -1,7 +1,6 @@
 package com.cinderellavip.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,12 +12,12 @@ import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.home.Ad;
+import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.banner.BannerUtil;
 import com.cinderellavip.util.banner.LinkUtil;
@@ -33,6 +32,7 @@ import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -91,11 +91,6 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
                 StaggeredGridLayoutManager.HORIZONTAL));
         homeCategoryAdapter = new HomeCategoryAdapter();
         scrollRecyclerView.setAdapter(homeCategoryAdapter);
-    }
-
-    @Override
-    public void loadData() {
-
 
         List<String> data1 = new ArrayList<>();
         data1.add("精选");
@@ -103,20 +98,34 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
         data1.add("进口");
         data1.add("实惠");
         tabLabel.setTitle(data1);
-
-
-
-
-
-//        LogUtil.e("page = " + page + "," + "PageSize = " + PageSize);
-        //这里只有通过Handler 已经到底啦 才会出来
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getHomeGoods(4,0));
-        }, 100);
-
-        getCategory();
     }
 
+
+    private String type = "1";
+    @Override
+    public void loadData() {
+        super.loadData();
+        if (!isLoad || page == DEFAULT_PAGE){
+            getCategory();
+        }
+        getGoods();
+    }
+
+    private void getGoods(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("type", type);
+        hashMap.put("first_category_id", "0");
+        hashMap.put("limit", PageSize+"");
+        hashMap.put("page", page+"");
+        new RxHttp<BaseResult<HomeGoodsResult>>().send(ApiManager.getService().getHomeGoods(hashMap),
+                new Response<BaseResult<HomeGoodsResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<HomeGoodsResult> result) {
+                        setData(result.data.products);
+                    }
+                });
+
+    }
 
     /**
      * 获取一级分类
@@ -127,8 +136,6 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
                     @Override
                     public void onSuccess(BaseResult<ShopHomeResult> result) {
                         ShopHomeResult homeResult = result.data;
-
-
                         BannerUtil.setData(mActivity,xbanner,homeResult.banners);
 
                         List<HomeCategoryItem> typeList = homeResult.third_categories;
@@ -174,7 +181,7 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
         switch (view.getId()) {
 
             case R.id.iv_top:
-                mRecyclerView.smoothScrollToPosition(0);
+                mRecyclerView.scrollToPosition(0);
                 CoordinatorLayout.Behavior behavior =
                         ((CoordinatorLayout.LayoutParams) appbar.getLayoutParams()).getBehavior();
                 if (behavior instanceof AppBarLayout.Behavior) {
@@ -231,10 +238,12 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
         });
 
         tabLabel.setOnTabPositionClickLister(position -> {
-            new Handler().postDelayed(() -> {
-                page = 0;
-                setData(DataUtil.getHomeGoods(4,position));
-            }, 100);
+            if (mAdapter != null){
+                ((HomeGoodsAdapter)mAdapter).setType(position);
+            }
+            type = position+1+"";
+            page = DEFAULT_PAGE;
+            getGoods();
         });
 
     }

@@ -50,7 +50,7 @@ public class SignUtil {
 
     //静态方法，便于作为工具类
     public static String getMd5(String time) {
-        LogUtil.e(time);
+//        LogUtil.e(time);
 
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

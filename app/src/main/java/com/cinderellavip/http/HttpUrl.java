@@ -7,7 +7,6 @@ public interface HttpUrl {
 
 
     String server_url = "https://api.huiguniangvip.com/";
-    String image_url = server_url+"gp/profile/";
 
     String login = "api/store/login";  //用户名登录
     String get_code = "api/store/sms/send";  //获取验证码
@@ -18,6 +17,7 @@ public interface HttpUrl {
 
     String home_category = "api/store/categories/first";  //首页分类
     String home_index = "api/store/index";  //首页接口
+    String home_goods = "api/store/index/products";  //首页商品
 
 
 

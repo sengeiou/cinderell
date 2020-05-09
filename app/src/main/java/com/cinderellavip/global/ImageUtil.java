@@ -8,7 +8,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.cinderellavip.R;
-import com.cinderellavip.http.HttpUrl;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -75,7 +74,7 @@ public class ImageUtil {
                 .circleCrop()
                 .error(R.drawable.shape_gray5)
                 .circleCrop();
-        Glide.with(mContext).load(HttpUrl.image_url+path).apply(options).into(imageView);
+        Glide.with(mContext).load(path).apply(options).into(imageView);
 
 
 
