@@ -75,4 +75,12 @@ public interface ApiService {
     Observable<BaseResult<ListResult<HomeGoods>>>
     getHomeMoreGoods(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.search_goods)
+    Observable<BaseResult<ListResult<HomeGoods>>>
+    getSearchGoods(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.search_words)
+    Observable<BaseResult<ListResult<String>>>
+    getSearchWords();
+
 }

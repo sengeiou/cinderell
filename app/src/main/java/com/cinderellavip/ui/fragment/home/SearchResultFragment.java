@@ -27,21 +27,7 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
         return R.layout.fragment_recycleview_search_result;
     }
 
-    public String sort = "0",area = "0",type_child_ids = "";
-    /**
-     * 一级商品lieb
-     * @param type  parent_id == 0 就是一级
-     * @param type_id 一级分类ID
-     * @return
-     */
-    private int third_category_id;
-    public static SearchResultFragment newInstance(int third_category_id) {
-        SearchResultFragment cartFragment = new SearchResultFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("third_category_id", third_category_id);
-        cartFragment.setArguments(bundle);
-        return cartFragment;
-    }
+    public String sort = "0",sort_type = "0",type_child_ids = "";
 
 
 
@@ -64,7 +50,6 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        third_category_id = getArguments().getInt("third_category_id");
         keyword = getArguments().getString("keyword");
 
         girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10),2,0,true);
@@ -72,7 +57,7 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
 
 
 
-        setEmptyView("没有更多商品，换个关键字试试");
+        setEmptyView("暂无搜索结果");
 
     }
 
@@ -80,36 +65,35 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
 
     @Override
     public void loadData() {
-        super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("third_category_id", ""+third_category_id);
-        hashMap.put("sort", "0");
-        hashMap.put("sort_type", "0");
+        hashMap.put("keyword", ""+keyword);
+        hashMap.put("sort", sort);
+        hashMap.put("sort_type", sort_type);
         hashMap.put("limit", ""+PageSize);
         hashMap.put("page", ""+page);
-        new RxHttp<BaseResult<ListResult<HomeGoods>>>().send(ApiManager.getService().getHomeMoreGoods(hashMap),
+        new RxHttp<BaseResult<ListResult<HomeGoods>>>().send(ApiManager.getService().getSearchGoods(hashMap),
                 new Response<BaseResult<ListResult<HomeGoods>>>(isLoad,getContext()) {
                     @Override
                     public void onSuccess(BaseResult<ListResult<HomeGoods>> result) {
                         setData(result.data.list);
                     }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }
-    public void setSortAndArea(String sort, String area){
+    public void setSortAndArea(String sort, String sort_type){
         this.sort = sort;
-        this.area = area;
+        this.sort_type = sort_type;
+        swipeLayout.setRefreshing(true);
         onRefresh();
 
     }
     public void setKeyword(String keyword){
         this.keyword = keyword;
-        onRefresh();
-
-    }
-
-    public void setTypeIds(String type_child_ids){
-        this.type_child_ids = type_child_ids;
+        swipeLayout.setRefreshing(true);
         onRefresh();
 
     }

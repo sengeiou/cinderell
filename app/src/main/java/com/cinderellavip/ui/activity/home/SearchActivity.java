@@ -12,12 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.SearchItem;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.FlowLayout;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.DpUtil;
 
@@ -89,18 +93,8 @@ public class SearchActivity extends BaseActivity {
         data.add(new SearchItem("沐浴乳"));
         data.add(new SearchItem("拖鞋"));
         addRecent(flRecent, data);
-        List<SearchItem> data1 = new ArrayList<>();
-        data1.add(new SearchItem("包包"));
-        data1.add(new SearchItem("红酒"));
-        data1.add(new SearchItem("日用品"));
-        data1.add(new SearchItem("粉底遮瑕"));
-        data1.add(new SearchItem("面膜"));
-        data1.add(new SearchItem("代餐棒"));
-        data1.add(new SearchItem("奶粉"));
-        data1.add(new SearchItem("母婴用品"));
-        data1.add(new SearchItem("酱油"));
-        data1.add(new SearchItem("饮料"));
-        addHotData(flHot, data1);
+
+
 //                        addData(tlCommon,result.data2);
 //                    }
 //
@@ -109,15 +103,17 @@ public class SearchActivity extends BaseActivity {
 //                        showError(s);
 //                    }
 //                });
+
+
+        new RxHttp<BaseResult<ListResult<String>>>().send(ApiManager.getService().getSearchWords(),
+                new Response<BaseResult<ListResult<String>>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<String>> result) {
+                        addHotData(flHot, result.data.list);
+                    }
+                });
     }
 
-//    @Override
-//    public void onEvent(Object o) {
-//        super.onEvent(o);
-//        if (o instanceof UpdateHistorySearch){
-//            loadData();
-//        }
-//    }
 
     private void addRecent(FlowLayout flowLayout, List<SearchItem> list) {
         if (list == null || list.size() == 0) {
@@ -158,7 +154,7 @@ public class SearchActivity extends BaseActivity {
     }
 
 
-    private void addHotData(FlowLayout flowLayout, List<SearchItem> list) {
+    private void addHotData(FlowLayout flowLayout, List<String> list) {
         //往容器内添加TextView数据
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(DpUtil.dip2px(mContext, 12), DpUtil.dip2px(mContext, 5),
@@ -166,11 +162,11 @@ public class SearchActivity extends BaseActivity {
         if (flowLayout != null) {
             flowLayout.removeAllViews();
         }
-        for (SearchItem s : list) {
+        for (String s : list) {
             TextView tv = new TextView(this);
             tv.setPadding(DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3),
                     DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3));
-            tv.setText(s.name);
+            tv.setText(s);
             tv.setMaxWidth(ScreenUtil.getScreenWidth(mActivity) - DpUtil.dip2px(mContext, 24));
             tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setSingleLine();

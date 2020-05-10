@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
@@ -108,7 +109,12 @@ public class CommonInterceptor implements Interceptor {
                 FormBody formBody = (FormBody) request.body();
                 // 先复制原来的参数
                 for (int i = 0; i < formBody.size(); i++) {
-                    signParams.put(formBody.encodedName(i), formBody.encodedValue(i));
+                    try {
+                        signParams.put(formBody.encodedName(i), URLDecoder.decode(formBody.encodedValue(i), "UTF-8"));
+                    }catch (Exception e){
+
+                    }
+
 //                    LogUtil.e( formBody.encodedName(i)+"==="+formBody.encodedValue(i));
                 }
 
@@ -144,6 +150,7 @@ public class CommonInterceptor implements Interceptor {
         int separatorIndex = url.lastIndexOf("?");
 
 //        LogUtil.e(url);
+        System.out.println(url);
         StringBuilder sb = new StringBuilder(url);
         String string = sb.toString();
         Request.Builder requestBuilder = request.newBuilder();
@@ -158,9 +165,24 @@ public class CommonInterceptor implements Interceptor {
             String s = "secret=241cd2aa2aae01cd2&"+"timestamp="+time;
             requestBuilder.addHeader("X-Sign",SignUtil.getMd5(s));
         }else {
-            String s = "secret=241cd2aa2aae01cd2&"+"timestamp="+time;
-            requestBuilder.addHeader("X-Sign",
-                    SignUtil.getMd5(url.substring(separatorIndex+1,url.length())+"&"+s));
+//            String s = "secret=241cd2aa2aae01cd2&"+"timestamp="+time;
+            String substring = url.substring(separatorIndex + 1);
+            String replaceAll = substring.replaceAll("&", "=");
+            String[] split = replaceAll.split("=");
+            TreeMap<String, String> keys = new TreeMap<>();
+            for (int i = 0;i<split.length;){
+                try {
+                    keys.put(split[i],URLDecoder.decode(split[i+1], "UTF-8"));
+                }catch (Exception e){
+
+                }
+//                System.out.println("参数 key = "+split[i]+",值"+split[i+1]);
+                i = i+2;
+            }
+            requestBuilder.addHeader("X-Sign",SignUtil.getMd5(keys,time));
+//            System.out.println("签名"+SignUtil.getMd5(keys,time));
+//            requestBuilder.addHeader("X-Sign",
+//                    SignUtil.getMd5(url.substring(separatorIndex+1,url.length())+"&"+s));
         }
 
         return requestBuilder.url(string).build();

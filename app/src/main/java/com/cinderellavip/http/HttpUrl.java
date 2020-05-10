@@ -20,6 +20,8 @@ public interface HttpUrl {
     String home_goods = "api/store/index/products";  //首页商品
     String home_more_cate = "api/store/more-cate";
     String home_more_goods = "api/store/cate-products";//根据三级分类获取商品
+    String search_words = "api/store/search/hot-words";//热搜词汇
+    String search_goods = "api/store/search-products";//搜索商品
 
 
 
