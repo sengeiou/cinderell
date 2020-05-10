@@ -8,15 +8,15 @@ import android.widget.ImageView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
-import com.cinderellavip.bean.net.home.HomeBanner;
 import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.net.home.HomeBanner;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.GirdSpace;
 import com.cinderellavip.weight.HomeTabLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.lishide.recyclerview.scroll.ScrollRecyclerView;
 import com.stx.xhb.xbanner.XBanner;
-import com.tozzais.baselibrary.ui.BaseListFragment;
+import com.tozzais.baselibrary.ui.LazyListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class ShopCategoryGoodsFragment extends BaseListFragment<HomeGoods> {
+public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
     @BindView(R.id.iv_top)
     ImageView iv_top; //最上面的标题
 
@@ -55,7 +55,8 @@ public class ShopCategoryGoodsFragment extends BaseListFragment<HomeGoods> {
     }
 
     @Override
-    public void loadData() {
+    public void loadData1() {
+
 
         initBanner(DataUtil.getBannerData(4));
 

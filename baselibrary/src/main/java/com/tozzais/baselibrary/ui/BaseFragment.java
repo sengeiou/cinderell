@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
-
 import com.tozzais.baselibrary.R;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 import com.tozzais.baselibrary.weight.ProgressLayout;
@@ -19,6 +15,8 @@ import com.tozzais.baselibrary.weight.ProgressLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -65,6 +63,7 @@ public abstract class BaseFragment<T> extends DialogFragment {
             unbinder = ButterKnife.bind(this, mRootView);
 
             initView(savedInstanceState);
+            initView1(savedInstanceState);
         }
 
 
@@ -122,6 +121,14 @@ public abstract class BaseFragment<T> extends DialogFragment {
 
     public abstract void loadData();
 
+
+    //懒加载用的
+    public  void loadData1(){}
+
+
+    //主要是为了ListFragmentview的初始化。放置viewpager的预加载导致 RecyclerView和SwipeRefreshLayout的空指针
+    public void initView1(Bundle savedInstanceState){};
+
     public  void initListener(){}
 
     public  void scrollTop(){}
@@ -150,7 +157,10 @@ public abstract class BaseFragment<T> extends DialogFragment {
     }
 
     protected void showError(String errorStr) {
-        progress_layout.showError(errorStr, v -> loadData());
+        progress_layout.showError(errorStr, v -> {
+            loadData();
+            loadData1();
+        });
     }
 
     protected void showError(String errorStr, View.OnClickListener clickListener) {

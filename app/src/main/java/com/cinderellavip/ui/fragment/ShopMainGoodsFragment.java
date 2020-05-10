@@ -27,7 +27,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.lishide.recyclerview.scroll.ScrollRecyclerView;
 import com.stx.xhb.xbanner.XBanner;
 import com.tozzais.baselibrary.http.RxHttp;
-import com.tozzais.baselibrary.ui.BaseListFragment;
+import com.tozzais.baselibrary.ui.LazyListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
+public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
 
     @BindView(R.id.iv_top)
     ImageView iv_top; //最上面的标题
@@ -62,6 +62,8 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
     View viewIndicator;
     @BindView(R.id.rl_indicator)
     RelativeLayout rlIndicator;
+    @BindView(R.id.rl_banner)
+    RelativeLayout rl_banner;
     @BindView(R.id.tab_label)
     HomeTabLayout tabLabel;
     @BindView(R.id.appbar)
@@ -69,6 +71,17 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
 
 
     private HomeCategoryAdapter homeCategoryAdapter;
+
+
+    private int first_category_id;
+    public static ShopMainGoodsFragment newInstance(int first_category_id){
+        ShopMainGoodsFragment cartFragment = new ShopMainGoodsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("first_category_id",first_category_id);
+        cartFragment.setArguments(bundle);
+        return cartFragment;
+
+    }
 
     @Override
     public int setLayout() {
@@ -78,6 +91,7 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        first_category_id = getArguments().getInt("first_category_id");
 
         //设置商品
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
@@ -98,12 +112,16 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
         data1.add("进口");
         data1.add("实惠");
         tabLabel.setTitle(data1);
+
+        if (first_category_id != 0){
+            rlIndicator.setVisibility(View.GONE);
+        }
     }
 
 
     private String type = "1";
     @Override
-    public void loadData() {
+    public void loadData1() {
         super.loadData();
         if (!isLoad || page == DEFAULT_PAGE){
             getCategory();
@@ -114,7 +132,7 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
     private void getGoods(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("type", type);
-        hashMap.put("first_category_id", "0");
+        hashMap.put("first_category_id", ""+first_category_id);
         hashMap.put("limit", PageSize+"");
         hashMap.put("page", page+"");
         new RxHttp<BaseResult<HomeGoodsResult>>().send(ApiManager.getService().getHomeGoods(hashMap),
@@ -131,12 +149,17 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
      * 获取一级分类
      */
     private void getCategory(){
-        new RxHttp<BaseResult<ShopHomeResult>>().send(ApiManager.getService().getHome("0"),
-                new Response<BaseResult<ShopHomeResult>>(mActivity) {
+        new RxHttp<BaseResult<ShopHomeResult>>().send(ApiManager.getService().getHome(""+first_category_id),
+                new Response<BaseResult<ShopHomeResult>>(mActivity,Response.BOTH) {
                     @Override
                     public void onSuccess(BaseResult<ShopHomeResult> result) {
                         ShopHomeResult homeResult = result.data;
-                        BannerUtil.setData(mActivity,xbanner,homeResult.banners);
+                        if (homeResult.banners == null || homeResult.banners.size() == 0){
+                            rl_banner.setVisibility(View.GONE);
+                        }else {
+                            rl_banner.setVisibility(View.VISIBLE);
+                            BannerUtil.setData(mActivity,xbanner,homeResult.banners);
+                        }
 
                         List<HomeCategoryItem> typeList = homeResult.third_categories;
                         homeCategoryAdapter.setNewData(typeList);
@@ -152,22 +175,31 @@ public class ShopMainGoodsFragment extends BaseListFragment<HomeGoods> {
                         }
 
                         List<Ad> advertisements = homeResult.advertisements;
-                        if (advertisements != null && advertisements.size()>0){
-                            Ad ad = advertisements.get(0);
+                        if (advertisements != null){
+                            if (advertisements.size() == 0){
+                                iv_ad_left.setVisibility(View.GONE);
+                                iv_ad_right.setVisibility(View.GONE);
+                            }else {
+                                if (advertisements.size() == 1){
+                                    iv_ad_left.setVisibility(View.VISIBLE);
+                                    iv_ad_right.setVisibility(View.INVISIBLE);
 
-                            ImageUtil.loadNet(mActivity,iv_ad_left, ad.img);
-                            iv_ad_left.setOnClickListener(view -> {
-                                LinkUtil.setData(mActivity,ad.type,ad.value);
-                            });
+                                }else if (advertisements.size() == 2){
+                                    iv_ad_left.setVisibility(View.VISIBLE);
+                                    iv_ad_right.setVisibility(View.VISIBLE);
+                                    Ad ad = advertisements.get(1);
+                                    ImageUtil.loadNet(mActivity,iv_ad_right,ad.img);
+                                    iv_ad_right.setOnClickListener(view -> {
+                                        LinkUtil.setData(mActivity,ad.type,ad.value);
+                                    });
+                                }
+                                Ad ad = advertisements.get(0);
+                                ImageUtil.loadNet(mActivity,iv_ad_left, ad.img);
+                                iv_ad_left.setOnClickListener(view -> {
+                                    LinkUtil.setData(mActivity,ad.type,ad.value);
+                                });
+                            }
                         }
-                        if (advertisements != null && advertisements.size()>1){
-                            Ad ad = advertisements.get(1);
-                            ImageUtil.loadNet(mActivity,iv_ad_right,ad.img);
-                            iv_ad_right.setOnClickListener(view -> {
-                                LinkUtil.setData(mActivity,ad.type,ad.value);
-                            });
-                        }
-
 
                     }
                 });
