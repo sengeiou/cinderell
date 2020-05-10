@@ -2,7 +2,6 @@ package com.cinderellavip.ui.fragment.home;
 
 import android.os.Bundle;
 
-import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.http.ApiManager;
@@ -19,15 +18,12 @@ import java.util.TreeMap;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 
-public class SearchResultFragment extends BaseListFragment<HomeGoods> {
+public class GoodsListFragment extends BaseListFragment<HomeGoods> {
 
 
-    @Override
-    public int setLayout() {
-        return R.layout.fragment_recycleview_search_result;
-    }
 
-    public String sort = "0",area = "0",type_child_ids = "";
+
+    public String sort = "0",sort_type = "0",type_child_ids = "";
     /**
      * 一级商品lieb
      * @param type  parent_id == 0 就是一级
@@ -35,26 +31,10 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
      * @return
      */
     private int third_category_id;
-    public static SearchResultFragment newInstance(int third_category_id) {
-        SearchResultFragment cartFragment = new SearchResultFragment();
+    public static GoodsListFragment newInstance(int third_category_id) {
+        GoodsListFragment cartFragment = new GoodsListFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("third_category_id", third_category_id);
-        cartFragment.setArguments(bundle);
-        return cartFragment;
-    }
-
-
-
-    /**
-     *
-     * @param keyword 所搜页面进入
-     * @return
-     */
-    private String keyword;
-    public static SearchResultFragment newInstance(String keyword) {
-        SearchResultFragment cartFragment = new SearchResultFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", keyword);
         cartFragment.setArguments(bundle);
         return cartFragment;
     }
@@ -65,14 +45,13 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         third_category_id = getArguments().getInt("third_category_id");
-        keyword = getArguments().getString("keyword");
 
         girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10),2,0,true);
         setLayoutManager();
 
 
 
-        setEmptyView("没有更多商品，换个关键字试试");
+        setEmptyView("暂无数据");
 
     }
 
@@ -83,8 +62,8 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
         super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("third_category_id", ""+third_category_id);
-        hashMap.put("sort", "0");
-        hashMap.put("sort_type", "0");
+        hashMap.put("sort", sort);
+        hashMap.put("sort_type", sort_type);
         hashMap.put("limit", ""+PageSize);
         hashMap.put("page", ""+page);
         new RxHttp<BaseResult<ListResult<HomeGoods>>>().send(ApiManager.getService().getHomeMoreGoods(hashMap),
@@ -96,20 +75,10 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
                 });
 
     }
-    public void setSortAndArea(String sort, String area){
+    public void setSortAndArea(String sort, String sort_type){
         this.sort = sort;
-        this.area = area;
-        onRefresh();
-
-    }
-    public void setKeyword(String keyword){
-        this.keyword = keyword;
-        onRefresh();
-
-    }
-
-    public void setTypeIds(String type_child_ids){
-        this.type_child_ids = type_child_ids;
+        this.sort_type = sort_type;
+        swipeLayout.setRefreshing(true);
         onRefresh();
 
     }

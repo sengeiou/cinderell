@@ -1,6 +1,7 @@
 package com.cinderellavip.http;
 
 
+import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.home.CateMoreList;
@@ -69,5 +70,9 @@ public interface ApiService {
     @GET(HttpUrl.home_more_cate)
     Observable<BaseResult<ListResult<CateMoreList>>>
     getHomeMoreCate(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.home_more_goods)
+    Observable<BaseResult<ListResult<HomeGoods>>>
+    getHomeMoreGoods(@QueryMap TreeMap<String, String> map);
 
 }

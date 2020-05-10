@@ -33,7 +33,7 @@ public class FiltSecondAdapter extends BaseQuickAdapter<HomeCategoryItem, BaseVi
             if (listener != null){
                 listener.onClick(v);
             }
-            GoodsListActivity.launch(getContext(),"粽子",0,0);
+            GoodsListActivity.launch(getContext(),item.name,item.id);
         });
 
 

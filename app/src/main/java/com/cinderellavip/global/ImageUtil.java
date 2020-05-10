@@ -38,6 +38,14 @@ public class ImageUtil {
         Glide.with(mContext).load(path).apply(options).into(imageView);
     }
 
+    public static  void loadNet2(Context mContext, ImageView imageView, String path){
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.shape_white5)//图片加载出来前，显示的图片
+                .fallback(R.drawable.shape_white5) //url为空的时候,显示的图片
+                .error(R.drawable.shape_white5);//图片加载失败后，显示的图片
+        Glide.with(mContext).load(path).apply(options).into(imageView);
+    }
+
     public static  void loadNet1(Context mContext, ImageView imageView, String path){
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.shape_oval_gray)//图片加载出来前，显示的图片

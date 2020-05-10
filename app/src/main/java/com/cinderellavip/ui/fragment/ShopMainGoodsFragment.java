@@ -163,7 +163,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
                         }
 
                         List<HomeCategoryItem> typeList = homeResult.third_categories;
-                        if (homeCategoryItem.id != 0){
+                        if (homeCategoryItem.id != 0 && typeList.size()>0){
                             typeList.add(new HomeCategoryItem("-1"));
                         }
                         homeCategoryAdapter.setNewData(typeList);

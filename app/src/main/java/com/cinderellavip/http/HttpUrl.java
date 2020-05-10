@@ -19,6 +19,7 @@ public interface HttpUrl {
     String home_index = "api/store/index";  //首页接口
     String home_goods = "api/store/index/products";  //首页商品
     String home_more_cate = "api/store/more-cate";
+    String home_more_goods = "api/store/cate-products";//根据三级分类获取商品
 
 
 

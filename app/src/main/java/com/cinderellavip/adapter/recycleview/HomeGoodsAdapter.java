@@ -56,7 +56,7 @@ public class HomeGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
        ImageView iv_national_flag =  baseViewHolder.getView(R.id.iv_national_flag);
        ImageView iv_image =  baseViewHolder.getView(R.id.iv_image);
         tv_name.setText(homeGoods.name);
-        ImageUtil.loadNet(getContext(),iv_image,homeGoods.thumb);
+        ImageUtil.loadNet2(getContext(),iv_image,homeGoods.thumb);
 
 
        if (type == FEATURED){

@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.cinderellavip.R;
-import com.cinderellavip.listener.OnFilterListener;
-import com.cinderellavip.ui.fragment.home.SearchResultFragment;
+import com.cinderellavip.listener.OnSureClickListener;
+import com.cinderellavip.ui.fragment.home.GoodsListFragment;
 import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -20,7 +19,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class GoodsListActivity extends BaseActivity implements OnFilterListener {
+public class GoodsListActivity extends BaseActivity implements OnSureClickListener {
 
 
     @BindView(R.id.filter_view)
@@ -38,13 +37,11 @@ public class GoodsListActivity extends BaseActivity implements OnFilterListener 
      * @param type
      * @param type_id 一级分类ID
      */
-    private int type_id;
-    private int parent_id;
-    public static void launch(Context from, String name, int parent_id, int type_id) {
+    private int third_category_id;
+    public static void launch(Context from, String name,  int third_category_id) {
         Intent intent = new Intent(from, GoodsListActivity.class);
         intent.putExtra("name", name);
-        intent.putExtra("parent_id",parent_id);
-        intent.putExtra("type_id",type_id);
+        intent.putExtra("third_category_id",third_category_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         from.startActivity(intent);
     }
@@ -60,15 +57,9 @@ public class GoodsListActivity extends BaseActivity implements OnFilterListener 
     @Override
     public void initView(Bundle savedInstanceState) {
         name = getIntent().getStringExtra("name");
-        parent_id = getIntent().getIntExtra("parent_id",0);
-        type_id = getIntent().getIntExtra("type_id",0);
+        third_category_id = getIntent().getIntExtra("third_category_id",0);
         tv_title_name.setText(name);
-        if (parent_id == 0){
-            //一级
-            filter_view.setFilterCondition(type_id+"","");
-        }else {
-            //二级
-        }
+
     }
 
     @Override
@@ -79,7 +70,7 @@ public class GoodsListActivity extends BaseActivity implements OnFilterListener 
     @Override
     public void loadData() {
 
-        fragment = SearchResultFragment.newInstance(type_id);
+        fragment = GoodsListFragment.newInstance(third_category_id);
 
         getSupportFragmentManager().beginTransaction().add(R.id.fl_container, fragment).commit();
 
@@ -88,7 +79,7 @@ public class GoodsListActivity extends BaseActivity implements OnFilterListener 
 
     @Override
     public void initListener() {
-        filter_view.setOnFilterListener(this);
+        filter_view.setOnDialogClickListener(this);
     }
 
 
@@ -106,43 +97,11 @@ public class GoodsListActivity extends BaseActivity implements OnFilterListener 
     }
 
 
-    private String sort = "0";
-    private String area = "0";
-    private boolean isGrid = false;
-    private SearchResultFragment fragment;
+    private GoodsListFragment fragment;
 
     @Override
-    public void onComplex() {
-        sort = "0";
-        fragment.setSortAndArea(sort,area);
-    }
-
-    @Override
-    public void onPrice(boolean isDown) {
-        if (isDown){
-            sort = "4";
-        }else {
-            sort = "3";
-        }
-        fragment.setSortAndArea(sort,area);
-    }
-
-    @Override
-    public void onCategray(boolean isDown) {
+    public void onSure() {
+        fragment.setSortAndArea(filter_view.getSort()+"",filter_view.getSort_type()+"");
 
     }
-
-
-    @Override
-    public void onSaleVolume(boolean isDown) {
-        if (isDown){
-            sort = "2";
-        }else {
-            sort = "1";
-        }
-        fragment.setSortAndArea(sort,area);
-    }
-
-
-
 }

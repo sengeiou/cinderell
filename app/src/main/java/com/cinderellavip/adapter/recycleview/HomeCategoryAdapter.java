@@ -17,6 +17,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.ui.activity.home.GoodsListActivity;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.dialog.RightDialogUtil;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -43,7 +44,7 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
             iv_image.setImageResource(R.mipmap.icon_more);
             tv_number.setText("更多");
         }else {
-            ImageUtil.load(getContext(),iv_image,item.image);
+            ImageUtil.loadNet2(getContext(),iv_image,item.image);
             tv_number.setText(item.name);
         }
 
@@ -58,10 +59,10 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
 
         helper.getView(R.id.rl_root).setOnClickListener(v -> {
             if ("-1".equals(item.type)){
-
                getGoods();
+            }else if (!"-".equals(item.type)){
+                GoodsListActivity.launch(getContext(),item.name,item.id);
 
-            }else {
             }
 //            if (item.name.equals("更多")){
 //
