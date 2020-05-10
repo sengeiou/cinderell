@@ -37,6 +37,16 @@ public class ImageUtil {
                 .error(R.drawable.shape_gray5);//图片加载失败后，显示的图片
         Glide.with(mContext).load(path).apply(options).into(imageView);
     }
+
+    public static  void loadNet1(Context mContext, ImageView imageView, String path){
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.shape_oval_gray)//图片加载出来前，显示的图片
+                .fallback(R.drawable.shape_oval_gray) //url为空的时候,显示的图片
+                .error(R.drawable.shape_oval_gray);//图片加载失败后，显示的图片
+        Glide.with(mContext).load(path).apply(options).into(imageView);
+    }
+
+
     public static  void loadGauss(Context mContext, ImageView imageView, String path){
 
         RequestOptions requestOptions = RequestOptions.bitmapTransform(new BlurTransformation(mContext, 12, 1));

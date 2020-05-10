@@ -73,16 +73,15 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     private HomeCategoryAdapter homeCategoryAdapter;
 
 
-    private int first_category_id;
-    public static ShopMainGoodsFragment newInstance(int first_category_id){
+    private HomeCategoryItem homeCategoryItem;
+    public static ShopMainGoodsFragment newInstance(HomeCategoryItem homeCategoryItem){
         ShopMainGoodsFragment cartFragment = new ShopMainGoodsFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("first_category_id",first_category_id);
+        bundle.putParcelable("homeCategoryItem",homeCategoryItem);
         cartFragment.setArguments(bundle);
         return cartFragment;
 
     }
-
     @Override
     public int setLayout() {
         return R.layout.fragment_shop_home_goods;
@@ -91,7 +90,9 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        first_category_id = getArguments().getInt("first_category_id");
+        homeCategoryItem = getArguments().getParcelable("homeCategoryItem");
+        if (homeCategoryItem == null)
+            homeCategoryItem = new HomeCategoryItem(0);
 
         //设置商品
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
@@ -103,7 +104,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
         scrollRecyclerView.setItemAnimator(new DefaultItemAnimator());
         scrollRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.HORIZONTAL));
-        homeCategoryAdapter = new HomeCategoryAdapter();
+        homeCategoryAdapter = new HomeCategoryAdapter(homeCategoryItem);
         scrollRecyclerView.setAdapter(homeCategoryAdapter);
 
         List<String> data1 = new ArrayList<>();
@@ -113,7 +114,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
         data1.add("实惠");
         tabLabel.setTitle(data1);
 
-        if (first_category_id != 0){
+        if (homeCategoryItem.id != 0){
             rlIndicator.setVisibility(View.GONE);
         }
     }
@@ -132,7 +133,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     private void getGoods(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("type", type);
-        hashMap.put("first_category_id", ""+first_category_id);
+        hashMap.put("first_category_id", ""+homeCategoryItem.id);
         hashMap.put("limit", PageSize+"");
         hashMap.put("page", page+"");
         new RxHttp<BaseResult<HomeGoodsResult>>().send(ApiManager.getService().getHomeGoods(hashMap),
@@ -149,7 +150,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
      * 获取一级分类
      */
     private void getCategory(){
-        new RxHttp<BaseResult<ShopHomeResult>>().send(ApiManager.getService().getHome(""+first_category_id),
+        new RxHttp<BaseResult<ShopHomeResult>>().send(ApiManager.getService().getHome(""+homeCategoryItem.id),
                 new Response<BaseResult<ShopHomeResult>>(mActivity,Response.BOTH) {
                     @Override
                     public void onSuccess(BaseResult<ShopHomeResult> result) {
@@ -162,6 +163,9 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
                         }
 
                         List<HomeCategoryItem> typeList = homeResult.third_categories;
+                        if (homeCategoryItem.id != 0){
+                            typeList.add(new HomeCategoryItem("-1"));
+                        }
                         homeCategoryAdapter.setNewData(typeList);
                         if (typeList == null || typeList.size()<=10){
                             //如果小于10则 宽度一样

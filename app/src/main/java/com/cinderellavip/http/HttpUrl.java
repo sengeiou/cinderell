@@ -18,6 +18,7 @@ public interface HttpUrl {
     String home_category = "api/store/categories/first";  //首页分类
     String home_index = "api/store/index";  //首页接口
     String home_goods = "api/store/index/products";  //首页商品
+    String home_more_cate = "api/store/more-cate";
 
 
 

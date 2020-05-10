@@ -135,7 +135,7 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
         scrollRecyclerView.setItemAnimator(new DefaultItemAnimator());
         scrollRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.HORIZONTAL));
-        homeCategoryAdapter = new HomeCategoryAdapter();
+//        homeCategoryAdapter = new HomeCategoryAdapter();
         scrollRecyclerView.setAdapter(homeCategoryAdapter);
 
     }

@@ -11,11 +11,9 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.FilterAdapter;
+import com.cinderellavip.bean.net.home.CateMoreList;
+import com.cinderellavip.http.ListResult;
 import com.cinderellavip.listener.OnGetStringListener;
-import com.cinderellavip.util.DataUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,17 +26,20 @@ public class RightDialogUtil {
 
 	private static Dialog dialog;
 
-	public static void showDialog(Context context, OnGetStringListener listener) {
+	public static void showDialog(Context context, ListResult<CateMoreList> data, String name, OnGetStringListener listener) {
 		View view = View.inflate(context.getApplicationContext(), R.layout.pop_right_condition, null);
+		TextView tv_title = view.findViewById(R.id.tv_title);
+		tv_title.setText(name);
 
 		RecyclerView rv_condition = view.findViewById(R.id.rv_condition);
 		rv_condition.setLayoutManager(new LinearLayoutManager(context));
+
 		FilterAdapter filterAdapter = new FilterAdapter(v -> {
 			dialog.dismiss();
 			dialog = null;
 		});
 		rv_condition.setAdapter(filterAdapter);
-		filterAdapter.setNewData(DataUtil.getData(2));
+		filterAdapter.setNewData(data.list);
 
 
 		dialog = new Dialog(context,R.style.transparentFrameWindowStyle);

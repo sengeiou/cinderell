@@ -105,10 +105,10 @@ public class ShopFragment extends BaseFragment {
         myTitle = new ArrayList<>();
         myFragment = new ArrayList<>();
         myTitle.add("首页");
-        myFragment.add(ShopMainGoodsFragment.newInstance(0));
+        myFragment.add(ShopMainGoodsFragment.newInstance(null));
         for (HomeCategoryItem category1:category){
             myTitle.add(category1.name);
-            myFragment.add(ShopMainGoodsFragment.newInstance(category1.id));
+            myFragment.add(ShopMainGoodsFragment.newInstance(category1));
         }
         tabCategory.setTitle(myTitle);
         //预加载

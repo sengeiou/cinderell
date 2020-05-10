@@ -11,17 +11,25 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.HomeCategoryItem;
+import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.global.ImageUtil;
-import com.cinderellavip.ui.activity.home.CardSaleActivity;
-import com.cinderellavip.ui.activity.home.GoodsListActivity;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.dialog.RightDialogUtil;
+import com.tozzais.baselibrary.http.RxHttp;
+
+import java.util.TreeMap;
 
 
 public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, BaseViewHolder> {
 
-    public HomeCategoryAdapter() {
+    private HomeCategoryItem homeCategoryItem;
+    public HomeCategoryAdapter(HomeCategoryItem homeCategoryItem) {
         super(R.layout.item_home_category, null);
+        this.homeCategoryItem = homeCategoryItem;
     }
 
 
@@ -31,8 +39,14 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
 //        helper.setText(R.id.tv_number,item);
         ImageView iv_image = helper.getView(R.id.iv_image);
         TextView tv_number = helper.getView(R.id.tv_number);
-        ImageUtil.load(getContext(),iv_image,item.image);
-        tv_number.setText(item.name);
+        if ("-1".equals(item.type)){
+            iv_image.setImageResource(R.mipmap.icon_more);
+            tv_number.setText("更多");
+        }else {
+            ImageUtil.load(getContext(),iv_image,item.image);
+            tv_number.setText(item.name);
+        }
+
 
         LinearLayout rl_root = helper.getView(R.id.rl_root);
         ViewGroup.LayoutParams linearParams = rl_root.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
@@ -43,16 +57,37 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
 
 
         helper.getView(R.id.rl_root).setOnClickListener(v -> {
-            if (item.name.equals("更多")){
-                RightDialogUtil.showDialog(getContext(),s -> {});
-            }else if (item.name.equals("大牌特卖")){
-                CardSaleActivity.launch(getContext());
+            if ("-1".equals(item.type)){
+
+               getGoods();
+
             }else {
-                GoodsListActivity.launch(getContext(),item.name,0,0);
             }
+//            if (item.name.equals("更多")){
+//
+//            }else if (item.name.equals("大牌特卖")){
+//                CardSaleActivity.launch(getContext());
+//            }else {
+//                GoodsListActivity.launch(getContext(),item.name,0,0);
+//            }
         });
 
 
+
+
+
+    }
+
+    private void getGoods(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("first_category_id", ""+homeCategoryItem.id);
+        new RxHttp<BaseResult<ListResult<CateMoreList>>>().send(ApiManager.getService().getHomeMoreCate(hashMap),
+                new Response<BaseResult<ListResult<CateMoreList>>>(getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<CateMoreList>> result) {
+                        RightDialogUtil.showDialog(getContext(),result.data,homeCategoryItem.name,s -> {});
+                    }
+                });
 
     }
 

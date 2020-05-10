@@ -1,21 +1,18 @@
 package com.cinderellavip.adapter.recycleview;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.bean.net.home.CateMoreList;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class FilterAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class FilterAdapter extends BaseQuickAdapter<CateMoreList, BaseViewHolder> {
 
     private View.OnClickListener listener;
     public FilterAdapter(View.OnClickListener listener) {
@@ -25,11 +22,13 @@ public class FilterAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
 
     @Override
-    protected void convert( BaseViewHolder helper,  String item) {
+    protected void convert( BaseViewHolder helper,  CateMoreList item) {
         int position = helper.getAdapterPosition();
 
         RecyclerView rv_goods = helper.getView(R.id.rv_goods);
         TextView tv_name = helper.getView(R.id.tv_name);
+        tv_name.setText(item.name);
+
         GridLayoutManager linearLayoutManager = new GridLayoutManager(getContext(),4);
         rv_goods.setLayoutManager(linearLayoutManager);
 
@@ -38,7 +37,7 @@ public class FilterAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
 
 
-        goodsAdapter.setNewData(DataUtil.getData(10));
+        goodsAdapter.setNewData(item.next);
 
 
     }
