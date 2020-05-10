@@ -50,7 +50,7 @@ public class SearchGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHold
            tv_former_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
 
         baseViewHolder.getView(R.id.ll_root).setOnClickListener(v -> {
-            GoodsDetailActivity.launch((Activity) getContext(),0);
+            GoodsDetailActivity.launch((Activity) getContext(),homeGoods.id+"");
         });
         baseViewHolder.getView(R.id.tv_go_shop).setOnClickListener(v -> {
             ShopDetailActivity.launch(getContext());

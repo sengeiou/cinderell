@@ -4,19 +4,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 
-
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CouponCenterAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
-import com.cinderellavip.global.GlobalParam;
-import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.ui.activity.mine.MineCouponActivity;
 import com.tozzais.baselibrary.ui.BaseListFragment;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
@@ -65,9 +60,9 @@ public class CouponCenterFragment extends BaseListFragment<CouponsBean> {
         super.loadData();
         new Handler().postDelayed(()->{
             List<CouponsBean> list = new ArrayList<>();
-            list.add(new CouponsBean(0));
-            list.add(new CouponsBean(1));
-            list.add(new CouponsBean(2));
+            list.add(new CouponsBean());
+            list.add(new CouponsBean());
+            list.add(new CouponsBean());
             setData(list);
         },500);
 

@@ -36,19 +36,19 @@ public class CouponReceiveDialogForServiceAdapter extends BaseQuickAdapter<Coupo
         ImageView iv_selete = helper.getView(R.id.iv_selete);
 
 //
-        switch (item.status) {
-            case CouponsBean.NORMAL:
-            case CouponsBean.OBTAINED:
+        switch (item.id) {
+            case 0:
+            case 1:
                 iv_selete.setVisibility(View.GONE);
                 tv_use.setVisibility(View.VISIBLE);
                 break;
-            case CouponsBean.RECEIVED:
+            case 2:
                 //已领取
                 iv_selete.setVisibility(View.VISIBLE);
                 iv_selete.setImageResource(R.mipmap.yilingqu);
                 tv_use.setVisibility(View.GONE);
                 break;
-            case CouponsBean.NO_HAVE:
+            case 3:
                 //已抢光
                 iv_selete.setVisibility(View.VISIBLE);
                 iv_selete.setImageResource(R.mipmap.yiqinagguang);

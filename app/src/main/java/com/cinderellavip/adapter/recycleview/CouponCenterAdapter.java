@@ -1,16 +1,13 @@
 package com.cinderellavip.adapter.recycleview;
 
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.CouponsBean;
 
@@ -36,7 +33,7 @@ public class CouponCenterAdapter extends BaseQuickAdapter<CouponsBean, BaseViewH
 
 
         //状态 0：正常 1：下架  2:已领取  3：已领完
-        switch (item.status) {
+        switch (item.id) {
             case 2:
                 tv_use.setText("立即领取");
                 iv_status.setVisibility(View.GONE);

@@ -4,6 +4,8 @@ package com.cinderellavip.http;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.bean.net.UserInfo;
+import com.cinderellavip.bean.net.goods.GoodsCommentResult;
+import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
@@ -14,6 +16,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -82,5 +85,21 @@ public interface ApiService {
     @GET(HttpUrl.search_words)
     Observable<BaseResult<ListResult<String>>>
     getSearchWords();
+
+    @GET(HttpUrl.goods_detail+"{id}")
+    Observable<BaseResult<GoodsResult>>
+    getGoodsDetail(@Path("id") String id);
+
+    @GET(HttpUrl.goods_comment)
+    Observable<BaseResult<GoodsCommentResult>>
+    getGoodsComment(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.goods_coupons)
+    Observable<BaseResult<GoodsResult>>
+    getGoodsCoupons(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.coupons_receive)
+    Observable<BaseResult>
+    getReceiveCoupons(@QueryMap TreeMap<String, String> map);
 
 }

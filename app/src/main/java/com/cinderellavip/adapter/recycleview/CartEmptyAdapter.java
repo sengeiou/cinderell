@@ -1,6 +1,5 @@
 package com.cinderellavip.adapter.recycleview;
 
-import android.app.Activity;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +10,6 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.HomeGoods;
-import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 
 
 public class CartEmptyAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder> implements LoadMoreModule {
@@ -41,7 +39,7 @@ public class CartEmptyAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
 
 
         baseViewHolder.getView(R.id.ll_root).setOnClickListener(v -> {
-            GoodsDetailActivity.launch((Activity) getContext(),0);
+//            GoodsDetailActivity.launch((Activity) getContext(),0);
         });
 
 

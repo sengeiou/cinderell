@@ -63,9 +63,9 @@ public class MineCouponFragment extends BaseListFragment<CouponsBean> {
         super.loadData();
         new Handler().postDelayed(()->{
             List<CouponsBean> list = new ArrayList<>();
-            list.add(new CouponsBean(0));
-            list.add(new CouponsBean(1));
-            list.add(new CouponsBean(2));
+            list.add(new CouponsBean());
+            list.add(new CouponsBean());
+            list.add(new CouponsBean());
             setData(list);
         },500);
 

@@ -53,10 +53,10 @@ public class SelectCouponFragment extends BaseListFragment<CouponsBean> {
         super.loadData();
         new Handler().postDelayed(()->{
             List<CouponsBean> list = new ArrayList<>();
-            list.add(new CouponsBean(CouponsBean.NORMAL));
-            list.add(new CouponsBean(CouponsBean.NORMAL));
-            list.add(new CouponsBean(CouponsBean.NORMAL));
-            list.add(new CouponsBean(CouponsBean.NORMAL));
+            list.add(new CouponsBean());
+            list.add(new CouponsBean());
+            list.add(new CouponsBean());
+            list.add(new CouponsBean());
             setData(list);
         },500);
 

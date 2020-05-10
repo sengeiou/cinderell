@@ -99,7 +99,7 @@ public class HomeGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
        }
 
         baseViewHolder.getView(R.id.ll_root).setOnClickListener(v -> {
-            GoodsDetailActivity.launch((Activity) getContext(),0);
+            GoodsDetailActivity.launch((Activity) getContext(),homeGoods.id+"");
         });
     }
 }

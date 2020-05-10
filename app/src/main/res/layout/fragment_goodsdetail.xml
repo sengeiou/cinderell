@@ -36,6 +36,8 @@
         />
 
     <LinearLayout
+        android:id="@+id/ll_normal_price"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="6dp"
@@ -62,7 +64,7 @@
         <TextView
             android:id="@+id/tv_advance_price"
             style="@style/base_text_style_gray_small"
-            android:text="￥52.0"
+            tools:text="￥52.0"
             android:textSize="12sp"
             />
 
@@ -86,7 +88,7 @@
         <TextView
             android:id="@+id/tv_tax"
             style="@style/base_text_style_gray_small"
-            android:text="销量：1328件"
+            android:text="销量：件"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             />
@@ -95,7 +97,7 @@
         <TextView
             android:id="@+id/tv_intro"
             style="@style/base_text_style_gray_small"
-            android:text="发货：上海"
+            android:text="发货："
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>
@@ -117,7 +119,7 @@
             <TextView
                 android:id="@+id/tv_coupon_text"
                 style="@style/base_text_style_gray_small"
-                android:text="满500减100 满300减80 满100减30"
+                tools:text="满500减100 满300减80 满100减30"
                 android:textColor="@color/red"
                 android:layout_marginLeft="12dp"
                 android:layout_weight="1"/>
@@ -140,7 +142,7 @@
         <TextView
             android:id="@+id/tv_promotion_text"
             style="@style/base_text_style_gray_small"
-            android:text="满500减100"
+            tools:text="满500减100"
             android:textColor="@color/red"
             android:layout_marginLeft="12dp"
             android:layout_weight="1"/>
@@ -164,13 +166,13 @@
             android:id="@+id/merchant_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@mipmap/demo_brand_avater"/>
+            tools:src="@mipmap/demo_brand_avater"/>
         <TextView
             android:id="@+id/merchant_name"
             style="@style/base_text_style"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="三只松鼠"
+            tools:text="三只松鼠"
             />
 
         <ImageView
@@ -191,6 +193,7 @@
 
     <LinearLayout
         android:id="@+id/ll_address"
+        android:visibility="gone"
         android:background="@drawable/touch_bg"
         style="@style/base_hor_style">
         <TextView
@@ -223,6 +226,7 @@
 
     <View
         style="@style/base_space"
+        android:visibility="gone"
         />
 
 
@@ -234,7 +238,7 @@
         <TextView
             android:id="@+id/tv_comment_number"
             style="@style/base_text_style"
-            android:text="商品评价(4672)"
+            android:text="商品评价()"
             android:layout_weight="1"/>
 
         <ImageView

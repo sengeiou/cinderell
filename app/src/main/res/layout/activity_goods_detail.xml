@@ -142,17 +142,12 @@
                     android:layout_width="wrap_content"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content"
-                    android:text="￥278"
+                    android:text="￥278\n单独购买"
                     android:textSize="14sp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="3dp"
                     />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:text="单独购买"
-                    android:textSize="12sp"
-                    />
 
             </LinearLayout>
 
@@ -170,17 +165,12 @@
                     android:layout_width="wrap_content"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content"
-                    android:text="￥200"
+                    android:text="￥200\n参团购买"
                     android:textSize="14sp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="3dp"
                     />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:text="参团购买"
-                    android:textSize="12sp"
-                    />
 
             </LinearLayout>
 

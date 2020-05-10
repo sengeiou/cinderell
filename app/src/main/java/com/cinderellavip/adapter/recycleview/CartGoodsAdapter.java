@@ -1,6 +1,5 @@
 package com.cinderellavip.adapter.recycleview;
 
-import android.app.Activity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -8,12 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.CartGoodsItem;
-import com.cinderellavip.bean.local.CartItem;
-import com.cinderellavip.listener.CartClickListener;
 import com.cinderellavip.listener.CartGoodsClickListener;
-import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 
 public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHolder> {
@@ -69,7 +63,7 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
             cartClickListener.onClick(position);
         });
         helper.getView(R.id.ll_root).setOnClickListener(v -> {
-            GoodsDetailActivity.launch((Activity) getContext(),1);
+//            GoodsDetailActivity.launch((Activity) getContext(),1);
         });
 
 

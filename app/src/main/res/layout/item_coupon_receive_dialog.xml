@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:layout_marginTop="12dp"
     android:layout_marginLeft="12dp"
     android:layout_marginRight="12dp"
     android:layout_width="match_parent"
-    android:layout_height="95dp" >
+    android:layout_height="95dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,8 +26,9 @@
                 <TextView
                     android:id="@+id/tv_title"
                     style="@style/base_text_style"
-                    android:textSize="16sp"
-                    android:text="新用户专享"/>
+                    android:layout_height="wrap_content"
+                    tools:text="新用户专享"
+                    android:textSize="16sp" />
 
 
                 <LinearLayout
@@ -44,7 +45,7 @@
                         style="@style/base_text_style_gray_small"
                         android:textColor="@color/red"
                         android:textSize="18sp"
-                        android:text="20"/>
+                        tools:text="20"/>
                     <TextView
                         android:id="@+id/tv_money_condition"
                         style="@style/base_text_style_gray_small"
@@ -56,14 +57,14 @@
                         android:paddingBottom="3dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="满200可用"/>
+                        tools:text="满200可用"/>
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_complain"
                     style="@style/base_text_style_gray_small"
                     android:layout_marginTop="10dp"
-                    android:text="全部商品可用"/>
+                    tools:text="全部商品可用"/>
             </LinearLayout>
 
         </RelativeLayout>

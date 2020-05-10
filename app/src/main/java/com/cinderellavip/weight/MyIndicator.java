@@ -67,7 +67,7 @@ public class MyIndicator extends LinearLayout {
         removeAllViews();
         for (int i = 0; i < size; i++) {
             ImageView view = new ImageView(getContext());
-            view.setBackgroundResource((i == position) ? R.mipmap.banner_goods_select : R.mipmap.banner_goods_default);
+            view.setBackgroundResource((i == position) ? R.drawable.shape_oval_red : R.drawable.shape_oval_gray);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             addView(view);
             int width = 0, height = 0;
@@ -76,7 +76,7 @@ public class MyIndicator extends LinearLayout {
                 width = 20;
                 height = 20;
             } else {
-                width = 40;
+                width = 20;
                 height = 20;
             }
             if (i != 0) {

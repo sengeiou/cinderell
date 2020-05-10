@@ -62,7 +62,7 @@ public class MineCouponAdapter extends BaseQuickAdapter<CouponsBean, BaseViewHol
                 break;
         }
         tv_use.setOnClickListener(v -> {
-            switch (item.coupons_type){
+            switch (item.id){
                 case 0:
                     //通用
                 case 1:

@@ -78,9 +78,9 @@ public class ServiceListFragment extends BaseListFragment<String> implements Vie
                 break;
             case R.id.tv_receive_coupon:
                 List<CouponsBean> list = new ArrayList<>();
-                list.add(new CouponsBean(CouponsBean.RECEIVED));
-                list.add(new CouponsBean(CouponsBean.NO_HAVE));
-                list.add(new CouponsBean(CouponsBean.NORMAL));
+                list.add(new CouponsBean());
+                list.add(new CouponsBean());
+                list.add(new CouponsBean());
                 DialogUtil.showServiceCouponDialog(mActivity, list);
                 break;
         }

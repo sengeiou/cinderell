@@ -1,27 +1,32 @@
 package com.cinderellavip.ui.fragment.goods;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CommentAdapter;
 import com.cinderellavip.bean.local.CommnetTabItem;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.bean.net.goods.GoodsCommentItem;
+import com.cinderellavip.bean.net.goods.GoodsCommentResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.weight.tab.CommentTabLayout;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 
 
-public class CommentFragment extends BaseListFragment<String> {
+public class CommentFragment extends BaseListFragment<GoodsCommentItem> {
 
     @BindView(R.id.tab_label)
     CommentTabLayout tabLabel;
-    private int id;
+    private String id;
 
     @Override
     public int setLayout() {
@@ -31,7 +36,7 @@ public class CommentFragment extends BaseListFragment<String> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        id = getArguments().getInt("id");
+        id = getArguments().getString("id");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 //        mRecyclerView.addItemDecoration(new LineItemDecoration(2, R.color.line));
         mAdapter = new CommentAdapter(true);
@@ -39,23 +44,48 @@ public class CommentFragment extends BaseListFragment<String> {
         setEmptyView("暂无评价");
     }
 
+    private String type = "0";
+
     @Override
     public void loadData() {
 
-        new Handler().postDelayed(() -> {
-            List<CommnetTabItem> tabList = new ArrayList<>();
-            tabList.add(new CommnetTabItem("全部评价","169"));
-            tabList.add(new CommnetTabItem("好评","100"));
-            tabList.add(new CommnetTabItem("中评","20"));
-            tabList.add(new CommnetTabItem("差评","9"));
-            tabList.add(new CommnetTabItem("有图","40"));
-            tabLabel.setTitle(tabList);
 
-            setData(true, DataUtil.getData(4));
-        }, 100);
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("product_id", ""+id);
+        hashMap.put("type", type);
+        hashMap.put("limit", ""+PageSize);
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<GoodsCommentResult>>().send(ApiManager.getService().getGoodsComment(hashMap),
+                new Response<BaseResult<GoodsCommentResult>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<GoodsCommentResult> result) {
+                        GoodsCommentResult data = result.data;
+                        if (page == 1 && "0".equals(type)){
+                            List<CommnetTabItem> tabList = new ArrayList<>();
+                            tabList.add(new CommnetTabItem("全部评价", data.all+""));
+                            tabList.add(new CommnetTabItem("好评",data.good+""));
+                            tabList.add(new CommnetTabItem("中评",data.normal+""));
+                            tabList.add(new CommnetTabItem("差评",data.bad+""));
+                            tabList.add(new CommnetTabItem("有图",data.image+""));
+                            tabLabel.setTitle(tabList);
+                        }
+                        setData(data.comments);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
     }
 
-
+    @Override
+    public void initListener() {
+        super.initListener();
+        tabLabel.setOnTabPositionClickLister(position -> {
+            type = position+"";
+            onRefresh();
+        });
+    }
 }

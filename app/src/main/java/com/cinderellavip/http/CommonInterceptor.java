@@ -124,7 +124,7 @@ public class CommonInterceptor implements Interceptor {
                 request = request.newBuilder()
                         .addHeader("X-Timestamp", time)
                         .addHeader("Accept","application/json")
-                        .addHeader("X-Seller-Token",userToken)
+                        .addHeader("X-User-Token",userToken)
                         .addHeader("X-Sign",SignUtil.getMd5(signParams,time))
                         .build();
                 return request;
@@ -159,7 +159,7 @@ public class CommonInterceptor implements Interceptor {
         requestBuilder.addHeader("Accept","application/json");
         String userToken = GlobalParam.getUserToken();
         if (!TextUtils.isEmpty(userToken)){
-            requestBuilder.addHeader("X-Seller-Token",userToken);
+            requestBuilder.addHeader("X-User-Token",userToken);
         }
         if (separatorIndex == -1) {
             String s = "secret=241cd2aa2aae01cd2&"+"timestamp="+time;

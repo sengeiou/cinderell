@@ -3,12 +3,17 @@ package com.cinderellavip.ui.activity.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
+import com.cinderellavip.bean.net.goods.GoodsInfo;
+import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.bean.net.goods.GroupInfo;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.order.CartActivity;
 import com.cinderellavip.ui.fragment.goods.CommentFragment;
@@ -16,6 +21,7 @@ import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
 import com.cinderellavip.ui.fragment.goods.GraphicFragment;
 import com.cinderellavip.weight.VerticalViewPager;
 import com.google.android.material.tabs.TabLayout;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 
@@ -50,13 +56,11 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
         intent.putExtra("id", id);
         activity.startActivity(intent);
     }
-    public static void launch(Activity activity, int id) {
-        Intent intent = new Intent(activity, GoodsDetailActivity.class);
-        intent.putExtra("id", id);
-        activity.startActivity(intent);
-    }
-
     private String id;
+
+    public String getId() {
+        return id;
+    }
 
     @Override
     protected int getToolbarLayout() {
@@ -108,10 +112,29 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     @Override
     public void loadData() {
-        new Handler().postDelayed(() -> {
-            graphicFragment.setData();
-        }, 500);
 
+        new RxHttp<BaseResult<GoodsResult>>().send(ApiManager.getService().getGoodsDetail(id),
+                new Response<BaseResult<GoodsResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<GoodsResult> result) {
+                        GoodsResult goodsResult = result.data;
+                        GoodsInfo productInfo = goodsResult.product_info;
+                        if (goodsDetailGoodsFragment != null)
+                        goodsDetailGoodsFragment.setData(goodsResult);
+                        if (graphicFragment != null) {
+                            graphicFragment.setData(productInfo.detail);
+                        }
+                        if (productInfo.hasGroup){
+                            GroupInfo groupInfo = goodsResult.group_info;
+                            tvLeftPrice.setText("￥"+groupInfo.getProduct_price()+"\n单独购买");
+                            tvRightPrice.setText("￥"+groupInfo.getGroup_price()+"\n参团购买");
+                        }else {
+                            tvLeftPrice.setText("加入购物车");
+                            tvRightPrice.setText("立即购买");
+                        }
+
+                    }
+                });
     }
 
     @Override
