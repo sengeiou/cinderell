@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/shape_white5"
     android:id="@+id/ll_root"
     android:orientation="vertical">
@@ -22,7 +23,7 @@
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
             android:layout_height="0dp"
-            android:src="@mipmap/product"
+            tools:src="@mipmap/product"
             />
 
 
@@ -43,7 +44,7 @@
         android:lines="2"
         android:ellipsize="end"
         android:textColor="@color/black_title_color"
-        android:text="冬季婴儿夹棉连体0~3岁宝宝加厚保暖"
+        tools:text="冬季婴儿夹棉连体0~3岁宝宝加厚保暖"
         />
 
 
@@ -52,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
+        android:gravity="bottom"
         android:layout_marginLeft="12dp"
         android:orientation="horizontal">
 
@@ -65,18 +66,17 @@
             android:textSize="16sp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/baseColor"
-            android:text="￥238"/>
+            tools:text="￥238"/>
 
         <TextView
             android:id="@+id/tv_former_price"
             style="@style/base_text_style_gray_small"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:text="￥238"/>
+            tools:text="￥238"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.cinderellavip.weight.WrapLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_marginLeft="12dp"
@@ -88,19 +88,23 @@
         <TextView
             android:id="@+id/tv_shop_name"
             style="@style/base_text_style_gray_small"
-            android:text="哈尼宝贝旗舰店"/>
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="旗舰店旗舰店"/>
 
         <TextView
             android:id="@+id/tv_go_shop"
+            android:layout_toRightOf="@+id/tv_shop_name"
             style="@style/base_text_style_gray_small"
-            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:textColor="@color/black_title_color"
             android:text="进店"
             android:padding="5dp"
             android:drawableRight="@mipmap/right_black"
             android:drawablePadding="3dp"
             />
-    </LinearLayout>
+    </com.cinderellavip.weight.WrapLayout>
 
 
 

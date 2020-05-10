@@ -3,7 +3,7 @@ package com.cinderellavip.ui.fragment.home;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.adapter.recycleview.SearchGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -103,7 +103,7 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
     private void setLayoutManager(){
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         mRecyclerView.addItemDecoration(girdSpace);
-        mAdapter = new HomeGoodsAdapter();
+        mAdapter = new SearchGoodsAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 

@@ -7,12 +7,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 
 import com.cinderellavip.R;
-import com.cinderellavip.listener.OnFilterListener;
+import com.cinderellavip.bean.eventbus.UpdateSearch;
+import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.ui.fragment.home.SearchResultFragment;
 import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.weight.FilterView;
@@ -27,7 +25,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class SearchResultActivity extends BaseActivity implements OnFilterListener {
+public class SearchResultActivity extends BaseActivity implements OnSureClickListener {
 
 
     @BindView(R.id.et_search)
@@ -91,44 +89,17 @@ public class SearchResultActivity extends BaseActivity implements OnFilterListen
                 KeyboardUtils.hideKeyboard(etSearch);
                 String keyword = etSearch.getText().toString().trim();
                 fragment.setKeyword(keyword);
+                EventBus.getDefault().post(new UpdateSearch(keyword));
             }
             return false;
         });
-        filter_view.setOnFilterListener(this);
+        filter_view.setOnDialogClickListener(this);
     }
 
-
-    private String sort = "0";
-    private String area = "0";
-    @Override
-    public void onComplex() {
-        sort = "0";
-        fragment.setSortAndArea(sort,area);
-    }
 
     @Override
-    public void onPrice(boolean isDown) {
-        if (isDown){
-            sort = "4";
-        }else {
-            sort = "3";
-        }
-        fragment.setSortAndArea(sort,area);
+    public void onSure() {
+        fragment.setSortAndArea(filter_view.getSort()+"",filter_view.getSort_type()+"");
+
     }
-
-    @Override
-    public void onCategray(boolean isDown) {
-    }
-
-    @Override
-    public void onSaleVolume(boolean isDown) {
-        if (isDown){
-            sort = "2";
-        }else {
-            sort = "1";
-        }
-        fragment.setSortAndArea(sort,area);
-    }
-
-
 }

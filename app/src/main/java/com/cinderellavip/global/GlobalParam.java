@@ -65,5 +65,14 @@ public class GlobalParam {
     }
 
 
+    //存 用户的token
+    public static void setSearch(String userid) {
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.search, userid);
+    }
+    //取 用户的用户的token
+    public static String getSearch() {
+        return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.search,"");
+    }
+
 
 }

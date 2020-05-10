@@ -1,11 +1,15 @@
 package com.cinderellavip;
 
 import com.cinderellavip.http.SignUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.junit.Test;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.TreeMap;
 
 /**
@@ -66,6 +70,21 @@ public class ExampleUnitTest {
         } catch (Exception e) {
             return 0;
         }
+
+    }
+
+    @Test
+    public void textJson() {
+        String url = "[\n" +
+                "    \"Marcus\",\n" +
+                "    \"Christian\",\n" +
+                "    \"Norman\"\n" +
+                "]";
+        Gson gson = new Gson();
+        Type founderSetType = new TypeToken<HashSet<String>>(){}.getType();
+        HashSet<String> set = gson.fromJson(url, founderSetType);
+        System.out.println(set.size());
+
 
     }
 }

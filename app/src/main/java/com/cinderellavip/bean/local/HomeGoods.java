@@ -12,6 +12,7 @@ public class HomeGoods {
     public int id;
     public String name;
     public String thumb;
+
     public double price;
     public double old_price;
     public int number;
@@ -33,4 +34,9 @@ public class HomeGoods {
     public String getGroup_price() {
         return ArithmeticUtil.convert(group_price);
     }
+
+
+    //搜索的时候 会有下面数据
+    public String store_id;
+    public String store_name;
 }
