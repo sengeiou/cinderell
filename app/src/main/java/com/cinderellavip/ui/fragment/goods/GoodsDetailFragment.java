@@ -131,7 +131,10 @@ public class GoodsDetailFragment extends BaseFragment {
 
     }
 
+    private GoodsResult goodsResult;
+
     public void setData(GoodsResult goodsResult) {
+        this.goodsResult = goodsResult;
         GoodsInfo productInfo = goodsResult.product_info;
 
         List<GoodsDetialBanner> bannerList = new ArrayList<>();
@@ -209,8 +212,12 @@ public class GoodsDetailFragment extends BaseFragment {
                 ((GoodsDetailActivity) mActivity).setCurrent(2);
                 break;
             case R.id.ll_merchant:
-                BrandDetailActivity.launch(mActivity);
-//                MerchantDetailForNewActivity.launch(mActivity, (int) merchantName.getTag());
+                if (goodsResult != null){
+                    GoodsInfo goodsInfo = goodsResult.product_info;
+//                    BrandDetailActivity.launch(mActivity);
+//                    ShopDetailActivity.launchShop(mActivity,goodsInfo.brand_id+"",goodsInfo.brand_name);
+                    BrandDetailActivity.launch(mActivity,goodsInfo.brand_id+"");
+                }
                 break;
         }
     }

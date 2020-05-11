@@ -1,14 +1,12 @@
 package com.cinderellavip.adapter.recycleview;
 
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.CartGoodsItem;
 import com.cinderellavip.bean.local.CartItem;
-import com.cinderellavip.listener.CartClickListener;
 import com.cinderellavip.listener.CartGoodsClickListener;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 

@@ -146,6 +146,7 @@ public class MainActivity extends CheckPermissionActivity {
                 break;
             case R.id.ll_mine:
                 selectFragment(MINE);
+//                DirectAppointmentTechnicianDetailActivity.launch(mActivity,0);
                 break;
         }
     }

@@ -3,7 +3,6 @@ package com.cinderellavip.util.banner;
 import android.app.Activity;
 
 import com.cinderellavip.ui.activity.WebViewActivity;
-import com.cinderellavip.ui.activity.home.BrandDetailActivity;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
@@ -24,7 +23,7 @@ public class LinkUtil {
                     WebViewActivity.launch(context,value,WebViewActivity.GRAPHIC);
                     break;
                 case 5:
-                    BrandDetailActivity.launch(context);
+//                    BrandDetailActivity.launch(context);
                     break;
                 case 6:
                     ShopDetailActivity.launch(context);

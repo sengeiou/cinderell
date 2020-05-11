@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/gray_bg"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-
-      <include
-          layout="@layout/fragment_brand_detail"/>
-
-
 
 
     <LinearLayout
         android:id="@+id/title"
-        android:background="#00000000"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior=".weight.behavior.TechnicalDetailTitleBehavior"
@@ -106,8 +101,18 @@
 
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 
-</RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>
 

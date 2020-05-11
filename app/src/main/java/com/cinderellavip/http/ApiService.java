@@ -2,7 +2,9 @@ package com.cinderellavip.http;
 
 
 import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.net.BrandResult;
 import com.cinderellavip.bean.net.HomeCategoryResult;
+import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.goods.GoodsCommentResult;
 import com.cinderellavip.bean.net.goods.GoodsResult;
@@ -101,5 +103,22 @@ public interface ApiService {
     @GET(HttpUrl.coupons_receive)
     Observable<BaseResult>
     getReceiveCoupons(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.shop_detail)
+    Observable<BaseResult<ShopResult>>
+    getShopInfo(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.brand_detail)
+    Observable<BaseResult<BrandResult>>
+    getBrandInfo(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.goods_for_brand_and_shop)
+    Observable<BaseResult<ListResult<HomeGoods>>>
+    getBrandGoods(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.collect)
+    Observable<BaseResult>
+    getCollect(@QueryMap TreeMap<String, String> map);
+
 
 }

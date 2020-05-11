@@ -1,18 +1,26 @@
 package com.cinderellavip.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.bean.net.ShopInfo;
+import com.cinderellavip.bean.net.ShopResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
+import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.weight.GirdSpace;
 import com.google.android.material.appbar.AppBarLayout;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+
+import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -23,6 +31,7 @@ import butterknife.OnClick;
 
 
 public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
+
     @BindView(R.id.iv_top)
     ImageView iv_top; //最上面的标题
 
@@ -31,6 +40,35 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
     AppBarLayout appbar;
 
 
+    public static ShopDetailFragment newInstance(String id) {
+        ShopDetailFragment cartFragment = new ShopDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        cartFragment.setArguments(bundle);
+        return cartFragment;
+
+    }
+
+
+
+    public String sort = "0", sort_type = "0";
+
+    private  String id;
+    @Override
+    public void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
+        id = getArguments().getString("id");
+
+        getShopInfo();
+
+
+        //设置商品
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
+        GirdSpace girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10), 2,0,true);
+        mRecyclerView.addItemDecoration(girdSpace);
+        mAdapter = new HomeGoodsAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+    }
 
     @Override
     public int setLayout() {
@@ -41,13 +79,55 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
     public void loadData() {
 
 
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("store_id", "" + id);
+        hashMap.put("sort", sort);
+        hashMap.put("sort_type", sort_type);
+        hashMap.put("limit", "" + PageSize);
+        hashMap.put("page", "" + page);
+        new RxHttp<BaseResult<ListResult<HomeGoods>>>().send(ApiManager.getService().getBrandGoods(hashMap),
+                new Response<BaseResult<ListResult<HomeGoods>>>(isLoad, getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<HomeGoods>> result) {
+                        setData(result.data.list);
+                    }
 
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
+    }
 
+    private ShopInfo storeInfo;
+    private void getShopInfo() {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("store_id", id + "");
+        new RxHttp<BaseResult<ShopResult>>().send(ApiManager.getService().getShopInfo(hashMap),
+                new Response<BaseResult<ShopResult>>(getContext(),Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseResult<ShopResult> result) {
+                        storeInfo = result.data.store_info;
+                        ShopDetailActivity mActivity = (ShopDetailActivity) ShopDetailFragment.this.mActivity;
+                        mActivity.setTvTitleName(storeInfo.name);
+                        mActivity.setIvCollect(storeInfo.collect);
 
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getHomeGoods(4));
-        }, 100);
+//                        tv_title_name.setText(storeInfo.name);
+//                        ImageUtil.loadNet(mActivity, ivImage, storeInfo.image);
+//                        if (storeInfo.collect) {
+//                            iv_collect.setImageResource(R.mipmap.brand_collect_select);
+//                        } else {
+//                            iv_collect.setImageResource(R.mipmap.brand_collect);
+//                        }
+//                        if (TextUtils.isEmpty(storeInfo.video)){
+//                            llVideo.setVisibility(View.GONE);
+//                        }else {
+//                            llVideo.setVisibility(View.VISIBLE);
+//                        }
+
+                    }
+                });
     }
 
     @Override
@@ -87,17 +167,6 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
 
 
 
-    @Override
-    public void initView(Bundle savedInstanceState) {
-        super.initView(savedInstanceState);
-
-        //设置商品
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        GirdSpace girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10), 2,0,true);
-        mRecyclerView.addItemDecoration(girdSpace);
-        mAdapter = new HomeGoodsAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-    }
 
 
 

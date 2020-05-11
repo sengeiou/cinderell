@@ -41,73 +41,53 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/demo_brand_image"/>
+                        tools:src="@mipmap/demo_brand_image"/>
 
                     <TextView
-                        style="@style/base_text_style_gray_small"
-                        tools:text="三只松鼠股份有限公司成立于2012年，公司总部在安徽芜湖，是中国第一家定位于纯互联网食品品牌的企业，也是当前中国销售规模最大的食品电商企业，其主营业务覆盖了坚果、肉脯、果干、膨化等全品类休闲零食"
-                        android:padding="12dp"
+                        android:id="@+id/tv_content"
                         android:visibility="gone"
+                        style="@style/base_text_style_gray_small"
+                        android:text="三只松鼠股份有限公司成立于2012年，公司总部在安徽芜湖，是中国第一家定位于纯互联网食品品牌的企业，也是当前中国销售规模最大的食品电商企业，其主营业务覆盖了坚果、肉脯、果干、膨化等全品类休闲零食"
+                        android:padding="12dp"
                         android:lineSpacingExtra="4dp"
                         />
 
-                   <LinearLayout
-                       android:id="@+id/ll_video"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:orientation="vertical">
-                       <View
-                           style="@style/base_space"
-                           />
-
-                       <RelativeLayout
-
-                           android:layout_width="match_parent"
-                           android:layout_marginTop="12dp"
-                           android:layout_marginBottom="8dp"
-                           android:layout_marginLeft="12dp"
-                           android:layout_marginRight="12dp"
-                           android:layout_height="180dp">
-                           <ImageView
-                               android:layout_width="match_parent"
-                               android:layout_height="match_parent"
-                               android:scaleType="centerCrop"
-                               android:src="@mipmap/demo_brand_vedio"/>
-                           <ImageView
-                               android:layout_width="wrap_content"
-                               android:layout_height="wrap_content"
-                               android:layout_centerInParent="true"
-                               android:src="@mipmap/play"/>
-                       </RelativeLayout>
-
-                   </LinearLayout>
-
-
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/statusbar_view_height_and_toolbar1"
-                    android:orientation="vertical">
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/statusbar_view_height_and_toolbar"
+                        style="@style/base_space"
                         />
 
-                    <com.cinderellavip.weight.FilterView
-                        android:id="@+id/tab_label"
+                    <RelativeLayout
+                        android:id="@+id/ll_video"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        app:tabIndicatorHeight="0dp"
-                        android:background="@color/gray_bg"
-                        app:tabMode="fixed"
-                        />
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_height="180dp">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/demo_brand_vedio"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/play"/>
+                    </RelativeLayout>
+
+
                 </LinearLayout>
 
 
+                <com.cinderellavip.weight.FilterView
+                    android:id="@+id/tab_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    app:tabIndicatorHeight="0dp"
+                    android:background="@color/gray_bg"
+                    app:tabMode="fixed"
+                    />
 
 
 

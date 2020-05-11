@@ -117,7 +117,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 new Response<BaseResult<GoodsResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<GoodsResult> result) {
-                        GoodsResult goodsResult = result.data;
+                        goodsResult = result.data;
                         GoodsInfo productInfo = goodsResult.product_info;
                         if (goodsDetailGoodsFragment != null)
                         goodsDetailGoodsFragment.setData(goodsResult);
@@ -136,6 +136,8 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                     }
                 });
     }
+
+    GoodsResult goodsResult;
 
     @Override
     public void initListener() {
@@ -198,7 +200,11 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 DialogUtil.showCallPhoneDialog(mActivity);
                 break;
             case R.id.tv_shop:
-                ShopDetailActivity.launch(mActivity);
+                if (goodsResult != null){
+                    GoodsInfo goodsInfo = goodsResult.product_info;
+                    ShopDetailActivity.launchShop(mActivity,goodsInfo.store_id+"");
+                }
+
                 break;
             case R.id.ll_buy_left_btn:
                 DialogUtil.showSpeciSpecialDialog(mContext,payString -> {

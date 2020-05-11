@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.ui.activity.home.BrandDetailActivity;
 
 
 public class CollectBrandAdapter extends BaseQuickAdapter<String, BaseViewHolder> implements LoadMoreModule {
@@ -30,7 +29,7 @@ public class CollectBrandAdapter extends BaseQuickAdapter<String, BaseViewHolder
 
         }
         helper.getView(R.id.ll_merchant).setOnClickListener(view -> {
-            BrandDetailActivity.launch(getContext());
+//            BrandDetailActivity.launch(getContext());
         });
     }
 
