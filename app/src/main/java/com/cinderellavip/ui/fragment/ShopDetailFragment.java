@@ -1,6 +1,7 @@
 package com.cinderellavip.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,16 +10,21 @@ import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.ShopInfo;
 import com.cinderellavip.bean.net.ShopResult;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
+import com.cinderellavip.util.ImageUtils;
+import com.cinderellavip.weight.FilterView;
 import com.cinderellavip.weight.GirdSpace;
 import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.TreeMap;
 
@@ -30,7 +36,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
+public class ShopDetailFragment extends BaseListFragment<HomeGoods> implements OnSureClickListener {
 
     @BindView(R.id.iv_top)
     ImageView iv_top; //最上面的标题
@@ -38,6 +44,12 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
 
     @BindView(R.id.appbar)
     AppBarLayout appbar;
+
+
+    @BindView(R.id.iv_image)
+    ImageView iv_image;
+    @BindView(R.id.filter_view)
+    FilterView filter_view;
 
 
     public static ShopDetailFragment newInstance(String id) {
@@ -68,6 +80,8 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
         mRecyclerView.addItemDecoration(girdSpace);
         mAdapter = new HomeGoodsAdapter();
         mRecyclerView.setAdapter(mAdapter);
+
+        filter_view.setTv_comment("新品");
     }
 
     @Override
@@ -77,7 +91,6 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
 
     @Override
     public void loadData() {
-
 
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("store_id", "" + id);
@@ -109,22 +122,14 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
                     @Override
                     public void onSuccess(BaseResult<ShopResult> result) {
                         storeInfo = result.data.store_info;
-                        ShopDetailActivity mActivity = (ShopDetailActivity) ShopDetailFragment.this.mActivity;
-                        mActivity.setTvTitleName(storeInfo.name);
-                        mActivity.setIvCollect(storeInfo.collect);
+                        if(mActivity instanceof ShopDetailActivity ){
+                            LogUtil.e(storeInfo.toString());
+                            ShopDetailActivity activity = (ShopDetailActivity) mActivity;
+                            activity.setTvTitleName(storeInfo.name);
+                            activity.setIvCollect(storeInfo.collect);
+                            ImageUtil.loadNet(mActivity,iv_image,storeInfo.image);
 
-//                        tv_title_name.setText(storeInfo.name);
-//                        ImageUtil.loadNet(mActivity, ivImage, storeInfo.image);
-//                        if (storeInfo.collect) {
-//                            iv_collect.setImageResource(R.mipmap.brand_collect_select);
-//                        } else {
-//                            iv_collect.setImageResource(R.mipmap.brand_collect);
-//                        }
-//                        if (TextUtils.isEmpty(storeInfo.video)){
-//                            llVideo.setVisibility(View.GONE);
-//                        }else {
-//                            llVideo.setVisibility(View.VISIBLE);
-//                        }
+                        }
 
                     }
                 });
@@ -134,6 +139,7 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
     public void initListener() {
         super.initListener();
         swipeLayout.setEnabled(true);
+        filter_view.setOnDialogClickListener(this);
 
         mAdapter.getLoadMoreModule().setEnableLoadMore(false);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -193,4 +199,12 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
     }
 
 
+    @Override
+    public void onSure() {
+        this.sort = filter_view.getSort()+"";
+        this.sort_type = filter_view.getSort_type()+"";
+        swipeLayout.setRefreshing(true);
+        onRefresh();
+
+    }
 }

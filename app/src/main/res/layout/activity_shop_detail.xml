@@ -54,7 +54,7 @@
                 style="@style/base_text_style"
                 tools:text="三只松鼠"
                 android:layout_centerInParent="true"
-                android:textColor="#00000000"
+                android:textColor="@color/black_title_color"
                 android:textSize="18sp"/>
             <RelativeLayout
                 android:id="@+id/ll_search"
@@ -88,7 +88,7 @@
                     android:id="@+id/iv_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/brand_collect"
+                    tools:src="@mipmap/brand_collect"
                     />
             </RelativeLayout>
 

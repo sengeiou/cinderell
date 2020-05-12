@@ -7,12 +7,8 @@
     android:background="@color/gray_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-
       <include
           layout="@layout/fragment_brand_detail"/>
-
-
 
 
     <LinearLayout

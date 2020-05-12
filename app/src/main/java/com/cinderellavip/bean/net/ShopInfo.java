@@ -6,5 +6,13 @@ public class ShopInfo {
     public String name;
     public boolean collect;
 
-
+    @Override
+    public String toString() {
+        return "ShopInfo{" +
+                "id=" + id +
+                ", image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                ", collect=" + collect +
+                '}';
+    }
 }

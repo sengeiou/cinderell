@@ -18,7 +18,9 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.util.ColorUtil;
+import com.cinderellavip.weight.FilterView;
 import com.cinderellavip.weight.GirdSpace;
 import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -36,7 +38,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class BrandDetailFragment extends BaseListFragment<HomeGoods> {
+public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements OnSureClickListener {
     @BindView(R.id.iv_top)
     ImageView iv_top; //最上面的标题
 
@@ -57,6 +59,9 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> {
 
     @BindView(R.id.tv_title_name)
     TextView tv_title_name;
+
+    @BindView(R.id.filter_view)
+    FilterView filter_view;
 
     public static BrandDetailFragment newInstance(String id) {
         BrandDetailFragment cartFragment = new BrandDetailFragment();
@@ -80,6 +85,8 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> {
         mRecyclerView.addItemDecoration(girdSpace);
         mAdapter = new HomeGoodsAdapter();
         mRecyclerView.setAdapter(mAdapter);
+
+        filter_view.setTv_comment("新品");
     }
 
 
@@ -147,6 +154,7 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> {
     @Override
     public void initListener() {
         super.initListener();
+        filter_view.setOnDialogClickListener(this);
         swipeLayout.setEnabled(true);
 
         mAdapter.getLoadMoreModule().setEnableLoadMore(false);
@@ -162,22 +170,23 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> {
                 } else {
                     iv_top.setVisibility(View.GONE);
                 }
-                float percent = Math.abs(totalDy) * 1.0f / 300 % 100;
-                percent = percent > 1 ? 1 : percent;
-                String bgColor = ColorUtil.caculateColor("#00000000", "#FFFFFFFF", percent);
-                title.setBackgroundColor(Color.parseColor(bgColor));
 
-                String textColor = ColorUtil.caculateColor("#00000000", "#FF111111", percent);
-                tv_title_name.setTextColor(Color.parseColor(textColor));
             }
         });
         //SwipeRefreshLayout和CoordinatorLayout滑动冲突
         appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
+            LogUtil.e("totalDy" + i);
             if (i >= 0) {
                 swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
             } else {
                 swipeLayout.setEnabled(false); //否则关闭
             }
+            float percent = Math.abs(i) * 1.0f / 200 % 100;
+            percent = percent > 1 ? 1 : percent;
+            String bgColor = ColorUtil.caculateColor("#00000000", "#FFFFFFFF", percent);
+            title.setBackgroundColor(Color.parseColor(bgColor));
+            String textColor = ColorUtil.caculateColor("#00000000", "#FF111111", percent);
+            tv_title_name.setTextColor(Color.parseColor(textColor));
         });
 
 
@@ -196,7 +205,7 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> {
                 collect();
                 break;
             case R.id.iv_top:
-                mRecyclerView.scrollToPosition(0);
+                mRecyclerView.smoothScrollToPosition(0);
                 CoordinatorLayout.Behavior behavior =
                         ((CoordinatorLayout.LayoutParams) appbar.getLayoutParams()).getBehavior();
                 if (behavior instanceof AppBarLayout.Behavior) {
@@ -230,5 +239,13 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> {
                     }
                 });
 
+    }
+
+    @Override
+    public void onSure() {
+        this.sort = filter_view.getSort()+"";
+        this.sort_type = filter_view.getSort_type()+"";
+        swipeLayout.setRefreshing(true);
+        onRefresh();
     }
 }

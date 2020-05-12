@@ -31,17 +31,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_marginBottom="@dimen/statusbar_view_height_and_toolbar1"
                     app:layout_scrollFlags="scroll"
                     android:orientation="vertical">
 
-
-
-                    <ImageView
+                    <com.cinderellavip.weight.ScaleImageView
                         android:id="@+id/iv_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/demo_brand_image"/>
+                        app:scale="0.496"
+                        tools:src="@mipmap/demo_brand_image"/>
 
                     <TextView
                         style="@style/base_text_style_gray_small"
@@ -90,7 +90,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/statusbar_view_height_and_toolbar1"
+
                     android:orientation="vertical">
                     <View
                         android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                         />
 
                     <com.cinderellavip.weight.FilterView
-                        android:id="@+id/tab_label"
+                        android:id="@+id/filter_view"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         app:tabIndicatorHeight="0dp"

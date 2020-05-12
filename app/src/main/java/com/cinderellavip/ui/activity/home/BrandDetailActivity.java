@@ -67,18 +67,4 @@ public class BrandDetailActivity extends BaseActivity{
         StatusBarUtil.setLightMode(this);
     }
 
-
-//    @OnClick({R.id.iv_back, R.id.iv_search, R.id.iv_collect})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.iv_back:
-//                finish();
-//                break;
-//            case R.id.iv_search:
-//                SearchActivity.launch(mActivity);
-//                break;
-//            case R.id.iv_collect:
-//                break;
-//        }
-//    }
 }

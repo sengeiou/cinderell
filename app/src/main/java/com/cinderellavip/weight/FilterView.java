@@ -43,6 +43,11 @@ public class FilterView extends FrameLayout implements View.OnClickListener {
     private ImageView iv_price;
     private ImageView iv_comment;
 
+
+    public void setTv_comment(String text) {
+        tv_comment.setText(text);
+    }
+
     public FilterView(@NonNull Context context) {
         super(context);
         initView(context);

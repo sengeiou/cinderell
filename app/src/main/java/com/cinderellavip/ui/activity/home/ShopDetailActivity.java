@@ -3,17 +3,21 @@ package com.cinderellavip.ui.activity.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.ShopInfo;
+import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.ShopDetailFragment;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.TreeMap;
 
@@ -51,18 +55,34 @@ public class ShopDetailActivity extends BaseActivity{
 
     String id;
 
-//    @Override
-//    public int getLayoutId() {
-//        return R.layout.activity_shop_detail;
-//    }
 
     @Override
     public void initView(Bundle savedInstanceState) {
         Intent intent = getIntent();
          id = intent.getStringExtra("id");
-
+//        tvTitleName.setText("id");
+//        setIvCollect(true);
     }
 
+    private ShopInfo storeInfo;
+    private void getShopInfo() {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("store_id", id + "");
+        new RxHttp<BaseResult<ShopResult>>().send(ApiManager.getService().getShopInfo(hashMap),
+                new Response<BaseResult<ShopResult>>(mActivity,Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseResult<ShopResult> result) {
+                        storeInfo = result.data.store_info;
+                        if(mActivity instanceof ShopDetailActivity ){
+                            LogUtil.e(storeInfo.toString());
+                            ShopDetailActivity activity = (ShopDetailActivity) mActivity;
+                            setTvTitleName(storeInfo.name);
+                            setIvCollect(storeInfo.collect);
+
+                        }
+                    }
+                });
+    }
     @Override
     protected int getToolbarLayout() {
         return -1;
@@ -81,11 +101,8 @@ public class ShopDetailActivity extends BaseActivity{
     @Override
     public void loadData() {
 
-
-
         getSupportFragmentManager().beginTransaction().add(R.id.fl_container,
                 ShopDetailFragment.newInstance(id)).commit();
-
 
     }
 
@@ -115,7 +132,7 @@ public class ShopDetailActivity extends BaseActivity{
     private void collect(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("id", id + "");
-        hashMap.put("type",   "2");
+        hashMap.put("type",   "1");
         new RxHttp<BaseResult>().send(ApiManager.getService().getCollect(hashMap),
                 new Response<BaseResult>(mActivity) {
                     @Override
@@ -132,7 +149,8 @@ public class ShopDetailActivity extends BaseActivity{
     private boolean isCollect;
     public void setIvCollect(boolean isCollect){
         this.isCollect = isCollect;
-        if (isCollect) {
+        LogUtil.e(isCollect+"");
+        if (this.isCollect) {
             ivCollect.setImageResource(R.mipmap.brand_collect_select);
         } else {
             ivCollect.setImageResource(R.mipmap.brand_collect);
