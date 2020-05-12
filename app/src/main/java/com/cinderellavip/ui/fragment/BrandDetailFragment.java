@@ -19,6 +19,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnSureClickListener;
+import com.cinderellavip.ui.activity.home.SearchListActivity;
 import com.cinderellavip.util.ColorUtil;
 import com.cinderellavip.weight.FilterView;
 import com.cinderellavip.weight.GirdSpace;
@@ -200,6 +201,7 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements 
                 mActivity.finish();
                 break;
             case R.id.ll_search:
+                SearchListActivity.launch(mActivity,id,SearchListActivity.BRAND);
                 break;
             case R.id.rl_collect:
                 collect();

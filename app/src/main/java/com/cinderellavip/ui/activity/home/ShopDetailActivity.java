@@ -121,6 +121,7 @@ public class ShopDetailActivity extends BaseActivity{
                 mActivity.finish();
                 break;
             case R.id.ll_search:
+                SearchListActivity.launch(mActivity,id,SearchListActivity.SHOP);
                 break;
             case R.id.rl_collect:
                 collect();
