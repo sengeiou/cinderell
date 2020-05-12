@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
+import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.goods.GroupInfo;
@@ -215,6 +216,12 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 }
                 break;
             case R.id.ll_buy_right_btn:
+                if (goodsResult != null) {
+                    DialogUtil.showSpeciSpecialDialog(mContext,goodsResult, (norm_id, number) -> {
+                        RequestSettlePara para = new RequestSettlePara(RequestSettlePara.PRODUCT, id, norm_id, number);
+                        EnsureOrderActivity.launch(mActivity,para);
+                    });
+                }
 //                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {
 //                    EnsureOrderActivity.launch(mActivity);
 //                });

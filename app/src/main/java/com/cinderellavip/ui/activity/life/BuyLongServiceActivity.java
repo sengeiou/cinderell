@@ -133,7 +133,7 @@ public class BuyLongServiceActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SelectServiceAddressActivity.REQUEST_CODE && resultCode == RESULT_OK) {
-            setAddress(new NetCityBean(true));
+//            setAddress(new NetCityBean(true));
         }
     }
 

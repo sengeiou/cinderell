@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:orientation="vertical">
 
@@ -153,9 +154,10 @@
                         android:text="运费合计" />
 
                     <TextView
+                        android:id="@+id/tv_tax_total"
                         style="@style/base_text_style"
                         android:textSize="12sp"
-                        android:text="￥0.00" />
+                        tools:text="￥0.00" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -171,9 +173,10 @@
                         android:text="优惠合计" />
 
                     <TextView
+                        android:id="@+id/tv_coupon_total"
                         style="@style/base_text_style"
                         android:textSize="12sp"
-                        android:text="0.00" />
+                        tools:text="0.00" />
                 </LinearLayout>
                 <LinearLayout
                     style="@style/base_hor_style"
@@ -182,15 +185,17 @@
                     android:background="@drawable/touch_bg">
 
                     <TextView
+
                         style="@style/base_text_style"
                         android:layout_weight="1"
                         android:text="商品合计"
                         android:textSize="12sp"/>
 
                     <TextView
+                        android:id="@+id/tv_goods_total"
                         style="@style/base_text_style"
                         android:textSize="12sp"
-                        android:text="￥488" />
+                        tools:text="￥488" />
                 </LinearLayout>
                 <LinearLayout
                     style="@style/base_hor_style"
@@ -205,9 +210,9 @@
                         android:textStyle="bold"/>
 
                     <TextView
-                        android:id="@+id/tv_goods_money"
+                        android:id="@+id/tv_order_money"
                         style="@style/base_text_style"
-                        android:text="￥488" />
+                        tools:text="￥488" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -267,7 +272,7 @@
                 <TextView
                     android:id="@+id/tv_pay_monet"
                     style="@style/base_text_style"
-                    android:text="￥698.00"
+                    tools:text="￥698.00"
                     android:textSize="16sp" />
 
 

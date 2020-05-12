@@ -200,7 +200,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
             tsg("必须选择商品");
             return;
         }
-        EnsureOrderActivity.launch(mActivity);
+//        EnsureOrderActivity.launch(mActivity);
 
 //        for (int i=0;i<selectList.size();i++){
 //            CartItem item = selectList.get(i);

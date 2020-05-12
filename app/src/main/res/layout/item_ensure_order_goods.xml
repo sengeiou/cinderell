@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,13 +17,13 @@
     android:orientation="horizontal">
 
 
-    <com.cinderellavip.weight.RoundImageView
-        android:id="@+id/iv_product"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/demo_cardsale_banner1"/>
+        <com.cinderellavip.weight.RoundImageView
+            android:id="@+id/iv_product"
+            android:layout_width="77dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/demo_cardsale_banner1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,9 +42,8 @@
                 android:layout_weight="1"
                 android:maxLines="2"
                 android:ellipsize="end"
-
                 android:layout_height="wrap_content"
-                android:text="MAC 魅可 时尚唇膏 口红 3克小辣椒牛血麻辣鸡丝西柚都是"
+                tools:text="MAC 魅可 时尚唇膏 口红 3克小辣椒牛血麻辣鸡丝西柚都是"
                 android:textSize="12sp"
                 android:textColor="@color/black_title_color"/>
 
@@ -67,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="规格：#901"
+                tools:text="规格：#901"
                 android:textSize="12sp"
                 android:layout_marginTop="3dp"
                 android:textColor="@color/grayText"/>
@@ -76,7 +75,7 @@
                 android:id="@+id/tv_number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="数量x1"
+                tools:text="数量x1"
                 android:gravity="center"
                 android:textSize="12sp"
                 android:textColor="@color/grayText"/>
@@ -105,7 +104,7 @@
                 android:layout_weight="1"
                 android:textColor="@color/black_title_color"
                 android:textSize="12sp"
-                android:text="￥90.00" />
+                tools:text="￥90.00" />
 
 
 

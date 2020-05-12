@@ -11,6 +11,7 @@ import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.order.OrderSettleResult;
 
 import java.util.TreeMap;
 
@@ -123,6 +124,10 @@ public interface ApiService {
     @GET(HttpUrl.add_cart)
     Observable<BaseResult>
     getAddCart(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.settlement_product)
+    Observable<BaseResult<OrderSettleResult>>
+    getSettlementProduct(@QueryMap TreeMap<String, String> map);
 
 
 }

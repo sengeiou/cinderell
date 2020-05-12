@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/tv_shop"
             style="@style/base_text_style"
-            android:text="夺伊服装店"
+            tools:text="夺伊服装店"
             android:textSize="12sp"
             android:padding="10dp"
             android:drawablePadding="5dp"
@@ -69,6 +69,7 @@
                 android:text="运费" />
 
             <TextView
+                android:id="@+id/tv_tax"
                 style="@style/base_text_style"
                 android:textSize="12sp"
                 android:text="￥0.00" />
@@ -87,6 +88,7 @@
                 android:text="活动" />
 
             <TextView
+                android:id="@+id/tv_active"
                 style="@style/base_text_style"
                 android:textSize="12sp"
                 android:text="暂无活动"
@@ -131,7 +133,7 @@
                 android:id="@+id/tv_goods_money"
                 style="@style/base_text_style"
                 android:textSize="12sp"
-                android:text="￥488" />
+                tools:text="￥488" />
         </LinearLayout>
     </LinearLayout>
 
