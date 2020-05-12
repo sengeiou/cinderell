@@ -27,6 +27,9 @@ public class NetCityBean implements Parcelable {
 	public boolean is_default;
 
 
+
+
+
 	@Override
 	public int describeContents() {
 		return 0;

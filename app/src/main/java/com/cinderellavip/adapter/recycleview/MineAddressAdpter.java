@@ -43,19 +43,23 @@ public class MineAddressAdpter extends BaseQuickAdapter<NetCityBean, BaseViewHol
         iv_edit.setOnClickListener(v -> {
             EditAddressActivity.launch((Activity) getContext(), EditAddressActivity.EDIT, item);
         });
-//        TextView tv_name = helper.getView(R.id.tv_name);
-//        TextView tv_phone = helper.getView(R.id.tv_phone);
+        TextView tv_name = helper.getView(R.id.tv_name);
+        TextView tv_phone = helper.getView(R.id.tv_phone);
 //        TextView tv_id_number = helper.getView(R.id.tv_id_number);
-//        TextView tv_default_status = helper.getView(R.id.tv_default_status);
-//        TextView tv_detail_address = helper.getView(R.id.tv_detail_address);
-////
+        TextView tv_default_status = helper.getView(R.id.tv_default_status);
+        if (item.is_default){
+            tv_default_status.setVisibility(View.VISIBLE);
+        }else {
+            tv_default_status.setVisibility(View.GONE);
+        }
+        TextView tv_detail_address = helper.getView(R.id.tv_detail_address);
+//
 //        View tv_default_line = helper.getView(R.id.tv_default_line);
 //        tv_default_status.setVisibility(item.isDefault() ? View.VISIBLE : View.GONE);
-//
-//        tv_name.setText(item.truename);
-//        tv_phone.setText(item.phone);
-//        tv_id_number.setText("身份证号：" + item.getId_card());
-//        tv_detail_address.setText(item.prov + " " + item.city + " " + item.dist + " " + item.detail);
+
+        tv_name.setText(item.name);
+        tv_phone.setText(item.mobile);
+        tv_detail_address.setText(item.province + "" + item.city + "" + item.area + "" + item.address);
 
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
     android:paddingTop="6dp"
@@ -41,14 +41,14 @@
                         <TextView
                             android:id="@+id/tv_name"
                             style="@style/base_text_style"
-                            android:text="李逸"/>
+                            tools:text="李逸"/>
 
 
                         <TextView
                             android:id="@+id/tv_phone"
                             style="@style/base_text_style"
                             android:layout_marginLeft="12dp"
-                            android:text="131****5579"/>
+                            tools:text="131****5579"/>
 
                         <TextView
                             android:id="@+id/tv_default_status"
@@ -65,6 +65,7 @@
                         android:id="@+id/tv_id_number"
                         style="@style/base_text_style"
                         android:textSize="12sp"
+                        android:visibility="gone"
                         android:layout_marginTop="10dp"
                         android:text="身份证号：3208**********4876"/>
 
@@ -72,8 +73,8 @@
                         android:id="@+id/tv_detail_address"
                         style="@style/base_text_style"
                         android:textSize="12sp"
-                        android:layout_marginTop="5dp"
-                        android:text="上海 上海市 青浦区 华徐公路888号1号楼2楼ipd"/>
+                        android:layout_marginTop="8dp"
+                        tools:text="上海 上海市 青浦区 华徐公路888号1号楼2楼ipd"/>
 
                 </LinearLayout>
 

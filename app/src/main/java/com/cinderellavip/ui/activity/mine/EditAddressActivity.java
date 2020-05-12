@@ -10,10 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.AddAddress;
 import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
+import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.util.address.LocalCityUtil3s;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -69,11 +74,11 @@ public class EditAddressActivity extends CheckPermissionActivity {
         type = getIntent().getIntExtra("type", ADD);
         if (type == ADD) {
             tvSava.setText("保存");
-            setBackTitle("我的收货地址");
+            setBackTitle("新增收货地址");
         } else {
-            tvSava.setText("修改收货地址");
+            tvSava.setText("保存");
             item = getIntent().getParcelableExtra("item");
-            setBackTitle("保存");
+            setBackTitle("修改收货地址");
             setRightText("删除");
             setData();
         }
@@ -92,16 +97,16 @@ public class EditAddressActivity extends CheckPermissionActivity {
 
 
     private void setData() {
-//        etName.setText(item.truename);
-//        etPhone.setText(item.phone);
-//        tvAddress.setText(String.format("%s %s %s", item.prov, item.city, item.dist));
-//        etAddress.setText(item.detail);
-//        cbDefaultAddress.setChecked(item.isDefault());
+        etName.setText(item.name);
+        etPhone.setText(item.mobile);
+        tvAddress.setText(String.format("%s %s %s", item.province, item.city, item.area));
+        etAddress.setText(item.address);
+        cbDefaultAddress.setChecked(item.is_default);
 
 
     }
 
-    @OnClick({R.id.ll_address, R.id.tv_sava, R.id.tv_right})
+    @OnClick({R.id.ll_address, R.id.tv_sava})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_address:
@@ -110,36 +115,39 @@ public class EditAddressActivity extends CheckPermissionActivity {
             case R.id.tv_sava:
                 commit();
                 break;
-            case R.id.tv_right:
-//                CenterDialogUtil.showTwo(mContext, "确定要删除收货地址吗？",
-//                        "删除后不可恢复，请谨慎操作。", "暂不删除", "确认删除", type1 -> {
-//                            if (type1 == 1) {
-//                                TreeMap<String, String> hashMap = new TreeMap<>();
-//                                hashMap.put("user_id", GlobalParam.getUserId());
-//                                hashMap.put("address_id", item.address_id + "");
-//                                hashMap.put("sign", SignUtil.getMd5(hashMap));
-//
-//                                new RxHttp<BaseResult>().send(ApiManager.getService().removeAddress(hashMap),
-//                                        new Response<BaseResult>(mContext) {
-//                                            @Override
-//                                            public void onSuccess(BaseResult result) {
-//                                                tsg("删除成功");
-//                                                EventBus.getDefault().post(new UpdateAddress());
-//                                                finish();
-//                                            }
-//                                        });
-//                            }
-//                        });
-
-                break;
-
 
         }
     }
 
+    @Override
+    public void initListener() {
+        super.initListener();
+        tv_right.setOnClickListener(v -> {
+            CenterDialogUtil.showTwo(mContext, "确定要删除收货地址吗？",
+                    "删除后不可恢复，请谨慎操作。", "暂不删除", "确认删除", type1 -> {
+                        if (type1.equals("1")) {
+                            deleteAddress();
+                        }
+                    });
+        });
+    }
+
+    private void deleteAddress(){
+        new RxHttp<BaseResult>().send(ApiManager.getService().deleteAddress(item.id+""),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        tsg("删除成功");
+                        EventBus.getDefault().post(new AddAddress());
+                        finish();
+                    }
+                });
+
+    }
+
     private void getCity() {
         LocalCityUtil3s.getInstance().showSelectDialog(mContext, ((province, city, county) -> {
-            tvAddress.setText(province.name + "-" + city.name + "-" + county.name);
+            tvAddress.setText(String.format("%s %s %s", item.name, item.name, item.name));
         }));
     }
 
@@ -174,7 +182,25 @@ public class EditAddressActivity extends CheckPermissionActivity {
             tsg("请填写详细地址");
             return;
         }
-        success();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        if (type == EDIT){
+            hashMap.put("id", item.id+"");
+        }
+        hashMap.put("name", name);
+        hashMap.put("mobile", phone);
+        hashMap.put("province", address.split(" ")[0]);
+        hashMap.put("city", address.split(" ")[1]);
+        hashMap.put("area", address.split(" ")[2]);
+        hashMap.put("address", addressDetail);
+        hashMap.put("default", cbDefaultAddress.isChecked()?"1":"0");
+        new RxHttp<BaseResult>().send(ApiManager.getService().getEditAddress(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        success();
+                    }
+                });
+
 
 
     }
@@ -185,6 +211,7 @@ public class EditAddressActivity extends CheckPermissionActivity {
         } else {
             tsg("修改成功");
         }
+        EventBus.getDefault().post(new AddAddress());
         finish();
     }
 

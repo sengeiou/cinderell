@@ -4,6 +4,7 @@ package com.cinderellavip.http;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.BrandResult;
 import com.cinderellavip.bean.net.HomeCategoryResult;
+import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.goods.GoodsCommentResult;
@@ -15,6 +16,7 @@ import com.cinderellavip.bean.net.order.OrderSettleResult;
 
 import java.util.TreeMap;
 
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -128,6 +130,19 @@ public interface ApiService {
     @GET(HttpUrl.settlement_product)
     Observable<BaseResult<OrderSettleResult>>
     getSettlementProduct(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.address_list)
+    Observable<BaseResult<ListResult<NetCityBean>>>
+    getAddressList();
+
+    @POST(HttpUrl.address_edit)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    getEditAddress(@FieldMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.address_delete)
+    Observable<BaseResult>
+    deleteAddress(@Query("id") String id);
 
 
 }

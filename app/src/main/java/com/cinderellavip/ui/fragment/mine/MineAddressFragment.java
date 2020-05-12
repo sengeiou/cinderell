@@ -10,11 +10,18 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.MineAddressAdpter;
+import com.cinderellavip.bean.eventbus.AddAddress;
 import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.EditAddressActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
+import com.cinderellavip.util.dialog.RightDialogUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.sign.SignUtil;
 
@@ -63,16 +70,18 @@ public class MineAddressFragment extends BaseListFragment<NetCityBean> {
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
-            List<NetCityBean> list = new ArrayList<>();
-            list.add(new NetCityBean(true));
-            list.add(new NetCityBean(false));
-            list.add(new NetCityBean(false));
-            list.add(new NetCityBean(false));
-            setData(list);
-        },500);
+        getAddressList();
 
+    }
 
+    private void getAddressList(){
+        new RxHttp<BaseResult<ListResult<NetCityBean>>>().send(ApiManager.getService().getAddressList(),
+                new Response<BaseResult<ListResult<NetCityBean>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<NetCityBean>> result) {
+                        setData(result.data.list);
+                    }
+                });
 
     }
 
@@ -126,8 +135,8 @@ public class MineAddressFragment extends BaseListFragment<NetCityBean> {
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);
-//        if (o instanceof UpdateAddress) {
-//            onRefresh();
-//        }
+        if (o instanceof AddAddress) {
+            onRefresh();
+        }
     }
 }
