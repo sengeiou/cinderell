@@ -14,6 +14,8 @@ import com.cinderellavip.adapter.recycleview.CouponReceiveDialogAdapter;
 import com.cinderellavip.adapter.recycleview.CouponReceiveDialogForServiceAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.net.SpecialItem;
+import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.find.PublishPostActivity;
 import com.cinderellavip.ui.activity.find.PublishTopicActivity;
 import com.cinderellavip.weight.CartNumberView;
@@ -34,57 +36,85 @@ public class DialogUtil {
 
 
 
-    private static void addData(Context mContext, FlowLayout flowLayout) {
-        List<SpecialItem> list=new ArrayList<>();
-        list.add(new SpecialItem(true,"500g"));
-        list.add(new SpecialItem(false,"1KG"));
-        for (int i=0;i<list.size();i++) {
-            SpecialItem text = list.get(i);
-            View view = View.inflate(mContext,R.layout.item_service_order_comment_flag,null);
-            TextView tv = view.findViewById(R.id.tv_title);
-            if (text.isCheck){
-                tv.setTextColor(mContext.getResources().getColor(R.color.white));
-                tv.setBackgroundResource(R.drawable.shape_basecolor50);
-            }else {
-                tv.setBackgroundResource(R.drawable.shape_line_gray50);
-                tv.setTextColor(mContext.getResources().getColor(R.color.black_title_color));
-            }
-            tv.setOnClickListener(v -> {
-                text.isCheck = !text.isCheck;
-                if (text.isCheck){
-                    tv.setTextColor(mContext.getResources().getColor(R.color.white));
-                    tv.setBackgroundResource(R.drawable.shape_basecolor50);
-                }else {
-                    tv.setBackgroundResource(R.drawable.shape_line_gray50);
-                    tv.setTextColor(mContext.getResources().getColor(R.color.black_title_color));
-                }
-            });
-            tv.setText(text.name);
-            flowLayout.addView(view);
-        }
 
-    }
 
-    public static void showSpeciSpecialDialog(Context context,  onSelectListener listener) {
+    public static void showSpeciSpecialDialog(Context context, GoodsResult goodsResult, onNormSelectListener listener) {
+
         View view = View.inflate(context, R.layout.pop_bottom_specification, null);
         dialog = DialogUtils.getBottomDialog(context, view);
         ImageView iv_close = view.findViewById(R.id.iv_close);
-        FlowLayout fl_special = view.findViewById(R.id.fl_flag);
+
+
         TextView tv_sure = view.findViewById(R.id.tv_sure);
 
         SquareRoundImageView iv_image = view.findViewById(R.id.iv_image);
+
+
         CartNumberView cart_view = view.findViewById(R.id.cart_view);
         cart_view.setNumber(1);
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_former_price = view.findViewById(R.id.tv_former_price);
         TextView tv_specification = view.findViewById(R.id.tv_specification);
         tv_former_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        //商品规格
+        FlowLayout fl_special = view.findViewById(R.id.fl_flag);
+        List<SpecialItem> list = goodsResult.product_norm;
+        //设置默认规格
+        final SpecialItem specialItem = list.get(0);
+        ImageUtil.loadNet(context,iv_image,specialItem.thumb);
+        tv_price.setText("￥"+specialItem.getPrice());
+        tv_former_price.setText(specialItem.getOld_price());
+        tv_specification.setText("已选：“"+specialItem.name+"”");
+
+        specialItem.isCheck = true;
+        for (int i=0;i<list.size();i++) {
+            SpecialItem text = list.get(i);
+            View normView = View.inflate(context,R.layout.item_service_order_comment_flag,null);
+            TextView tv = normView.findViewById(R.id.tv_title);
+            if (text.isCheck){
+                tv.setTextColor(context.getResources().getColor(R.color.white));
+                tv.setBackgroundResource(R.drawable.shape_basecolor50);
+            }else {
+                tv.setBackgroundResource(R.drawable.shape_line_gray50);
+                tv.setTextColor(context.getResources().getColor(R.color.black_title_color));
+            }
+            tv.setOnClickListener(v -> {
+                for (int j=0;j<list.size();j++){
+                    View childAt = fl_special.getChildAt(j);
+                    TextView textView = childAt.findViewById(R.id.tv_title);
+                    SpecialItem specialItem1 = list.get(j);
+                    //text 是点击的  specialItem1是遍历的
+                    if (specialItem1 == text){
+                        //只是为了做传递给后台用。只能去id。其他参数不能取
+                        specialItem.id = text.id;
+                        specialItem1.isCheck = true;
+                    }else {
+                        specialItem1.isCheck = false;
+                    }
+                    if (specialItem1.isCheck){
+                        ImageUtil.loadNet(context,iv_image,text.thumb);
+                        tv_price.setText("￥"+text.getPrice());
+                        tv_former_price.setText(text.getOld_price());
+                        tv_specification.setText("已选：“"+text.name+"”");
+
+                        textView.setTextColor(context.getResources().getColor(R.color.white));
+                        textView.setBackgroundResource(R.drawable.shape_basecolor50);
+                    }else {
+                        textView.setBackgroundResource(R.drawable.shape_line_gray50);
+                        textView.setTextColor(context.getResources().getColor(R.color.black_title_color));
+                    }
+                }
+
+            });
+            tv.setText(text.name);
+            fl_special.addView(normView);
+        }
+
         tv_sure.setOnClickListener(v -> {
-            listener.onFinish(cart_view.getTv_number().getText().toString().trim());
+            listener.onFinish(specialItem.id+"",cart_view.getTv_number().getText().toString().trim());
             dialog.dismiss();
             dialog = null;
         });
-        addData(context, fl_special);
         iv_close.setOnClickListener(v -> {
             dialog.dismiss();
             dialog = null;
@@ -209,4 +239,7 @@ public class DialogUtil {
         void onFinish(String payString);
     }
 
+    public interface onNormSelectListener {
+        void onFinish(String norm_id,String number);
+    }
 }

@@ -32,6 +32,24 @@ public interface HttpUrl {
     String goods_for_brand_and_shop = "api/store/product/list/by-store-brand";//品牌 店铺 商品
     String collect = "api/store/collect/third";//收藏
     String banner_detail = "api/store/banner/info";//轮播详情
+    //2020-5-12
+    String add_cart = "api/store/cart/add";//加入购物车
+    String modify_cart_number = "api/store/cart/num";//修改购物车数量
+    String delete_cart = "api/store/cart/delete";//删除购物车
+    String order_pay = "api/store/order/pay";//订单支付
+    String order_pay_likes = "api/store/order/likes";//订单支付成功时获取猜你喜欢的商品
+    String settlement_product = "api/store/settlement/product";//直接购买结算页面
+    String create_order_product = "api/store/order/create-product";//直接购买结算生成订单
+    String order_list = "api/store/order/list";//我的订单列表
+    String order_info = "api/store/order/info/";//订单详情
+    String order_cancel = "api/store/order/cancel/";//取消订单
+    String order_receipt = "api/store/order/receipt/";//确认订单
+    String order_comment = "api/store/order/commit";//订单评价
+    String order_logistics = "api/store/order/logistics/";//订单物流
+    String cart_list = "api/store/cart/list-new";//购物车列表
+    String settlement_cart = "api/store/settlement/cart-new";//购物车结算
+    String create_order_cart = "api/store/order/create-cart-new";//购物车结算
+    String coupons_settlement = "api/store/settlement/coupons";//结算时获取可用优惠券列表
 
 
 }

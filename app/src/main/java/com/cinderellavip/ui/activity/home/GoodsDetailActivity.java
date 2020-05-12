@@ -27,6 +27,7 @@ import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
@@ -207,15 +208,31 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
                 break;
             case R.id.ll_buy_left_btn:
-                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {
-                    EnsureOrderActivity.launch(mActivity);
-                });
+                if (goodsResult != null) {
+                    DialogUtil.showSpeciSpecialDialog(mContext,goodsResult, (norm_id, number) -> {
+                        addCart(norm_id,number);
+                    });
+                }
                 break;
             case R.id.ll_buy_right_btn:
-                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {
-                    EnsureOrderActivity.launch(mActivity);
-                });
+//                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {
+//                    EnsureOrderActivity.launch(mActivity);
+//                });
                 break;
         }
+    }
+
+    private void addCart(String norm_id,String number){
+            TreeMap<String, String> hashMap = new TreeMap<>();
+            hashMap.put("product_id", id + "");
+            hashMap.put("norm_id", norm_id + "");
+            hashMap.put("number",   number);
+            new RxHttp<BaseResult>().send(ApiManager.getService().getAddCart(hashMap),
+                    new Response<BaseResult>(mActivity) {
+                        @Override
+                        public void onSuccess(BaseResult result) {
+                          tsg("商品已成功加入购物车");
+                        }
+                    });
     }
 }

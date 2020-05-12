@@ -120,5 +120,9 @@ public interface ApiService {
     Observable<BaseResult>
     getCollect(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.add_cart)
+    Observable<BaseResult>
+    getAddCart(@QueryMap TreeMap<String, String> map);
+
 
 }

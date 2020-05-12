@@ -43,7 +43,7 @@
             android:id="@+id/iv_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@mipmap/demo_comment"/>
+            tools:src="@mipmap/demo_comment"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,13 +55,13 @@
                 android:id="@+id/tv_price"
                 style="@style/base_text_style"
                 android:textColor="@color/red"
-                android:text="￥169.00"
+                tools:text="￥169.00"
                 android:drawablePadding="3dp"/>
 
             <TextView
                 android:id="@+id/tv_former_price"
                 style="@style/base_text_style_gray_small"
-                android:text="300.00"
+                tools:text="300.00"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:drawablePadding="3dp"/>
@@ -69,7 +69,7 @@
             <TextView
                 android:id="@+id/tv_specification"
                 style="@style/base_text_style_gray_small"
-                android:text="已选：“901”"
+                tools:text="已选：“901”"
                 android:drawablePadding="3dp"/>
         </LinearLayout>
 
