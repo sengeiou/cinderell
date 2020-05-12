@@ -12,13 +12,13 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.EnsureOrderAdapter;
 import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
 import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
-import com.cinderellavip.util.DataUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -143,8 +143,9 @@ public class EnsureOrderActivity extends BaseActivity {
         } else {
             llNoAddress.setVisibility(View.GONE);
             llHavaAddress.setVisibility(View.VISIBLE);
-//            tvName.setText(address.truename + "   " + address.phone);
-//            tvDetailAddress.setText(address.prov + address.city + address.dist + address.detail);
+            requestSettlePara.address_id = address.id+"";
+            tvName.setText(address.name + "   " + address.mobile);
+            tvDetailAddress.setText(address.province + address.city + address.area + address.address);
         }
     }
 
@@ -152,8 +153,15 @@ public class EnsureOrderActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MineAddressActivity.REQUESTCODE && resultCode == RESULT_OK) {
-//            setAddress(new NetCityBean(true));
+        if (requestCode == MineAddressActivity.REQUESTCODE) {
+
+            if (data == null){
+                requestSettlePara.address_id = "0";
+            }else{
+                NetCityBean netCityBean = data.getParcelableExtra("netCityBean");
+                requestSettlePara.address_id = netCityBean.id+"";
+            }
+            loadData();
         } else if (requestCode == 11 && resultCode == RESULT_OK) {
 //            tvCouponMoney.setText("-￥20");
         }
@@ -166,11 +174,7 @@ public class EnsureOrderActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.tv_commit:
-                SelectPayWayActivity.launch(mActivity, 0, "");
-                finish();
-//                DialogUtil.getInstance().showRealNameDialog(mContext,payString -> {
-
-//                });
+                createOrder();
                 break;
             case R.id.ll_selete_address:
                 MineAddressActivity.launch(mActivity, MineAddressActivity.SELETE, "");
@@ -180,6 +184,31 @@ public class EnsureOrderActivity extends BaseActivity {
 //                break;
 
         }
+    }
+
+    private void createOrder() {
+        if ("0".equals(requestSettlePara.address_id)){
+            tsg("请选择收货地址");
+            return;
+
+        }
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("product_id", requestSettlePara.product_id);
+        hashMap.put("norm_id", requestSettlePara.norm_id);
+        hashMap.put("number", requestSettlePara.number);
+        hashMap.put("address_id", requestSettlePara.address_id);
+        hashMap.put("coupon_id", requestSettlePara.coupon_ids);
+        new RxHttp<BaseResult<CreateOrderBean>>().send(ApiManager.getService().createOrderByProduct(hashMap),
+                new Response<BaseResult<CreateOrderBean>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<CreateOrderBean> result) {
+                        CreateOrderBean settleResult = result.data;
+                        SelectPayWayActivity.launch(mActivity, settleResult);
+                         finish();
+
+
+                    }
+                });
     }
 
 }

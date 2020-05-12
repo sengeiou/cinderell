@@ -5,7 +5,8 @@ import android.os.Parcelable;
 
 import com.cinderellavip.util.ArithmeticUtil;
 
-public class CouponsBean implements Parcelable {
+public class MineCouponsBean implements Parcelable {
+
 
 
     public boolean isCheck;
@@ -14,15 +15,17 @@ public class CouponsBean implements Parcelable {
     public int store_id;
     public String title;
     public String condition;
+    public String expire_date;
     public String type;
     public double amount;
 
     //是否可领取
-    public boolean status;
+    public int status;
 
     public String getAmount() {
         return ArithmeticUtil.convert(amount);
     }
+
 
     @Override
     public int describeContents() {
@@ -33,35 +36,37 @@ public class CouponsBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.isCheck ? (byte) 1 : (byte) 0);
         dest.writeInt(this.id);
+        dest.writeInt(this.store_id);
         dest.writeString(this.title);
         dest.writeString(this.condition);
         dest.writeString(this.type);
         dest.writeDouble(this.amount);
-        dest.writeByte(this.status ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.status);
     }
 
-    public CouponsBean() {
+    public MineCouponsBean() {
     }
 
-    protected CouponsBean(Parcel in) {
+    protected MineCouponsBean(Parcel in) {
         this.isCheck = in.readByte() != 0;
         this.id = in.readInt();
+        this.store_id = in.readInt();
         this.title = in.readString();
         this.condition = in.readString();
         this.type = in.readString();
         this.amount = in.readDouble();
-        this.status = in.readByte() != 0;
+        this.status = in.readInt();
     }
 
-    public static final Parcelable.Creator<CouponsBean> CREATOR = new Parcelable.Creator<CouponsBean>() {
+    public static final Parcelable.Creator<MineCouponsBean> CREATOR = new Parcelable.Creator<MineCouponsBean>() {
         @Override
-        public CouponsBean createFromParcel(Parcel source) {
-            return new CouponsBean(source);
+        public MineCouponsBean createFromParcel(Parcel source) {
+            return new MineCouponsBean(source);
         }
 
         @Override
-        public CouponsBean[] newArray(int size) {
-            return new CouponsBean[size];
+        public MineCouponsBean[] newArray(int size) {
+            return new MineCouponsBean[size];
         }
     };
 }

@@ -9,11 +9,11 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.CouponsBean;
-import com.cinderellavip.ui.fragment.mine.MineCouponFragment;
+import com.cinderellavip.bean.local.MineCouponsBean;
+import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 
 
-public class MineCouponAdapter extends BaseQuickAdapter<CouponsBean, BaseViewHolder> {
+public class MineCouponAdapter extends BaseQuickAdapter<MineCouponsBean, BaseViewHolder> {
 
     private int type;
 
@@ -24,7 +24,7 @@ public class MineCouponAdapter extends BaseQuickAdapter<CouponsBean, BaseViewHol
 
 
     @Override
-    protected void convert(final BaseViewHolder helper, final CouponsBean item) {
+    protected void convert(final BaseViewHolder helper, final MineCouponsBean item) {
         int position = helper.getAdapterPosition();
 
         RelativeLayout ll_root = helper.getView(R.id.ll_root);
@@ -38,13 +38,21 @@ public class MineCouponAdapter extends BaseQuickAdapter<CouponsBean, BaseViewHol
         ImageView iv_selete = helper.getView(R.id.iv_selete);
         iv_selete.setVisibility(View.GONE);
 
+        helper.setText(R.id.tv_name,item.title)
+                .setText(R.id.tv_money,item.getAmount())
+                .setText(R.id.tv_time,item.expire_date)
+                .setText(R.id.tv_type,item.type)
+                .setText(R.id.tv_complain,item.condition);
+
+
+
 //        tv_money.setText(item.getSale_money() + "");
 //        tv_complain.setText("满" + item.getMeet_money() + "可用");
 //        helper.setText(R.id.tv_name, item.coupons_name);
 //        helper.setText(R.id.tv_type, item.getType());
 //        tv_time.setText("有效期:"+item.validtime);
-        switch (type) {
-            case MineCouponFragment.UNUSED:
+        switch (item.status) {
+            case 1:
                 ll_root.setBackgroundResource(R.mipmap.my_coupon_red_bg);
                 tv_money_unit.setTextColor(getContext().getResources().getColor(R.color.baseColor));
                 tv_money.setTextColor(getContext().getResources().getColor(R.color.baseColor));
@@ -52,8 +60,8 @@ public class MineCouponAdapter extends BaseQuickAdapter<CouponsBean, BaseViewHol
                 tv_use.setVisibility(View.VISIBLE);
                 break;
 
-            case MineCouponFragment.USED:
-            case MineCouponFragment.EXPIRED:
+            case 2:
+            case 3:
                 ll_root.setBackgroundResource(R.mipmap.my_coupon_ysy_bg);
                 tv_money_unit.setTextColor(getContext().getResources().getColor(R.color.grayText));
                 tv_money.setTextColor(getContext().getResources().getColor(R.color.grayText));
@@ -62,21 +70,22 @@ public class MineCouponAdapter extends BaseQuickAdapter<CouponsBean, BaseViewHol
                 break;
         }
         tv_use.setOnClickListener(v -> {
-            switch (item.id){
-                case 0:
-                    //通用
-                case 1:
-                    //品牌
-//                    BrandDetailActivity.launch((Activity) mContext,item.coupons_type_id);
-                case 2:
-                    //一级分类
-                case 3:
-                    //二级分类
-                case 4:
-                    //商家
-                    break;
-
-            }
+            ShopDetailActivity.launchShop(getContext(),item.store_id+"");
+//            switch (item.id){
+//                case 0:
+//                    //通用
+//                case 1:
+//                    //品牌
+////                    BrandDetailActivity.launch((Activity) mContext,item.coupons_type_id);
+//                case 2:
+//                    //一级分类
+//                case 3:
+//                    //二级分类
+//                case 4:
+//                    //商家
+//                    break;
+//
+//            }
         });
 
 

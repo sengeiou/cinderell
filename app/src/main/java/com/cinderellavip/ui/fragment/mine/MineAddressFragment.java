@@ -3,31 +3,22 @@ package com.cinderellavip.ui.fragment.mine;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
 import android.widget.TextView;
-
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.MineAddressAdpter;
 import com.cinderellavip.bean.eventbus.AddAddress;
 import com.cinderellavip.bean.net.NetCityBean;
-import com.cinderellavip.bean.net.home.CateMoreList;
-import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.EditAddressActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
-import com.cinderellavip.util.dialog.RightDialogUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
@@ -55,7 +46,8 @@ public class MineAddressFragment extends BaseListFragment<NetCityBean> {
         mAdapter = new MineAddressAdpter(type);
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView("暂无地址");
+
+        setEmptyView("暂无收货地址");
 
 //        if (type == MineAddressActivity.SELETE) {
 //            //积分兑换 和 确认订单 暂时没区分 统一用确认

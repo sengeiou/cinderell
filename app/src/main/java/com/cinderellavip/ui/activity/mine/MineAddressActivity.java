@@ -66,4 +66,10 @@ public class MineAddressActivity extends BaseActivity {
             EditAddressActivity.launch(mActivity, EditAddressActivity.ADD);
         });
     }
+
+    @Override
+    public void back() {
+        mActivity.setResult(Activity.RESULT_OK);
+        mActivity.finish();
+    }
 }

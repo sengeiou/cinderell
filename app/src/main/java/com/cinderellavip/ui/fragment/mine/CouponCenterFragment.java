@@ -1,17 +1,18 @@
 package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CouponCenterAdapter;
+import com.cinderellavip.bean.ListCoupons;
 import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.MineCouponActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
@@ -58,16 +59,17 @@ public class CouponCenterFragment extends BaseListFragment<CouponsBean> {
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
-            List<CouponsBean> list = new ArrayList<>();
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            setData(list);
-        },500);
+        getCouponList();
 
-
-
+    }
+    private void getCouponList(){
+        new RxHttp<BaseResult<ListCoupons<CouponsBean>>>().send(ApiManager.getService().couponsCenter(),
+                new Response<BaseResult<ListCoupons<CouponsBean>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListCoupons<CouponsBean>> result) {
+                        setData(result.data.coupons);
+                    }
+                });
 
     }
 

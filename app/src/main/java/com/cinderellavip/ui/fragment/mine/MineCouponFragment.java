@@ -1,24 +1,27 @@
 package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.MineCouponAdapter;
-import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.bean.local.MineCouponsBean;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.CouponCenterActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class MineCouponFragment extends BaseListFragment<CouponsBean> {
+public class MineCouponFragment extends BaseListFragment<MineCouponsBean> {
 
     @BindView(R.id.tv_add)
     TextView tvAdd;
@@ -51,9 +54,7 @@ public class MineCouponFragment extends BaseListFragment<CouponsBean> {
         mAdapter = new MineCouponAdapter(type);
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView(com.tozzais.baselibrary.R.mipmap.empty_view,"暂无优惠券可用哦~","去领取",v -> {
-            CouponCenterActivity.launch(mActivity);
-        });
+        setEmptyView("暂无优惠券可用哦~");
 
 
     }
@@ -61,13 +62,22 @@ public class MineCouponFragment extends BaseListFragment<CouponsBean> {
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
-            List<CouponsBean> list = new ArrayList<>();
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            setData(list);
-        },500);
+        getCouponList();
+
+
+    }
+    private void getCouponList(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("status", (type+1)+"");
+        hashMap.put("page", page+"");
+        hashMap.put("limit", PageSize+"");
+        new RxHttp<BaseResult<ListResult<MineCouponsBean>>>().send(ApiManager.getService().getMineCoupons(hashMap),
+                new Response<BaseResult<ListResult<MineCouponsBean>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<MineCouponsBean>> result) {
+                        setData(result.data.list);
+                    }
+                });
 
     }
 

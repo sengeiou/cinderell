@@ -13,7 +13,6 @@ import com.cinderellavip.R;
 import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.order.OrderDetailActivity;
-import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.DataUtil;
 
@@ -79,7 +78,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
         tv_btn1.setOnClickListener(view -> {
             switch (item.type){
                 case OrderFragment.UNPAY:
-                    SelectPayWayActivity.launch(getContext(),1,"");
+//                    SelectPayWayActivity.launch(getContext(),1,"");
                     break;
 
                 case OrderFragment.UNRECEIVE:

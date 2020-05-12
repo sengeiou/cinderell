@@ -1,7 +1,10 @@
 package com.cinderellavip.http;
 
 
+import com.cinderellavip.bean.ListCoupons;
+import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.local.MineCouponsBean;
 import com.cinderellavip.bean.net.BrandResult;
 import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.bean.net.NetCityBean;
@@ -12,11 +15,12 @@ import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
+import com.cinderellavip.bean.net.order.PayResult;
 
 import java.util.TreeMap;
 
-import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -131,6 +135,14 @@ public interface ApiService {
     Observable<BaseResult<OrderSettleResult>>
     getSettlementProduct(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.create_order_product)
+    Observable<BaseResult<CreateOrderBean>>
+    createOrderByProduct(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.order_pay)
+    Observable<BaseResult<PayResult>>
+    orderPay(@QueryMap TreeMap<String, String> map);
+
     @GET(HttpUrl.address_list)
     Observable<BaseResult<ListResult<NetCityBean>>>
     getAddressList();
@@ -143,6 +155,14 @@ public interface ApiService {
     @GET(HttpUrl.address_delete)
     Observable<BaseResult>
     deleteAddress(@Query("id") String id);
+
+    @GET(HttpUrl.coupons_center)
+    Observable<BaseResult<ListCoupons<CouponsBean>>>
+    couponsCenter();
+
+    @GET(HttpUrl.coupons_mine)
+    Observable<BaseResult<ListResult<MineCouponsBean>>>
+    getMineCoupons(@QueryMap TreeMap<String, String> map);
 
 
 }

@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/tv_money"
             style="@style/base_text_style"
-            android:text="￥188.00"
+            tools:text="￥188.00"
             android:textColor="@color/baseColor"
             android:textSize="18sp"
             android:layout_gravity="center_horizontal"

@@ -12,11 +12,8 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.AddAddress;
 import com.cinderellavip.bean.net.NetCityBean;
-import com.cinderellavip.bean.net.order.OrderSettleResult;
-import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
-import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.util.PhotoUtils;
@@ -24,7 +21,6 @@ import com.cinderellavip.util.address.LocalCityUtil3s;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -147,7 +143,7 @@ public class EditAddressActivity extends CheckPermissionActivity {
 
     private void getCity() {
         LocalCityUtil3s.getInstance().showSelectDialog(mContext, ((province, city, county) -> {
-            tvAddress.setText(String.format("%s %s %s", item.name, item.name, item.name));
+            tvAddress.setText(String.format("%s %s %s", province.name, city.name, county.name));
         }));
     }
 

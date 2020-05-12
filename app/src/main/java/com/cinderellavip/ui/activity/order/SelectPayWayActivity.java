@@ -8,9 +8,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.order.CreateOrderBean;
+import com.cinderellavip.bean.net.order.PayResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,13 +46,11 @@ public class SelectPayWayActivity extends BaseActivity {
     TextView tv_balance;
 
 
-    private String payMoney;
-    private int order_id;
 
-    public static void launch(Context activity, int order_id, String payMoney) {
+    private CreateOrderBean createOrderBean;
+    public static void launch(Context activity, CreateOrderBean createOrderBean) {
         Intent intent = new Intent(activity, SelectPayWayActivity.class);
-        intent.putExtra("payMoney", payMoney);
-        intent.putExtra("order_id", order_id);
+        intent.putExtra("createOrderBean", createOrderBean);
         activity.startActivity(intent);
     }
 
@@ -68,10 +73,11 @@ public class SelectPayWayActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         setBackTitle("支付方式");
         llPayBalance.setVisibility(View.VISIBLE);
+        createOrderBean = getIntent().getParcelableExtra("createOrderBean");
 
 //        payMoney = getIntent().getStringExtra("payMoney");
 //        order_id = getIntent().getIntExtra("order_id", 0);
-//        tv_money.setText("HK$ " + payMoney);
+        tv_money.setText("￥ " + createOrderBean.pay_amount);
 
     }
 
@@ -90,13 +96,15 @@ public class SelectPayWayActivity extends BaseActivity {
                 setPayWay(1);
                 break;
             case R.id.ll_pay_wechat:
-                setPayWay(3);
+                setPayWay(2);
                 break;
             case R.id.ll_pay_balance:
-                setPayWay(5);
+                setPayWay(3);
                 break;
             case R.id.tv_add:
-                PayResultActivity.launch(mActivity,0,true);
+                pay();
+
+//                PayResultActivity.launch(mActivity,0,true);
 
 
                 break;
@@ -107,11 +115,26 @@ public class SelectPayWayActivity extends BaseActivity {
 
     private void setPayWay(int way) {
         payway = way + "";
-        ivPayWechat.setImageResource(way == 3 ? R.mipmap.gwcxz : R.mipmap.gwcmx);
+        ivPayWechat.setImageResource(way == 2 ? R.mipmap.gwcxz : R.mipmap.gwcmx);
         ivPayAli.setImageResource(way == 1 ? R.mipmap.gwcxz : R.mipmap.gwcmx);
-        ivPayBalance.setImageResource(way == 5 ? R.mipmap.gwcxz : R.mipmap.gwcmx);
+        ivPayBalance.setImageResource(way == 3 ? R.mipmap.gwcxz : R.mipmap.gwcmx);
     }
 
+
+    private void pay(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("order_id", createOrderBean.order_id+"");
+        hashMap.put("payment", payway);
+        new RxHttp<BaseResult<PayResult>>().send(ApiManager.getService().orderPay(hashMap),
+                new Response<BaseResult<PayResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<PayResult> result) {
+
+
+
+                    }
+                });
+    }
 
 
 

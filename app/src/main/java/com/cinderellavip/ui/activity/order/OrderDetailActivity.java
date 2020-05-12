@@ -178,8 +178,7 @@ public class OrderDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_btn_bottom2:
                 if (status == PAY){
-                    SelectPayWayActivity.launch(mActivity,1,"");
-//                    OrderCommentActivity.launch(mActivity,1);
+//                    SelectPayWayActivity.launch(mActivity,1,"");
                 }else if (status == RECEIVE){
                     CenterDialogUtil.showTwo(mContext,"是否确认收货？",
                             "请确保已经收到商品，确认收货后，不可撤销，请谨慎操作。"

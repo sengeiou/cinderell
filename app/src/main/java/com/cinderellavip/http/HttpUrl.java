@@ -69,7 +69,7 @@ public interface HttpUrl {
     String withdrawal_apply = "api/store/my/withdraw/apply";//申请提现
     String collects = "api/store/my/collects";//我的收藏
     String balance = "api/store/my/balance";//我的钱包
-    String coupons_center = "api/store/my/center";//领券中心
+    String coupons_center = "api/store/coupon/center";//领券中心
     String coupons_mine = "api/store/my/coupons";//我的优惠券
     String password_reset = "api/store/password/reset";//修改登录密码
     String update_info = "api/store/my/info-update";//修改个人信息
