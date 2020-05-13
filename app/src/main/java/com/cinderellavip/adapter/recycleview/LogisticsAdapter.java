@@ -27,11 +27,8 @@ implements LoadMoreModule {
         }else {
             ll_list_header.setVisibility(View.GONE);
         }
-//
-//        String[] split = item.time.split(" ");
-//        helper.setText(R.id.tv_time1,split[0])
-//                .setText(R.id.tv_time2,split[1])
-//                .setText(R.id.tv_content,item.status);
+        helper.setText(R.id.tv_content,item.context)
+                .setText(R.id.tv_time,item.time);
 
 
     }

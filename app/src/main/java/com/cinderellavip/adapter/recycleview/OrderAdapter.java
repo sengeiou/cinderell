@@ -1,6 +1,7 @@
 package com.cinderellavip.adapter.recycleview;
 
 
+import android.app.Activity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,11 +11,27 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.ReceiveOrder;
 import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.bean.net.order.CreateOrderBean;
+import com.cinderellavip.bean.net.order.OrderInfo;
+import com.cinderellavip.bean.net.order.OrderInfoResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
+import com.cinderellavip.ui.activity.mine.EditAddressActivity;
+import com.cinderellavip.ui.activity.mine.LogisticsActivity;
+import com.cinderellavip.ui.activity.order.OrderCommentActivity;
 import com.cinderellavip.ui.activity.order.OrderDetailActivity;
+import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.DataUtil;
+import com.tozzais.baselibrary.http.RxHttp;
+import com.tozzais.baselibrary.util.toast.ToastCommom;
+
+import org.greenrobot.eventbus.EventBus;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,37 +55,41 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
         rv_goods.setLayoutManager(new LinearLayoutManager(getContext()));
         OrderGoodsAdapter adapter = new OrderGoodsAdapter(1);
         rv_goods.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(2));
-        switch (item.type){
-            case OrderFragment.UNPAY:
-                tv_status.setText("待付款");
+        adapter.setNewData(item.goods);
+
+        helper.setText(R.id.tv_shop,item.store_name)
+                .setText(R.id.tv_status,item.getStatus())
+                .setText(R.id.tv_goods_number,"共"+item.goods.size()+"件 应付金额：")
+                .setText(R.id.tv_money,"￥"+item.goods_amount);
+        switch (item.status){
+            case 0:
+                tv_btn1.setText("详情");
+                tv_btn1.setVisibility(View.VISIBLE);
+                tv_btn2.setVisibility(View.GONE);
+                break;
+            case 1:
                 tv_btn1.setText("取消");
                 tv_btn2.setText("付款");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.VISIBLE);
                 break;
-            case OrderFragment.UNSEND:
-                tv_status.setText("待发货");
+            case 2:
                 tv_btn1.setText("详情");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.GONE);
                 break;
-            case OrderFragment.UNRECEIVE:
-                tv_status.setText("待收货");
+            case 3:
                 tv_btn1.setText("物流");
                 tv_btn2.setText("收货");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.VISIBLE);
                 break;
-            case OrderFragment.FINISH:
-                tv_status.setText("已完成");
+            case 5:
                 tv_btn1.setText("详情");
-                tv_btn2.setText("评价");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.GONE);
                 break;
-            case OrderFragment.EVALUATION:
-                tv_status.setText("已完成");
+            case 4:
                 tv_btn1.setText("详情");
                 tv_btn2.setText("评价");
                 tv_btn1.setVisibility(View.VISIBLE);
@@ -76,27 +97,58 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
                 break;
         }
         tv_btn1.setOnClickListener(view -> {
-            switch (item.type){
-                case OrderFragment.UNPAY:
-//                    SelectPayWayActivity.launch(getContext(),1,"");
+            switch (item.status){
+                case 1:
+                    CenterDialogUtil.showTwo(getContext(),"提示","确定要取消该订单吗？","取消","确定",s -> {
+                        if ("1".equals(s)){
+                            cancel(item.id+"");
+                        }
+                    });
+                    break;
+                case 2:
+                case 5:
+                case 4:
+                    OrderDetailActivity.launch(getContext(),item.id);
+                    break;
+                case 3:
+                    LogisticsActivity.launch((Activity) getContext(),item.id+"");
                     break;
 
-                case OrderFragment.UNRECEIVE:
-                   //物流
-                    break;
             }
         });
         tv_btn2.setOnClickListener(view -> {
+            switch (item.status){
+
+                case 1:
+                    CreateOrderBean createOrderBean = new CreateOrderBean();
+                    createOrderBean.order_id = item.id;
+                    createOrderBean.pay_amount = item.goods_amount;
+                    SelectPayWayActivity.launch(getContext(),createOrderBean);
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                    CenterDialogUtil.showTwo(getContext(),"提示","确定要收货吗？","取消","确定",s -> {
+                        if ("1".equals(s)){
+                                receive(item.id+"");
+                        }
+                    });
+                    break;
+                case 4:
+                    OrderCommentActivity.launch(getContext(),item.id);
+                    break;
+            }
 
         });
         helper.getView(R.id.tv_shop).setOnClickListener(view -> {
-            ShopDetailActivity.launch(getContext());
+            ShopDetailActivity.launchShop(getContext(),item.store_id+"");
         });
 
 
         LinearLayout ll_root = helper.getView(R.id.ll_root);
         ll_root.setOnClickListener(v -> {
-            OrderDetailActivity.launch(getContext(),item.type);
+            OrderDetailActivity.launch(getContext(),item.id);
         });
 //        ll_root.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
@@ -118,5 +170,27 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
 
     }
 
+
+    private void receive(String order_id){
+        new RxHttp<BaseResult>().send(ApiManager.getService().getOrderReceipt(order_id),
+                new Response<BaseResult>(getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        ToastCommom.createToastConfig().ToastShow(getContext(),"收货成功");
+                        EventBus.getDefault().post(new ReceiveOrder());
+                    }
+                });
+    }
+
+    private void cancel(String order_id){
+        new RxHttp<BaseResult>().send(ApiManager.getService().getOrderCancel(order_id),
+                new Response<BaseResult>(getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        ToastCommom.createToastConfig().ToastShow(getContext(),"取消成功");
+                        EventBus.getDefault().post(new ReceiveOrder());
+                    }
+                });
+    }
 
 }

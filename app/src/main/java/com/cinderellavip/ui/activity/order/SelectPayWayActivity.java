@@ -133,7 +133,7 @@ public class SelectPayWayActivity extends BaseActivity {
                     public void onSuccess(BaseResult<GetPayResult> result) {
                         PayUtil.pay(mActivity,payway,result.data,isSuccess -> {
                             if (isSuccess){
-                                PayResultActivity.launch(mActivity, createOrderBean.pay_amount,true);
+                                PayResultActivity.launch(mActivity, createOrderBean,true);
                             }else {
                                 tsg("支付失败");
                             }
@@ -150,7 +150,7 @@ public class SelectPayWayActivity extends BaseActivity {
             PayResultEvent event = (PayResultEvent) o;
             if (event.status == 0 || event.status == 1 || event.status == 2) {
                 if (event.status == 0) {
-                    PayResultActivity.launch(mActivity,createOrderBean.pay_amount,true);
+                    PayResultActivity.launch(mActivity,createOrderBean,true);
                 } else {
                     tsg("支付失败");
                 }

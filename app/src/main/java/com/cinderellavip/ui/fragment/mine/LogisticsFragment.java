@@ -6,8 +6,16 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.LogisticsAdapter;
+import com.cinderellavip.bean.eventbus.ReceiveOrder;
 import com.cinderellavip.bean.net.IntegralExchangeLogistics;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
+import com.tozzais.baselibrary.util.toast.ToastCommom;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,19 +63,21 @@ public class LogisticsFragment extends BaseListFragment<IntegralExchangeLogistic
 
     @Override
     public void loadData() {
-        List<IntegralExchangeLogistics.ListBean> list = new ArrayList();
-        list.add(new IntegralExchangeLogistics.ListBean());
-        list.add(new IntegralExchangeLogistics.ListBean());
-        list.add(new IntegralExchangeLogistics.ListBean());
-        list.add(new IntegralExchangeLogistics.ListBean());
-        list.add(new IntegralExchangeLogistics.ListBean());
-        setData(list);
+        super.loadData();
+        new RxHttp<BaseResult<IntegralExchangeLogistics>>().send(ApiManager.getService().getLogistics(getArguments().getString("post_no")),
+                new Response<BaseResult<IntegralExchangeLogistics>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<IntegralExchangeLogistics> result) {
+                        setData(result.data);
+
+                    }
+                });
 
 
     }
 
     private void setData(IntegralExchangeLogistics data) {
-        tv_name.setText(data.expName);
+        tv_name.setText(data.company);
         tv_number.setText(data.number);
         setData(data.list);
 
@@ -75,8 +85,8 @@ public class LogisticsFragment extends BaseListFragment<IntegralExchangeLogistic
 
     @Override
     public void initListener() {
-        super.initListener();
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
+        if (swipeLayout != null)
+            swipeLayout.setOnRefreshListener(this::onRefresh);
 
     }
 }

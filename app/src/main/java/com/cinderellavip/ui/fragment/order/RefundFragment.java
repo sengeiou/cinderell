@@ -44,9 +44,9 @@ public class RefundFragment extends BaseListFragment<OrderBean> {
     public void loadData() {
         super.loadData();
         List<OrderBean> list = new ArrayList<>();
-        list.add(new OrderBean(0));
-        list.add(new OrderBean(1));
-        list.add(new OrderBean(2));
+//        list.add(new OrderBean(0));
+//        list.add(new OrderBean(1));
+//        list.add(new OrderBean(2));
 
         setData(list);
 

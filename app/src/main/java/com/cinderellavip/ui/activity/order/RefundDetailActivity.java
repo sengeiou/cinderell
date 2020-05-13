@@ -120,7 +120,7 @@ public class RefundDetailActivity extends BaseActivity {
         rvGoods.setLayoutManager(new LinearLayoutManager(mContext));
         OrderGoodsAdapter adapter = new OrderGoodsAdapter();
         rvGoods.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(1));
+//        adapter.setNewData(DataUtil.getData(1));
 
 
         rv_image.setLayoutManager(new GridLayoutManager(mActivity,4));

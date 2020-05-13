@@ -21,12 +21,12 @@
         <TextView
             android:id="@+id/tv_name"
             style="@style/base_text_style"
-            android:text="圆通快递"/>
+            tools:text="圆通快递"/>
         <TextView
             android:id="@+id/tv_number"
             android:layout_marginTop="8dp"
             style="@style/base_text_style_gray_small"
-            android:text="54564561315645616516"/>
+            tools:text="54564561315645616516"/>
     </LinearLayout>
 
 

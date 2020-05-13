@@ -26,7 +26,7 @@ public class MessageOrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHol
 
         LinearLayout ll_root = helper.getView(R.id.ll_root);
          ll_root.setOnClickListener(v -> {
-            MineOrderActivity.launch((Activity) getContext(),item.type);
+            MineOrderActivity.launch((Activity) getContext(),item.id);
         });
 
 

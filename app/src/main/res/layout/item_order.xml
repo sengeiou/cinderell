@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="10dp"
     android:id="@+id/ll_root"
     android:background="@color/white"
@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/tv_shop"
             style="@style/base_text_style"
-            android:text="夺伊服装店"
+            tools:text="夺伊服装店"
             android:padding="12dp"
             android:drawableRight="@mipmap/right_black_icon"
             android:drawablePadding="5dp"
@@ -39,7 +39,7 @@
             android:id="@+id/tv_status"
             style="@style/base_text_style"
             android:layout_marginLeft="12dp"
-            android:text="待付款"
+            tools:text="待付款"
             android:textColor="@color/red"
             />
     </LinearLayout>
@@ -63,12 +63,14 @@
         >
 
         <TextView
+            android:id="@+id/tv_goods_number"
             style="@style/base_text_style"
-            android:text="共2件 应付金额：" />
+            tools:text="共2件 应付金额：" />
 
         <TextView
+            android:id="@+id/tv_money"
             style="@style/base_text_style"
-            android:text="￥188.00" />
+            tools:text="￥188.00" />
     </LinearLayout>
 
     <LinearLayout

@@ -38,8 +38,8 @@ public class RefundAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> {
         rv_goods.setLayoutManager(new LinearLayoutManager(getContext()));
         OrderGoodsAdapter adapter = new OrderGoodsAdapter(OrderGoodsAdapter.RETURN);
         rv_goods.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(2));
-        switch (item.type){
+//        adapter.setNewData(DataUtil.getData(2));
+        switch (item.id){
             case 0:
                 tv_status.setText("审核中");
                 break;
@@ -55,9 +55,9 @@ public class RefundAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> {
 
         LinearLayout ll_root = helper.getView(R.id.ll_root);
         tv_btn1.setOnClickListener(v -> {
-            RefundDetailActivity.launch(getContext(),item.type);
+            RefundDetailActivity.launch(getContext(),item.id);
         }); ll_root.setOnClickListener(v -> {
-            RefundDetailActivity.launch(getContext(),item.type);
+            RefundDetailActivity.launch(getContext(),item.id);
         });
 
         rv_goods.setOnTouchListener((v, event) -> {

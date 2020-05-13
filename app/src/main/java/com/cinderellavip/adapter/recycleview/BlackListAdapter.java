@@ -28,7 +28,7 @@ public class BlackListAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder
 
         LinearLayout ll_root = helper.getView(R.id.ll_root);
          ll_root.setOnClickListener(v -> {
-            RefundDetailActivity.launch(getContext(),item.type);
+            RefundDetailActivity.launch(getContext(),item.id);
         });
 
 

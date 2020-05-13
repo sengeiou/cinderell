@@ -26,7 +26,7 @@ public class LogisticsActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setLineVisibility();
-        setBackTitle("查看物流");
+        setBackTitle("物流详情");
         String post_no = getIntent().getStringExtra("post_no");
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, LogisticsFragment.newInstance(post_no)).commit();
     }

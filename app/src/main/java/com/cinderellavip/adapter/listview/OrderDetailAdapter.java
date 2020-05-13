@@ -7,29 +7,25 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.base.BaseAdapter;
+import com.cinderellavip.bean.net.order.OrderGoodsInfo;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.order.ApplyReturnActivity;
+import com.cinderellavip.weight.RoundImageView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OrderDetailAdapter extends BaseAdapter<String> {
+public class OrderDetailAdapter extends BaseAdapter<OrderGoodsInfo> {
 
 
 
 
-    public OrderDetailAdapter(List<String> mList, Context context) {
+    public OrderDetailAdapter(List<OrderGoodsInfo> mList, Context context) {
         super(mList, context);
     }
 
-    //是否需要退款
-    private boolean isShowReturn;
-
-    public OrderDetailAdapter(List<String> mList, Context context, boolean isShowReturn) {
-        super(mList, context);
-        this.isShowReturn = isShowReturn;
-    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -43,14 +39,22 @@ public class OrderDetailAdapter extends BaseAdapter<String> {
             hodler = (ViewHolder) convertView.getTag();
 
         }
-        if (isShowReturn){
+        OrderGoodsInfo orderGoodsInfo = mList.get(position);
+        if (orderGoodsInfo.refund_num > 0) {
             hodler.tvBtn1.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             hodler.tvBtn1.setVisibility(View.GONE);
 
         }
+        ImageUtil.loadNet(context,hodler.ivProduct,orderGoodsInfo.product_thumb);
+        hodler.tvTitle.setText(orderGoodsInfo.product_name);
+        hodler.tvSpecification.setText("规格："+orderGoodsInfo.product_norm);
+        hodler.tvPrice.setText("￥"+orderGoodsInfo.product_price);
+        hodler.tvNumber.setText("数量：X"+orderGoodsInfo.product_num);
+
+
         hodler.tvBtn1.setOnClickListener(v -> {
-            ApplyReturnActivity.launch(context,1);
+            ApplyReturnActivity.launch(context, 1);
         });
 
 
@@ -60,6 +64,16 @@ public class OrderDetailAdapter extends BaseAdapter<String> {
     static class ViewHolder {
         @BindView(R.id.tv_btn1)
         TextView tvBtn1;
+        @BindView(R.id.iv_product)
+        RoundImageView ivProduct;
+        @BindView(R.id.tv_title)
+        TextView tvTitle;
+        @BindView(R.id.tv_specification)
+        TextView tvSpecification;
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
+        @BindView(R.id.tv_number)
+        TextView tvNumber;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -10,11 +10,21 @@ import android.widget.TextView;
 
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
+import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.adapter.recycleview.LikeGoodsAdapter;
+import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.net.order.CreateOrderBean;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.GirdSpace;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListActivity;
 import com.tozzais.baselibrary.util.DpUtil;
+
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -32,12 +42,12 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     private ImageView iv_code;
 
 
-    private String pay_amount;
+    private CreateOrderBean createOrderBean;
     private boolean success;
 
-    public static void launch(Activity activity, String  pay_amount, boolean success) {
+    public static void launch(Activity activity, CreateOrderBean createOrderBean, boolean success) {
         Intent intent = new Intent(activity, PayResultActivity.class);
-        intent.putExtra("pay_amount", pay_amount);
+        intent.putExtra("createOrderBean", createOrderBean);
         intent.putExtra("success", success);
         activity.startActivity(intent);
         activity.finish();
@@ -53,12 +63,12 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         setBackTitle("支付结果");
-        pay_amount = getIntent().getStringExtra("pay_amount");
+        createOrderBean = getIntent().getParcelableExtra("createOrderBean");
         success = getIntent().getBooleanExtra("success",false);
 
 
 
-        mAdapter = new LikeGoodsAdapter();
+        mAdapter = new HomeGoodsAdapter();
         GridLayoutManager linearLayoutManager = new GridLayoutManager(mActivity, 2);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         GirdSpace girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 8),2,1);
@@ -76,7 +86,7 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
         tv_go_home.setOnClickListener(this);
         mAdapter.addHeaderView(v);
 
-        tv_pay_money.setText("实付￥"+pay_amount);
+        tv_pay_money.setText("实付￥"+createOrderBean.pay_amount);
 //        if (success){
 //            tv_pay_result.setText("支付成功");
 //            Drawable drawableLeft = getResources().getDrawable(
@@ -100,18 +110,18 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
 
         getLoveData();
 
-
-
-
-
     }
 
 
     //得到猜你喜欢的数据
     private void getLoveData() {
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getData(4));
-        }, 100);
+        new RxHttp<BaseResult<ListResult<HomeGoods>>>().send(ApiManager.getService().getLicks(),
+                new Response<BaseResult<ListResult<HomeGoods>>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<HomeGoods>> result) {
+                        setData(result.data.list);
+                    }
+                });
     }
 
 
@@ -120,7 +130,7 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_look_order:
-                OrderDetailActivity.launch(mActivity,1);
+                OrderDetailActivity.launch(mActivity,createOrderBean.order_id);
                 finish();
                 break;
             case R.id.tv_go_home:

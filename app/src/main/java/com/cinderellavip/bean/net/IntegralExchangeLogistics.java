@@ -7,9 +7,8 @@ public class IntegralExchangeLogistics {
 
   
 
-    public String expName;
+    public String company;
     public String number;
-    public String type;
     public List<ListBean> list;
 
 
@@ -17,7 +16,7 @@ public class IntegralExchangeLogistics {
     public static class ListBean {
 
 
-        public String status;
+        public String context;
         public String time;
 
 

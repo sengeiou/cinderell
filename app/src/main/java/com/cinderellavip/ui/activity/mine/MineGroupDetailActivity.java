@@ -129,7 +129,7 @@ public class MineGroupDetailActivity extends BaseActivity {
         lvGoods.setLayoutManager(new LinearLayoutManager(mActivity));
         OrderGoodsAdapter adapter = new OrderGoodsAdapter(OrderGoodsAdapter.RETURN);
         lvGoods.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(1));
+//        adapter.setNewData(DataUtil.getData(1));
 
     }
 

@@ -37,7 +37,7 @@ public class MineGroupUpAdapter extends BaseQuickAdapter<String, BaseViewHolder>
         rv_goods.setLayoutManager(new LinearLayoutManager(getContext()));
         OrderGoodsAdapter adapter = new OrderGoodsAdapter(OrderGoodsAdapter.RETURN);
         rv_goods.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(1));
+//        adapter.setNewData(DataUtil.getData(1));
 
         ll_root.setOnClickListener(v -> {
             MineGroupDetailActivity.launch(getContext(),item);
