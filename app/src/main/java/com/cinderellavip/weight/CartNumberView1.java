@@ -1,9 +1,6 @@
 package com.cinderellavip.weight;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -90,13 +86,13 @@ public class CartNumberView1 extends FrameLayout {
 //            }
 //        });
 
-        tv_number.setOnFocusChangeListener((v, hasFocus) -> {
-            String content = tv_number.getText().toString().trim();
-            LogUtil.e("setOnFocusChangeListener= "+content+"=="+hasFocus);
-            if (hasFocus)
-            tv_number.setSelection(tv_number.getText().toString().length());
-
-        });
+//        tv_number.setOnFocusChangeListener((v, hasFocus) -> {
+//            String content = tv_number.getText().toString().trim();
+//            LogUtil.e("setOnFocusChangeListener= "+content+"=="+hasFocus);
+//            if (hasFocus)
+//            tv_number.setSelection(tv_number.getText().toString().length());
+//
+//        });
         tv_number.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -128,7 +124,7 @@ public class CartNumberView1 extends FrameLayout {
     public void setNumber(int number) {
         this.number = number;
         tv_number.setText(number+"");
-        tv_number.setSelection(tv_number.getText().toString().length()-1);
+//        tv_number.setSelection(tv_number.getText().toString().length());
     }
 
 
@@ -149,7 +145,7 @@ public class CartNumberView1 extends FrameLayout {
 
     public void setNumber(String number) {
         tv_number.setText(number);
-        tv_number.setSelection(number.length());
+//        tv_number.setSelection(number.length());
     }
 
 

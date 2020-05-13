@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -17,7 +17,6 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.CartGoodsClickListener;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
-import com.cinderellavip.weight.CartNumberView;
 import com.cinderellavip.weight.CartNumberView1;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.log.LogUtil;
@@ -25,6 +24,7 @@ import com.tozzais.baselibrary.util.log.LogUtil;
 import java.util.TreeMap;
 
 
+//https://blog.csdn.net/itdream88/article/details/85046989
 public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHolder> {
 
     private CartGoodsClickListener cartClickListener;
@@ -36,9 +36,13 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
 
     @Override
     protected void convert( BaseViewHolder helper, CartGoodsItem item) {
+        helper.setIsRecyclable(false);
         int position = helper.getAdapterPosition();
+        LogUtil.e("convert"+position+"==="+item.product_num);
         ImageView iv_product = helper.getView(R.id.iv_product);
         CartNumberView1 cart_view = helper.getView(R.id.cart_view);
+        EditText tv_number = cart_view.getTv_number();
+
         helper.setText(R.id.tv_title,item.product_name)
                 .setText(R.id.tv_specification,"规格："+item.product_norm)
                 .setText(R.id.tv_price,"￥"+item.getProduct_price());
@@ -66,7 +70,10 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
             }
 
         });
-        cart_view.getTv_number().addTextChangedListener(new TextWatcher() {
+        if (tv_number.getTag() instanceof TextWatcher){
+            tv_number.removeTextChangedListener((TextWatcher) tv_number.getTag());
+        }
+        TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -85,22 +92,24 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
                     content = "1";
 
                 }
-//                try {
-//                    number = Integer.parseInt(content);
-//                    if (number>1){
-//                        rl_reduce.setEnabled(true);
-//                        iv_reduce.setImageResource(R.mipmap.cart_reduce);
-//                    }else {
-//                        rl_reduce.setEnabled(false);
-//                        iv_reduce.setImageResource(R.mipmap.caer_reduce_unclick);
-//                    }
-
-//                }catch (Exception e){
-//
-//                }
-
             }
+        };
+
+
+        tv_number.setTag(textWatcher);
+
+        tv_number.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                tv_number.addTextChangedListener(textWatcher);
+            }else {
+                tv_number.removeTextChangedListener(textWatcher);
+            }
+            String content = tv_number.getText().toString().trim();
+            LogUtil.e("setOnFocusChangeListener= "+content+"=="+hasFocus);
+
         });
+
+        tv_number.clearFocus();
         iv_selete.setOnClickListener(v -> {
             item.isCheck = !item.isCheck;
             cartClickListener.onClick(position);
@@ -126,11 +135,13 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
         hashMap.put("cart_id", item.cart_id + "");
         hashMap.put("number",   number);
         new RxHttp<BaseResult>().send(ApiManager.getService().modifyCartNumber(hashMap),
-                new Response<BaseResult>(getContext(),Response.BOTH) {
+                new Response<BaseResult>(false,getContext()) {
                     @Override
                     public void onSuccess(BaseResult result) {
                         item.product_num = Integer.parseInt(number);
                         notifyDataSetChanged();
+
+//                        notifyItemChanged(position);
                     }
                 });
     }

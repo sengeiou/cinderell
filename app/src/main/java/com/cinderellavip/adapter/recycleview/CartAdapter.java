@@ -25,6 +25,7 @@ public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
 
     @Override
     protected void convert( BaseViewHolder helper,final CartItem item) {
+        helper.setIsRecyclable(false);
         int position = helper.getAdapterPosition();
         RecyclerView rv_list = helper.getView(R.id.rv_list);
         ImageView iv_selete = helper.getView(R.id.iv_selete);
