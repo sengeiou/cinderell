@@ -32,12 +32,12 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     private ImageView iv_code;
 
 
-    private int order_id;
+    private String pay_amount;
     private boolean success;
 
-    public static void launch(Activity activity, int order_id, boolean success) {
+    public static void launch(Activity activity, String  pay_amount, boolean success) {
         Intent intent = new Intent(activity, PayResultActivity.class);
-        intent.putExtra("order_id", order_id);
+        intent.putExtra("pay_amount", pay_amount);
         intent.putExtra("success", success);
         activity.startActivity(intent);
         activity.finish();
@@ -53,7 +53,7 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         setBackTitle("支付结果");
-        order_id = getIntent().getIntExtra("order_id",-1);
+        pay_amount = getIntent().getStringExtra("pay_amount");
         success = getIntent().getBooleanExtra("success",false);
 
 
@@ -68,12 +68,15 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
         View v = View.inflate(mContext, R.layout.header_pay_result, null);
         tv_pay_result = v.findViewById(R.id.tv_pay_result);
         tv_pay_money = v.findViewById(R.id.tv_pay_money);
+
         tv_look_order = v.findViewById(R.id.tv_look_order);
         tv_go_home = v.findViewById(R.id.tv_go_home);
         iv_code = v.findViewById(R.id.iv_code);
         tv_look_order.setOnClickListener(this);
         tv_go_home.setOnClickListener(this);
         mAdapter.addHeaderView(v);
+
+        tv_pay_money.setText("实付￥"+pay_amount);
 //        if (success){
 //            tv_pay_result.setText("支付成功");
 //            Drawable drawableLeft = getResources().getDrawable(

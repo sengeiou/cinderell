@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
-import com.cinderellavip.bean.net.order.PayResult;
+import com.cinderellavip.bean.net.order.GetPayResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.util.pay.PayResultEvent;
+import com.cinderellavip.util.pay.PayUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -104,7 +106,7 @@ public class SelectPayWayActivity extends BaseActivity {
             case R.id.tv_add:
                 pay();
 
-//                PayResultActivity.launch(mActivity,0,true);
+//
 
 
                 break;
@@ -125,18 +127,37 @@ public class SelectPayWayActivity extends BaseActivity {
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("order_id", createOrderBean.order_id+"");
         hashMap.put("payment", payway);
-        new RxHttp<BaseResult<PayResult>>().send(ApiManager.getService().orderPay(hashMap),
-                new Response<BaseResult<PayResult>>(mActivity) {
+        new RxHttp<BaseResult<GetPayResult>>().send(ApiManager.getService().orderPay(hashMap),
+                new Response<BaseResult<GetPayResult>>(mActivity) {
                     @Override
-                    public void onSuccess(BaseResult<PayResult> result) {
+                    public void onSuccess(BaseResult<GetPayResult> result) {
+                        PayUtil.pay(mActivity,payway,result.data,isSuccess -> {
+                            if (isSuccess){
+                                PayResultActivity.launch(mActivity, createOrderBean.pay_amount,true);
+                            }else {
+                                tsg("支付失败");
+                            }
 
-
-
+                        });
                     }
                 });
     }
 
 
+    @Override
+    public void onEvent(Object o) {
+        if (o instanceof PayResultEvent) {
+            PayResultEvent event = (PayResultEvent) o;
+            if (event.status == 0 || event.status == 1 || event.status == 2) {
+                if (event.status == 0) {
+                    PayResultActivity.launch(mActivity,createOrderBean.pay_amount,true);
+                } else {
+                    tsg("支付失败");
+                }
+
+            }
+        }
+    }
 
 
 
