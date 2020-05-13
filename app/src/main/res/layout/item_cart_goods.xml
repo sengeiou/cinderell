@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_product_banner"/>
+            tools:src="@mipmap/demo_product_banner"/>
 
 
     </RelativeLayout>
@@ -54,9 +54,11 @@
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:text="农家新语 马丹90红颜奶油草莓3斤 新鲜现摘水果"
+                tools:text="农家新语 马丹90红颜奶油草莓3斤 新鲜现摘水果"
                 android:textSize="14sp"
                 android:textColor="@color/black_title_color"/>
 
@@ -79,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="规格：L"
+            tools:text="规格：L"
             android:textSize="12sp"
             android:layout_marginTop="3dp"
             android:textColor="@color/grayText"/>
@@ -96,11 +98,12 @@
                 android:layout_weight="1"
                 android:layout_marginTop="3dp"
                 android:layout_height="wrap_content"
-                android:text="￥90"
+                tools:text="￥90"
                 android:textSize="14sp"
                 android:textColor="@color/baseColor"/>
 
-            <com.cinderellavip.weight.CartNumberView
+            <com.cinderellavip.weight.CartNumberView1
+                android:id="@+id/cart_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

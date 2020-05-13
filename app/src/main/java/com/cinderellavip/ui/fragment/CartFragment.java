@@ -1,36 +1,31 @@
 package com.cinderellavip.ui.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CartAdapter;
 import com.cinderellavip.adapter.recycleview.CartEmptyAdapter;
-import com.cinderellavip.bean.local.CartGoodsItem;
-import com.cinderellavip.bean.local.CartItem;
+import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.bean.net.cart.CartItem;
 import com.cinderellavip.bean.local.HomeGoods;
-import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.bean.net.cart.CartGoodsItem;
+import com.cinderellavip.bean.net.cart.CartResult;
 import com.cinderellavip.http.ApiManager;
-import com.cinderellavip.listener.CartClickListener;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.CartGoodsClickListener;
-import com.cinderellavip.ui.activity.home.EnsureOrderActivity;
-import com.cinderellavip.util.DataUtil;
-import com.cinderellavip.util.PriceFormat;
 import com.cinderellavip.weight.MarginDecorationextendsHeader;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
-import com.tozzais.baselibrary.util.log.LogUtil;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -94,7 +89,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         MarginDecorationextendsHeader space = new MarginDecorationextendsHeader(DpUtil.dip2px(mActivity, 8));
         mRecyclerView.addItemDecoration(space);
-        mAdapter = new CartEmptyAdapter();
+        mAdapter = new HomeGoodsAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
         View emptyHeader = View.inflate(mActivity, R.layout.header_empty_view_for_cart, null);
@@ -114,32 +109,23 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
 
     @Override
     public void loadData() {
-
-        getData();
+        super.loadData();
+        new RxHttp<BaseResult<CartResult>>().send(ApiManager.getService().getCartData(),
+                new Response<BaseResult<CartResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<CartResult> result) {
+                        setData(result.data.products);
+                        setCartData(result.data.list);
+                    }
+                });
     }
 
-    private void getData() {
-        super.loadData();
-
-        List<CartItem> list = new ArrayList<>();
-        List<CartGoodsItem> dataList = new ArrayList<>();
-        dataList.add(new CartGoodsItem(false));
-        dataList.add(new CartGoodsItem(false));
-
-        List<CartGoodsItem> dataList2 = new ArrayList<>();
-        dataList2.add(new CartGoodsItem(false));
-        dataList2.add(new CartGoodsItem(false));
-        dataList2.add(new CartGoodsItem(false));
-
-        list.add(new CartItem(false,dataList));
-        list.add(new CartItem(false,dataList2));
+    private void setCartData(List<CartItem> list) {
         cartAdapter.setNewData(list);
-        setData(DataUtil.getHomeGoods(4));
         //解决删除购物车后不重置的bug。放在setData后面，解决刷新不重置总价格的bug
         onClick(1);
 
     }
-
 
     private boolean isSeleteAll = false;
 
@@ -151,7 +137,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
                 ivSeleteAll.setImageResource(isSeleteAll ? R.mipmap.gwcxz : R.mipmap.gwcmx);
                 List<CartItem> mdata = cartAdapter.getData();
                 for (CartItem cartItem : mdata) {
-                    for (CartGoodsItem cartGoodsItem:cartItem.list){
+                    for (CartGoodsItem cartGoodsItem:cartItem.products){
                         cartGoodsItem.isCheck = isSeleteAll;
                     }
                     cartItem.isCheck = isSeleteAll;
@@ -219,7 +205,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
         this.isSeleteAll = true;
         for (CartItem cartItem:cartAdapter.getData()){
             boolean allSelect = true;
-            for (CartGoodsItem goodsItem:cartItem.list){
+            for (CartGoodsItem goodsItem:cartItem.products){
                 if (!cartItem.isCheck){
                     isSeleteAll = false;
                     allSelect = false;
@@ -236,5 +222,11 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
         ll_bottom.setVisibility(isHavaData ? View.VISIBLE : View.GONE);
         ll_empty.setVisibility(!isHavaData ? View.VISIBLE : View.GONE);
         calculateMoney();
+    }
+
+    @Override
+    public void initListener() {
+        if (swipeLayout != null)
+            swipeLayout.setOnRefreshListener(this::onRefresh);
     }
 }

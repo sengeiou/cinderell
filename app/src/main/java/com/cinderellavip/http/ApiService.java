@@ -13,6 +13,7 @@ import com.cinderellavip.bean.net.IntegralExchangeLogistics;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
+import com.cinderellavip.bean.net.cart.CartResult;
 import com.cinderellavip.bean.net.goods.GoodsCommentResult;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
@@ -157,9 +158,17 @@ public interface ApiService {
     Observable<BaseResult>
     getAddCart(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.modify_cart_number)
+    Observable<BaseResult>
+    modifyCartNumber(@QueryMap TreeMap<String, String> map);
+
     @GET(HttpUrl.order_pay_likes)
     Observable<BaseResult<ListResult<HomeGoods>>>
     getLicks();
+
+    @GET(HttpUrl.cart_list)
+    Observable<BaseResult<CartResult>>
+    getCartData();
 
     @GET(HttpUrl.settlement_product)
     Observable<BaseResult<OrderSettleResult>>

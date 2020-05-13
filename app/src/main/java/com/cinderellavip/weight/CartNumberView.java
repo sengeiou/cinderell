@@ -65,8 +65,18 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
     }
 
     private void initListener() {
-        rl_reduce.setOnClickListener(this);
-        rl_add.setOnClickListener(this);
+        if (onNumberClickListener != null){
+            rl_reduce.setOnClickListener(v -> {
+                onNumberClickListener.reduce();
+            });
+            rl_add.setOnClickListener(v -> {
+                onNumberClickListener.add();
+            });
+        }else {
+            rl_reduce.setOnClickListener(this);
+            rl_add.setOnClickListener(this);
+        }
+
         tv_number.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -136,6 +146,21 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
 
 
 
+    private OnNumberClickListener onNumberClickListener;
+
+    public void setOnNumberClickListener(OnNumberClickListener onNumberClickListener) {
+        this.onNumberClickListener = onNumberClickListener;
+    }
+
+    public interface OnNumberClickListener{
+        void add();
+        void reduce();
+
+    }
+
+    public void setNumber(String number) {
+        tv_number.setText(number);
+    }
 
 
 
