@@ -3,17 +3,20 @@ package com.cinderellavip.ui.fragment.mine;
 import android.os.Bundle;
 
 import com.cinderellavip.adapter.recycleview.BlackListAdapter;
-import com.cinderellavip.adapter.recycleview.RefundAdapter;
-import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.bean.net.mine.BlacklistItem;
+import com.cinderellavip.bean.net.mine.BlacklistResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class BlackListFragment extends BaseListFragment<OrderBean> {
+public class BlackListFragment extends BaseListFragment<BlacklistItem> {
 
 
 
@@ -39,13 +42,18 @@ public class BlackListFragment extends BaseListFragment<OrderBean> {
 
     @Override
     public void loadData() {
-        super.loadData();
-        List<OrderBean> list = new ArrayList<>();
-//        list.add(new OrderBean(0));
-//        list.add(new OrderBean(1));
-//        list.add(new OrderBean(2));
+        super.loadData();super.loadData();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("page", page + "");
+        hashMap.put("limit", PageSize + "");
+        new RxHttp<BaseResult<BlacklistResult>>().send(ApiManager.getService().getBlackList(hashMap),
+                new Response<BaseResult<BlacklistResult>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<BlacklistResult> result) {
 
-        setData(list);
+                        setData(result.data.users);
+                    }
+                });
 
     }
 

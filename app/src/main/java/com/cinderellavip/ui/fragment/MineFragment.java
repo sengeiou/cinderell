@@ -3,7 +3,6 @@ package com.cinderellavip.ui.fragment;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +13,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
 import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.net.mine.ApplyResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
@@ -27,6 +27,7 @@ import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.activity.life.LongServiceOrderListActivity;
 import com.cinderellavip.ui.activity.life.SingleServiceOrderListActivity;
 import com.cinderellavip.ui.activity.mine.ApplyProductSupplierActivity;
+import com.cinderellavip.ui.activity.mine.ApplyProductSupplierResultActivity;
 import com.cinderellavip.ui.activity.mine.CouponCenterActivity;
 import com.cinderellavip.ui.activity.mine.MessageActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
@@ -47,7 +48,6 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -351,8 +351,24 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MineAddressActivity.launch(mActivity,MineAddressActivity.LOOK);
                 break;
             case R.id.rl_mine_service7:
-                if (GlobalParam.getUserLogin(mActivity))
-                ApplyProductSupplierActivity.launch(mActivity);
+                if (GlobalParam.getUserLogin(mActivity)){
+                    new RxHttp<BaseResult<ApplyResult>>().send(ApiManager.getService().applyResult(),
+                            new Response<BaseResult<ApplyResult>>( mActivity) {
+                                @Override
+                                public void onSuccess(BaseResult<ApplyResult> result) {
+                                    int status = result.data.status;
+                                    if (status == 1){
+                                        ApplyProductSupplierResultActivity.launch(mActivity);
+                                    }else {
+                                        //未申请
+                                        ApplyProductSupplierActivity.launch(mActivity);
+                                    }
+
+
+                                }
+                            });
+                }
+
                 break;
             case R.id.rl_mine_service8:
                 //申请成为劳务用户

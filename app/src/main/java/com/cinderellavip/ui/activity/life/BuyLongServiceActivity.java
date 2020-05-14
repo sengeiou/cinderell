@@ -12,10 +12,8 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.OperateProductBean;
-import com.cinderellavip.bean.local.OperateProductSecondBean;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.toast.ServicePeriodDialogUtil;
-import com.cinderellavip.toast.ServiceTypeDialogUtil;
 import com.cinderellavip.ui.activity.WebViewActivity;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -165,21 +163,21 @@ public class BuyLongServiceActivity extends BaseActivity {
 
 
 
-        List<OperateProductSecondBean> list3 = new ArrayList<>();
-        list3.add(new OperateProductSecondBean("日常护理"));
-        list3.add(new OperateProductSecondBean("母婴护理"));
-        list3.add(new OperateProductSecondBean("母乳喂养"));
-        list3.add(new OperateProductSecondBean("日常看护"));
-        list3.add(new OperateProductSecondBean("生活起居"));
-
-        list.add(new OperateProductBean("日常清洁", list3));
-        list.add(new OperateProductBean("清理养护", list3));
-        list.add(new OperateProductBean("月嫂", list3));
-        list.add(new OperateProductBean("保姆", list3));
-        list.add(new OperateProductBean("育儿嫂", list3));
-
-        ServiceTypeDialogUtil.getInstance().showSelectDialog(mContext, list, (province, city) -> {
-            tvServiceType.setText(province.name + "-" + city.name);
-        });
+//        List<OperateProductSecondBean> list3 = new ArrayList<>();
+//        list3.add(new OperateProductSecondBean("日常护理"));
+//        list3.add(new OperateProductSecondBean("母婴护理"));
+//        list3.add(new OperateProductSecondBean("母乳喂养"));
+//        list3.add(new OperateProductSecondBean("日常看护"));
+//        list3.add(new OperateProductSecondBean("生活起居"));
+//
+//        list.add(new OperateProductBean("日常清洁", list3));
+//        list.add(new OperateProductBean("清理养护", list3));
+//        list.add(new OperateProductBean("月嫂", list3));
+//        list.add(new OperateProductBean("保姆", list3));
+//        list.add(new OperateProductBean("育儿嫂", list3));
+//
+//        ServiceTypeDialogUtil.getInstance().showSelectDialog(mContext, list, (province, city) -> {
+//            tvServiceType.setText(province.name + "-" + city.name);
+//        });
     }
 }

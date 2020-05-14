@@ -4,10 +4,7 @@ import java.util.List;
 
 public class OperateProductBean {
     public String name;
-    public List<OperateProductSecondBean> list;
+    public List<String> children;
 
-    public OperateProductBean(String name, List<OperateProductSecondBean> list) {
-        this.name = name;
-        this.list = list;
-    }
+
 }

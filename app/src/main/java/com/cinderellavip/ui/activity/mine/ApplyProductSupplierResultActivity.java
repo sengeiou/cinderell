@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -34,7 +33,16 @@ public class ApplyProductSupplierResultActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-
+//        new RxHttp<BaseResult<ApplyResult>>().send(ApiManager.getService().applyResult(),
+//                new Response<BaseResult<ApplyResult>>( mActivity) {
+//                    @Override
+//                    public void onSuccess(BaseResult<ApplyResult> result) {
+//                        CenterDialogUtil.showApplySuccess(mContext,()->{
+//                            ApplyProductSupplierResultActivity.launch(mActivity);
+//                            mActivity.finish();
+//                        });
+//                    }
+//                });
     }
 
     @Override

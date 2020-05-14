@@ -3,26 +3,41 @@ package com.cinderellavip.ui.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.local.OperateProductBean;
-import com.cinderellavip.bean.local.OperateProductSecondBean;
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.OperatingProductsUtil3s;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.util.address.LocalCityUtil3s;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
+import com.tozzais.baselibrary.util.progress.LoadingUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 
 /**
@@ -62,6 +77,13 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
     @BindView(R.id.iv_delete_id_card_back)
     ImageView ivDeleteIdCardBack;
 
+
+    private String first_category;
+    private String second_category;
+    private String seller_image;
+    private String business_license;
+    private String id_card_front;
+    private String id_card_back;
     public static void launch(Context from) {
         Intent intent = new Intent(from, ApplyProductSupplierActivity.class);
         from.startActivity(intent);
@@ -101,31 +123,18 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
                 }));
                 break;
             case R.id.tv_business_category:
-                List<OperateProductBean> list = new ArrayList<>();
+                new RxHttp<BaseResult<ListResult<OperateProductBean>>>().send(ApiManager.getService().getOperateCate(),
+                        new Response<BaseResult<ListResult<OperateProductBean>>>(isLoad, mActivity) {
+                            @Override
+                            public void onSuccess(BaseResult<ListResult<OperateProductBean>> result) {
+                                OperatingProductsUtil3s.getInstance().showSelectDialog(mContext, result.data.list, (province, city) -> {
+                                    first_category = province.name;
+                                    second_category = city;
+                                    tvBusinessCategory.setText(province.name + "-" + city);
+                                });
+                            }
+                        });
 
-                List<OperateProductSecondBean> list1 = new ArrayList<>();
-                list1.add(new OperateProductSecondBean("全部"));
-                list1.add(new OperateProductSecondBean("服务员"));
-                list1.add(new OperateProductSecondBean("送餐员"));
-                list1.add(new OperateProductSecondBean("厨师"));
-                list.add(new OperateProductBean("生活|服务业", list1));
-
-                List<OperateProductSecondBean> list2 = new ArrayList<>();
-                list2.add(new OperateProductSecondBean("全部"));
-                list2.add(new OperateProductSecondBean("前台"));
-                list2.add(new OperateProductSecondBean("经理"));
-                list2.add(new OperateProductSecondBean("人事"));
-                list.add(new OperateProductBean("人力|行政|管理", list2));
-
-                List<OperateProductSecondBean> list3 = new ArrayList<>();
-                list3.add(new OperateProductSecondBean("全部"));
-                list.add(new OperateProductBean("销售|客服|采购|淘宝", list3));
-                list.add(new OperateProductBean("酒店", list3));
-
-
-                OperatingProductsUtil3s.getInstance().showSelectDialog(mContext, list, (province, city) -> {
-                    tvBusinessCategory.setText(province.name + "-" + city.name);
-                });
                 break;
             case R.id.iv_store:
                 imageView = ivStore;
@@ -147,18 +156,22 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
                 commit();
                 break;
             case R.id.iv_delete_store:
+                seller_image = "";
                 ivStore.setImageResource(R.mipmap.add_upload_image);
                 ivDeleteStore.setVisibility(View.GONE);
                 break;
             case R.id.iv_delete_business_license:
+                business_license = "";
                 ivBusinessLicense.setImageResource(R.mipmap.add_upload_image);
                 ivDeleteBusinessLicense.setVisibility(View.GONE);
                 break;
             case R.id.iv_delete_id_card_front:
+                id_card_front = "";
                 ivIdCardFront.setImageResource(R.mipmap.add_upload_image);
                 ivDeleteIdCardFront.setVisibility(View.GONE);
                 break;
             case R.id.iv_delete_id_card_back:
+                id_card_back = "";
                 ivIdCardBack.setImageResource(R.mipmap.add_upload_image);
                 ivDeleteIdCardBack.setVisibility(View.GONE);
                 break;
@@ -166,10 +179,70 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
     }
 
     private void commit() {
-        CenterDialogUtil.showApplySuccess(mContext,()->{
-            ApplyProductSupplierResultActivity.launch(mActivity);
-            mActivity.finish();
-        });
+       String name = etName.getText().toString().trim();
+        String mobile = etPhone.getText().toString().trim();
+        String seller_name = etShopName.getText().toString().trim();
+        String area = etCityName.getText().toString().trim();
+        String address = etContent.getText().toString().trim();
+        String product = etMainProduct.getText().toString().trim();
+        if (TextUtils.isEmpty(name)){
+            tsg(etName.getHint().toString());
+            return;
+        }if (TextUtils.isEmpty(mobile)){
+            tsg(etPhone.getHint().toString());
+            return;
+        }if (TextUtils.isEmpty(seller_name)){
+            tsg(etShopName.getHint().toString());
+            return;
+        }if (TextUtils.isEmpty(area)){
+            tsg(etCityName.getHint().toString());
+            return;
+        }if (TextUtils.isEmpty(address)){
+            tsg(etContent.getHint().toString());
+            return;
+        }if (TextUtils.isEmpty(first_category)){
+            tsg(tvBusinessCategory.getHint().toString());
+            return;
+        }if (TextUtils.isEmpty(product)){
+            tsg(etMainProduct.getHint().toString());
+            return;
+        }if (TextUtils.isEmpty(seller_image)){
+            tsg("请上传门店照片");
+            return;
+        }if (TextUtils.isEmpty(business_license)){
+            tsg("请上传营业执照");
+            return;
+        }if (TextUtils.isEmpty(id_card_front)){
+            tsg("请上传身份证正面");
+            return;
+        }if (TextUtils.isEmpty(id_card_back)){
+            tsg("请上传身份证反面照片");
+            return;
+        }
+
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("name", name + "");
+        hashMap.put("mobile", mobile + "");
+        hashMap.put("seller_name", seller_name + "");
+        hashMap.put("area", area + "");
+        hashMap.put("address", address + "");
+        hashMap.put("first_category", first_category + "");
+        hashMap.put("second_category", second_category + "");
+        hashMap.put("product", product + "");
+        hashMap.put("seller_image", seller_image + "");
+        hashMap.put("business_license", business_license + "");
+        hashMap.put("id_card_front", id_card_front + "");
+        hashMap.put("id_card_back", id_card_back + "");
+        new RxHttp<BaseResult>().send(ApiManager.getService().applySupplier(hashMap),
+                new Response<BaseResult>( mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        CenterDialogUtil.showApplySuccess(mContext,()->{
+                            ApplyProductSupplierResultActivity.launch(mActivity);
+                            mActivity.finish();
+                        });
+                    }
+                });
     }
 
     private ImageView imageView;
@@ -183,18 +256,67 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            ImageUtil.loadLocal(mContext, imageView, (PhotoUtils.getInstance().getPath(mActivity, requestCode, data)));
-            if (imageView == ivStore){
-                ivDeleteStore.setVisibility(View.VISIBLE);
-            }else if (imageView == ivBusinessLicense){
-                ivDeleteBusinessLicense.setVisibility(View.VISIBLE);
-            }else if (imageView == ivIdCardFront){
-                ivDeleteIdCardFront.setVisibility(View.VISIBLE);
-            }else if (imageView == ivIdCardBack){
-                ivDeleteIdCardBack.setVisibility(View.VISIBLE);
-            }
+            String path = PhotoUtils.getInstance().getPath(mActivity, requestCode, data);
+            compress(path);
+
+
         }
 
+    }
+    private void compress(String path){
+        Luban.with(this)
+                .load(path)
+                .ignoreBy(100)
+                .setTargetDir(Constant.ROOT_PATH)
+                .filter(path1 -> !(TextUtils.isEmpty(path1) || path1.toLowerCase().endsWith(".gif")))
+                .setCompressListener(new OnCompressListener() {
+                    @Override
+                    public void onStart() {
+                        LoadingUtils.show(mContext,"压缩图片中...");
+                    }
+
+                    @Override
+                    public void onSuccess(File file) {
+                        LoadingUtils.dismiss();
+                        upload(file.getAbsolutePath());
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        tsg("图片压缩失败");
+                        LoadingUtils.dismiss();
+                    }
+                }).launch();
+
+    }
+
+    private void upload(String path){
+        List<MultipartBody.Part> parts = new ArrayList<>();
+        File file = new File(path);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        parts.add(part);
+        new RxHttp<BaseResult<UploadImageResult>>().send(ApiManager.getService().getUploadImg(parts),
+                new Response<BaseResult<UploadImageResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<UploadImageResult> result) {
+
+                        String url = result.data.url;
+                        ImageUtil.loadNet(mContext, imageView, url);
+                        if (imageView == ivStore){
+                            seller_image = url;
+                            ivDeleteStore.setVisibility(View.VISIBLE);
+                        }else if (imageView == ivBusinessLicense){
+                            business_license = url;
+                            ivDeleteBusinessLicense.setVisibility(View.VISIBLE);
+                        }else if (imageView == ivIdCardFront){
+                            id_card_front = url;
+                            ivDeleteIdCardFront.setVisibility(View.VISIBLE);
+                        }else if (imageView == ivIdCardBack){
+                            id_card_back = url;
+                            ivDeleteIdCardBack.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
     }
 
 }

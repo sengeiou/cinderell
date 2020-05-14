@@ -7,6 +7,7 @@ import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.local.MineCouponsBean;
+import com.cinderellavip.bean.local.OperateProductBean;
 import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.bean.local.SelectCouponsBean;
 import com.cinderellavip.bean.net.BrandResult;
@@ -21,6 +22,8 @@ import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.mine.ApplyResult;
+import com.cinderellavip.bean.net.mine.BlacklistResult;
 import com.cinderellavip.bean.net.mine.IntegralResult;
 import com.cinderellavip.bean.net.mine.MineBalanceResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
@@ -29,24 +32,21 @@ import com.cinderellavip.bean.net.mine.RankMonthItem;
 import com.cinderellavip.bean.net.mine.RankResult;
 import com.cinderellavip.bean.net.mine.WithDrawHistoryResult;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
+import com.cinderellavip.bean.net.order.GetPayResult;
 import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
-import com.cinderellavip.bean.net.order.GetPayResult;
 
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -284,6 +284,27 @@ public interface ApiService {
     @GET(HttpUrl.ranking_history)
     Observable<BaseResult<ListResult<RankMonthItem>>>
     rankingMonth(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.apply_supplier_cate)
+    Observable<BaseResult<ListResult<OperateProductBean>>>
+    getOperateCate();
+
+    @POST(HttpUrl.apply_supplier)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    applySupplier(@FieldMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.apply_supplier_result)
+    Observable<BaseResult<ApplyResult>>
+    applyResult();
+
+    @GET(HttpUrl.shield_users)
+    Observable<BaseResult<BlacklistResult>>
+    getBlackList(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.discuss_shield)
+    Observable<BaseResult>
+    getShield(@QueryMap TreeMap<String, String> map);
 
 
 

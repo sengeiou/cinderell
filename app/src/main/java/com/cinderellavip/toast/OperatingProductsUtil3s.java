@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.OperateProductBean;
-import com.cinderellavip.bean.local.OperateProductSecondBean;
 import com.cinderellavip.weight.wheel.OnWheelChangedListener;
 import com.cinderellavip.weight.wheel.WheelView;
 import com.cinderellavip.weight.wheel.adapters.AbstractWheelTextAdapter;
@@ -60,7 +59,7 @@ public class OperatingProductsUtil3s implements OnWheelChangedListener {
 		mBtnConfirm.setOnClickListener(v ->{
 			cityDialog.dismiss();
 			OperateProductBean province = localCities.get(mViewProvince.getCurrentItem());
-			OperateProductSecondBean cityListBean = province.list.get(mViewCity.getCurrentItem());
+			String cityListBean = province.children.get(mViewCity.getCurrentItem());
 			if (listener != null) {
 				listener.onFinish(province,
 						cityListBean);
@@ -100,7 +99,7 @@ public class OperatingProductsUtil3s implements OnWheelChangedListener {
 
 	private void updateCities() {
 
-		List<OperateProductSecondBean> city = localCities.get(mViewProvince.getCurrentItem()).list;
+		List<String> city = localCities.get(mViewProvince.getCurrentItem()).children;
 		cityAdapter = new CityWheelAdapter(context, city);
 		mViewCity.setViewAdapter(cityAdapter);
 		mViewCity.setCurrentItem(0);
@@ -130,9 +129,9 @@ public class OperatingProductsUtil3s implements OnWheelChangedListener {
 	}
 
 	class CityWheelAdapter extends AbstractWheelTextAdapter {
-		List<OperateProductSecondBean> list;
+		List<String> list;
 
-		public CityWheelAdapter(Context context, List<OperateProductSecondBean> list) {
+		public CityWheelAdapter(Context context, List<String> list) {
 			super(context);
 			this.list = list;
 		}
@@ -145,14 +144,14 @@ public class OperatingProductsUtil3s implements OnWheelChangedListener {
 
 		@Override
 		protected CharSequence getItemText(int index) {
-			return list.get(index).name;
+			return list.get(index);
 		}
 
 	}
 
 
 	public interface onSelectCityFinishListener {
-		 void onFinish(OperateProductBean province, OperateProductSecondBean city);
+		 void onFinish(OperateProductBean province, String city);
 	}
 
 }
