@@ -8,9 +8,15 @@ import android.widget.EditText;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 
@@ -59,11 +65,20 @@ public class ModifyNickNameActivity extends BaseActivity {
                 tsg("请输入昵称");
                 return;
             }
-            EventBus.getDefault().post(new UpdateMineInfo());
-            Intent intent = new Intent();
-            intent.putExtra("name",name);
-            setResult(101,intent);
-            finish();
+            TreeMap<String, String> hashMap = new TreeMap<>();
+            hashMap.put("username",name);
+            new RxHttp<BaseResult>().send(ApiManager.getService().updateInfo(hashMap),
+                    new Response<BaseResult>(mActivity) {
+                        @Override
+                        public void onSuccess(BaseResult result) {
+                            EventBus.getDefault().post(new UpdateMineInfo());
+                            Intent intent = new Intent();
+                            intent.putExtra("name",name);
+                            setResult(101,intent);
+                            finish();
+                        }
+                    });
+
 
         });
 

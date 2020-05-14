@@ -8,8 +8,11 @@ public interface HttpUrl {
 
     String server_url = "https://api.huiguniangvip.com/";
 
-    String login = "api/store/login";  //用户名登录
+    //上传图片
+    String upload = "api/store/upload/image";  //上传图片
     String get_code = "api/store/sms/send";  //获取验证码
+
+    String login = "api/store/login";  //用户名登录
     String code_login = "api/store/login/fast";  //短信验证码登录
     String register = "api/store/register";  //注册
     String forget_pass = "api/store/password/forget";  //忘记密码

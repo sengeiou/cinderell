@@ -3,6 +3,7 @@ package com.cinderellavip.http;
 
 import com.cinderellavip.bean.ListCoupons;
 import com.cinderellavip.bean.ListOrders;
+import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.local.MineCouponsBean;
@@ -27,12 +28,19 @@ import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.bean.net.order.GetPayResult;
 
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -44,6 +52,10 @@ import rx.Observable;
  */
 public interface ApiService {
 
+    @Multipart
+    @POST(HttpUrl.upload)
+    Observable<BaseResult<UploadImageResult>>
+    getUploadImg(@Part() List<MultipartBody.Part> parts);
     /**
      * 登录
      * @param
@@ -225,9 +237,16 @@ public interface ApiService {
     Observable<BaseResult<MineInfo>>
     getMineInfo();
 
+
     @GET(HttpUrl.apply_vip)
     Observable<BaseResult>
     applyVip(@Query("invite_code") String invite_code);
+
+
+    @POST(HttpUrl.update_info)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    updateInfo(@FieldMap TreeMap<String, String> map);
 
 
 

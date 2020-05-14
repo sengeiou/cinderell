@@ -213,12 +213,12 @@ public class DialogUtil {
         ImageView iv_woman = view.findViewById(R.id.iv_woman);
         ImageView iv_man = view.findViewById(R.id.iv_man);
         iv_woman.setOnClickListener(v -> {
-            listener.onFinish("灰姑娘");
+            listener.onFinish("2");
             dialog.dismiss();
             dialog = null;
         });
         iv_man.setOnClickListener(v -> {
-            listener.onFinish("灰小伙");
+            listener.onFinish("1");
             dialog.dismiss();
             dialog = null;
         });

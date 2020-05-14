@@ -51,7 +51,7 @@
 
             <TextView
                 style="@style/base_text_style"
-                android:text="灰小伙"
+                android:text="男"
                 android:layout_marginTop="10dp"
                 />
 
@@ -74,7 +74,7 @@
 
             <TextView
                 style="@style/base_text_style"
-                android:text="灰姑娘"
+                android:text="女"
                 android:layout_marginTop="10dp"
                 />
 
