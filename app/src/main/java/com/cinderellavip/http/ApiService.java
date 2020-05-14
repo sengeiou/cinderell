@@ -20,6 +20,7 @@ import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
@@ -219,6 +220,14 @@ public interface ApiService {
     @GET(HttpUrl.coupons_mine)
     Observable<BaseResult<ListResult<MineCouponsBean>>>
     getMineCoupons(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.mine_center)
+    Observable<BaseResult<MineInfo>>
+    getMineInfo();
+
+    @GET(HttpUrl.apply_vip)
+    Observable<BaseResult>
+    applyVip(@Query("invite_code") String invite_code);
 
 
 

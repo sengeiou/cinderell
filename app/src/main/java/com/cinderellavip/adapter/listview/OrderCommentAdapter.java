@@ -14,6 +14,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.MineOrderCommentImageAdpter;
 import com.cinderellavip.base.BaseAdapter;
 import com.cinderellavip.bean.OrderCommentItemBean;
+import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.listener.OnDoublePositionClickListener;
 import com.cinderellavip.weight.RatingBarView;
@@ -26,13 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OrderCommentAdapter extends BaseAdapter<OrderCommentItemBean> {
+public class OrderCommentAdapter extends BaseAdapter<OrderGoodsInfo> {
 
 
 
     private OnDoublePositionClickListener listener;
 
-    public OrderCommentAdapter(List<OrderCommentItemBean> mList, Context context, OnDoublePositionClickListener listener) {
+    public OrderCommentAdapter(List<OrderGoodsInfo> mList, Context context, OnDoublePositionClickListener listener) {
         super(mList, context);
         this.listener = listener;
     }
@@ -48,15 +49,16 @@ public class OrderCommentAdapter extends BaseAdapter<OrderCommentItemBean> {
 //        } else {
 //            hodler = (ViewHolder) convertView.getTag();
 //        }
-        OrderCommentItemBean bean = mList.get(position);
-//        ImageUtil.loadNet(context, hodler.ivImage, bean.logo);
-//        hodler.tvTitle.setText(bean.name);
-//        if (!TextUtils.isEmpty(bean.content))
-//        hodler.etComment.setText(bean.content);
-//        if (!TextUtils.isEmpty(bean.score))
-//        hodler.rbScore.setStar(Integer.parseInt(bean.score),false);
+        OrderGoodsInfo bean = mList.get(position);
+        ImageUtil.loadNet(context, hodler.ivImage, bean.product_thumb);
+        hodler.tvTitle.setText(bean.product_name);
+
+        if (!TextUtils.isEmpty(bean.content))
+        hodler.etComment.setText(bean.content);
+        if (!TextUtils.isEmpty(bean.product_star))
+        hodler.rbScore.setStar(Integer.parseInt(bean.product_star),false);
         hodler.rbScore.setOnRatingListener((bindObject, RatingScore) -> {
-            bean.score = RatingScore+"";
+            bean.product_star = RatingScore+"";
         });
         hodler.etComment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -75,8 +77,7 @@ public class OrderCommentAdapter extends BaseAdapter<OrderCommentItemBean> {
         hodler.rv_comment.setLayoutManager(new GridLayoutManager(context, 4));
         MineOrderCommentImageAdpter mAdapter = new MineOrderCommentImageAdpter(listener, position,4);
         hodler.rv_comment.setAdapter(mAdapter);
-        mAdapter.setNewData(bean.mDatas);
-
+        mAdapter.setNewData(bean.images);
 
         return convertView;
     }

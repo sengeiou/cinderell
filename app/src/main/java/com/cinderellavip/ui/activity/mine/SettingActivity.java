@@ -107,8 +107,9 @@ public class SettingActivity extends BaseActivity {
     private void exit(){
         CenterDialogUtil.showTwo(mContext,"提示","确定要退出当前账号？","取消","确定", s->{
             if (s.equals("1")){
-
-//                EventBus.getDefault().post(new ExitSuccess());
+                GlobalParam.setUserLogin(false);
+                GlobalParam.setUserToken("");
+                GlobalParam.setUserId("");
                 LoginActivity.launch(mActivity);
                 finish();
             }

@@ -99,7 +99,7 @@ public class ImageUtil {
     }
     public static  void loadAvatar(Context mContext, ImageView imageView, String path){
         RequestOptions options = new RequestOptions()
-                .error(R.drawable.shape_gray5)    //加载错误之后的错误图
+                .error(R.mipmap.avatar_default)    //加载错误之后的错误图
                 .override(400,400)  //指定图片的尺寸
                 //指定图片的缩放类型为fitCenter （等比例缩放图片，宽或者是高等于ImageView的宽或者是高。）
                 .fitCenter()

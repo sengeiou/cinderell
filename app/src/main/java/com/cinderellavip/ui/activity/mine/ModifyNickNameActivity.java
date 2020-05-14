@@ -6,17 +6,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 
-
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
-import com.cinderellavip.global.GlobalParam;
-import com.cinderellavip.http.ApiManager;
 import com.tozzais.baselibrary.ui.BaseActivity;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.TreeMap;
 
 import butterknife.BindView;
 

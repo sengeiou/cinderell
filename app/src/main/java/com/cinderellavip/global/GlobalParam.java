@@ -1,7 +1,11 @@
 package com.cinderellavip.global;
 
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.cinderellavip.bean.net.UserInfo;
+import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.tozzais.baselibrary.util.SharedPreferencesUtil;
 
 
@@ -40,6 +44,14 @@ public class GlobalParam {
         return SharedPreferencesUtil.getBooleanData(CinderellApplication.mContext, Constant.user_login,false);
     }
 
+    public static boolean getUserLogin(Context context) {
+        boolean isLogin = SharedPreferencesUtil.getBooleanData(CinderellApplication.mContext, Constant.user_login, false);
+        if (!isLogin){
+            LoginActivity.launch((Activity) context,true);
+        }
+        return isLogin;
+    }
+
     //存 用户的token
     public static void setUserId(String userid) {
         SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.user_id, userid);
@@ -74,5 +86,14 @@ public class GlobalParam {
         return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.search,"");
     }
 
+
+
+    //登录成功是否直接返回 用户没登录的情况 操作之后 返回当前界面
+    public static void setLoginFinish(boolean loginFinish) {
+        SharedPreferencesUtil.saveBooleanData(CinderellApplication.mContext, Constant.user_login_finish, loginFinish);
+    }
+    public static boolean getLoginFinish() {
+        return SharedPreferencesUtil.getBooleanData(CinderellApplication.mContext, Constant.user_login_finish,false);
+    }
 
 }

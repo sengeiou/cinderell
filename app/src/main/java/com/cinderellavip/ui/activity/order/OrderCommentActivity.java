@@ -10,12 +10,19 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.listview.OrderCommentAdapter;
 import com.cinderellavip.bean.OrderCommentImageItemBean;
 import com.cinderellavip.bean.OrderCommentItemBean;
+import com.cinderellavip.bean.net.order.OrderGoodsInfo;
+import com.cinderellavip.bean.net.order.OrderInfo;
+import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.bean.request.CommentOrder;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnDoublePositionClickListener;
 import com.cinderellavip.ui.BigImageActivity;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.weight.MyListView;
 import com.google.gson.Gson;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.log.LogUtil;
 
@@ -35,15 +42,16 @@ public class OrderCommentActivity extends CheckPermissionActivity implements OnD
     MyListView lvComment;
 
     private OrderCommentAdapter adapter;
-    private ArrayList<OrderCommentItemBean> data;
+    private ArrayList<OrderGoodsInfo> data;
     private int IMAGE_MAX = 4;
+
     private int position = 3;
     private int childPosition = 3;
 
-    public int child_order_id;
-    public static void launch(Context activity, int child_order_id) {
+    public int order_id;
+    public static void launch(Context activity, int order_id) {
         Intent intent = new Intent(activity, OrderCommentActivity.class);
-        intent.putExtra("child_order_id", child_order_id);
+        intent.putExtra("order_id", order_id);
         activity.startActivity(intent);
     }
 
@@ -56,7 +64,7 @@ public class OrderCommentActivity extends CheckPermissionActivity implements OnD
     @Override
     public void initView(Bundle savedInstanceState) {
         LogUtil.e("initView" + (savedInstanceState==null));
-        child_order_id = getIntent().getIntExtra("child_order_id", -1);
+        order_id = getIntent().getIntExtra("order_id", -1);
         setBackTitle("发表评价");
         if (savedInstanceState != null){
             data = savedInstanceState.getParcelableArrayList("list");
@@ -73,24 +81,37 @@ public class OrderCommentActivity extends CheckPermissionActivity implements OnD
         if (data != null){
             return;
         }
-        if (data == null){
-            data = new ArrayList<>();
-        }
-        data.add(new OrderCommentItemBean());
-        data.add(new OrderCommentItemBean());
+        if (!isLoad)showProress();
+        new RxHttp<BaseResult<OrderInfoResult<OrderInfo>>>().send(ApiManager.getService().getOrderDetail(order_id + ""),
+                new Response<BaseResult<OrderInfoResult<OrderInfo>>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<OrderInfoResult<OrderInfo>> result) {
+                        showContent();
+                        if (data == null){
+                            data = new ArrayList<>();
+                        }
 
-        for (OrderCommentItemBean orderCommentItemBean : OrderCommentActivity.this.data) {
-            orderCommentItemBean.mDatas.add(new OrderCommentImageItemBean());
-        }
-        adapter = new OrderCommentAdapter(OrderCommentActivity.this.data, mContext, OrderCommentActivity.this);
-        lvComment.setAdapter(adapter);
+                        List<OrderGoodsInfo> datas = result.data.order.goods;
+                        for (OrderGoodsInfo itemBean:datas){
+                            data.add(itemBean);
+                        }
+                        for (OrderGoodsInfo orderCommentItemBean : OrderCommentActivity.this.data) {
+                            orderCommentItemBean.images.add(new OrderCommentImageItemBean());
+                        }
+                        adapter = new OrderCommentAdapter(OrderCommentActivity.this.data, mContext, OrderCommentActivity.this);
+                        lvComment.setAdapter(adapter);
+                    }
+                });
+
     }
+
+
 
     @OnClick(R.id.tv_btn_bottom3)
     public void onClick() {
         List<CommentOrder> list = new ArrayList<>();
-        for (OrderCommentItemBean bean : data) {
-            if (TextUtils.isEmpty(bean.score)) {
+        for (OrderGoodsInfo bean : data) {
+            if (TextUtils.isEmpty(bean.product_star)) {
                 tsg("请选择评分");
                 return;
             }
@@ -98,12 +119,11 @@ public class OrderCommentActivity extends CheckPermissionActivity implements OnD
                 tsg("请输入评价内容");
                 return;
             }
-            list.add(new CommentOrder(bean.product_id + "", bean.score, bean.content, bean.getPics()));
+            list.add(new CommentOrder(bean.product_id + "", bean.product_star, bean.content, bean.getPics()));
         }
-
-//        tsg(new Gson().toJson(list));
-        tsg("评价成功");
-        finish();
+        tsg(new Gson().toJson(list));
+//        tsg("评价成功");
+//        finish();
     }
 
 //    private void comment(String str) {
@@ -129,7 +149,7 @@ public class OrderCommentActivity extends CheckPermissionActivity implements OnD
     public void onClick(int position, int childPosition) {
         this.position = position;
         this.childPosition = childPosition;
-        List<OrderCommentImageItemBean> mDatas = data.get(position).mDatas;
+        List<OrderCommentImageItemBean> mDatas = data.get(position).images;
         OrderCommentImageItemBean item = mDatas.get(childPosition);
         if (TextUtils.isEmpty(item.path)) {
             checkPermissions(PhotoUtils.needPermissions);
@@ -163,7 +183,7 @@ public class OrderCommentActivity extends CheckPermissionActivity implements OnD
     }
 
     private void upload(String path) {
-        List<OrderCommentImageItemBean> mDatas = data.get(position).mDatas;
+        List<OrderCommentImageItemBean> mDatas = data.get(position).images;
         OrderCommentImageItemBean item = mDatas.get(childPosition);
         item.path = path;
         item.netPath = path;

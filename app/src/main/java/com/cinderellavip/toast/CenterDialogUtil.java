@@ -9,9 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.UpdateMineInfo;
+import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnGetStringListener;
 import com.cinderellavip.listener.OnSureClickListener;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 public class CenterDialogUtil {
@@ -26,6 +34,7 @@ public class CenterDialogUtil {
         ImageView iv_close = messageView.findViewById(R.id.iv_close);
         EditText et_name = messageView.findViewById(R.id.et_name);
         TextView tv_commit = messageView.findViewById(R.id.tv_commit);
+        TextView tv_add = messageView.findViewById(R.id.tv_add);
         iv_close.setOnClickListener(v -> {
             cityDialog.dismiss();
             cityDialog = null;
@@ -33,13 +42,24 @@ public class CenterDialogUtil {
         tv_commit.setOnClickListener(v -> {
             String code = et_name.getText().toString().trim();
             if (TextUtils.isEmpty(code)){
-                ToastCommom.createToastConfig().ToastShow(context,"请输入邀请码");
+                ToastCommom.createToastConfig().ToastShow(context,"请输入推荐码");
                 return;
-            }else {
-                ToastCommom.createToastConfig().ToastShow(context,"申请成功");
             }
-            cityDialog.dismiss();
-            cityDialog = null;
+            new RxHttp<BaseResult>().send(ApiManager.getService().applyVip(code),
+                    new Response<BaseResult>(context) {
+                        @Override
+                        public void onSuccess(BaseResult result) {
+                            EventBus.getDefault().post(new UpdateMineInfo());
+                            ToastCommom.createToastConfig().ToastShow(context,"申请成功");
+                            cityDialog.dismiss();
+                            cityDialog = null;
+
+                        }
+                    });
+
+        });
+        tv_add.setOnClickListener(v -> {
+            DialogUtil.showCallPhoneDialog(context);
         });
 
     }

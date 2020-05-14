@@ -76,7 +76,7 @@
                 android:id="@+id/tv_unpay"
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
-
+                android:visibility="gone"
                 android:text="3"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
@@ -291,7 +291,7 @@
                 android:layout_margin="5dp"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/rl_unservice__first"
+            android:id="@+id/rl_unservice_first"
             android:layout_width="0dp"
             android:paddingRight="20dp"
             android:layout_height="match_parent"
@@ -317,7 +317,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_unservice__first"
+                android:id="@+id/tv_unservice_first"
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
@@ -466,6 +466,7 @@
                 style="@style/cart_number_style"
                 android:background="@drawable/shape_oval_red"
                 android:text="3"
+                android:visibility="gone"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
         <RelativeLayout

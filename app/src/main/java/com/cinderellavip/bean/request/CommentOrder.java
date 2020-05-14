@@ -2,15 +2,15 @@ package com.cinderellavip.bean.request;
 
 public class CommentOrder {
 
-    public String choose_product_id;
-    public String score;
+    public String product_id;
+    public String product_star;
     public String content;
-    public String pics;
+    public String images;
 
-    public CommentOrder(String choose_product_id, String score, String content, String pics) {
-        this.choose_product_id = choose_product_id;
-        this.score = score;
+    public CommentOrder(String choose_product_id, String product_star, String content, String images) {
+        this.product_id = product_id;
+        this.product_star = product_star;
         this.content = content;
-        this.pics = pics;
+        this.images = images;
     }
 }

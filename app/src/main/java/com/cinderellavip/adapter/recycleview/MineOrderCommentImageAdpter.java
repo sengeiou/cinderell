@@ -43,7 +43,7 @@ public class MineOrderCommentImageAdpter extends BaseQuickAdapter<OrderCommentIm
 
         if (TextUtils.isEmpty(item.path)){
             iv_image_close.setVisibility(View.GONE);
-                iv_image.setImageResource(R.mipmap.add_upload_image);
+            iv_image.setImageResource(R.mipmap.add_upload_image);
         }else {
             iv_image_close.setVisibility(View.VISIBLE);
             ImageUtil.loadLocal(getContext(),iv_image,item.path);

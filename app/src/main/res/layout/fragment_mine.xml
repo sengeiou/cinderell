@@ -1,205 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-<com.google.android.material.appbar.AppBarLayout
-    android:id="@+id/app_bar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    app:elevation="0dp">
-    <com.google.android.material.appbar.CollapsingToolbarLayout
-        android:id="@+id/toolbar_layout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_scrollFlags="scroll">
-        <LinearLayout
+        android:layout_height="match_parent"
+        >
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:scaleType="fitXY"
-            >
-
-            <LinearLayout
+            app:elevation="0dp">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@mipmap/home_bg">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/statusbar_view_height"
-                    />
-
+                android:background="@color/white"
+                app:layout_scrollFlags="scroll"
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp"
-                    android:visibility="visible"
-                    android:gravity="right">
-                    <ImageView
-                        android:id="@+id/iv_setting"
-                        style="@style/base_click_style2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/my_set_icon_white"/>
-
-                    <RelativeLayout
-                        android:layout_width="30dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/iv_message"
-                            style="@style/base_click_style2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/my_msg_icon_white" />
-
-                        <View
-                            android:id="@+id/dot_message"
-                            android:visibility="gone"
-                            android:layout_width="6dp"
-                            android:layout_height="6dp"
-                            android:layout_marginRight="3dp"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/shape_red50"/>
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <com.cinderellavip.weight.CircleImageView
-                        android:id="@+id/vi_image"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@mipmap/avater"/>
+                    android:orientation="vertical"
+                    android:scaleType="fitXY"
+                    >
 
                     <LinearLayout
-                        android:id="@+id/ll_logined_info"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
+                        android:orientation="vertical"
+                        android:background="@mipmap/home_bg">
 
-                        android:orientation="vertical">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/statusbar_view_height"
+                            />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:orientation="horizontal"
+                            android:padding="12dp"
+                            android:visibility="visible"
+                            android:gravity="right">
 
-                            <TextView
-                                android:id="@+id/tv_name"
-                                style="@style/base_text_style"
-                                android:textColor="@color/white"
-                                android:text="倾国倾城" />
 
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
+                            android:padding="12dp"
+                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal">
 
+                            <com.cinderellavip.weight.CircleImageView
+                                android:id="@+id/vi_image"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@mipmap/avatar_default"/>
+
                             <LinearLayout
+                                android:id="@+id/ll_logined_info"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/shape_white50"
-                                android:paddingTop="2dp"
-                                android:paddingBottom="2dp"
-                                android:paddingLeft="10dp"
                                 android:layout_gravity="center_vertical"
-                                android:paddingRight="10dp">
-                                <ImageView
+                                android:layout_marginLeft="12dp"
+
+                                android:orientation="vertical">
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginRight="3dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:src="@mipmap/icon_cinderell_mark"/>
+                                    android:orientation="horizontal">
 
-                                <TextView
-                                    style="@style/base_text_style"
-                                    android:text="普通用户"
-                                    android:layout_gravity="center_vertical"
-                                    android:textSize="12sp" />
+                                    <TextView
+                                        android:id="@+id/tv_name"
+                                        style="@style/base_text_style"
+                                        android:textColor="@color/white"
+                                        tools:text="倾国倾城" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/shape_white50"
+                                        android:paddingTop="2dp"
+                                        android:paddingBottom="2dp"
+                                        android:paddingLeft="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:paddingRight="10dp">
+                                        <ImageView
+                                            android:id="@+id/iv_role_tabel"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginRight="3dp"
+                                            android:visibility="gone"
+                                            android:layout_gravity="center_vertical"
+                                            android:src="@mipmap/icon_cinderell_mark"/>
+
+                                        <TextView
+                                            android:id="@+id/tv_roles"
+                                            style="@style/base_text_style"
+                                            tools:text="普通用户"
+                                            android:layout_gravity="center_vertical"
+                                            android:textSize="12sp" />
+
+
+                                    </LinearLayout>
+
+
+
+
+
+                                    <TextView
+                                        android:id="@+id/tv_to_be_cinderell"
+                                        style="@style/base_text_style"
+                                        android:layout_marginLeft="12dp"
+                                        android:textColor="@color/white"
+                                        android:text="成为灰姑娘"
+                                        android:visibility="gone"
+                                        android:padding="5dp"
+                                        android:drawableRight="@mipmap/arrow_right_white"
+                                        android:drawablePadding="3dp"
+                                        android:textSize="12sp" />
+
+
+                                </LinearLayout>
 
 
                             </LinearLayout>
 
-
-
-
-
                             <TextView
-                                android:id="@+id/tv_to_be_cinderell"
+                                android:id="@+id/tv_login"
                                 style="@style/base_text_style"
-                                android:layout_marginLeft="12dp"
+                                android:text="注册/登录"
+                                android:visibility="gone"
                                 android:textColor="@color/white"
-                                android:text="成为灰姑娘"
-                                android:padding="5dp"
-                                android:drawableRight="@mipmap/arrow_right_white"
-                                android:drawablePadding="3dp"
-                                android:textSize="12sp" />
-
-
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="12dp"/>
                         </LinearLayout>
-
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_login"
-                        style="@style/base_text_style"
-                        android:text="您还未登录"
-                        android:visibility="gone"
-                        android:textColor="@color/white"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"/>
+
+                    <include
+                        layout="@layout/header_mine"/>
+
+
                 </LinearLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
-            </LinearLayout>
+            />
 
 
-            <include
-                layout="@layout/header_mine"/>
 
 
-        </LinearLayout>
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
-</com.google.android.material.appbar.AppBarLayout>
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rv_list"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
-    />
 
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
     <LinearLayout
         android:id="@+id/title"
-        android:background="@color/white"
+        android:background="#00000000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior=".weight.behavior.SampleTitleBehavior"
         android:orientation="vertical">
         <View
             android:layout_width="match_parent"
@@ -212,10 +200,11 @@
             android:padding="12dp"
             >
             <TextView
+                android:id="@+id/tv_title_name"
                 style="@style/base_text_style"
-                android:textColor="@color/black_title_color"
                 android:layout_height="wrap_content"
                 android:text="我的"
+                android:textColor="#00000000"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="18sp"
@@ -230,11 +219,11 @@
                 android:layout_alignParentRight="true">
 
                 <ImageView
-                    android:id="@+id/iv_setting1"
+                    android:id="@+id/iv_setting"
                     style="@style/base_click_style2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/my_set_icon"/>
+                    android:src="@mipmap/my_set_icon_white"/>
 
                 <RelativeLayout
                     android:layout_width="30dp"
@@ -242,15 +231,15 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/iv_message1"
+                        android:id="@+id/iv_message"
                         style="@style/base_click_style2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/my_msg_icon"
+                        android:src="@mipmap/my_msg_icon_white"
                         />
 
                     <View
-                        android:id="@+id/dot_message1"
+                        android:id="@+id/dot_message"
                         android:visibility="gone"
                         android:layout_width="6dp"
                         android:layout_height="6dp"
@@ -270,4 +259,7 @@
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
+
+
+

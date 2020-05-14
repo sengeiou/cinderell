@@ -275,7 +275,7 @@ public class OrderDetailActivity extends BaseActivity {
                             });
                             break;
                         case 4:
-                            OrderCommentActivity.launch(mActivity,1);
+                            OrderCommentActivity.launch(mActivity,orderInfo.id);
                             break;
                     }
                 break;

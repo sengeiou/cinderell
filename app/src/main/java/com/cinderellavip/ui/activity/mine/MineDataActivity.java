@@ -8,10 +8,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.weight.CircleImageView;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 
 import butterknife.BindView;
@@ -37,17 +42,28 @@ public class MineDataActivity extends CheckPermissionActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setBackTitle("个人资料");
-//        userInfo = GlobalParam.getUser();
-//        if (userInfo != null){
-//            setData();
-//        }
     }
 
 
     @Override
     public void loadData() {
-//
 
+        new RxHttp<BaseResult<MineInfo>>().send(ApiManager.getService().getMineInfo(),
+                new Response<BaseResult<MineInfo>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<MineInfo> result) {
+                        MineInfo mineInfo = result.data;
+                        ImageUtil.loadAvatar(mActivity,ivAvater,mineInfo.user_avatar);
+                        tv_nickname.setText(mineInfo.username);
+                        if (mineInfo.sex == 1){
+                            tvSex.setText("男");
+                        }else {
+                            tvSex.setText("女");
+                        }
+                        tv_phone.setText(mineInfo.mobile);
+
+                    }
+                });
 
     }
 

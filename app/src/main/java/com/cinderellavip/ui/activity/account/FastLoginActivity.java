@@ -13,11 +13,13 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
+import com.cinderellavip.bean.eventbus.UpdateMineInfo;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.util.KeyboardUtils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
@@ -239,7 +241,14 @@ public class FastLoginActivity extends BaseActivity {
                         EventBus.getDefault().post(new LoginFinishSuccess());
                         UserInfo userInfo = result.data;
                         GlobalParam.setUserInfo(userInfo);
-                        MainActivity.launch(mActivity);
+                        if (GlobalParam.getLoginFinish()){
+                            EventBus.getDefault().post(new UpdateMineInfo());
+                            GlobalParam.setLoginFinish(false);
+                            KeyboardUtils.hideInput(mActivity);
+                            finish();
+                        }else {
+                            MainActivity.launch(mActivity);
+                        }
                     }
                 });
     }

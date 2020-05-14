@@ -11,14 +11,18 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
+import com.cinderellavip.bean.eventbus.UpdateMineInfo;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.util.KeyboardUtils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.TreeMap;
 
@@ -35,6 +39,12 @@ public class LoginActivity extends BaseActivity {
     TextView tvSeletePhone;
 
     public static void launch(Activity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void launch(Activity activity,boolean isFinishLogin) {
+        GlobalParam.setLoginFinish(isFinishLogin);
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
@@ -84,7 +94,16 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess(BaseResult<UserInfo> result) {
                         UserInfo userInfo = result.data;
                         GlobalParam.setUserInfo(userInfo);
-                        MainActivity.launch(mActivity);
+                        if (GlobalParam.getLoginFinish()){
+                            EventBus.getDefault().post(new UpdateMineInfo());
+                            GlobalParam.setLoginFinish(false);
+                            KeyboardUtils.hideInput(mActivity);
+                            finish();
+                        }else {
+                            MainActivity.launch(mActivity);
+                        }
+
+
                     }
                 });
 
