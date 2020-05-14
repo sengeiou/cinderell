@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.order.RequestSelectCoupons;
 import com.cinderellavip.ui.fragment.mine.SelectCouponFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -12,8 +13,9 @@ import com.tozzais.baselibrary.ui.BaseActivity;
 public class SelectCouponActivity extends BaseActivity {
 
 
-    public static void launch(Activity activity) {
+    public static void launch(Activity activity, RequestSelectCoupons requestSelectCoupons) {
         Intent intent = new Intent(activity, SelectCouponActivity.class);
+        intent.putExtra("requestSelectCoupons",requestSelectCoupons);
         activity.startActivityForResult(intent,11);
     }
 
@@ -30,8 +32,9 @@ public class SelectCouponActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, SelectCouponFragment.newInstance()).commit();
+        RequestSelectCoupons requestSelectCoupons = getIntent().getParcelableExtra("requestSelectCoupons");
+        SelectCouponFragment fragment = SelectCouponFragment.newInstance(requestSelectCoupons);
+        getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
 
 
     }

@@ -18,6 +18,8 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.ui.activity.mine.MineOrderActivity;
+import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.GirdSpace;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -130,7 +132,8 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_look_order:
-                OrderDetailActivity.launch(mActivity,createOrderBean.order_id);
+                MineOrderActivity.launch(mActivity, OrderFragment.ALL);
+//                OrderDetailActivity.launch(mActivity,createOrderBean.order_id);
                 finish();
                 break;
             case R.id.tv_go_home:

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.EnsureOrderAdapter;
 import com.cinderellavip.bean.local.RequestSettlePara;
+import com.cinderellavip.bean.local.SelectCouponsBean;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
@@ -19,6 +20,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
 import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
+import com.cinderellavip.util.CouponsStringUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -95,10 +97,14 @@ public class EnsureOrderActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (!isLoad){
+            showProress();
+        }
         if (requestSettlePara.type == RequestSettlePara.PRODUCT) {
             getDataForProduct();
+        }else if (requestSettlePara.type == RequestSettlePara.CART) {
+            getDataForCart();
         }
-//
     }
 
     private void getDataForProduct() {
@@ -109,13 +115,38 @@ public class EnsureOrderActivity extends BaseActivity {
         hashMap.put("address_id", requestSettlePara.address_id);
         hashMap.put("coupon_id", requestSettlePara.coupon_ids);
         new RxHttp<BaseResult<OrderSettleResult>>().send(ApiManager.getService().getSettlementProduct(hashMap),
-                new Response<BaseResult<OrderSettleResult>>(mActivity) {
+                new Response<BaseResult<OrderSettleResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<OrderSettleResult> result) {
+                        showContent();
                         OrderSettleResult settleResult = result.data;
                         setData(settleResult);
+                    }
 
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
+    }
 
+    private void getDataForCart() {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("cart_ids", requestSettlePara.cart_ids);
+        hashMap.put("address_id", requestSettlePara.address_id);
+        hashMap.put("coupon_ids", requestSettlePara.coupon_ids);
+        new RxHttp<BaseResult<OrderSettleResult>>().send(ApiManager.getService().getSettlementCart(hashMap),
+                new Response<BaseResult<OrderSettleResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<OrderSettleResult> result) {
+                        showContent();
+                        OrderSettleResult settleResult = result.data;
+                        setData(settleResult);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
     }
@@ -163,7 +194,10 @@ public class EnsureOrderActivity extends BaseActivity {
             }
             loadData();
         } else if (requestCode == 11 && resultCode == RESULT_OK) {
-//            tvCouponMoney.setText("-￥20");
+            SelectCouponsBean selectCouponsBean = data.getParcelableExtra("couponsBean");
+                requestSettlePara.coupon_ids = CouponsStringUtil.getString(requestSettlePara.coupon_ids
+                ,selectCouponsBean.id+"",!TextUtils.isEmpty(selectCouponsBean.title));
+            loadData();
         }
     }
 
@@ -174,7 +208,12 @@ public class EnsureOrderActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.tv_commit:
-                createOrder();
+                if (requestSettlePara.type == RequestSettlePara.PRODUCT){
+                    createOrderForProduct();
+                }else {
+                    createOrderForCart();
+                }
+
                 break;
             case R.id.ll_selete_address:
                 MineAddressActivity.launch(mActivity, MineAddressActivity.SELETE, "");
@@ -186,11 +225,10 @@ public class EnsureOrderActivity extends BaseActivity {
         }
     }
 
-    private void createOrder() {
+    private void createOrderForProduct() {
         if ("0".equals(requestSettlePara.address_id)){
             tsg("请选择收货地址");
             return;
-
         }
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("product_id", requestSettlePara.product_id);
@@ -205,8 +243,27 @@ public class EnsureOrderActivity extends BaseActivity {
                         CreateOrderBean settleResult = result.data;
                         SelectPayWayActivity.launch(mActivity, settleResult);
                          finish();
+                    }
+                });
+    }
 
-
+    private void createOrderForCart() {
+        if ("0".equals(requestSettlePara.address_id)){
+            tsg("请选择收货地址");
+            return;
+        }
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("cart_ids", requestSettlePara.cart_ids);
+        hashMap.put("address_id", requestSettlePara.address_id);
+        hashMap.put("coupon_id", requestSettlePara.coupon_ids);
+        new RxHttp<BaseResult<CreateOrderBean>>().send(ApiManager.getService().createOrderByCart(hashMap),
+                new Response<BaseResult<CreateOrderBean>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<CreateOrderBean> result) {
+                        CreateOrderBean settleResult = result.data;
+                        settleResult.type = CreateOrderBean.CART;
+                        SelectPayWayActivity.launch(mActivity, settleResult);
+                        finish();
                     }
                 });
     }

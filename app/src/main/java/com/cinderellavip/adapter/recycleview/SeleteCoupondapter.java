@@ -10,9 +10,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.bean.local.SelectCouponsBean;
 
 
-public class SeleteCoupondapter extends BaseQuickAdapter<CouponsBean, BaseViewHolder> {
+public class SeleteCoupondapter extends BaseQuickAdapter<SelectCouponsBean, BaseViewHolder> {
 
 
     public SeleteCoupondapter() {
@@ -23,7 +24,7 @@ public class SeleteCoupondapter extends BaseQuickAdapter<CouponsBean, BaseViewHo
 
 
     @Override
-    protected void convert(final BaseViewHolder helper, final CouponsBean item) {
+    protected void convert(final BaseViewHolder helper, final SelectCouponsBean item) {
         int position = helper.getAdapterPosition();
 //        RelativeLayout ll_root = helper.getView(R.id.ll_root);
 //        TextView tv_money_unit = helper.getView(R.id.tv_money_unit);
@@ -34,6 +35,12 @@ public class SeleteCoupondapter extends BaseQuickAdapter<CouponsBean, BaseViewHo
 //        TextView tv_type = helper.getView(R.id.tv_type);
         TextView tv_use = helper.getView(R.id.tv_use);
         ImageView iv_selete = helper.getView(R.id.iv_selete);
+
+        helper.setText(R.id.tv_name,item.title)
+                .setText(R.id.tv_money,item.getAmount())
+                .setText(R.id.tv_complain,item.condition)
+                .setText(R.id.tv_type,item.type)
+                .setText(R.id.tv_time,"有效期："+item.expire_date);
 //
 ////        helper.setText(R.id.tv_money,item.getSale_money())
 ////                .setText(R.id.tv_complain,"满" + item.getMeet_money() + "可用")

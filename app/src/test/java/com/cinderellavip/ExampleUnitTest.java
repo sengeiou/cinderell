@@ -1,6 +1,8 @@
 package com.cinderellavip;
 
+import com.cinderellavip.bean.net.cart.CartGoodsItem;
 import com.cinderellavip.http.SignUtil;
+import com.cinderellavip.util.CouponsStringUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -8,8 +10,10 @@ import org.junit.Test;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.TreeMap;
 
 /**
@@ -84,6 +88,15 @@ public class ExampleUnitTest {
         Type founderSetType = new TypeToken<HashSet<String>>(){}.getType();
         HashSet<String> set = gson.fromJson(url, founderSetType);
         System.out.println(set.size());
+
+
+    }
+
+    @Test
+    public void textCouponString() {
+        String url = "25";
+        String removeUrl = "25";
+        System.out.println(CouponsStringUtil.getString(url,removeUrl,false));
 
 
     }

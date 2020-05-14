@@ -263,7 +263,7 @@ public class OrderDetailActivity extends BaseActivity {
                     switch (orderInfo.status) {
                         case 1:
                             CreateOrderBean createOrderBean = new CreateOrderBean();
-                            createOrderBean.order_id = orderInfo.id;
+                            createOrderBean.order_id = orderInfo.id+"";
                             createOrderBean.pay_amount = orderInfo.total_amount;
                             SelectPayWayActivity.launch(mActivity,createOrderBean);
                             break;

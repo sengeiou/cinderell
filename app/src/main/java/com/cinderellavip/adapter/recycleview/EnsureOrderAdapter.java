@@ -11,6 +11,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.listview.EnsureOrderGoodsAdapter;
 import com.cinderellavip.bean.net.order.OrderSettleShopAmount;
 import com.cinderellavip.bean.net.order.OrderSettleShopBean;
+import com.cinderellavip.bean.net.order.RequestSelectCoupons;
 import com.cinderellavip.ui.activity.mine.SelectCouponActivity;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyListView;
@@ -52,12 +53,14 @@ public class EnsureOrderAdapter extends BaseQuickAdapter<OrderSettleShopBean, Ba
             tv_coupon.setCompoundDrawables(null, null, null, null);
         }else {
             ll_coupon.setEnabled(true);
-            if (amount.isSelectCoupon()){
-                tv_coupon.setText("￥"+amount.coupon);
+            if (!amount.isSelectCoupon()){
+                tv_coupon.setText("-￥"+amount.coupon);
+                tv_coupon.setTextColor(getContext().getColor(R.color.black_title_color));
             }else {
-                tv_coupon.setText("选择优惠券");
+                tv_coupon.setTextColor(getContext().getColor(R.color.grayText));
+                tv_coupon.setText("请选择");
             }
-            tv_coupon.setTextColor(getContext().getColor(R.color.black_title_color));
+
             tv_coupon.setCompoundDrawables(null, null, nav_up, null);
         }
 
@@ -66,11 +69,15 @@ public class EnsureOrderAdapter extends BaseQuickAdapter<OrderSettleShopBean, Ba
             tv_active.setText("暂无活动");
             tv_active.setTextColor(getContext().getColor(R.color.grayText));
         }else {
-            tv_active.setText("￥"+amount.active);
+            tv_active.setText("-￥"+amount.active);
             tv_active.setTextColor(getContext().getColor(R.color.black_title_color));
         }
         ll_coupon.setOnClickListener(v -> {
-            SelectCouponActivity.launch((Activity) getContext());
+            RequestSelectCoupons requestSelectCoupons = new RequestSelectCoupons();
+            requestSelectCoupons.store_id = item.store_id;
+            requestSelectCoupons.goods_amount = item.amount.goods;
+            requestSelectCoupons.coupon = item.coupon;
+            SelectCouponActivity.launch((Activity) getContext(),requestSelectCoupons);
         });
 
 

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
+import com.cinderellavip.bean.eventbus.AddCart;
 import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
@@ -25,6 +26,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,6 +241,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                     new Response<BaseResult>(mActivity) {
                         @Override
                         public void onSuccess(BaseResult result) {
+                            EventBus.getDefault().post(new AddCart());
                           tsg("商品已成功加入购物车");
                         }
                     });

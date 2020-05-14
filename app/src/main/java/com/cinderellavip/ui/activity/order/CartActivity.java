@@ -2,7 +2,11 @@ package com.cinderellavip.ui.activity.order;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 
 import com.cinderellavip.R;
 import com.cinderellavip.global.GlobalParam;
@@ -41,5 +45,24 @@ public class CartActivity extends BaseActivity {
     @Override
     public void loadData() {
 
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 获取当前焦点所在的控件；
+            View view = getCurrentFocus();
+            if (view != null && view instanceof EditText) {
+                Rect r = new Rect();
+                view.getGlobalVisibleRect(r);
+                int rawX = (int) ev.getRawX();
+                int rawY = (int) ev.getRawY();
+                // 判断点击的点是否落在当前焦点所在的 view 上；
+                if (!r.contains(rawX, rawY)) {
+                    view.clearFocus();
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

@@ -11,6 +11,8 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CartAdapter;
 import com.cinderellavip.adapter.recycleview.CartEmptyAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.bean.eventbus.AddCart;
+import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.cart.CartItem;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.cart.CartGoodsItem;
@@ -19,6 +21,8 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.CartGoodsClickListener;
+import com.cinderellavip.ui.activity.home.EnsureOrderActivity;
+import com.cinderellavip.util.PriceFormat;
 import com.cinderellavip.weight.MarginDecorationextendsHeader;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
@@ -123,7 +127,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
     private void setCartData(List<CartItem> list) {
         cartAdapter.setNewData(list);
         //解决删除购物车后不重置的bug。放在setData后面，解决刷新不重置总价格的bug
-        onClick(1);
+        onClick();
 
     }
 
@@ -162,46 +166,51 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
     }
 
     private void calculateMoney(){
-//        List<CartItem> data = cartAdapter.getData();
-//        double money = 0;
-//        for (CartItem cartItem : data) {
-//            if (cartItem.isCheck) {
-//                money += cartItem.price * cartItem.getNum();
-//            }
-//        }
-//        tvTotalPrice.setText("" + PriceFormat.getPeice(money));
+        List<CartItem> data = cartAdapter.getData();
+        double money = 0;
+        for (CartItem cartItem : data) {
+            for (CartGoodsItem cartGoodsItem:cartItem.products)
+            if (cartGoodsItem.isCheck) {
+                money += cartGoodsItem.product_price * cartGoodsItem.product_num;
+            }
+        }
+        tvTotalPrice.setText("" + PriceFormat.getPeice(money));
     }
 
     private void calculateCarts(){
         List<CartItem> data = cartAdapter.getData();
         //得到条件
         StringBuffer stringBuffer = new StringBuffer();
-        List<CartItem> selectList = new ArrayList<>();
+
+        List<CartGoodsItem> selectList = new ArrayList<>();
         for (CartItem item:data){
-            if (item.isCheck){
-                selectList.add(item);
-            }
+            for (CartGoodsItem cartGoodsItem:item.products)
+                if (cartGoodsItem.isCheck) {
+                    selectList.add(cartGoodsItem);
+                }
+
         }
         if (selectList.size() == 0){
-            tsg("必须选择商品");
+            tsg("请选择商品");
             return;
         }
-//        EnsureOrderActivity.launch(mActivity);
+//
 
-//        for (int i=0;i<selectList.size();i++){
-//            CartItem item = selectList.get(i);
-//            if (i==selectList.size()-1){
-//                stringBuffer.append(item.cart_id);
-//            }else {
-//                stringBuffer.append(item.cart_id+",");
-//            }
-//        }
-//        return stringBuffer.toString();
+        for (int i=0;i<selectList.size();i++){
+            CartGoodsItem item = selectList.get(i);
+            if (i==selectList.size()-1){
+                stringBuffer.append(item.cart_id);
+            }else {
+                stringBuffer.append(item.cart_id+",");
+            }
+        }
+        RequestSettlePara para = new RequestSettlePara(RequestSettlePara.CART, stringBuffer.toString());
+        EnsureOrderActivity.launch(mActivity,para);
 
     }
 
     @Override
-    public void onClick(int position) {
+    public void onClick() {
         this.isSeleteAll = true;
         for (CartItem cartItem:cartAdapter.getData()){
             boolean allSelect = true;
@@ -228,5 +237,13 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
     public void initListener() {
         if (swipeLayout != null)
             swipeLayout.setOnRefreshListener(this::onRefresh);
+    }
+
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof AddCart){
+            onRefresh();
+        }
     }
 }

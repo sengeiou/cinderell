@@ -7,6 +7,7 @@ import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.local.MineCouponsBean;
 import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.bean.local.SelectCouponsBean;
 import com.cinderellavip.bean.net.BrandResult;
 import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.bean.net.IntegralExchangeLogistics;
@@ -162,6 +163,10 @@ public interface ApiService {
     Observable<BaseResult>
     modifyCartNumber(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.delete_cart)
+    Observable<BaseResult>
+    deleteCart(@QueryMap TreeMap<String, String> map);
+
     @GET(HttpUrl.order_pay_likes)
     Observable<BaseResult<ListResult<HomeGoods>>>
     getLicks();
@@ -174,9 +179,17 @@ public interface ApiService {
     Observable<BaseResult<OrderSettleResult>>
     getSettlementProduct(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.settlement_cart)
+    Observable<BaseResult<OrderSettleResult>>
+    getSettlementCart(@QueryMap TreeMap<String, String> map);
+
     @GET(HttpUrl.create_order_product)
     Observable<BaseResult<CreateOrderBean>>
     createOrderByProduct(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.create_order_cart)
+    Observable<BaseResult<CreateOrderBean>>
+    createOrderByCart(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.order_pay)
     Observable<BaseResult<GetPayResult>>
@@ -198,6 +211,10 @@ public interface ApiService {
     @GET(HttpUrl.coupons_center)
     Observable<BaseResult<ListCoupons<CouponsBean>>>
     couponsCenter();
+
+    @GET(HttpUrl.coupons_settlement)
+    Observable<BaseResult<ListCoupons<SelectCouponsBean>>>
+    couponsSettlement(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.coupons_mine)
     Observable<BaseResult<ListResult<MineCouponsBean>>>

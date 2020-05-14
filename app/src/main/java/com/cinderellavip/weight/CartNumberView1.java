@@ -145,7 +145,7 @@ public class CartNumberView1 extends FrameLayout {
 
     public void setNumber(String number) {
         tv_number.setText(number);
-//        tv_number.setSelection(number.length());
+        tv_number.setSelection(number.length());
     }
 
 

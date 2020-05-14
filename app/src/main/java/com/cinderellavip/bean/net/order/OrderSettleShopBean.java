@@ -1,15 +1,15 @@
 package com.cinderellavip.bean.net.order;
 
-import com.cinderellavip.bean.local.CouponsBean;
-import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.local.SelectCouponsBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderSettleShopBean {
 
 
     public List<OrderSettleGoods> products;
-    public CouponsBean coupon;
+    public SelectCouponsBean coupon;
     public boolean has_coupon;
     public OrderSettleShopAmount amount;
 

@@ -126,6 +126,7 @@ public class SelectPayWayActivity extends BaseActivity {
     private void pay(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("order_id", createOrderBean.order_id+"");
+
         hashMap.put("payment", payway);
         new RxHttp<BaseResult<GetPayResult>>().send(ApiManager.getService().orderPay(hashMap),
                 new Response<BaseResult<GetPayResult>>(mActivity) {

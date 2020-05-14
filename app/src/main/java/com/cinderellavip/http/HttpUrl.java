@@ -46,7 +46,7 @@ public interface HttpUrl {
     String order_logistics = "api/store/order/logistics/";//订单物流
     String cart_list = "api/store/cart/list-new";//购物车列表
     String settlement_cart = "api/store/settlement/cart-new";//购物车结算
-    String create_order_cart = "api/store/order/create-cart-new";//购物车结算
+    String create_order_cart = "api/store/order/create-cart-new";//生成订单（购物车）新版
     String coupons_settlement = "api/store/settlement/coupons";//结算时获取可用优惠券列表
     //收货地址
     String address_list = "api/store/address/list";//收货地址列表

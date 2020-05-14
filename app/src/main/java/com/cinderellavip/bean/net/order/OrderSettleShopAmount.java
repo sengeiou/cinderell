@@ -16,10 +16,10 @@ public class OrderSettleShopAmount {
      * @return
      */
     public boolean isSelectCoupon() {
-        return Double.parseDouble(coupon) == 0;
+        return !(Double.parseDouble(coupon) > 0);
     }
 
     public boolean isActive() {
-        return  Double.parseDouble(active) == 0;
+        return  !(Double.parseDouble(active) > 0);
     }
 }

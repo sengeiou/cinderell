@@ -22,10 +22,12 @@ import com.cinderellavip.weight.CartNumberView;
 import com.cinderellavip.weight.SquareRoundImageView;
 import com.nex3z.flowlayout.FlowLayout;
 import com.tozzais.baselibrary.util.CommonUtils;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +60,8 @@ public class DialogUtil {
         tv_former_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         //商品规格
         FlowLayout fl_special = view.findViewById(R.id.fl_flag);
+        NestedScrollView scrollview = view.findViewById(R.id.scrollview);
+
         List<SpecialItem> list = goodsResult.product_norm;
         //设置默认规格
         final SpecialItem specialItem = list.get(0);
@@ -109,6 +113,9 @@ public class DialogUtil {
             tv.setText(text.name);
             fl_special.addView(normView);
         }
+        int measuredHeight = fl_special.getMeasuredHeight();
+        LogUtil.e("measuredHeight = "+measuredHeight);
+        LogUtil.e("measuredHeight = "+fl_special.getHeight());
 
         tv_sure.setOnClickListener(v -> {
             listener.onFinish(specialItem.id+"",cart_view.getTv_number().getText().toString().trim());

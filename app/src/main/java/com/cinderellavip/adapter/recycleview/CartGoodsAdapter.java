@@ -16,6 +16,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.CartGoodsClickListener;
+import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.weight.CartNumberView1;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -25,6 +26,11 @@ import java.util.TreeMap;
 
 
 //https://blog.csdn.net/itdream88/article/details/85046989
+
+/**
+ * 解决焦点乱跑的问题
+ * https://www.jianshu.com/p/9a156b48e4f6
+ */
 public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHolder> {
 
     private CartGoodsClickListener cartClickListener;
@@ -84,14 +90,13 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
             @Override
             public void afterTextChanged(Editable s) {
                 String content = s.toString();
-                LogUtil.e("content= "+content);
+                LogUtil.e("content1= "+content);
                 if (content.length()>4){
                     content = "9999";
-
                 }else if (TextUtils.isEmpty(content)){
                     content = "1";
-
                 }
+                item.product_num = Integer.parseInt(content);
             }
         };
 
@@ -103,22 +108,28 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
                 tv_number.addTextChangedListener(textWatcher);
             }else {
                 tv_number.removeTextChangedListener(textWatcher);
+                modify(item,item.product_num+"",cart_view);
             }
+
             String content = tv_number.getText().toString().trim();
-            LogUtil.e("setOnFocusChangeListener= "+content+"=="+hasFocus);
+            LogUtil.e("content1= "+content+"=="+hasFocus);
 
         });
 
         tv_number.clearFocus();
         iv_selete.setOnClickListener(v -> {
             item.isCheck = !item.isCheck;
-            cartClickListener.onClick(position);
+            cartClickListener.onClick();
             notifyDataSetChanged();
         });
 
         helper.getView(R.id.iv_delete).setOnClickListener(v -> {
-            remove(position);
-            cartClickListener.onClick(position);
+            CenterDialogUtil.showTwo(getContext(),"提示","确定要删除该商品吗？","取消","确定", s -> {
+                if ("1".equals(s)){
+                    delete(item,position);
+                }
+            });
+
         });
         helper.getView(R.id.ll_root).setOnClickListener(v -> {
             GoodsDetailActivity.launch((Activity) getContext(),item.product_id+"");
@@ -130,7 +141,7 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
 
 
     private void modify(CartGoodsItem item,String number,CartNumberView1 cart_view){
-        LogUtil.e("modify");
+        LogUtil.e("content1= "+"modify");
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("cart_id", item.cart_id + "");
         hashMap.put("number",   number);
@@ -139,9 +150,26 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
                     @Override
                     public void onSuccess(BaseResult result) {
                         item.product_num = Integer.parseInt(number);
+                        //计算价格
+                        cartClickListener.onClick();
                         notifyDataSetChanged();
 
 //                        notifyItemChanged(position);
+                    }
+                });
+    }
+
+    private void delete(CartGoodsItem item,int position){
+        LogUtil.e("delete= "+"modify");
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("cart_ids", item.cart_id + "");
+        new RxHttp<BaseResult>().send(ApiManager.getService().deleteCart(hashMap),
+                new Response<BaseResult>(true,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        remove(position);
+                        //计算价格
+                        cartClickListener.onClick();
                     }
                 });
     }

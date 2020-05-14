@@ -121,7 +121,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
 
                 case 1:
                     CreateOrderBean createOrderBean = new CreateOrderBean();
-                    createOrderBean.order_id = item.id;
+                    createOrderBean.order_id = item.id+"";
                     createOrderBean.pay_amount = item.goods_amount;
                     SelectPayWayActivity.launch(getContext(),createOrderBean);
                     break;

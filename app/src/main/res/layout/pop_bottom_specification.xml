@@ -81,38 +81,53 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="30dp"
         />
-
-    <com.nex3z.flowlayout.FlowLayout
-        android:id="@+id/fl_flag"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginRight="12dp"
-        app:flChildSpacing="8dp"
-        app:flChildSpacingForLastRow="8dp"
-        app:flRowSpacing="8dp"
-        />
+        android:layout_height="250dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.nex3z.flowlayout.FlowLayout
+                android:id="@+id/fl_flag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                app:flChildSpacing="8dp"
+                app:flChildSpacingForLastRow="8dp"
+                app:flRowSpacing="8dp"
+                />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="12dp">
-        <TextView
-            style="@style/base_text_style"
-            android:text="数量"
-            android:layout_weight="1"
-            />
-        <com.cinderellavip.weight.CartNumberView
-            android:id="@+id/cart_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="12dp">
+                <TextView
+                    style="@style/base_text_style"
+                    android:text="数量"
+                    android:layout_weight="1"
+                    />
+                <com.cinderellavip.weight.CartNumberView
+                    android:id="@+id/cart_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
     <TextView
         android:id="@+id/tv_sure"
         android:layout_width="match_parent"

@@ -6,3 +6,6 @@
 
 
 商家端UI地址：https://lanhuapp.com/web/#/item/project/board?type=share_mark&pid=83f8ef0f-5d8f-41e2-8da6-4245eaeccf20&activeSectionId=&teamId=a4c70b0d-3824-4971-92c2-03e4164c4900&param=bdc4a6ef-84c8-4d7f-a0f2-8b9411b5bf2f
+
+
+1：选择优惠劵是商品价格还是应付价格

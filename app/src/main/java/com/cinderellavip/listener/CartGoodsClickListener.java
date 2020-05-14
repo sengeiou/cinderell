@@ -1,6 +1,7 @@
 package com.cinderellavip.listener;
 
 public  interface CartGoodsClickListener {
-    void onClick(int  position);
+    //position暂时没用
+    void onClick();
 
 }

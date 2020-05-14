@@ -6,10 +6,18 @@ import android.os.Parcelable;
 public class CreateOrderBean implements Parcelable {
 
 
+    public static int PRODUCT = 1;
+    public static int CART = 2;
 
 
-    public int order_id;
+    public int type = 1;
+
+    ////立即结算
+    public String order_id;
+
+    //公共的
     public String pay_amount;
+
 
     @Override
     public int describeContents() {
@@ -18,7 +26,8 @@ public class CreateOrderBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.order_id);
+        dest.writeInt(this.type);
+        dest.writeString(this.order_id);
         dest.writeString(this.pay_amount);
     }
 
@@ -26,7 +35,8 @@ public class CreateOrderBean implements Parcelable {
     }
 
     protected CreateOrderBean(Parcel in) {
-        this.order_id = in.readInt();
+        this.type = in.readInt();
+        this.order_id = in.readString();
         this.pay_amount = in.readString();
     }
 
