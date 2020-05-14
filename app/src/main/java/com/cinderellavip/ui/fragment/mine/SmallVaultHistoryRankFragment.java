@@ -5,8 +5,18 @@ import android.os.Handler;
 
 import com.cinderellavip.adapter.recycleview.SmallVaultHistoryRankAdapter;
 import com.cinderellavip.adapter.recycleview.SmallVaultInterestIntegralAdapter;
+import com.cinderellavip.bean.net.mine.RankItem;
+import com.cinderellavip.bean.net.mine.RankMonthItem;
+import com.cinderellavip.bean.net.mine.RankResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.util.DataUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
+
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,18 +24,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 /**
  * 小金推荐-推荐积分
  */
-public class SmallVaultHistoryRankFragment extends BaseListFragment<String> {
+public class SmallVaultHistoryRankFragment extends BaseListFragment<RankMonthItem> {
 
 
 
 
     @Override
     public void loadData() {
+        super.loadData();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("page", page + "");
+        hashMap.put("limit", PageSize + "");
+        new RxHttp<BaseResult<ListResult<RankMonthItem>>>().send(ApiManager.getService().rankingMonth(hashMap),
+                new Response<BaseResult<ListResult<RankMonthItem>>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<RankMonthItem>> result) {
 
-        //这里只有通过Handler 已经到底啦 才会出来
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getData(8));
-        }, 100);
+                        setData(result.data.list);
+                    }
+                });
     }
 
     @Override

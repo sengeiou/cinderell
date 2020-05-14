@@ -3,6 +3,7 @@ package com.cinderellavip.ui.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.mine.LeaderBoardFragment;
@@ -21,14 +22,23 @@ public class LeaderBoardActivity extends BaseActivity {
         Intent intent = new Intent(from, LeaderBoardActivity.class);
         from.startActivity(intent);
     }
+    public static void launch(Context from,String month) {
+        Intent intent = new Intent(from, LeaderBoardActivity.class);
+        intent.putExtra("month",month);
+        from.startActivity(intent);
+    }
 
-
+    String month;
     @Override
     public void initView(Bundle savedInstanceState) {
         setLineVisibility();
-        setBackTitle("月冠排行");
-        setRightText("历史排行榜");
-//        setRightIcon(R.mipmap.icon_search_black);
+        month =  getIntent().getStringExtra("month");
+        if (TextUtils.isEmpty(month)){
+            setBackTitle("月冠排行");
+            setRightText("历史排行榜");
+        }else {
+            setBackTitle("历史排行榜");
+        }
 
 
 
@@ -37,8 +47,8 @@ public class LeaderBoardActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        LeaderBoardFragment fragment = new LeaderBoardFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.content_container,
+                LeaderBoardFragment.newInstance(month)).commit();
     }
 
     @Override

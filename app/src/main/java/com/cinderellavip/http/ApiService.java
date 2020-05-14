@@ -25,6 +25,7 @@ import com.cinderellavip.bean.net.mine.IntegralResult;
 import com.cinderellavip.bean.net.mine.MineBalanceResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.bean.net.mine.MineInviterResult;
+import com.cinderellavip.bean.net.mine.RankMonthItem;
 import com.cinderellavip.bean.net.mine.RankResult;
 import com.cinderellavip.bean.net.mine.WithDrawHistoryResult;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
@@ -279,6 +280,10 @@ public interface ApiService {
     @GET(HttpUrl.ranking)
     Observable<BaseResult<RankResult>>
     ranking(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.ranking_history)
+    Observable<BaseResult<ListResult<RankMonthItem>>>
+    rankingMonth(@QueryMap TreeMap<String, String> map);
 
 
 

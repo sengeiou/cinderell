@@ -2,6 +2,7 @@ package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.SmallVaultLeaderBoardAdapter;
@@ -30,12 +31,26 @@ import butterknife.OnClick;
  */
 public class LeaderBoardFragment extends BaseListFragment<RankItem> {
 
+
+    public static LeaderBoardFragment newInstance(String month){
+        LeaderBoardFragment cartFragment = new LeaderBoardFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("month",month);
+        cartFragment.setArguments(bundle);
+        return cartFragment;
+
+    }
+
     @Override
     public void loadData() {
 
         super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("month", "");
+        String month = getArguments().getString("month");
+        if (TextUtils.isEmpty(month)){
+            month = "";
+        }
+        hashMap.put("month", month);
         hashMap.put("page", page + "");
         hashMap.put("limit", PageSize + "");
         new RxHttp<BaseResult<RankResult>>().send(ApiManager.getService().ranking(hashMap),
