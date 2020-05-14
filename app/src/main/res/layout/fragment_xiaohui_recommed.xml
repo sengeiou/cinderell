@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:padding="12dp"
                     android:background="@color/white"
-                    android:text="我推荐的好友（88）"
+                    android:text="我推荐的好友（0）"
                     android:textSize="14sp"
                     android:textColor="@color/black_title_color"
                     />

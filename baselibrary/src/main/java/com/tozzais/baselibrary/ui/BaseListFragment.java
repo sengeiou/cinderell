@@ -124,7 +124,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
              *  参数是 true的话 不显示
              */
             if (mAdapter.getLoadMoreModule() != null)
-            mAdapter.getLoadMoreModule().loadMoreEnd(false);
+            mAdapter.getLoadMoreModule().loadMoreEnd(isRefresh);
         } else {
             //自动加载下一个 显示加载中
             if (mAdapter.getLoadMoreModule() != null)

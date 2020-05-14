@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.MineBalanceAdpter;
+import com.cinderellavip.bean.eventbus.UpdateMinebalance;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.net.mine.MineBalanceItem;
 import com.cinderellavip.bean.net.mine.MineBalanceResult;
@@ -69,6 +70,7 @@ public class MineBalanceFragment extends BaseListFragment<MineBalanceItem> imple
                     @Override
                     public void onSuccess(BaseResult<MineBalanceResult> result) {
                         MineBalanceResult data = result.data;
+                        if (page == DEFAULT_PAGE)
                         tv_balance.setText(data.balance);
                         setData(data.list);
                     }
@@ -94,6 +96,14 @@ public class MineBalanceFragment extends BaseListFragment<MineBalanceItem> imple
             case R.id.tv_top_up:
                 WithDrawActivity.launch(mActivity);
                 break;
+        }
+    }
+
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateMinebalance){
+            onRefresh();
         }
     }
 }

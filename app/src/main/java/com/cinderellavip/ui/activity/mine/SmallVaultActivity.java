@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.fragment.mine.SmallVaultFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -47,7 +49,7 @@ public class SmallVaultActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         iv_right_icon.setOnClickListener(v -> {
-            WebViewActivity.launch(mActivity,"规则说明","https://www.baidu.com");
+            AgreementWebViewActivity.launch(mActivity, Constant.H5);
         });
     }
 }

@@ -8,11 +8,24 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.UpdateMinebalance;
+import com.cinderellavip.bean.net.mine.MineBalanceResult;
+import com.cinderellavip.global.Constant;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,6 +41,8 @@ public class WithDrawActivity extends BaseActivity {
     EditText etPhone;
     @BindView(R.id.et_money)
     EditText etMoney;
+    @BindView(R.id.tv_balance)
+    TextView tv_balance;
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, WithDrawActivity.class);
@@ -40,14 +55,23 @@ public class WithDrawActivity extends BaseActivity {
 
         setBackTitle("提现申请");
         setRightText("提现说明");
-//        setRightIcon(R.mipmap.icon_search_black);
-
 
     }
 
 
     @Override
     public void loadData() {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("page", 1+"");
+        hashMap.put("limit", 1+"");
+        new RxHttp<BaseResult<MineBalanceResult>>().send(ApiManager.getService().mineBalance(hashMap),
+                new Response<BaseResult<MineBalanceResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<MineBalanceResult> result) {
+                        MineBalanceResult data = result.data;
+                        tv_balance.setText("账户余额：￥"+data.balance);
+                    }
+                });
 
     }
 
@@ -70,10 +94,25 @@ public class WithDrawActivity extends BaseActivity {
                 }if (TextUtils.isEmpty(money)){
                     tsg("请输入提现金额");
                     return;
+                }else if (Double.parseDouble(money)<=100){
+                    tsg("提现金额不得小于100元");
+                    return;
                 }
-                CenterDialogUtil.showCommitSuccess(mContext,()->{
-                    finish();
-                });
+                TreeMap<String, String> hashMap = new TreeMap<>();
+                hashMap.put("account", phone+"");
+                hashMap.put("money", money+"");
+
+                new RxHttp<BaseResult>().send(ApiManager.getService().applyWithDraw(hashMap),
+                        new Response<BaseResult>(mActivity) {
+                            @Override
+                            public void onSuccess(BaseResult result) {
+                                EventBus.getDefault().post(new UpdateMinebalance());
+                                CenterDialogUtil.showCommitSuccess(mContext,()->{
+                                    finish();
+                                });
+                            }
+                        });
+
                 break;
         }
     }
@@ -82,7 +121,7 @@ public class WithDrawActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         tv_right.setOnClickListener(v -> {
-            WebViewActivity.launch(mActivity,"提现规则","https://www.baidu.com");
+            AgreementWebViewActivity.launch(mActivity, Constant.H3);
         });
         etMoney.addTextChangedListener(new TextWatcher() {
             @Override
@@ -98,13 +137,18 @@ public class WithDrawActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String trim = editable.toString().trim();
-                if (Integer.parseInt(trim)>99990){
-                    tsg("单次最多提现9999元");
+                try {
+                    if (Integer.parseInt(trim)>99990){
+                        tsg("单次最多提现9999元");
+                    }
+                    if (trim.length()>4){
+                        etMoney.setText("9999");
+                        etMoney.setSelection(4);
+                    }
+                }catch (Exception e){
+
                 }
-                if (trim.length()>4){
-                    etMoney.setText("9999");
-                    etMoney.setSelection(4);
-                }
+
 
             }
         });

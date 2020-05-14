@@ -21,8 +21,12 @@ import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.mine.IntegralResult;
 import com.cinderellavip.bean.net.mine.MineBalanceResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.bean.net.mine.MineInviterResult;
+import com.cinderellavip.bean.net.mine.RankResult;
+import com.cinderellavip.bean.net.mine.WithDrawHistoryResult;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
@@ -255,6 +259,26 @@ public interface ApiService {
     @GET(HttpUrl.balance)
     Observable<BaseResult<MineBalanceResult>>
     mineBalance(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.withdrawal_apply)
+    Observable<BaseResult>
+    applyWithDraw(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.withdrawal)
+    Observable<BaseResult<WithDrawHistoryResult>>
+    withDrawHistory(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.ming_inviter)
+    Observable<BaseResult<MineInviterResult>>
+    mine_inviter(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.mine_integral)
+    Observable<BaseResult<IntegralResult>>
+    mine_integral(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.ranking)
+    Observable<BaseResult<RankResult>>
+    ranking(@QueryMap TreeMap<String, String> map);
 
 
 

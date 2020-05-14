@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:paddingRight="12dp"
     android:paddingTop="12dp"
@@ -17,9 +17,10 @@
         android:orientation="horizontal">
 
         <com.cinderellavip.weight.CircleImageView
+            android:id="@+id/iv_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/avater"/>
+            tools:src="@mipmap/avater"/>
 
         <TextView
             android:id="@+id/tv_title"
@@ -29,7 +30,7 @@
             android:maxLines="1"
             android:lines="1"
             android:ellipsize="end"
-            android:text="倾国倾城的凤姐"
+            tools:text="倾国倾城的凤姐"
             />
 
         <TextView
@@ -42,13 +43,14 @@
             />
 
         <TextView
+            android:id="@+id/tv_money"
             style="@style/base_text_style_gray_small"
             android:layout_marginLeft="12dp"
             android:textColor="@color/black_title_color"
             android:maxLines="1"
             android:lines="1"
             android:ellipsize="end"
-            android:text="+200"
+            tools:text="+200"
             />
 
 

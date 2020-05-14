@@ -416,7 +416,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
 //        super.initListener();
         //SwipeRefreshLayout和CoordinatorLayout滑动冲突
         appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
-            LogUtil.e("totalDy" + i);
+//            LogUtil.e("totalDy" + i);
             float percent = Math.abs(i) * 1.0f / 200 % 100;
             percent = percent > 1 ? 1 : percent;
             String bgColor = ColorUtil.caculateColor("#00000000", "#FFFFFFFF", percent);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
 
     android:background="@color/white"
@@ -35,23 +35,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/tv_header_time1"
                     style="@style/base_text_style"
                     android:maxLines="1"
                     android:lines="1"
                     android:ellipsize="end"
-                    android:text="2019年11月排行"
+                    tools:text="2019年11月排行"
                     />
 
             </LinearLayout>
 
 
             <TextView
+                android:id="@+id/tv_header_time2"
                 style="@style/base_text_style_gray_small"
                 android:layout_marginLeft="12dp"
                 android:maxLines="1"
                 android:lines="1"
                 android:ellipsize="end"
-                android:text="截止时间：2019-11-30"
+                tools:text="截止时间：2019-11-30"
                 />
 
 
@@ -97,10 +99,11 @@
             />
 
         <com.cinderellavip.weight.CircleImageView
+            android:id="@+id/iv_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="12dp"
-            android:src="@mipmap/avater"/>
+            tools:src="@mipmap/avater"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -109,11 +112,12 @@
             android:layout_marginLeft="12dp"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_title"
                 style="@style/base_text_style"
                 android:maxLines="1"
                 android:lines="1"
                 android:ellipsize="end"
-                android:text="001舰队"
+                tools:text="001舰队"
                 />
 
         </LinearLayout>
@@ -129,13 +133,14 @@
             />
 
         <TextView
+            android:id="@+id/tv_number"
             style="@style/base_text_style_gray_small"
             android:layout_marginLeft="12dp"
             android:textColor="@color/baseColor"
             android:maxLines="1"
             android:lines="1"
             android:ellipsize="end"
-            android:text="+200"
+            tools:text="+200"
             />
 
 

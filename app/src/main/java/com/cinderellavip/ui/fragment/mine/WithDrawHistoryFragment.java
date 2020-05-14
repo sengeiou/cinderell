@@ -8,13 +8,22 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.MineBalanceAdpter;
 import com.cinderellavip.adapter.recycleview.WithDrawHistoryAdapter;
+import com.cinderellavip.bean.net.mine.MineBalanceResult;
+import com.cinderellavip.bean.net.mine.WithDrawHistoryItem;
+import com.cinderellavip.bean.net.mine.WithDrawHistoryResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.util.DataUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
+
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class WithDrawHistoryFragment extends BaseListFragment<String>  {
+public class WithDrawHistoryFragment extends BaseListFragment<WithDrawHistoryItem>  {
 
     private TextView tv_balance;
 
@@ -38,10 +47,21 @@ public class WithDrawHistoryFragment extends BaseListFragment<String>  {
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("page", page+"");
+        hashMap.put("limit", PageSize+"");
 
-            setData(DataUtil.getData(8));
-        },500);
+        new RxHttp<BaseResult<WithDrawHistoryResult>>().send(ApiManager.getService().withDrawHistory(hashMap),
+                new Response<BaseResult<WithDrawHistoryResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<WithDrawHistoryResult> result) {
+                        WithDrawHistoryResult data = result.data;
+                        if (page == DEFAULT_PAGE) {
+                            tv_balance.setText("￥"+data.withdraw_sum);
+                        }
+                        setData(data.list);
+                    }
+                });
 
 
 

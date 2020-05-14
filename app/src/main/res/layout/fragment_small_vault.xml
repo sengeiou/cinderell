@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
@@ -25,13 +25,14 @@
 
                     <TextView
                         style="@style/base_text_style"
-                        android:text="我的推荐码"
+                        android:text="账户积分总数"
                         android:textColor="@color/white"
                         />
 
                     <TextView
+                        android:id="@+id/mine_code"
                         style="@style/base_text_style"
-                        android:text="876982"
+                        tools:text="876982"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:layout_margin="8dp"
@@ -56,8 +57,9 @@
                                 android:textColor="@color/white"
                                 />
                             <TextView
+                                android:id="@+id/tv_score_consume"
                                 style="@style/base_text_style"
-                                android:text="18236"
+                                tools:text="18236"
                                 android:textSize="16sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="@color/white"
@@ -77,8 +79,9 @@
                                 android:textColor="@color/white"
                                 />
                             <TextView
+                                android:id="@+id/tv_score_recommend"
                                 style="@style/base_text_style"
-                                android:text="18236"
+                                tools:text="18236"
                                 android:textSize="16sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="@color/white"
@@ -98,8 +101,9 @@
                                 android:textColor="@color/white"
                                 />
                             <TextView
+                                android:id="@+id/tv_score_moon_crown"
                                 style="@style/base_text_style"
-                                android:text="18236"
+                                tools:text="18236"
                                 android:textSize="16sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="@color/white"
@@ -119,8 +123,9 @@
                                 android:textColor="@color/white"
                                 />
                             <TextView
+                                android:id="@+id/tv_score_interest"
                                 style="@style/base_text_style"
-                                android:text="18236"
+                                tools:text="18236"
                                 android:textSize="16sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="@color/white"
