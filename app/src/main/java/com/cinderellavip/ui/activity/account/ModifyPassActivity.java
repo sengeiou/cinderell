@@ -7,8 +7,17 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.UpdateMineInfo;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -71,8 +80,18 @@ public class ModifyPassActivity extends BaseActivity {
             tsg("两次密码不一致");
             return;
         }
-        tsg("修改成功");
-        finish();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("old_password",pass);
+        hashMap.put("new_password",pass2);
+        new RxHttp<BaseResult>().send(ApiManager.getService().updatePass(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        tsg("修改成功");
+                        finish();
+                    }
+                });
+
 
 
 

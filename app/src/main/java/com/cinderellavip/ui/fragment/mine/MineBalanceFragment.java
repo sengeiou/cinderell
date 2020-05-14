@@ -8,11 +8,18 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.MineBalanceAdpter;
 import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.bean.net.mine.MineBalanceItem;
+import com.cinderellavip.bean.net.mine.MineBalanceResult;
+import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.WithDrawActivity;
 import com.cinderellavip.ui.activity.mine.WithDrawHistoryActivity;
 import com.cinderellavip.util.DataUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.sign.SignUtil;
 
@@ -23,7 +30,7 @@ import java.util.TreeMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class MineBalanceFragment extends BaseListFragment<String> implements View.OnClickListener {
+public class MineBalanceFragment extends BaseListFragment<MineBalanceItem> implements View.OnClickListener {
 
     private TextView tv_balance;
     private TextView tv_withdraw_record;
@@ -53,10 +60,19 @@ public class MineBalanceFragment extends BaseListFragment<String> implements Vie
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("page", page+"");
+        hashMap.put("limit", PageSize+"");
 
-            setData(DataUtil.getData(8));
-        },500);
+        new RxHttp<BaseResult<MineBalanceResult>>().send(ApiManager.getService().mineBalance(hashMap),
+                new Response<BaseResult<MineBalanceResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<MineBalanceResult> result) {
+                        MineBalanceResult data = result.data;
+                        tv_balance.setText(data.balance);
+                        setData(data.list);
+                    }
+                });
 
 
 

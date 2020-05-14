@@ -21,6 +21,7 @@ import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.mine.MineBalanceResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderInfo;
@@ -237,16 +238,23 @@ public interface ApiService {
     Observable<BaseResult<MineInfo>>
     getMineInfo();
 
-
     @GET(HttpUrl.apply_vip)
     Observable<BaseResult>
     applyVip(@Query("invite_code") String invite_code);
-
 
     @POST(HttpUrl.update_info)
     @FormUrlEncoded
     Observable<BaseResult>
     updateInfo(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.password_reset)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    updatePass(@FieldMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.balance)
+    Observable<BaseResult<MineBalanceResult>>
+    mineBalance(@QueryMap TreeMap<String, String> map);
 
 
 

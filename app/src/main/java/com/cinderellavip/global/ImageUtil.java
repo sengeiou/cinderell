@@ -106,7 +106,7 @@ public class ImageUtil {
                 //指定图片的缩放类型为centerCrop （等比例缩放图片，直到图片的狂高都大于等于ImageView的宽度，然后截取中间的显示。）
                 .centerCrop()
                 .circleCrop()//指定图片的缩放类型为centerCrop （圆形）
-                .skipMemoryCache(true)  //跳过内存缓存
+                .skipMemoryCache(false)  //跳过内存缓存
                 .diskCacheStrategy(DiskCacheStrategy.ALL)   //缓存所有版本的图像
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  //跳过磁盘缓存
                 .diskCacheStrategy(DiskCacheStrategy.DATA)  //只缓存原来分辨率的图片

@@ -43,6 +43,21 @@ public class Constant {
     public static String H5_SERVICE = HttpUrl.server_url+"api/user/agreements/1";
     //隐私协议
     public static String H5_PRIVACY = HttpUrl.server_url+"api/user/agreements/2";
+    //关于我们
+    public static String H5_ABOUT_US = HttpUrl.server_url+"api/user/agreements/4";
+
+    public static String H3 = HttpUrl.server_url+"api/user/agreements/3";
+    public static String H5 = HttpUrl.server_url+"api/user/agreements/5";
+    public static String H6 = HttpUrl.server_url+"api/user/agreements/6";
+    public static String H7 = HttpUrl.server_url+"api/user/agreements/7";
+    public static String H8 = HttpUrl.server_url+"api/user/agreements/8";
+    public static String H9 = HttpUrl.server_url+"api/user/agreements/9";
+    public static String H10 = HttpUrl.server_url+"api/user/agreements/10";
+    public static String H11 = HttpUrl.server_url+"api/user/agreements/11";
+    public static String H12 = HttpUrl.server_url+"api/user/agreements/12";
+    public static String H13 = HttpUrl.server_url+"api/user/agreements/13";
+    public static String H14 = HttpUrl.server_url+"api/user/agreements/14";
+    public static String H15 = HttpUrl.server_url+"api/user/agreements/15";
 
 
     public static final int ALL = 0;

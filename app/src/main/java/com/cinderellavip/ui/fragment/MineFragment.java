@@ -263,94 +263,123 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
 
                 break;
             case R.id.tv_to_be_cinderell:
+                if (GlobalParam.getUserLogin(mActivity))
                 CenterDialogUtil.showBulletin(mActivity);
                 break;
             case R.id.tv_all_order:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineOrderActivity.launch(mActivity, OrderFragment.ALL);
                 break;
             case R.id.rl_unpay:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineOrderActivity.launch(mActivity, OrderFragment.UNPAY);
                 break;
             case R.id.rl_unsend:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineOrderActivity.launch(mActivity, OrderFragment.UNSEND);
                 break;
             case R.id.rl_unreceive:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineOrderActivity.launch(mActivity, OrderFragment.UNRECEIVE);
                 break;
             case R.id.rl_finish:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineOrderActivity.launch(mActivity, OrderFragment.FINISH);
                 break;
             case R.id.rl_return:
+                if (GlobalParam.getUserLogin(mActivity))
                 ReturnListActivity.launch(mActivity);
                 break;
             case R.id.tv_all_order_first:
+                if (GlobalParam.getUserLogin(mActivity))
                 SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.ALL);
                 break;
             case R.id.rl_unpay_first:
+                if (GlobalParam.getUserLogin(mActivity))
                 SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.PAY);
                 break;
             case R.id.rl_unservice_first:
+                if (GlobalParam.getUserLogin(mActivity))
                 SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.SERVICE);
                 break;
             case R.id.rl_uncomment_first:
+                if (GlobalParam.getUserLogin(mActivity))
                 SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.COMMENT);
                 break;
             case R.id.tv_all_order_long:
+                if (GlobalParam.getUserLogin(mActivity))
                 LongServiceOrderListActivity.launch(mActivity,0);
                 break;
             case R.id.rl_to_be_confirm_long:
+                if (GlobalParam.getUserLogin(mActivity))
                 LongServiceOrderListActivity.launch(mActivity,1);
                 break;
             case R.id.rl_unpay_long:
+                if (GlobalParam.getUserLogin(mActivity))
                 LongServiceOrderListActivity.launch(mActivity,2);
                 break;
             case R.id.rl_serviceing_long:
+                if (GlobalParam.getUserLogin(mActivity))
                 LongServiceOrderListActivity.launch(mActivity,3);
                 break;
             case R.id.rl_complete_long:
+                if (GlobalParam.getUserLogin(mActivity))
                 LongServiceOrderListActivity.launch(mActivity,4);
                 break;
             case R.id.rl_xiaohui_recomment:
+                if (GlobalParam.getUserLogin(mActivity))
                 RecommentListActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service2:
+                if (GlobalParam.getUserLogin(mActivity))
                 SmallVaultActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service3:
+                if (GlobalParam.getUserLogin(mActivity))
                 CouponCenterActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service4:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineBalanceActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service5:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineGroupActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service6:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineAddressActivity.launch(mActivity,MineAddressActivity.LOOK);
                 break;
             case R.id.rl_mine_service7:
+                if (GlobalParam.getUserLogin(mActivity))
                 ApplyProductSupplierActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service8:
                 //申请成为劳务用户
+                if (GlobalParam.getUserLogin(mActivity))
                 CenterDialogUtil.showApplyService(mActivity,()->{
 
                 });
                 break;
             case R.id.rl_mine_service9:
                 //商家入驻
+                if (GlobalParam.getUserLogin(mActivity))
                 break;
             case R.id.rl_mine_service10:
+                if (GlobalParam.getUserLogin(mActivity))
                 MineCollectActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service11:
+                if (GlobalParam.getUserLogin(mActivity))
                 DialogUtil.showCallPhoneDialog(mActivity);
 
                 break;
             case R.id.iv_message:
+                if (GlobalParam.getUserLogin(mActivity))
                 MessageActivity.launch(mActivity);
                 break;
             case R.id.iv_setting:
+                if (GlobalParam.getUserLogin(mActivity))
                 SettingActivity.launch(mActivity);
 
                 break;

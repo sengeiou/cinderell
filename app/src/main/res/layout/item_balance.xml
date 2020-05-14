@@ -14,8 +14,8 @@
         android:background="@drawable/touch_bg"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:orientation="horizontal">
 
 
@@ -34,13 +34,17 @@
                 style="@style/base_text_style"
                 android:layout_gravity="center_vertical"
                 android:text="商品购买"/>
+
             <TextView
                 android:id="@+id/tv_id"
                 style="@style/base_text_style"
-                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="4dp"
-                android:text="订单编号:201805190045367"/>
+                android:text="订单编号:201805190045367"
+                android:visibility="gone"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_time"

@@ -11,11 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.activity.account.ModifyPassActivity;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.CacheClear;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -85,16 +87,16 @@ public class SettingActivity extends BaseActivity {
                 ModifyPassActivity.launch(mActivity);
                 break;
             case R.id.ll_about_us:
-                WebViewActivity.launch(mActivity,"关于我们","https://www.baidu.com");
+                AgreementWebViewActivity.launch(mActivity, Constant.H5_ABOUT_US);
                 break;
             case R.id.ll_black_list:
                 BlackListActivity.launch(mActivity);
                 break;
             case R.id.ll_user_agreement:
-                WebViewActivity.launch(mActivity,"用户协议","https://www.baidu.com");
+                AgreementWebViewActivity.launch(mActivity, Constant.H5_SERVICE);
                 break;
             case R.id.ll_privacy_policy:
-                WebViewActivity.launch(mActivity,"隐私条款","https://www.baidu.com");
+                AgreementWebViewActivity.launch(mActivity, Constant.H5_PRIVACY);
                 break;
             case R.id.ll_clear:
                 clearAppCache();
