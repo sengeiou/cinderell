@@ -12,19 +12,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="12dp"
+        android:paddingRight="12dp"
         android:orientation="horizontal">
 
-
-
-        <TextView
-            android:id="@+id/tv_title"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="订单编号：1354546515"
-            android:textSize="14sp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black_title_color"/>
+            android:paddingLeft="12dp"
+            android:src="@mipmap/icon_shop_forcart"/>
+
+        <TextView
+            android:id="@+id/tv_shop"
+            style="@style/base_text_style"
+            tools:text="夺伊服装店"
+            android:padding="12dp"
+            android:drawableRight="@mipmap/right_black_icon"
+            android:drawablePadding="5dp"
+            android:src="@mipmap/icon_shop_forcart"/>
+
 
         <View
             android:layout_width="0dp"
@@ -34,7 +39,7 @@
             android:id="@+id/tv_status"
             style="@style/base_text_style"
             android:layout_marginLeft="12dp"
-            android:text="审核中"
+            tools:text="待付款"
             android:textColor="@color/red"
             />
     </LinearLayout>
@@ -57,14 +62,14 @@
 
         <TextView
             style="@style/base_text_style"
-            android:text="应付金额:" />
+            android:text="退款金额:" />
 
         <TextView
             android:id="@+id/tv_money"
             style="@style/base_text_style"
             android:textColor="@color/red"
             android:layout_weight="1"
-            android:text="￥198.00" />
+            tools:text="￥198.00" />
 
         <TextView
             android:id="@+id/tv_btn1"

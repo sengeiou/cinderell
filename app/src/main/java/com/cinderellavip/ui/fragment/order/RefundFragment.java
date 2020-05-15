@@ -3,14 +3,14 @@ package com.cinderellavip.ui.fragment.order;
 import android.os.Bundle;
 
 import com.cinderellavip.adapter.recycleview.RefundAdapter;
+import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.local.OrderBean;
-import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
-import com.tozzais.baselibrary.util.sign.SignUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,12 +43,17 @@ public class RefundFragment extends BaseListFragment<OrderBean> {
     @Override
     public void loadData() {
         super.loadData();
-        List<OrderBean> list = new ArrayList<>();
-//        list.add(new OrderBean(0));
-//        list.add(new OrderBean(1));
-//        list.add(new OrderBean(2));
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("page", page + "");
+        hashMap.put("limit", PageSize + "");
+        new RxHttp<BaseResult<ListOrders<OrderBean>>>().send(ApiManager.getService().refundOrderList(hashMap),
+                new Response<BaseResult<ListOrders<OrderBean>>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ListOrders<OrderBean>> result) {
+                        setData(result.data.orders);
 
-        setData(list);
+                    }
+                });
 
     }
 

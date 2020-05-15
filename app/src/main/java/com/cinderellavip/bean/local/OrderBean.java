@@ -28,8 +28,13 @@ public class OrderBean {
     public String create_at;
     public String send_sn;
     public String send_company;
+
     public int store_id;
     public String store_name;
+
+
+    //退款订单列表
+    public String amount;
 
     public List<OrderGoodsInfo> goods;
 

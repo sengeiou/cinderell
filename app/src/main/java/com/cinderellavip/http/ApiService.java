@@ -2,6 +2,7 @@ package com.cinderellavip.http;
 
 
 import com.cinderellavip.bean.ListCoupons;
+import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.local.CouponsBean;
@@ -37,6 +38,7 @@ import com.cinderellavip.bean.net.order.GetPayResult;
 import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
+import com.cinderellavip.bean.net.order.ReturnOrderInfoResult;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -332,6 +334,15 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult>
     refundCommit(@FieldMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.refund_order_list)
+    Observable<BaseResult<ListOrders<OrderBean>>>
+    refundOrderList(@QueryMap TreeMap<String, String> map);
+
+
+    @GET(HttpUrl.refund_info)
+    Observable<BaseResult<OrderResult<ReturnOrderInfoResult>>>
+    refundOrderInfo(@QueryMap TreeMap<String, String> map);
 
 
 
