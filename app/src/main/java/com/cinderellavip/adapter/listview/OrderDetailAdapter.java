@@ -54,7 +54,7 @@ public class OrderDetailAdapter extends BaseAdapter<OrderGoodsInfo> {
 
 
         hodler.tvBtn1.setOnClickListener(v -> {
-            ApplyReturnActivity.launch(context, 1);
+            ApplyReturnActivity.launch(context, orderGoodsInfo);
         });
 
 

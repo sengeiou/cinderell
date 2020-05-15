@@ -54,6 +54,7 @@
         style="@style/base_btn_style_large"
         android:background="@drawable/shape_line_white5"
         android:text="保存"
+        android:visibility="gone"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:layout_alignParentBottom="true"

@@ -88,12 +88,20 @@ public class MainActivity extends CheckPermissionActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        fragmentManager = getSupportFragmentManager();
-        selectFragment(SHOP);
+
+        if (fragmentManager == null)
+            fragmentManager = getSupportFragmentManager();
+        if (savedInstanceState ==null){
+            selectFragment(SHOP);
+        }else {
+            isLoad = savedInstanceState.getBoolean("isLoad");
+        }
+
     }
 
     @Override
     public void loadData() {
+        if (!isLoad)
         checkPermissions(needPermissions);
 
     }
@@ -305,6 +313,7 @@ public class MainActivity extends CheckPermissionActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("mPosition", mPosition);
+        outState.putBoolean("isLoad", isLoad);
     }
 
     @Override

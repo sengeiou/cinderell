@@ -40,7 +40,7 @@ public class CommonUtils {
 
     public static void callKeFu(Context context) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri data = Uri.parse("tel:" + "4008218661");
+        Uri data = Uri.parse("tel:" + "13641869403");
         intent.setData(data);
         context.startActivity(intent);
     }

@@ -24,7 +24,7 @@ public class ReturnUtil {
 
 	private static Dialog cityDialog;
 
-	public static  void showSelectDialog(Context context, List<ReturnReasonItem> data, final onSelectListener listener) {
+	public static  void showSelectDialog(Context context, List<String> data, final onSelectListener listener) {
 
 		View view = View.inflate(context, R.layout.pop_bottom_return_dialog, null);
 		cityDialog = DialogUtils.getBottomDialog(context,view);
@@ -40,12 +40,7 @@ public class ReturnUtil {
 		});
 
 
-		ArrayList<String> strings = new ArrayList<>();
-		for (ReturnReasonItem returnReasonItem:data){
-			strings.add(returnReasonItem.name);
-		}
-
-		ProviceWheelAdapter provinceAdapter = new ProviceWheelAdapter(context, strings);
+		ProviceWheelAdapter provinceAdapter = new ProviceWheelAdapter(context, data);
 		mViewProvince.setViewAdapter(provinceAdapter);
 		mViewProvince.setVisibleItems(7);
 
@@ -74,7 +69,7 @@ public class ReturnUtil {
 	}
 
 	public interface onSelectListener {
-		void onFinish(ReturnReasonItem reason);
+		void onFinish(String reason);
 	}
 
 }

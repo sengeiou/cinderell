@@ -10,6 +10,7 @@ public interface HttpUrl {
 
     //上传图片
     String upload = "api/store/upload/image";  //上传图片
+    String uploads = "api/store/upload/images";  //上传图片
     String get_code = "api/store/sms/send";  //获取验证码
 
     String login = "api/store/login";  //用户名登录

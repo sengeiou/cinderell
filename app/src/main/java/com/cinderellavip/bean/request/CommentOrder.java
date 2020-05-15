@@ -7,7 +7,7 @@ public class CommentOrder {
     public String content;
     public String images;
 
-    public CommentOrder(String choose_product_id, String product_star, String content, String images) {
+    public CommentOrder(String product_id, String product_star, String content, String images) {
         this.product_id = product_id;
         this.product_star = product_star;
         this.content = content;

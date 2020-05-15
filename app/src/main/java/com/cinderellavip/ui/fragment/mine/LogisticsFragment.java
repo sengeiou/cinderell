@@ -6,19 +6,12 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.LogisticsAdapter;
-import com.cinderellavip.bean.eventbus.ReceiveOrder;
 import com.cinderellavip.bean.net.IntegralExchangeLogistics;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
-import com.tozzais.baselibrary.util.toast.ToastCommom;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 

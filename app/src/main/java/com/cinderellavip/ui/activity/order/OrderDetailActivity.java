@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.listview.OrderDetailAdapter;
+import com.cinderellavip.bean.eventbus.OrderRefund;
 import com.cinderellavip.bean.eventbus.ReceiveOrder;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
@@ -138,6 +139,12 @@ public class OrderDetailActivity extends BaseActivity {
         setStatus(orderInfo.status);
         NetCityBean address = orderInfo.address;
         List<OrderGoodsInfo> goods = orderInfo.goods;
+        //为了退款用的
+        for (OrderGoodsInfo orderGoodsInfo:goods){
+
+            orderGoodsInfo.order_id = order_id;
+            LogUtil.e("orderGoodsInfo  order_id== "+orderGoodsInfo.order_id +"=="+order_id );
+        }
         tvName.setText(address.name+"  "+address.mobile);
         tvAddress.setText(address.province+address.city+address.area+address.address);
 
@@ -304,5 +311,13 @@ public class OrderDetailActivity extends BaseActivity {
                         loadData();
                     }
                 });
+    }
+
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof OrderRefund){
+            loadData();
+        }
     }
 }

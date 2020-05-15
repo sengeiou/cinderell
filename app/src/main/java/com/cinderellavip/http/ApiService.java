@@ -63,6 +63,10 @@ public interface ApiService {
     @POST(HttpUrl.upload)
     Observable<BaseResult<UploadImageResult>>
     getUploadImg(@Part() List<MultipartBody.Part> parts);
+    @Multipart
+    @POST(HttpUrl.uploads)
+    Observable<BaseResult<UploadImageResult>>
+    getUploadImgs(@Part() List<MultipartBody.Part> parts);
     /**
      * 登录
      * @param
@@ -138,6 +142,11 @@ public interface ApiService {
     @GET(HttpUrl.order_receipt+"{id}")
     Observable<BaseResult>
     getOrderReceipt(@Path("id") String id);
+
+    @POST(HttpUrl.order_comment)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    orderComment(@FieldMap TreeMap<String, String> map);
 
     @GET(HttpUrl.order_logistics+"{id}")
     Observable<BaseResult<IntegralExchangeLogistics>>
@@ -314,6 +323,15 @@ public interface ApiService {
     @GET(HttpUrl.message_list)
     Observable<BaseResult<ListResult<MessageItem>>>
     messageList(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.refund_reason)
+    Observable<BaseResult<ListResult<String>>>
+    refundReason();
+
+    @POST(HttpUrl.refund_commit)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    refundCommit(@FieldMap TreeMap<String, String> map);
 
 
 

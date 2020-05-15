@@ -2,21 +2,17 @@ package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
 
-import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.OrderAdapter;
 import com.cinderellavip.bean.ListOrders;
+import com.cinderellavip.bean.eventbus.OrderComment;
 import com.cinderellavip.bean.eventbus.ReceiveOrder;
-import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
-import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,9 +42,11 @@ public class OrderFragment extends BaseListFragment<OrderBean> {
         mAdapter = new OrderAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView(R.mipmap.empty_view,"您还没有相关订单哦~","去逛逛", view->{
+//        setEmptyView(R.mipmap.empty_view,"您还没有相关订单哦~","去逛逛", view->{
+//
+//        });
 
-        });
+        setEmptyView("您还没有相关订单哦~");
 
 
 
@@ -90,7 +88,7 @@ public class OrderFragment extends BaseListFragment<OrderBean> {
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);
-        if (o instanceof ReceiveOrder){
+        if (o instanceof ReceiveOrder||o instanceof OrderComment){
             onRefresh();
         }
     }

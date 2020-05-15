@@ -13,7 +13,8 @@ public class OrderGoodsInfo implements Parcelable {
 
 
 
-
+    //退款用的
+    public int order_id;
 
     public int product_id;
     public String product_thumb;
@@ -28,6 +29,7 @@ public class OrderGoodsInfo implements Parcelable {
     //订单详情里
     public int refund_num;
 
+
     //评价使用的
     //得到上传的数据
     public String product_star;
@@ -36,14 +38,17 @@ public class OrderGoodsInfo implements Parcelable {
     //图片和视频源数据
     public List<OrderCommentImageItemBean> images  = new ArrayList<>();
 
+
+
+
     public String getPics(){
         String pics = "";
         for (OrderCommentImageItemBean bean:images){
             if (!TextUtils.isEmpty(bean.netPath)){
-                pics += bean.netPath+";";
+                pics += bean.netPath+",";
             }
         }
-        if (pics.endsWith(";")){
+        if (pics.endsWith(",")){
             pics = pics.substring(0,pics.length()-1);
         }
         return pics;
@@ -56,6 +61,7 @@ public class OrderGoodsInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.order_id);
         dest.writeInt(this.product_id);
         dest.writeString(this.product_thumb);
         dest.writeString(this.product_name);
@@ -74,6 +80,7 @@ public class OrderGoodsInfo implements Parcelable {
     }
 
     protected OrderGoodsInfo(Parcel in) {
+        this.order_id = in.readInt();
         this.product_id = in.readInt();
         this.product_thumb = in.readString();
         this.product_name = in.readString();
