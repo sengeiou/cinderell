@@ -19,9 +19,9 @@ import com.tozzais.baselibrary.ui.BaseFragment;
 public class MineAssetsActivity extends BaseActivity {
 
 
-    public static final int MINE_ASSET = 0;
-    public static final int ORDER = 1;
-    public static final int FIND = 2;
+    public static final int MINE_ASSET = 1;
+    public static final int ORDER = 2;
+    public static final int FIND = 3;
     private int type;
 
     public static void launch(Context from,int type) {
@@ -50,17 +50,8 @@ public class MineAssetsActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        BaseFragment fragment ;
-        if (type == MINE_ASSET){
-            fragment = new MessageMineAssetFragment();
-            setBackTitle("我的资产");
-        }else if (type == ORDER){
-            fragment = new MessageOrderFragment();
-            setBackTitle("订单交易");
-        }else {
-            fragment = new MessageFindFragment();
-            setBackTitle("发现");
-        }
+        BaseFragment fragment =
+        MessageMineAssetFragment.newInstance(type);
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 

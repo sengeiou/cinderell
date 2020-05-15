@@ -28,6 +28,7 @@
                 android:src="@mipmap/icon_message1"/>
 
             <TextView
+                android:id="@+id/tv_number_assets"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:text="2"
@@ -100,6 +101,7 @@
                 android:src="@mipmap/icon_message2"/>
 
             <TextView
+                android:id="@+id/tv_number_order"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:text="2"
@@ -172,6 +174,7 @@
                 android:src="@mipmap/icon_message3"/>
 
             <TextView
+                android:id="@+id/tv_number_find"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:text="2"

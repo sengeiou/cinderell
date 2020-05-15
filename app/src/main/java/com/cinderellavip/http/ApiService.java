@@ -25,6 +25,7 @@ import com.cinderellavip.bean.net.home.ShopHomeResult;
 import com.cinderellavip.bean.net.mine.ApplyResult;
 import com.cinderellavip.bean.net.mine.BlacklistResult;
 import com.cinderellavip.bean.net.mine.IntegralResult;
+import com.cinderellavip.bean.net.mine.MessageItem;
 import com.cinderellavip.bean.net.mine.MineBalanceResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.bean.net.mine.MineInviterResult;
@@ -305,6 +306,14 @@ public interface ApiService {
     @GET(HttpUrl.discuss_shield)
     Observable<BaseResult>
     getShield(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.message_center)
+    Observable<BaseResult<ListResult<MessageItem>>>
+    messageCenter();
+
+    @GET(HttpUrl.message_list)
+    Observable<BaseResult<ListResult<MessageItem>>>
+    messageList(@QueryMap TreeMap<String, String> map);
 
 
 

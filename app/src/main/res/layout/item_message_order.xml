@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:orientation="vertical">
 
@@ -11,7 +11,7 @@
         style="@style/base_text_style_gray_small"
         android:layout_margin="12dp"
         android:layout_gravity="center_horizontal"
-        android:text="10:00"
+        tools:text="10:00"
         />
 
     <LinearLayout
@@ -34,12 +34,14 @@
                 android:id="@+id/tv_name"
                 style="@style/base_text_style"
                 android:layout_weight="1"
-                android:text="商城订单通知"
+                tools:text="商城订单通知"
                 />
 
             <TextView
+                android:id="@+id/tv_status"
                 style="@style/base_text_style"
-                android:text="已发货"
+                tools:text="已发货"
+                android:visibility="gone"
                 />
 
 
@@ -58,15 +60,18 @@
             android:padding="12dp">
 
             <ImageView
+                android:id="@+id/iv_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@mipmap/demo_order_goods"/>
+                android:visibility="gone"
+                android:layout_marginRight="12dp"
+                tools:src="@mipmap/demo_order_goods"/>
 
             <TextView
+                android:id="@+id/tv_content"
                 style="@style/base_text_style_gray_small"
                 android:layout_weight="1"
-                android:text="您有一张价值20元的优惠券您有一张价值20元的优惠券您有一张价值20元的优惠券"
-                android:layout_marginLeft="12dp"
+                tools:text="您有一张价值20元的优惠券您有一张价值20元的优惠券您有一张价值20元的优惠券"
                 android:ellipsize="end"
                 android:lineSpacingExtra="5dp"
                 />
