@@ -12,13 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.R;
 import com.tozzais.baselibrary.util.StatusBarUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 import com.tozzais.baselibrary.weight.ProgressLayout;
 
@@ -26,6 +23,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.ButterKnife;
 
 
@@ -94,8 +94,15 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         line.setVisibility(View.VISIBLE);
     }
 
+
+
     public void back(){
         finish();
+    }
+    @Override
+    public void onBackPressed() {
+        LogUtil.e("onBackPressed");
+        back();
     }
 
     @Override

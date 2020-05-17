@@ -12,6 +12,7 @@ public class SpecialItem {
     public String thumb;
     public double price;
     public double old_price;
+    public double group_price;
 
     public String getPrice() {
         return ArithmeticUtil.convert(price);
@@ -19,6 +20,9 @@ public class SpecialItem {
 
     public String getOld_price() {
         return ArithmeticUtil.convert(old_price);
+    }
+    public String getGroupPrice() {
+        return ArithmeticUtil.convert(group_price);
     }
 
 

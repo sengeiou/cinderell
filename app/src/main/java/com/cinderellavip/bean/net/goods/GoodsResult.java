@@ -15,4 +15,7 @@ public class GoodsResult {
     public List<SpecialItem> product_norm;
     public List<GoodsCommentItem> comments;
     public  GroupInfo group_info;
+
+    public String integral_rate;
+    public  boolean user_is_vip;
 }

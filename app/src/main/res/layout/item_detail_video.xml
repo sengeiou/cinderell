@@ -4,23 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/demo_product_banner"
-        />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/video"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/paly_red"
-        />
+    <com.dueeeke.videoplayer.player.VideoView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
 </RelativeLayout>
 
 

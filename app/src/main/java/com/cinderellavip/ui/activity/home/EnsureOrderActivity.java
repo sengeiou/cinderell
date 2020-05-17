@@ -104,6 +104,8 @@ public class EnsureOrderActivity extends BaseActivity {
             getDataForProduct();
         }else if (requestSettlePara.type == RequestSettlePara.CART) {
             getDataForCart();
+        }else if (requestSettlePara.type == RequestSettlePara.GROUP) {
+            getDataForGroup();
         }
     }
 
@@ -136,6 +138,29 @@ public class EnsureOrderActivity extends BaseActivity {
         hashMap.put("address_id", requestSettlePara.address_id);
         hashMap.put("coupon_ids", requestSettlePara.coupon_ids);
         new RxHttp<BaseResult<OrderSettleResult>>().send(ApiManager.getService().getSettlementCart(hashMap),
+                new Response<BaseResult<OrderSettleResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<OrderSettleResult> result) {
+                        showContent();
+                        OrderSettleResult settleResult = result.data;
+                        setData(settleResult);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
+    }
+
+    private void getDataForGroup() {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("product_id", requestSettlePara.product_id);
+        hashMap.put("norm_id", requestSettlePara.norm_id);
+        hashMap.put("number", requestSettlePara.number);
+        hashMap.put("address_id", requestSettlePara.address_id);
+        hashMap.put("coupon_id", requestSettlePara.coupon_ids);
+        new RxHttp<BaseResult<OrderSettleResult>>().send(ApiManager.getService().getSettlementGroup(hashMap),
                 new Response<BaseResult<OrderSettleResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<OrderSettleResult> result) {
@@ -210,8 +235,10 @@ public class EnsureOrderActivity extends BaseActivity {
             case R.id.tv_commit:
                 if (requestSettlePara.type == RequestSettlePara.PRODUCT){
                     createOrderForProduct();
-                }else {
+                }else if (requestSettlePara.type == RequestSettlePara.CART){
                     createOrderForCart();
+                }else if (requestSettlePara.type == RequestSettlePara.GROUP){
+                    createOrderForGroup();
                 }
 
                 break;
@@ -262,6 +289,30 @@ public class EnsureOrderActivity extends BaseActivity {
                     public void onSuccess(BaseResult<CreateOrderBean> result) {
                         CreateOrderBean settleResult = result.data;
                         settleResult.type = CreateOrderBean.CART;
+                        SelectPayWayActivity.launch(mActivity, settleResult);
+                        finish();
+                    }
+                });
+    }
+
+
+    private void createOrderForGroup() {
+        if ("0".equals(requestSettlePara.address_id)){
+            tsg("请选择收货地址");
+            return;
+        }
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("product_id", requestSettlePara.product_id);
+        hashMap.put("norm_id", requestSettlePara.norm_id);
+        hashMap.put("number", requestSettlePara.number);
+        hashMap.put("address_id", requestSettlePara.address_id);
+        hashMap.put("coupon_id", requestSettlePara.coupon_ids);
+        new RxHttp<BaseResult<CreateOrderBean>>().send(ApiManager.getService().createOrderByGroup(hashMap),
+                new Response<BaseResult<CreateOrderBean>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<CreateOrderBean> result) {
+                        CreateOrderBean settleResult = result.data;
+                        settleResult.type = CreateOrderBean.GROUP;
                         SelectPayWayActivity.launch(mActivity, settleResult);
                         finish();
                     }

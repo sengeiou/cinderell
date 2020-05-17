@@ -1,22 +1,24 @@
 package com.cinderellavip.ui.fragment.mine;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.XiaohuiRecommentAdapter;
 import com.cinderellavip.bean.net.mine.MineInviteItem;
 import com.cinderellavip.bean.net.mine.MineInviterResult;
-import com.cinderellavip.bean.net.mine.WithDrawHistoryResult;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.SecondDialogUtil;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.util.QRCodeUtil;
 import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
+import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.TreeMap;
 
@@ -36,6 +38,10 @@ public class XiaoHuiRecommentFragment extends BaseListFragment<MineInviteItem> {
 
     @BindView(R.id.tab_label)
     TextView tab_label;
+    @BindView(R.id.iv_code)
+    ImageView iv_code;
+    @BindView(R.id.tv_mine_code)
+    TextView tv_mine_code;
 
     @Override
     public int setLayout() {
@@ -85,6 +91,11 @@ public class XiaoHuiRecommentFragment extends BaseListFragment<MineInviteItem> {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new XiaohuiRecommentAdapter();
         mRecyclerView.setAdapter(mAdapter);
+
+        String recommendCode = GlobalParam.getRecommendCode();
+        Bitmap qrCode = QRCodeUtil.createQRCode(recommendCode, DpUtil.dip2px(mActivity,150));
+        iv_code.setImageBitmap(qrCode);
+        tv_mine_code.setText(recommendCode);
     }
 
 

@@ -9,16 +9,18 @@ import android.os.Parcelable;
 public class RequestSettlePara implements Parcelable {
     public static int PRODUCT = 1;
     public static int CART = 2;
+    public static int GROUP = 3;
 
     public int type;
     //购物车结算参数
     public String cart_ids;
 
 
-    //立即结算参数
+    //立即结算参数  拼团购买 下面三个参数一样
     public String product_id;
     public String norm_id;
     public String number;
+
 
     //共有参数
     public String address_id = "0";

@@ -3,16 +3,19 @@ package com.cinderellavip.ui.activity.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.bean.eventbus.AddCart;
+import com.cinderellavip.bean.eventbus.LoginSuccess;
 import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.goods.GroupInfo;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -81,7 +84,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         toolbar.setNavigationIcon(R.mipmap.back);
-        toolbar.setNavigationOnClickListener(view -> finish());
+        toolbar.setNavigationOnClickListener(view -> back());
         id = getIntent().getStringExtra("id");
 
         fragmentList = new ArrayList<>();
@@ -195,10 +198,12 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rv_cart:
+                if (GlobalParam.getUserLogin(mActivity))
                 CartActivity.launch(mActivity);
 
                 break;
             case R.id.iv_share:
+                if (GlobalParam.getUserLogin(mActivity))
                 ShareActivity.launch(mActivity,0);
                 break;
             case R.id.tv_service:
@@ -212,22 +217,33 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
                 break;
             case R.id.ll_buy_left_btn:
+                if (GlobalParam.getUserLogin(mActivity))
                 if (goodsResult != null) {
-                    DialogUtil.showSpeciSpecialDialog(mContext,goodsResult, (norm_id, number) -> {
-                        addCart(norm_id,number);
+                    DialogUtil.showSpeciSpecialDialog(mContext,goodsResult, true,(norm_id, number) -> {
+                        if (goodsResult.product_info.hasGroup){
+                            RequestSettlePara para = new RequestSettlePara(RequestSettlePara.PRODUCT, id, norm_id, number);
+                            EnsureOrderActivity.launch(mActivity,para);
+                        }else {
+                            addCart(norm_id,number);
+                        }
+
                     });
                 }
                 break;
             case R.id.ll_buy_right_btn:
+                if (GlobalParam.getUserLogin(mActivity))
                 if (goodsResult != null) {
-                    DialogUtil.showSpeciSpecialDialog(mContext,goodsResult, (norm_id, number) -> {
-                        RequestSettlePara para = new RequestSettlePara(RequestSettlePara.PRODUCT, id, norm_id, number);
-                        EnsureOrderActivity.launch(mActivity,para);
+                    DialogUtil.showSpeciSpecialDialog(mContext,goodsResult, false,(norm_id, number) -> {
+                        if (goodsResult.product_info.hasGroup){
+                            RequestSettlePara para = new RequestSettlePara(RequestSettlePara.GROUP, id, norm_id, number);
+                            EnsureOrderActivity.launch(mActivity,para);
+                        }else {
+                            RequestSettlePara para = new RequestSettlePara(RequestSettlePara.PRODUCT, id, norm_id, number);
+                            EnsureOrderActivity.launch(mActivity,para);
+                        }
+
                     });
                 }
-//                DialogUtil.showSpeciSpecialDialog(mContext,payString -> {
-//                    EnsureOrderActivity.launch(mActivity);
-//                });
                 break;
         }
     }
@@ -246,4 +262,29 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                         }
                     });
     }
+
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof LoginSuccess){
+            loadData();
+        }
+    }
+    @Override
+    public void back() {
+        if (goodsDetailGoodsFragment.mVideoView == null || !goodsDetailGoodsFragment.mVideoView.onBackPressed()) {
+            finish();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            back();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
 }

@@ -62,11 +62,32 @@ public class GlobalParam {
     }
 
 
+
+    //存 用户的推荐码
+    public static void setRecommendCode(String userid) {
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.user_recommend_code, userid);
+    }
+    //取 用户的用户的推荐码
+    public static String getRecommendCode() {
+        return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.user_recommend_code,"");
+    }
+    //存 用户是够是vip
+    public static void setIsVip(boolean userid) {
+        SharedPreferencesUtil.saveBooleanData(CinderellApplication.mContext, Constant.user_is_vip, userid);
+    }
+    //取 用户是够是vip
+    public static boolean getIsVip() {
+        return SharedPreferencesUtil.getBooleanData(CinderellApplication.mContext, Constant.user_is_vip,false);
+    }
+
+
     //存 用户 信息
     public static void setUserInfo(UserInfo userInfo) {
         setUserLogin(true);
        setUserToken(userInfo.token);
        setUserId(userInfo.user_id+"");
+       setIsVip(userInfo.type == 1);
+       setRecommendCode(userInfo.invite_code);
     }
 
     //存 用户 信息
@@ -74,6 +95,8 @@ public class GlobalParam {
         setUserLogin(false);
         setUserToken("");
         setUserId("");
+        setIsVip(false);
+        setRecommendCode("");
     }
 
 

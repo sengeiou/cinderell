@@ -104,9 +104,11 @@ public class SelectPayWayActivity extends BaseActivity {
                 setPayWay(3);
                 break;
             case R.id.tv_add:
-                pay();
-
-//
+                if (createOrderBean.type == CreateOrderBean.PRODUCT ||createOrderBean.type == CreateOrderBean.CART){
+                    pay();
+                }else if (createOrderBean.type == CreateOrderBean.GROUP ){
+                    groupPay();
+                }
 
 
                 break;
@@ -126,9 +128,28 @@ public class SelectPayWayActivity extends BaseActivity {
     private void pay(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("order_id", createOrderBean.order_id+"");
-
         hashMap.put("payment", payway);
         new RxHttp<BaseResult<GetPayResult>>().send(ApiManager.getService().orderPay(hashMap),
+                new Response<BaseResult<GetPayResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<GetPayResult> result) {
+                        PayUtil.pay(mActivity,payway,result.data,isSuccess -> {
+                            if (isSuccess){
+                                PayResultActivity.launch(mActivity, createOrderBean,true);
+                            }else {
+                                tsg("支付失败");
+                            }
+
+                        });
+                    }
+                });
+    }
+
+    private void groupPay(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("order_id", createOrderBean.order_id+"");
+        hashMap.put("payment", payway);
+        new RxHttp<BaseResult<GetPayResult>>().send(ApiManager.getService().orderGroupPay(hashMap),
                 new Response<BaseResult<GetPayResult>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<GetPayResult> result) {

@@ -1,5 +1,7 @@
 package com.cinderellavip.bean.net.order;
 
+import android.text.TextUtils;
+
 public class OrderSettleShopAmount {
 
 
@@ -20,6 +22,8 @@ public class OrderSettleShopAmount {
     }
 
     public boolean isActive() {
+        if (TextUtils.isEmpty(active))
+            return true;
         return  !(Double.parseDouble(active) > 0);
     }
 }

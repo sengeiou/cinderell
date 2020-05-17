@@ -222,9 +222,18 @@ public interface ApiService {
     Observable<BaseResult<CreateOrderBean>>
     createOrderByCart(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.group_order_create)
+    Observable<BaseResult<CreateOrderBean>>
+    createOrderByGroup(@QueryMap TreeMap<String, String> map);
+
     @GET(HttpUrl.order_pay)
     Observable<BaseResult<GetPayResult>>
     orderPay(@QueryMap TreeMap<String, String> map);
+
+
+    @GET(HttpUrl.group_order_pay)
+    Observable<BaseResult<GetPayResult>>
+    orderGroupPay(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.address_list)
     Observable<BaseResult<ListResult<NetCityBean>>>
@@ -339,10 +348,14 @@ public interface ApiService {
     Observable<BaseResult<ListOrders<OrderBean>>>
     refundOrderList(@QueryMap TreeMap<String, String> map);
 
-
     @GET(HttpUrl.refund_info)
     Observable<BaseResult<OrderResult<ReturnOrderInfoResult>>>
     refundOrderInfo(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.group_order_settle)
+    Observable<BaseResult<OrderSettleResult>>
+    getSettlementGroup(@QueryMap TreeMap<String, String> map);
+
 
 
 

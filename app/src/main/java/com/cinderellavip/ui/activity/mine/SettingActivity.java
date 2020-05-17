@@ -14,14 +14,11 @@ import com.cinderellavip.R;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.toast.CenterDialogUtil;
-import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.activity.account.ModifyPassActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.CacheClear;
 import com.tozzais.baselibrary.ui.BaseActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -109,9 +106,7 @@ public class SettingActivity extends BaseActivity {
     private void exit(){
         CenterDialogUtil.showTwo(mContext,"提示","确定要退出当前账号？","取消","确定", s->{
             if (s.equals("1")){
-                GlobalParam.setUserLogin(false);
-                GlobalParam.setUserToken("");
-                GlobalParam.setUserId("");
+                GlobalParam.exitLogin();
                 LoginActivity.launch(mActivity);
                 finish();
             }

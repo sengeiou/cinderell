@@ -20,6 +20,7 @@ public class GoodsInfo {
     public String detail;
     public String store_name;
 
+
     public  boolean freight;
     public  boolean hasGroup;
 

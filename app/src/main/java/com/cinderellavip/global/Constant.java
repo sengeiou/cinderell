@@ -22,8 +22,9 @@ public class Constant {
     public static String user_id = "cinder_user_id";
     public static String user_token = "cinder_user_token";
     public static String user_first_use = "cinder_user_first_use";
-
     public static String user_login_finish = "cinder_user_login_finish";
+    public static String user_recommend_code = "cinder_user_recommend_code";
+    public static String user_is_vip = "cinder_is_vip";
 
     public static String search = "cinder_user_search";
 

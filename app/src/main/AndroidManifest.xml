@@ -72,7 +72,9 @@
         <activity android:name=".ui.activity.home.CardSaleActivity"/>
         <activity android:name=".ui.activity.home.SearchActivity"/>
         <activity android:name=".ui.activity.home.SearchResultActivity"/>
-        <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
+        <activity android:name=".ui.activity.home.GoodsDetailActivity"
+            android:configChanges="orientation|screenSize"
+                />
         <activity android:name=".ui.BigImageActivity"/>
         <activity android:name=".ui.BigImageActivity1"/>
         <activity android:name=".ui.activity.order.CartActivity"/>

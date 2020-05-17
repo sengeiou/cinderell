@@ -26,8 +26,10 @@ import com.cinderellavip.ui.activity.home.BrandDetailActivity;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.weight.CountDownView;
 import com.cinderellavip.weight.MyIndicator;
+import com.dueeeke.videoplayer.player.VideoView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class GoodsDetailFragment extends BaseFragment {
+public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
     @BindView(R.id.xbanner)
     ViewPager xbanner;
     @BindView(R.id.indicator)
@@ -93,6 +95,17 @@ public class GoodsDetailFragment extends BaseFragment {
     LinearLayout llPromotion;
     @BindView(R.id.ll_normal_price)
     LinearLayout ll_normal_price;
+    @BindView(R.id.tv_unit)
+    TextView tv_unit;
+    @BindView(R.id.tv_return_integral)
+    TextView tv_return_integral;
+    @BindView(R.id.view_space)
+    View view_space;
+    @BindView(R.id.tv_no_vip_tip)
+    TextView tv_no_vip_tip;
+    @BindView(R.id.tv_group_return)
+    TextView tv_group_return;
+
 
 
 
@@ -103,8 +116,11 @@ public class GoodsDetailFragment extends BaseFragment {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        tvAdvancePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //下划线
+//        tvAdvancePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //下划线
     }
+
+
+
 
     //评价
     CommentAdapter commentInAdapter;
@@ -137,15 +153,33 @@ public class GoodsDetailFragment extends BaseFragment {
         this.goodsResult = goodsResult;
         GoodsInfo productInfo = goodsResult.product_info;
 
+//        LogUtil.e("setData"+goodsResult.integral_rate);
+
         List<GoodsDetialBanner> bannerList = new ArrayList<>();
-        if (!TextUtils.isEmpty(productInfo.video)) {
-            bannerList.add(new GoodsDetialBanner(productInfo.video, true));
+
+//        if (!TextUtils.isEmpty(productInfo.video)) {
+//            bannerList.add(new GoodsDetialBanner(productInfo.video, true));
+//        }
+        List<String> images = productInfo.images;
+
+        for (int i = 0; i< images.size(); i++){
+            String path =images.get(i);
+            if (i == 0 && !TextUtils.isEmpty(productInfo.video)){
+                bannerList.add(new GoodsDetialBanner(path, true,productInfo.video));
+            }else {
+                bannerList.add(new GoodsDetialBanner(path, false));
+            }
         }
-        for (String path : productInfo.images) {
-            bannerList.add(new GoodsDetialBanner(path, false));
-        }
-        xbanner.setAdapter(new DetailBannerAdapter(bannerList, mActivity));
+        bannerAdapter = new DetailBannerAdapter(bannerList, mActivity);
+        xbanner.setAdapter(bannerAdapter);
         indicator.bindViewPager(xbanner, bannerList.size());
+
+
+
+        View childAt = xbanner.getChildAt(0);
+        mVideoView = childAt.findViewById(R.id.player);
+        xbanner.setOffscreenPageLimit(bannerList.size());
+        xbanner.addOnPageChangeListener(this);
 
         tvGroupOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
 
@@ -162,18 +196,42 @@ public class GoodsDetailFragment extends BaseFragment {
             llGroup.setVisibility(View.VISIBLE);
             GroupInfo group_info = goodsResult.group_info;
 
+
+                if (goodsResult.user_is_vip){
+                    tv_group_return.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(goodsResult.integral_rate))
+                        tv_group_return.setText("返积分"+goodsResult.integral_rate);
+                }else {
+                    tv_group_return.setVisibility(View.GONE);
+
+                }
+
+
             tvGroupPrice.setText(group_info.getGroup_price());
-            tvGroupOldPrice.setText(group_info.getProduct_price());
+            tvGroupOldPrice.setText("￥"+group_info.getProduct_price());
             tvGroupTip.setText(group_info.group_user+"人团，"+group_info.has_user+"人已参团");
 
             timeView.startTime(group_info.end_time - group_info.timestamp);
         }else {
             ll_normal_price.setVisibility(View.VISIBLE);
-            tvPrice.setText(productInfo.getPrice());
-            tvAdvancePrice.setText("￥" + productInfo.getOld_price());
-        }
+            if (goodsResult.user_is_vip){
+                view_space.setVisibility(View.VISIBLE);
+                tv_no_vip_tip.setVisibility(View.GONE);
 
-        tvAdvancePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+                tv_unit.setText("会员");
+                tvPrice.setText( productInfo.getPrice());
+                tvAdvancePrice.setText("非会员￥" + productInfo.getOld_price());
+                tv_return_integral.setVisibility(View.VISIBLE);
+                if (!TextUtils.isEmpty(goodsResult.integral_rate))
+                tv_return_integral.setText("返积分"+goodsResult.integral_rate);
+            }else {
+                view_space.setVisibility(View.GONE);
+                tv_no_vip_tip.setVisibility(View.VISIBLE);
+                tv_unit.setText("非会员");
+                tvPrice.setText("" + productInfo.getOld_price());
+                tvAdvancePrice.setText("会员￥" + productInfo.getPrice());
+            }
+        }
 
         List<CouponsBean> coupons = goodsResult.coupons;
         if (coupons == null || coupons.size() == 0) {
@@ -234,6 +292,59 @@ public class GoodsDetailFragment extends BaseFragment {
 
                 });
     }
+
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    DetailBannerAdapter bannerAdapter;
+
+    @Override
+    public void onPageSelected(int position) {
+        LogUtil.e(position+"");
+        if (position != 0 && mVideoView != null){
+            mVideoView.pause();
+        }else if (position == 0 && mVideoView != null){
+            mVideoView.resume();
+        }
+
+    }
+
+    public VideoView mVideoView;
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mVideoView != null) {
+            mVideoView.resume();
+        }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mVideoView != null) {
+            mVideoView.pause();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mVideoView != null) {
+            mVideoView.release();
+        }
+    }
+
+
+
 
 
 }

@@ -2,7 +2,6 @@ package com.cinderellavip.toast;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Paint;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +13,7 @@ import com.cinderellavip.adapter.recycleview.CouponReceiveDialogAdapter;
 import com.cinderellavip.adapter.recycleview.CouponReceiveDialogForServiceAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.net.SpecialItem;
+import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.find.PublishPostActivity;
@@ -22,9 +22,7 @@ import com.cinderellavip.weight.CartNumberView;
 import com.cinderellavip.weight.SquareRoundImageView;
 import com.nex3z.flowlayout.FlowLayout;
 import com.tozzais.baselibrary.util.CommonUtils;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.core.widget.NestedScrollView;
@@ -40,7 +38,7 @@ public class DialogUtil {
 
 
 
-    public static void showSpeciSpecialDialog(Context context, GoodsResult goodsResult, onNormSelectListener listener) {
+    public static void showSpeciSpecialDialog(Context context, GoodsResult goodsResult,boolean isLeft, onNormSelectListener listener) {
 
         View view = View.inflate(context, R.layout.pop_bottom_specification, null);
         dialog = DialogUtils.getBottomDialog(context, view);
@@ -54,23 +52,51 @@ public class DialogUtil {
 
         CartNumberView cart_view = view.findViewById(R.id.cart_view);
         cart_view.setNumber(1);
+        TextView tv_unit = view.findViewById(R.id.tv_unit);
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_former_price = view.findViewById(R.id.tv_former_price);
         TextView tv_specification = view.findViewById(R.id.tv_specification);
-        tv_former_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//        tv_former_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         //商品规格
         FlowLayout fl_special = view.findViewById(R.id.fl_flag);
         NestedScrollView scrollview = view.findViewById(R.id.scrollview);
 
-        List<SpecialItem> list = goodsResult.product_norm;
+        List<SpecialItem> list1 = goodsResult.product_norm;
+        GoodsInfo product_info = goodsResult.product_info;
         //设置默认规格
-        final SpecialItem specialItem = list.get(0);
-        ImageUtil.loadNet(context,iv_image,specialItem.thumb);
-        tv_price.setText("￥"+specialItem.getPrice());
-        tv_former_price.setText(specialItem.getOld_price());
-        tv_specification.setText("已选：“"+specialItem.name+"”");
+        SpecialItem specialItem2 = list1.get(0);
+
+        if (product_info.hasGroup && !isLeft){
+              list1 = goodsResult.group_info.group_norms;
+                specialItem2 = list1.get(0);
+            tv_unit.setText("拼团价");
+            tv_price.setText("￥"+specialItem2.getGroupPrice());
+            tv_former_price.setText("原价￥"+specialItem2.getOld_price());
+        }else {
+            if (goodsResult.user_is_vip){
+                //如果是灰姑娘
+                tv_unit.setText("会员");
+                tv_price.setText("￥"+specialItem2.getPrice());
+                tv_former_price.setText("非会员￥"+specialItem2.getOld_price());
+            }else {
+                tv_unit.setText("非会员");
+                tv_price.setText("￥"+specialItem2.getOld_price());
+                tv_former_price.setText("会员￥"+specialItem2.getPrice());
+            }
+        }
+        ImageUtil.loadNet(context,iv_image,specialItem2.thumb);
+        tv_specification.setText("已选：“"+specialItem2.name+"”");
+
+
+        final SpecialItem specialItem = specialItem2;
+        final  List<SpecialItem> list = list1;
+        for (int i=0;i<list.size();i++){
+            SpecialItem s = list.get(i);
+            s.isCheck = i==0;
+        }
 
         specialItem.isCheck = true;
+
         for (int i=0;i<list.size();i++) {
             SpecialItem text = list.get(i);
             View normView = View.inflate(context,R.layout.item_service_order_comment_flag,null);
@@ -97,8 +123,24 @@ public class DialogUtil {
                     }
                     if (specialItem1.isCheck){
                         ImageUtil.loadNet(context,iv_image,text.thumb);
-                        tv_price.setText("￥"+text.getPrice());
-                        tv_former_price.setText(text.getOld_price());
+                        if (product_info.hasGroup && !isLeft){
+                            //如果是灰姑娘
+                            tv_unit.setText("拼团价");
+                            tv_price.setText("￥"+text.getGroupPrice());
+                            tv_former_price.setText("原价￥"+text.getOld_price());
+                        }else {
+                            if (goodsResult.user_is_vip){
+                                //如果是灰姑娘
+                                tv_unit.setText("会员");
+                                tv_price.setText("￥"+text.getPrice());
+                                tv_former_price.setText("非会员￥"+text.getOld_price());
+                            }else {
+                                tv_unit.setText("非会员");
+                                tv_price.setText("￥"+text.getOld_price());
+                                tv_former_price.setText("会员￥"+text.getPrice());
+                            }
+                        }
+
                         tv_specification.setText("已选：“"+text.name+"”");
 
                         textView.setTextColor(context.getResources().getColor(R.color.white));
@@ -113,9 +155,9 @@ public class DialogUtil {
             tv.setText(text.name);
             fl_special.addView(normView);
         }
-        int measuredHeight = fl_special.getMeasuredHeight();
-        LogUtil.e("measuredHeight = "+measuredHeight);
-        LogUtil.e("measuredHeight = "+fl_special.getHeight());
+//        int measuredHeight = fl_special.getMeasuredHeight();
+//        LogUtil.e("measuredHeight = "+measuredHeight);
+//        LogUtil.e("measuredHeight = "+fl_special.getHeight());
 
         tv_sure.setOnClickListener(v -> {
             listener.onFinish(specialItem.id+"",cart_view.getTv_number().getText().toString().trim());

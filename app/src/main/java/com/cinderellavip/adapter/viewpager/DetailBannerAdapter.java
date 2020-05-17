@@ -8,6 +8,13 @@ import android.widget.ImageView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.GoodsDetialBanner;
 import com.cinderellavip.global.ImageUtil;
+import com.dueeeke.videocontroller.StandardVideoController;
+import com.dueeeke.videocontroller.component.CompleteView;
+import com.dueeeke.videocontroller.component.ErrorView;
+import com.dueeeke.videocontroller.component.GestureView;
+import com.dueeeke.videocontroller.component.PrepareView;
+import com.dueeeke.videocontroller.component.VodControlView;
+import com.dueeeke.videoplayer.player.VideoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +31,8 @@ public class DetailBannerAdapter extends PagerAdapter {
 
     private List<GoodsDetialBanner> mList;
     private Context mContext;
+
+
 
 
 
@@ -49,24 +58,52 @@ public class DetailBannerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public View instantiateItem(ViewGroup container, int position) {
         GoodsDetialBanner bean = mList.get(position);
         View view;
         if (bean.isVideo){
              view = View.inflate(mContext, R.layout.item_detail_video,null);
-//            StandardVideoController mController = new StandardVideoController(mContext);
-//            ImageView thumb = mController.getThumb();
-//            mController.setEnableOrientation(true);
-//            mController.setTitle("");
-//            if (videoIsFullPath){
-//                videoView.setUrl(bean.logo);
-//            }else {
-//                videoView.setUrl(HttpUrl.image_url+bean.logo);
-//            }
-//            videoView.setPlayerFactory(ExoMediaPlayerFactory.create());
-//            ImageUtil.loadNet(mContext,thumb,bean.pic);
-////
-//            videoView.setVideoController(mController);
+            StandardVideoController controller = new StandardVideoController(mContext);
+            //根据屏幕方向自动进入/退出全屏
+            controller.setEnableOrientation(true);
+
+            VideoView player = view.findViewById(R.id.player);
+
+            PrepareView prepareView = new PrepareView(mContext);//准备播放界面
+
+            prepareView.getmStartPlay().setImageResource(R.mipmap.paly_red);
+            prepareView.getmStartPlay().setOnClickListener(view1 -> {
+                player.start();
+            });
+
+            ImageView thumb = prepareView.findViewById(R.id.thumb);//封面图
+            ImageUtil.loadNet(mContext,thumb,bean.pic);
+
+            controller.addControlComponent(prepareView);
+
+            CompleteView completeView = new CompleteView(mContext);
+            ImageUtil.loadNet(mContext,completeView.mThumb,bean.pic);
+
+            controller.addControlComponent(completeView);//自动完成播放界面
+
+            controller.addControlComponent(new ErrorView(mContext));//错误界面
+
+            VodControlView vodControlView = new VodControlView(mContext);//点播控制条
+            //是否显示底部进度条。默认显示
+//                vodControlView.showBottomProgress(false);
+            controller.addControlComponent(vodControlView);
+
+            GestureView gestureControlView = new GestureView(mContext);//滑动控制视图
+            controller.addControlComponent(gestureControlView);
+            //根据是否为直播决定是否需要滑动调节进度
+            controller.setCanChangePosition(true);
+
+//            /如果你不想要UI，不要设置控制器即可
+            player.setVideoController(controller);
+
+            player.setUrl(bean.video);
+//
+
         }else {
             view = View.inflate(mContext, R.layout.item_detail_pic,null);
             ImageView iv_image = view.findViewById(R.id.iv_image);
@@ -86,6 +123,10 @@ public class DetailBannerAdapter extends PagerAdapter {
         return view;
     }
 
+
+    public interface OnPlayClick{
+        void onClick();
+    }
 
 
 }

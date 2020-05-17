@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        >
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:id="@+id/swipeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -38,8 +37,9 @@
                         />
 
                     <TextView
+                        android:id="@+id/tv_mine_code"
                         style="@style/base_text_style"
-                        android:text="876982"
+                        tools:text="876982"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:layout_margin="8dp"
@@ -50,12 +50,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_white5"
-                        android:padding="12dp">
+                        >
 
                         <ImageView
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:src="@mipmap/code"/>
+                            android:id="@+id/iv_code"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            tools:src="@mipmap/code"
+                            />
                     </LinearLayout>
 
                     <TextView

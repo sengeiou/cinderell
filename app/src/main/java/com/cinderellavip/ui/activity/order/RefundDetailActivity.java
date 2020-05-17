@@ -96,16 +96,22 @@ public class RefundDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (!isLoad) showProress();
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("order_id", refund_id + "");
         new RxHttp<BaseResult<OrderResult<ReturnOrderInfoResult>>>().send(ApiManager.getService().refundOrderInfo(hashMap),
                 new Response<BaseResult<OrderResult<ReturnOrderInfoResult>>>(isLoad, mActivity) {
                     @Override
                     public void onSuccess(BaseResult<OrderResult<ReturnOrderInfoResult>> result) {
+                        showContent();
                         setData(result.data.order);
 
                     }
 
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
 

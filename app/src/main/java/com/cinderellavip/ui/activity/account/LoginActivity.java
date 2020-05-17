@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
+import com.cinderellavip.bean.eventbus.LoginSuccess;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.global.GlobalParam;
@@ -96,6 +97,7 @@ public class LoginActivity extends BaseActivity {
                         GlobalParam.setUserInfo(userInfo);
                         if (GlobalParam.getLoginFinish()){
                             EventBus.getDefault().post(new UpdateMineInfo());
+                            EventBus.getDefault().post(new LoginSuccess());
                             GlobalParam.setLoginFinish(false);
                             KeyboardUtils.hideInput(mActivity);
                             finish();

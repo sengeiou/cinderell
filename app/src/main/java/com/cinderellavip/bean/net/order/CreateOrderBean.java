@@ -8,6 +8,7 @@ public class CreateOrderBean implements Parcelable {
 
     public static int PRODUCT = 1;
     public static int CART = 2;
+    public static int GROUP = 3;
 
 
     public int type = 1;
