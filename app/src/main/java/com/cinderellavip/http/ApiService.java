@@ -2,8 +2,8 @@ package com.cinderellavip.http;
 
 
 import com.cinderellavip.bean.ListCoupons;
-import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.ListOrders;
+import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
@@ -18,6 +18,7 @@ import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.cart.CartResult;
+import com.cinderellavip.bean.net.find.ListDiscussesResult;
 import com.cinderellavip.bean.net.goods.GoodsCommentResult;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
@@ -360,6 +361,12 @@ public interface ApiService {
     @GET(HttpUrl.group_order_settle)
     Observable<BaseResult<OrderSettleResult>>
     getSettlementGroup(@QueryMap TreeMap<String, String> map);
+
+
+    @GET(HttpUrl.discuss_index)
+    Observable<BaseResult<ListDiscussesResult>>
+    getFindList(@QueryMap TreeMap<String, String> map);
+
 
 
 

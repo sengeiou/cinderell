@@ -1,30 +1,31 @@
 package com.cinderellavip.ui.fragment.find;
 
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 
 import com.cinderellavip.R;
-import com.cinderellavip.adapter.recycleview.CardSaleAdapter;
 import com.cinderellavip.adapter.recycleview.FindAdapter;
 import com.cinderellavip.adapter.recycleview.FindHotTopicAdapter;
-import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.bean.net.find.FindItem;
+import com.cinderellavip.bean.net.find.ListDiscussesResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.find.PostDetailActivity;
 import com.cinderellavip.ui.activity.find.TopicDetailActivity;
-import com.cinderellavip.util.DataUtil;
-import com.cinderellavip.weight.GirdSpace;
 import com.cinderellavip.weight.GirdSpaceStag;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
+import java.util.TreeMap;
+
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 
-public class FindFindFragment extends BaseListFragment<String> {
+public class FindFindFragment extends BaseListFragment<FindItem> {
 
 
     public static FindFindFragment newInstance() {
@@ -76,16 +77,15 @@ public class FindFindFragment extends BaseListFragment<String> {
     }
 
     private RecyclerView rv_hot_topic;
+    private FindHotTopicAdapter findHotTopicAdapter;
     private void initHeadView() {
         View headerView = View.inflate(mActivity, R.layout.header_find_find, null);
         RecyclerView rv_hot_topic = headerView.findViewById(R.id.rv_hot_topic);
         rv_hot_topic.setLayoutManager(new GridLayoutManager(mActivity,2));
-        FindHotTopicAdapter adapter = new FindHotTopicAdapter();
-        rv_hot_topic.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(6));
+        findHotTopicAdapter = new FindHotTopicAdapter();
+        rv_hot_topic.setAdapter(findHotTopicAdapter);
         mAdapter.addHeaderView(headerView);
-
-        adapter.setOnItemClickListener((adapter1, view, position) -> {
+        findHotTopicAdapter.setOnItemClickListener((adapter1, view, position) -> {
             TopicDetailActivity.launch(mActivity);
         });
 
@@ -99,11 +99,35 @@ public class FindFindFragment extends BaseListFragment<String> {
     public void loadData() {
         super.loadData();
 //
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getData(4));
-        }, 100);
+//        new Handler().postDelayed(() -> {
+//            setData(DataUtil.getData(4));
+//        }, 100);
+        getData();
 
 
+    }
+
+    private void  getData(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("limit", ""+PageSize);
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<ListDiscussesResult>>().send(ApiManager.getService().getFindList(hashMap),
+                new Response<BaseResult<ListDiscussesResult>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListDiscussesResult> result) {
+                        ListDiscussesResult discussesResult = result.data;
+                        if (page == DEFAULT_PAGE){
+                            findHotTopicAdapter.setNewData(discussesResult.hot_topics);
+                        }
+                        setData(discussesResult.discusses);
+
+
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
     }
 
     @Override

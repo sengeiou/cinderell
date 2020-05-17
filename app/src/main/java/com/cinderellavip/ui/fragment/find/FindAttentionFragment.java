@@ -1,11 +1,9 @@
 package com.cinderellavip.ui.fragment.find;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.cinderellavip.adapter.recycleview.FindAdapter;
 import com.cinderellavip.ui.activity.find.PostDetailActivity;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.GirdSpaceStag;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -60,10 +58,9 @@ public class FindAttentionFragment extends BaseListFragment<String> {
     @Override
     public void loadData() {
         super.loadData();
-//
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getData(4));
-        }, 100);
+//        new Handler().postDelayed(() -> {
+//            setData(DataUtil.getData(4));
+//        }, 100);
 
 
     }

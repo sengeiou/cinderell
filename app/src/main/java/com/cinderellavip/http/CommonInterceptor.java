@@ -3,6 +3,7 @@ package com.cinderellavip.http;
 import android.text.TextUtils;
 
 import com.cinderellavip.global.GlobalParam;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -149,7 +150,7 @@ public class CommonInterceptor implements Interceptor {
         String url = request.url().toString();
         int separatorIndex = url.lastIndexOf("?");
 
-//        LogUtil.e(url);
+        LogUtil.e(url);
         System.out.println(url);
         StringBuilder sb = new StringBuilder(url);
         String string = sb.toString();

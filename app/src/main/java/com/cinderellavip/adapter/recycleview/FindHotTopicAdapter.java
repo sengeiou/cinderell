@@ -7,14 +7,10 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.ui.activity.find.TopicDetailActivity;
-import com.cinderellavip.util.DataUtil;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import com.cinderellavip.bean.net.find.HotTopicItem;
 
 
-public class FindHotTopicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class FindHotTopicAdapter extends BaseQuickAdapter<HotTopicItem, BaseViewHolder> {
 
     public FindHotTopicAdapter() {
         super(R.layout.item_find_hottopic, null);
@@ -22,10 +18,12 @@ public class FindHotTopicAdapter extends BaseQuickAdapter<String, BaseViewHolder
 
 
     @Override
-    protected void convert( BaseViewHolder helper,  String item) {
+    protected void convert( BaseViewHolder helper,  HotTopicItem item) {
         int position = helper.getAdapterPosition();
 //        helper.setText(R.id.tv_number,item);
         TextView tv_title = helper.getView(R.id.tv_title);
+        tv_title.setText(item.title);
+
         View view_line = helper.getView(R.id.view_line);
         int size = getData().size();
         if (size % 2 == 0 && (position == size-1 || position == size-2)){
