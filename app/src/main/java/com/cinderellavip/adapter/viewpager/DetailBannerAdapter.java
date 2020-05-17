@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.GoodsDetialBanner;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.BigImageActivity;
 import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videocontroller.component.CompleteView;
 import com.dueeeke.videocontroller.component.ErrorView;
@@ -33,14 +34,10 @@ public class DetailBannerAdapter extends PagerAdapter {
     private Context mContext;
 
 
-
-
-
     public DetailBannerAdapter(List<GoodsDetialBanner> mList, Context mContext) {
         this.mList = mList;
         this.mContext = mContext;
     }
-
 
     @Override
     public int getCount() {
@@ -90,7 +87,6 @@ public class DetailBannerAdapter extends PagerAdapter {
 
             VodControlView vodControlView = new VodControlView(mContext);//点播控制条
             //是否显示底部进度条。默认显示
-//                vodControlView.showBottomProgress(false);
             controller.addControlComponent(vodControlView);
 
             GestureView gestureControlView = new GestureView(mContext);//滑动控制视图
@@ -102,31 +98,33 @@ public class DetailBannerAdapter extends PagerAdapter {
             player.setVideoController(controller);
 
             player.setUrl(bean.video);
+
+            thumb.setOnClickListener(view1 -> clickPosition(position));
+            completeView.mThumb.setOnClickListener(view1 -> clickPosition(position));
 //
 
         }else {
             view = View.inflate(mContext, R.layout.item_detail_pic,null);
             ImageView iv_image = view.findViewById(R.id.iv_image);
             ImageUtil.loadNet(mContext,iv_image,bean.pic);
-            List<String> list = new ArrayList<>();
-            for (GoodsDetialBanner item:mList){
-                if (!item.isVideo){
-                    list.add(item.pic);
-                }
-            }
-            String[] array=list.toArray(new String[list.size()]);
             iv_image.setOnClickListener(v -> {
-//                BigImageActivity.launch(mContext,array,mList.get(0).isVideo?position-1:position,BigImageActivity.NET);
+                clickPosition(position);
             });
         }
         container.addView(view);
         return view;
     }
 
-
-    public interface OnPlayClick{
-        void onClick();
+    private void clickPosition(int position){
+        List<String> list = new ArrayList<>();
+        for (GoodsDetialBanner item:mList){
+                list.add(item.pic);
+        }
+        String[] array=list.toArray(new String[list.size()]);
+        BigImageActivity.launch(mContext,array,position);
     }
+
+
 
 
 }

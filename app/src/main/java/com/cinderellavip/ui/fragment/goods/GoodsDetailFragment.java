@@ -152,16 +152,8 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
     public void setData(GoodsResult goodsResult) {
         this.goodsResult = goodsResult;
         GoodsInfo productInfo = goodsResult.product_info;
-
-//        LogUtil.e("setData"+goodsResult.integral_rate);
-
         List<GoodsDetialBanner> bannerList = new ArrayList<>();
-
-//        if (!TextUtils.isEmpty(productInfo.video)) {
-//            bannerList.add(new GoodsDetialBanner(productInfo.video, true));
-//        }
         List<String> images = productInfo.images;
-
         for (int i = 0; i< images.size(); i++){
             String path =images.get(i);
             if (i == 0 && !TextUtils.isEmpty(productInfo.video)){
@@ -173,20 +165,14 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
         bannerAdapter = new DetailBannerAdapter(bannerList, mActivity);
         xbanner.setAdapter(bannerAdapter);
         indicator.bindViewPager(xbanner, bannerList.size());
-
-
-
         View childAt = xbanner.getChildAt(0);
         mVideoView = childAt.findViewById(R.id.player);
         xbanner.setOffscreenPageLimit(bannerList.size());
         xbanner.addOnPageChangeListener(this);
 
+
         tvGroupOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-
-
         tvGoodsName.setText(productInfo.name);
-
-
         tv_ship.setText(productInfo.getShip());
         tv_tax.setText("销量：" + productInfo.sale + "件");
         tv_intro.setText("发货：" + productInfo.send_area);
