@@ -20,6 +20,7 @@ import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.OperatingProductsUtil3s;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.util.address.LocalCityUtil3s;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -78,6 +79,10 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
     ImageView ivDeleteIdCardBack;
 
 
+    @BindView(R.id.iv_agreement)
+    ImageView ivAgreement;
+
+
     private String first_category;
     private String second_category;
     private String seller_image;
@@ -111,12 +116,21 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
     }
 
 
+    private boolean isSelete = false;
     @OnClick({R.id.et_city_name, R.id.tv_business_category, R.id.iv_store, R.id.iv_business_license
             , R.id.iv_id_card_front, R.id.iv_id_card_back, R.id.tv_login,
             R.id.iv_delete_store, R.id.iv_delete_business_license, R.id.iv_delete_id_card_front
-            , R.id.iv_delete_id_card_back})
+            , R.id.iv_delete_id_card_back,R.id.iv_agreement, R.id.tv_register_agreement,})
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.iv_agreement:
+                isSelete = !isSelete;
+                ivAgreement.setImageResource(isSelete?R.mipmap.agreement_selete_yes:R.mipmap.agreement_selete_no);
+                break;
+            case R.id.tv_register_agreement:
+                AgreementWebViewActivity.launch(mActivity, Constant.H16);
+                break;
             case R.id.et_city_name:
                 LocalCityUtil3s.getInstance().showSelectDialog(mContext, ((province, city, county) -> {
                     etCityName.setText(province.name + "-" + city.name + "-" + county.name);
@@ -217,6 +231,10 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
             return;
         }if (TextUtils.isEmpty(id_card_back)){
             tsg("请上传身份证反面照片");
+            return;
+        }
+        if (!isSelete){
+            tsg("请勾选《商家供货协议》");
             return;
         }
 

@@ -76,7 +76,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:text="不得小于100元"
+            android:text="不得小于1元"
             android:textSize="12sp"
             style="@style/base_text_style_gray_small" />
     </LinearLayout>

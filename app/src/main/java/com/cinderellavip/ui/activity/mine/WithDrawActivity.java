@@ -18,7 +18,6 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
-import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -94,8 +93,8 @@ public class WithDrawActivity extends BaseActivity {
                 }if (TextUtils.isEmpty(money)){
                     tsg("请输入提现金额");
                     return;
-                }else if (Double.parseDouble(money)<=100){
-                    tsg("提现金额不得小于100元");
+                }else if (Double.parseDouble(money)<1){
+                    tsg("提现金额不得小于1元");
                     return;
                 }
                 TreeMap<String, String> hashMap = new TreeMap<>();
