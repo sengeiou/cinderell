@@ -2,17 +2,15 @@ package com.cinderellavip.toast;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.cinderellavip.R;
-import com.cinderellavip.bean.ReturnReasonItem;
 import com.cinderellavip.weight.wheel.WheelView;
 import com.cinderellavip.weight.wheel.adapters.AbstractWheelTextAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,12 +22,16 @@ public class ReturnUtil {
 
 	private static Dialog cityDialog;
 
-	public static  void showSelectDialog(Context context, List<String> data, final onSelectListener listener) {
+	public static  void showSelectDialog(Context context,String title, List<String> data, final onSelectListener listener) {
 
 		View view = View.inflate(context, R.layout.pop_bottom_return_dialog, null);
 		cityDialog = DialogUtils.getBottomDialog(context,view);
 		WheelView mViewProvince = view.findViewById(R.id.wv_country);
 		ImageView iv_close = view.findViewById(R.id.iv_close);
+		TextView tv_title = view.findViewById(R.id.tv_title);
+		if (!TextUtils.isEmpty(title)){
+			tv_title.setText(title);
+		}
 		iv_close.setOnClickListener(v -> {
 			cityDialog.dismiss();
 		});
@@ -43,6 +45,13 @@ public class ReturnUtil {
 		ProviceWheelAdapter provinceAdapter = new ProviceWheelAdapter(context, data);
 		mViewProvince.setViewAdapter(provinceAdapter);
 		mViewProvince.setVisibleItems(7);
+
+
+	}
+
+	public static  void showSelectDialog(Context context, List<String> data, final onSelectListener listener) {
+
+		showSelectDialog(context,"",data,listener);
 
 
 	}

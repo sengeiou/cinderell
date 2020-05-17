@@ -45,6 +45,7 @@ public interface HttpUrl {
     String order_list = "api/store/order/list";//我的订单列表
     String order_info = "api/store/order/info/";//订单详情
     String order_cancel = "api/store/order/cancel/";//取消订单
+    String send_order_cancel = "api/store/order/cancel";//取消订单
     String order_receipt = "api/store/order/receipt/";//确认订单
     String order_comment = "api/store/order/commit";//订单评价
     String order_logistics = "api/store/order/logistics/";//订单物流

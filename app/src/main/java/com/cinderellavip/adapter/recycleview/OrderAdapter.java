@@ -16,8 +16,10 @@ import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.toast.ReturnUtil;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.mine.LogisticsActivity;
 import com.cinderellavip.ui.activity.order.OrderCommentActivity;
@@ -27,6 +29,8 @@ import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +48,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
         int position = helper.getAdapterPosition();
 //        RelativeLayout ll_root = helper.getView(R.id.ll_root);
         TextView tv_status = helper.getView(R.id.tv_status);
+        TextView tv_btn0 = helper.getView(R.id.tv_btn0);
         TextView tv_btn1 = helper.getView(R.id.tv_btn1);
         TextView tv_btn2 = helper.getView(R.id.tv_btn2);
         RecyclerView rv_goods = helper.getView(R.id.rv_goods);
@@ -61,14 +66,18 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
                 tv_btn1.setText("详情");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.GONE);
+                tv_btn0.setVisibility(View.GONE);
                 break;
             case 1:
                 tv_btn1.setText("取消");
                 tv_btn2.setText("付款");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.VISIBLE);
+                tv_btn0.setVisibility(View.GONE);
                 break;
             case 2:
+                tv_btn0.setVisibility(View.VISIBLE);
+                tv_btn0.setText("取消");
                 tv_btn1.setText("详情");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.GONE);
@@ -78,17 +87,20 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
                 tv_btn2.setText("收货");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.VISIBLE);
+                tv_btn0.setVisibility(View.GONE);
                 break;
             case 5:
                 tv_btn1.setText("详情");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.GONE);
+                tv_btn0.setVisibility(View.GONE);
                 break;
             case 4:
                 tv_btn1.setText("详情");
                 tv_btn2.setText("评价");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.VISIBLE);
+                tv_btn0.setVisibility(View.GONE);
                 break;
         }
         tv_btn1.setOnClickListener(view -> {
@@ -110,6 +122,27 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
                     break;
 
             }
+        });
+        tv_btn0.setOnClickListener(view -> {
+            if (item.status == 2){
+                new RxHttp<BaseResult<ListResult<String>>>().send(ApiManager.getService().refundReason(),
+                        new Response<BaseResult<ListResult<String>>>(getContext()) {
+                            @Override
+                            public void onSuccess(BaseResult<ListResult<String>> result) {
+                                ReturnUtil.showSelectDialog(getContext(),"请选择取消理由", result.data.list, reason -> {
+
+                                    CenterDialogUtil.showTwo(getContext(),"确定要取消订单吗？",
+                                            "待发货订单，需在3小时之内取消，超过3小时无法取消",
+                                            "暂不取消","确定取消",s -> {
+                                        if ("1".equals(s)){
+                                            cancelSend(item.id+"",reason);
+                                        }
+                                    });
+                                });
+                            }
+                        });
+            }
+
         });
         tv_btn2.setOnClickListener(view -> {
             switch (item.status){
@@ -179,6 +212,22 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
 
     private void cancel(String order_id){
         new RxHttp<BaseResult>().send(ApiManager.getService().getOrderCancel(order_id),
+                new Response<BaseResult>(getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        ToastCommom.createToastConfig().ToastShow(getContext(),"取消成功");
+                        EventBus.getDefault().post(new ReceiveOrder());
+                    }
+                });
+    }
+
+
+    private void cancelSend(String order_id,String reason){
+
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("id", ""+order_id);
+        hashMap.put("reason", reason);
+        new RxHttp<BaseResult>().send(ApiManager.getService().getSendOrderCancel(hashMap),
                 new Response<BaseResult>(getContext()) {
                     @Override
                     public void onSuccess(BaseResult result) {

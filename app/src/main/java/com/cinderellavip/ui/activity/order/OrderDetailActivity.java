@@ -1,6 +1,5 @@
 package com.cinderellavip.ui.activity.order;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,12 +19,13 @@ import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
+import com.cinderellavip.toast.ReturnUtil;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.mine.LogisticsActivity;
 import com.cinderellavip.util.ClipBoardUtil;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyListView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -35,6 +35,7 @@ import com.tozzais.baselibrary.util.toast.ToastCommom;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -188,9 +189,11 @@ public class OrderDetailActivity extends BaseActivity {
                 break;
             case 2:
                 tvStatus.setText("待发货");
-                tvStatus1.setVisibility(View.GONE);
+                tvStatus1.setVisibility(View.VISIBLE);
+                tvBtnBottom2.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
-                llBottom.setVisibility(View.GONE);
+                llBottom.setVisibility(View.VISIBLE);
+                tvBtnBottom1.setText("取消订单");
                 break;
             case 3:
                 tvStatus.setText("待收货");
@@ -257,6 +260,24 @@ public class OrderDetailActivity extends BaseActivity {
                             }
                         });
                         break;
+                    case 2:
+                        new RxHttp<BaseResult<ListResult<String>>>().send(ApiManager.getService().refundReason(),
+                                new Response<BaseResult<ListResult<String>>>(mActivity) {
+                                    @Override
+                                    public void onSuccess(BaseResult<ListResult<String>> result) {
+                                        ReturnUtil.showSelectDialog(mActivity,"请选择取消理由", result.data.list, reason -> {
+
+                                            CenterDialogUtil.showTwo(mActivity,"确定要取消订单吗？",
+                                                    "待发货订单，需在3小时之内取消，超过3小时无法取消",
+                                                    "暂不取消","确定取消",s -> {
+                                                        if ("1".equals(s)){
+                                                            cancelSend(orderInfo.id+"",reason);
+                                                        }
+                                                    });
+                                        });
+                                    }
+                                });
+                        break;
                     case 3:
                     case 5:
                     case 4:
@@ -306,7 +327,24 @@ public class OrderDetailActivity extends BaseActivity {
                 new Response<BaseResult>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult result) {
-                        ToastCommom.createToastConfig().ToastShow(mActivity,"取消成功");
+                        tsg("取消成功");
+                        EventBus.getDefault().post(new ReceiveOrder());
+                        loadData();
+                    }
+                });
+    }
+
+
+    private void cancelSend(String order_id,String reason){
+
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("id", ""+order_id);
+        hashMap.put("reason", reason);
+        new RxHttp<BaseResult>().send(ApiManager.getService().getSendOrderCancel(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        tsg("取消成功");
                         EventBus.getDefault().post(new ReceiveOrder());
                         loadData();
                     }

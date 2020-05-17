@@ -158,6 +158,11 @@ public interface ApiService {
     Observable<BaseResult>
     getOrderCancel(@Path("id") String id);
 
+    @POST(HttpUrl.send_order_cancel)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    getSendOrderCancel(@FieldMap TreeMap<String, String> map);
+
     @GET(HttpUrl.goods_comment)
     Observable<BaseResult<GoodsCommentResult>>
     getGoodsComment(@QueryMap TreeMap<String, String> map);
