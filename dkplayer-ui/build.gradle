@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+apply from: '../constants.gradle'
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:3.2.6'
+    implementation 'androidx.annotation:annotation:1.1.0'
+}
+
+ext {
+    releaseArtifact = 'dkplayer-ui'
+}
+
+apply from: '../publish.gradle'
