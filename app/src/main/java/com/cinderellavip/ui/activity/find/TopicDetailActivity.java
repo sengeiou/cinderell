@@ -15,8 +15,10 @@ public class TopicDetailActivity extends BaseActivity {
 
 
 
-    public static void launch(Activity activity) {
+    private String id;
+    public static void launch(Activity activity,String id) {
         Intent intent = new Intent(activity, TopicDetailActivity.class);
+        intent.putExtra("id",id);
         activity.startActivityForResult(intent,11);
     }
 
@@ -29,15 +31,17 @@ public class TopicDetailActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setLineVisibility();
+        id = getIntent().getStringExtra("id");
         setBackTitle("#我的百搭神仙单品#");
         setRightIcon(R.mipmap.icon_post_more);
     }
 
     @Override
     public void loadData() {
+        TopicDetailFragment fragment = TopicDetailFragment.newInstance(id);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.content_container, new TopicDetailFragment())
+                .add(R.id.content_container, fragment)
                 .commit();
     }
 

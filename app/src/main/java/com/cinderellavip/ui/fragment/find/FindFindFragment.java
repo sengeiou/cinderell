@@ -11,8 +11,6 @@ import com.cinderellavip.bean.net.find.ListDiscussesResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
-import com.cinderellavip.ui.activity.find.PostDetailActivity;
-import com.cinderellavip.ui.activity.find.TopicDetailActivity;
 import com.cinderellavip.weight.GirdSpaceStag;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
@@ -86,7 +84,7 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
         rv_hot_topic.setAdapter(findHotTopicAdapter);
         mAdapter.addHeaderView(headerView);
         findHotTopicAdapter.setOnItemClickListener((adapter1, view, position) -> {
-            TopicDetailActivity.launch(mActivity);
+//            TopicDetailActivity.launch(mActivity);
         });
 
 
@@ -134,7 +132,7 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
     public void initListener() {
         super.initListener();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            PostDetailActivity.launch(mActivity);
+//            PostDetailActivity.launch(mActivity);
         });
 
     }

@@ -1,6 +1,7 @@
 package com.cinderellavip.adapter.recycleview;
 
 
+import android.app.Activity;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -14,6 +15,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.find.FindItem;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.activity.find.PostDetailActivity;
+import com.cinderellavip.ui.activity.find.TopicDetailActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -69,6 +72,14 @@ public class FindAdapter extends BaseQuickAdapter<FindItem, BaseViewHolder> impl
            tv_topic.setVisibility(View.GONE);
 
        }
+
+       holder.getView(R.id.ll_root).setOnClickListener(view -> {
+           if (findItem.isTopic()){
+               TopicDetailActivity.launch((Activity) getContext(),findItem.id+"");
+           }else {
+               PostDetailActivity.launch((Activity) getContext(),findItem.id+"");
+           }
+       });
 
 
 

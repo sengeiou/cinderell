@@ -39,4 +39,11 @@ public class HomeGoods {
     //搜索的时候 会有下面数据
     public String store_id;
     public String store_name;
+
+    //帖子详情的时候
+    public int product_id;
+    public String product_name;
+    public String product_thumb;
+    public String product_price;
+    public String category;
 }

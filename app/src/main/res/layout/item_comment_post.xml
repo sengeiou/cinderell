@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:background="@color/white"
     android:orientation="vertical">
@@ -20,7 +21,7 @@
                 android:id="@+id/iv_avater"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@mipmap/avater"/>
+                tools:src="@mipmap/avater"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -35,7 +36,7 @@
                     android:textSize="12sp"
                     android:layout_marginLeft="8dp"
                     android:textColor="@color/black_title_color"
-                    android:text="陈思妥"/>
+                    tools:text="陈思妥"/>
 
             </LinearLayout>
 
@@ -55,7 +56,7 @@
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="专门使用过来评价的 第一次不会用 没涂凝胶 那感觉是一个酸爽，赶紧去联系了客服"
+            tools:text="专门使用过来评价的 第一次不会用 没涂凝胶 那感觉是一个酸爽，赶紧去联系了客服"
             android:layout_marginLeft="12dp"
             android:maxLines="3"
             android:ellipsize="end"
@@ -75,7 +76,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="12dp"
         android:textColor="@color/grayText"
-        android:text="12-2 14:00"/>
+        tools:text="12-2 14:00"/>
 
 
     <androidx.recyclerview.widget.RecyclerView

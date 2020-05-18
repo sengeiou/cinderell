@@ -1,14 +1,12 @@
 package com.cinderellavip.adapter.recycleview;
 
 
-import android.app.Activity;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.OrderBean;
-import com.cinderellavip.ui.activity.find.PostDetailActivity;
 
 public class MessageFindAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> {
 
@@ -26,7 +24,7 @@ public class MessageFindAdapter extends BaseQuickAdapter<OrderBean, BaseViewHold
 
         LinearLayout ll_root = helper.getView(R.id.ll_root);
          ll_root.setOnClickListener(v -> {
-            PostDetailActivity.launch((Activity) getContext());
+//            PostDetailActivity.launch((Activity) getContext());
         });
 
 

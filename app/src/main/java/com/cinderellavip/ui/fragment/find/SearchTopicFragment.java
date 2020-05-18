@@ -11,9 +11,6 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.SearchHotTopicAdapter;
 import com.cinderellavip.bean.local.SearchItem;
-import com.cinderellavip.ui.activity.find.SearchFindResultActivity;
-import com.cinderellavip.ui.activity.find.TopicDetailActivity;
-import com.cinderellavip.ui.activity.home.SearchResultActivity;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.FlowLayout;
@@ -95,7 +92,7 @@ public class SearchTopicFragment extends BaseFragment<String> {
 //                layoutParams.width = ScreenUtil.getScreenWidth(mActivity);
 //            }
             tv.setOnClickListener(v -> {
-                TopicDetailActivity.launch(mActivity);
+//                TopicDetailActivity.launch(mActivity);
             });
             flowLayout.addView(tv, layoutParams);
         }

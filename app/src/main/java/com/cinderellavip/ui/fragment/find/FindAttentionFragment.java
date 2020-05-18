@@ -3,7 +3,6 @@ package com.cinderellavip.ui.fragment.find;
 import android.os.Bundle;
 
 import com.cinderellavip.adapter.recycleview.FindAdapter;
-import com.cinderellavip.ui.activity.find.PostDetailActivity;
 import com.cinderellavip.weight.GirdSpaceStag;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -70,7 +69,7 @@ public class FindAttentionFragment extends BaseListFragment<String> {
     public void initListener() {
         super.initListener();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            PostDetailActivity.launch(mActivity);
+//            PostDetailActivity.launch(mActivity);
         });
     }
 }

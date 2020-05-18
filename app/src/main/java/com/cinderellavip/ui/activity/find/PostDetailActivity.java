@@ -14,11 +14,14 @@ import com.tozzais.baselibrary.ui.BaseActivity;
 public class PostDetailActivity extends BaseActivity {
 
 
-    public static void launch(Activity activity) {
+
+
+    private String id;
+    public static void launch(Activity activity,String id) {
         Intent intent = new Intent(activity, PostDetailActivity.class);
+        intent.putExtra("id",id);
         activity.startActivityForResult(intent,11);
     }
-
 
     @Override
     public int getLayoutId() {
@@ -29,13 +32,15 @@ public class PostDetailActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         setBackTitle("冬季护肤秘籍");
         setRightIcon(R.mipmap.icon_post_more);
+        id = getIntent().getStringExtra("id");
     }
 
     @Override
     public void loadData() {
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.content_container, new PostDetailFragment())
+                .add(R.id.content_container, PostDetailFragment.newInstance(id))
                 .commit();
     }
 

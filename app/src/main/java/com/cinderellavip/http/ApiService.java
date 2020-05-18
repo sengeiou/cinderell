@@ -18,6 +18,7 @@ import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.cart.CartResult;
+import com.cinderellavip.bean.net.find.DiscussInfoResult;
 import com.cinderellavip.bean.net.find.ListDiscussesResult;
 import com.cinderellavip.bean.net.goods.GoodsCommentResult;
 import com.cinderellavip.bean.net.goods.GoodsResult;
@@ -370,10 +371,13 @@ public interface ApiService {
     Observable<BaseResult<OrderSettleResult>>
     getSettlementGroup(@QueryMap TreeMap<String, String> map);
 
-
     @GET(HttpUrl.discuss_index)
     Observable<BaseResult<ListDiscussesResult>>
     getFindList(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.discuss_info)
+    Observable<BaseResult<DiscussInfoResult>>
+    getDiscussInfo(@QueryMap TreeMap<String, String> map);
 
 
 
