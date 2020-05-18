@@ -39,7 +39,7 @@
         <TextView
             android:id="@+id/tv_shop"
             style="@style/base_text_style"
-            android:text="夺伊服装店"
+            tools:text="夺伊服装店"
             android:padding="12dp"
             android:drawableRight="@mipmap/right_black_icon"
             android:drawablePadding="5dp"
@@ -55,7 +55,7 @@
             style="@style/base_text_style"
             android:textColor="@color/baseColor"
             android:layout_gravity="center_vertical"
-            android:text="未成团"/>
+            tools:text="未成团"/>
     </LinearLayout>
 
     <View
@@ -82,12 +82,14 @@
             >
 
             <TextView
+                android:id="@+id/tv_goods_number"
                 style="@style/base_text_style"
-                android:text="共2件 应付金额：" />
+                tools:text="共2件 应付金额：" />
 
             <TextView
+                android:id="@+id/tv_money"
                 style="@style/base_text_style"
-                android:text="￥188.00" />
+                tools:text="￥188.00" />
         </LinearLayout>
 
         <LinearLayout

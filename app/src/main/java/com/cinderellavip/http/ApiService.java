@@ -142,6 +142,10 @@ public interface ApiService {
     Observable<BaseResult<OrderInfoResult<OrderInfo>>>
     getOrderDetail(@Path("id") String id);
 
+    @GET(HttpUrl.group_order_info+"{id}")
+    Observable<BaseResult<OrderInfoResult<OrderInfo>>>
+    getGroupOrderDetail(@Path("id") String id);
+
     @GET(HttpUrl.order_receipt+"{id}")
     Observable<BaseResult>
     getOrderReceipt(@Path("id") String id);
@@ -240,6 +244,10 @@ public interface ApiService {
     @GET(HttpUrl.group_order_pay)
     Observable<BaseResult<GetPayResult>>
     orderGroupPay(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.group_order_list)
+    Observable<BaseResult<ListResult<OrderBean>>>
+    getGroupOrderList(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.address_list)
     Observable<BaseResult<ListResult<NetCityBean>>>

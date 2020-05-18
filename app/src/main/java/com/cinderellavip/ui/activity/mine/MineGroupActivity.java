@@ -1,15 +1,12 @@
 package com.cinderellavip.ui.activity.mine;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.ui.fragment.mine.MineGroupUpFragment;
-import com.cinderellavip.ui.fragment.mine.OrderFragment;
-import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
@@ -56,9 +53,9 @@ public class MineGroupActivity extends BaseActivity {
     @Override
     public void loadData() {
 
-        fragmentList.add(MineGroupUpFragment.newInstance(0));
-        fragmentList.add(MineGroupUpFragment.newInstance(1));
         fragmentList.add(MineGroupUpFragment.newInstance(2));
+        fragmentList.add(MineGroupUpFragment.newInstance(3));
+        fragmentList.add(MineGroupUpFragment.newInstance(4));
         List<String> list = new ArrayList<>();
         list.add("待成团");
         list.add("已成团");

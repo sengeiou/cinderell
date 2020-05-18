@@ -27,6 +27,7 @@ public class OrderInfo {
     public String pay_sn;
     public String pay_at;
     public String create_at;
+
     public String send_at;
     public String send_sn;
     public String send_company;
@@ -34,5 +35,13 @@ public class OrderInfo {
     public String commit_at;
     public int store_id;
     public String store_name;
+    //拼团参数
+    public long end_time;
+    public long timestamp;
+    public String  group_access;
+    public int  total_user;
+    public List<String> group_users;
+
+
 
 }

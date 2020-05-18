@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
+<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/gray_bg"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +29,7 @@
                 style="@style/base_text_style"
                 android:textColor="@color/white"
                 android:layout_gravity="center_vertical"
-                android:text="代成团"
+                tools:text="代成团"
                 android:layout_margin="12dp"
                 android:layout_weight="1"/>
 
@@ -74,13 +73,13 @@
                         style="@style/base_text_style"
                         android:layout_marginTop="6dp"
                         android:textSize="12sp"
-                        android:text="黄埔正雄  131****5579" />
+                        tools:text="黄埔正雄  131****5579" />
 
                     <TextView
-
+                        android:id="@+id/tvAddress"
                         style="@style/base_text_style"
                         android:layout_marginTop="4dp"
-                        android:text="上海 上海市 青浦区 华徐公路888号1号楼2楼ipd"
+                        tools:text="上海 上海市 青浦区 华徐公路888号1号楼2楼ipd"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -110,7 +109,7 @@
                 <TextView
                     android:id="@+id/tv_group_number"
                     style="@style/base_text_style"
-                    android:text="5人团，还差3人"
+                    tools:text="5人团，还差3人"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     />
@@ -167,7 +166,7 @@
                 <TextView
                     android:id="@+id/tv_shop"
                     style="@style/base_text_style"
-                    android:text="夺伊服装店"
+                    tools:text="夺伊服装店"
                     android:padding="12dp"
                     android:drawableRight="@mipmap/right_black_icon"
                     android:drawablePadding="5dp"
@@ -176,12 +175,13 @@
 
 
                 <TextView
+                    android:id="@+id/tv_goods_number"
                     style="@style/base_text_style"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:layout_marginRight="12dp"
                     android:textSize="12sp"
-                    android:text="（共计2件）" />
+                    tools:text="（共计2件）" />
 
             </LinearLayout>
 
@@ -220,7 +220,7 @@
                     <TextView
                         android:id="@+id/tv_goods_price"
                         style="@style/base_text_style_gray_small"
-                        android:text="￥178.00" />
+                        tools:text="￥178.00" />
 
                 </LinearLayout>
 
@@ -238,7 +238,7 @@
                     <TextView
                         android:id="@+id/tv_discounted_price"
                         style="@style/base_text_style_gray_small"
-                        android:text="-￥100.00" />
+                        tools:text="-￥100.00" />
 
                 </LinearLayout>
 
@@ -256,7 +256,7 @@
                     <TextView
                         android:id="@+id/tv_postage"
                         style="@style/base_text_style_gray_small"
-                        android:text="+￥5.00" />
+                        tools:text="+￥5.00" />
 
                 </LinearLayout>
 
@@ -292,7 +292,7 @@
                         android:id="@+id/tv_order_price"
                         style="@style/base_text_style"
                         android:textColor="@color/baseColor"
-                        android:text="￥123.00" />
+                        tools:text="￥123.00" />
                 </LinearLayout>
 
 
@@ -326,7 +326,7 @@
                     style="@style/base_text_style"
                     android:padding="12dp"
                     android:layout_weight="1"
-                    android:text="订单编号：1234567890" />
+                    tools:text="订单编号：1234567890" />
 
                 <TextView
                     android:id="@+id/tv_copy_numbering"
@@ -347,14 +347,14 @@
             <TextView
                 android:id="@+id/tv_order_time"
                 style="@style/base_text_style_gray_small"
-                android:text="下单时间：2019-04-19 12:00:56"
+                tools:text="下单时间：2019-04-19 12:00:56"
                 android:layout_marginTop="12dp"
                 android:layout_marginLeft="12dp"
                 />
             <TextView
                 android:id="@+id/tv_pay_time"
                 style="@style/base_text_style_gray_small"
-                android:text="付款时间：2019-04-19 12:00:56"
+                tools:text="付款时间：2019-04-19 12:00:56"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="12dp"
                 />
@@ -362,7 +362,7 @@
             <TextView
                 android:id="@+id/tv_pay_way"
                 style="@style/base_text_style_gray_small"
-                android:text="支付方式：微信支付"
+                tools:text="支付方式：微信支付"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginBottom="12dp"

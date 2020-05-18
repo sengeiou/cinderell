@@ -10,13 +10,20 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.GroupDetailUserAdapter;
 import com.cinderellavip.adapter.recycleview.OrderGoodsAdapter;
+import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.net.order.OrderGoodsInfo;
+import com.cinderellavip.bean.net.order.OrderInfo;
+import com.cinderellavip.bean.net.order.OrderInfoResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.weight.CountDownView;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -38,6 +45,8 @@ public class MineGroupDetailActivity extends BaseActivity {
     TextView tvStatus;
     @BindView(R.id.tv_name)
     TextView tvName;
+    @BindView(R.id.tvAddress)
+    TextView tvAddress;
     @BindView(R.id.tv_group_number)
     TextView tvGroupNumber;
     @BindView(R.id.cd_time)
@@ -67,19 +76,24 @@ public class MineGroupDetailActivity extends BaseActivity {
     @BindView(R.id.tv_pay_way)
     TextView tvPayWay;
 
+    @BindView(R.id.tv_shop)
+    TextView tvShop;
+    @BindView(R.id.tv_goods_number)
+    TextView tvGoodsNumber;
 
-    private String type;
 
-    public static void launch(Context from, String type) {
+    private String order_id;
+
+    public static void launch(Context from, String order_id) {
         Intent intent = new Intent(from, MineGroupDetailActivity.class);
-        intent.putExtra("type", type);
+        intent.putExtra("order_id", order_id);
         from.startActivity(intent);
     }
 
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        type = getIntent().getStringExtra("type");
+        order_id = getIntent().getStringExtra("order_id");
         setBackTitle("拼团详情");
 
     }
@@ -87,63 +101,110 @@ public class MineGroupDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        List<String> userList = new ArrayList<>();
-        userList.add("1");
-        userList.add("1");
-        userList.add("1");
-        if (type.equals("0")) {
-            ivStatus.setImageResource(R.mipmap.icon_daichengtuan);
-            tvStatus.setText("待成团");
-            tvGroupNumber.setText("5人团，还差2人");
-            cdTime.setVisibility(View.VISIBLE);
-            tvInvite.setVisibility(View.VISIBLE);
-            cdTime.startTime(15 * 3600 + 34 * 60 + 29);
-            cdTime.setTimeBackhround(R.color.yellow_shadow);
-            cdTime.setPointColor(R.color.yellow_deep);
-            cdTime.setTextColor(R.color.yellow_deep);
-            userList.add("");
-            userList.add("");
-        } else if (type.equals("1")) {
-            ivStatus.setImageResource(R.mipmap.icon_yichengtuan);
-            tvStatus.setText("已成团，待发货");
-            tvGroupNumber.setText("5人团，拼团成功");
-            tvGroupNumber.setTextColor(getColor(R.color.baseColor));
-            userList.add("1");
-            userList.add("1");
-        } else if (type.equals("2")) {
-            ivStatus.setImageResource(R.mipmap.icon_weichengtuan);
-            tvStatus.setText("未成团");
-            tvGroupNumber.setText("5人团，拼团失败");
-            userList.add("");
-            userList.add("");
-        }
 
-        //用户
-        rvUser.setLayoutManager(new GridLayoutManager(mContext, 5));
-        GroupDetailUserAdapter mAdapter = new GroupDetailUserAdapter();
-        rvUser.setAdapter(mAdapter);
-        mAdapter.setNewData(userList);
+        getDetailInfo();
+    }
 
 
-        //商品
-        lvGoods.setLayoutManager(new LinearLayoutManager(mActivity));
-        OrderGoodsAdapter adapter = new OrderGoodsAdapter(OrderGoodsAdapter.RETURN);
-        lvGoods.setAdapter(adapter);
-//        adapter.setNewData(DataUtil.getData(1));
+    private void getDetailInfo() {
+        new RxHttp<BaseResult<OrderInfoResult<OrderInfo>>>().send(ApiManager.getService().getGroupOrderDetail(order_id + ""),
+                new Response<BaseResult<OrderInfoResult<OrderInfo>>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<OrderInfoResult<OrderInfo>> result) {
+                        setData(result.data.order);
+                    }
+                });
 
     }
 
+    private OrderInfo orderInfo;
+    private void setData(OrderInfo orderInfo) {
+        this.orderInfo = orderInfo;
+        if (orderInfo.status==2) {
+            //待成团
+            ivStatus.setImageResource(R.mipmap.icon_daichengtuan);
+            tvStatus.setText("待成团");
+            tvGroupNumber.setText(orderInfo.group_access);
+            cdTime.setVisibility(View.VISIBLE);
+            tvInvite.setVisibility(View.VISIBLE);
+            cdTime.startTime((int) (orderInfo.end_time - orderInfo.timestamp));
+            cdTime.setTimeBackhround(R.color.yellow_shadow);
+            cdTime.setPointColor(R.color.yellow_deep);
+            cdTime.setTextColor(R.color.yellow_deep);
+            cdTime.setListener(isFinish -> {
+                if (true) loadData();
+            });
+
+        } else if (orderInfo.status==3) {
+            //已成团
+            ivStatus.setImageResource(R.mipmap.icon_yichengtuan);
+            tvStatus.setText("已成团，待发货");
+            tvGroupNumber.setText(orderInfo.group_access);
+            tvGroupNumber.setTextColor(getColor(R.color.baseColor));
+            cdTime.setVisibility(View.GONE);
+            tvInvite.setVisibility(View.GONE);
+        } else if (orderInfo.status==4) {
+            ivStatus.setImageResource(R.mipmap.icon_weichengtuan);
+            tvStatus.setText("未成团");
+            tvGroupNumber.setText(orderInfo.group_access);
+            cdTime.setVisibility(View.GONE);
+            tvInvite.setVisibility(View.GONE);
+
+        }
+        NetCityBean address = orderInfo.address;
+        List<OrderGoodsInfo> goods = orderInfo.goods;
+        tvName.setText(address.name+"  "+address.mobile);
+        tvAddress.setText(address.province+address.city+address.area+address.address);
+
+        tvShop.setText(orderInfo.store_name);
+        tvGoodsNumber.setText("（共计"+ goods.size()+"件）");
+
+        lvGoods.setLayoutManager(new LinearLayoutManager(mActivity));
+        OrderGoodsAdapter adapter = new OrderGoodsAdapter(OrderGoodsAdapter.RETURN);
+        lvGoods.setAdapter(adapter);
+        adapter.setNewData(orderInfo.goods);
+
+
+        tvGoodsPrice.setText("￥"+orderInfo.goods_amount);
+        tvDiscountedPrice.setText("￥"+orderInfo.dis_amount);
+        tvPostage.setText("￥"+orderInfo.ship_amount);
+        tvOrderPrice.setText("￥"+orderInfo.total_amount);
+
+        tvOrderTime.setText("下单时间："+orderInfo.create_at);
+        tvNumbering.setText("订单编号："+orderInfo.order_no);
+
+        tvPayTime.setText("付款时间："+orderInfo.pay_at);
+        tvPayWay.setText("支付方式："+orderInfo.payment);
+
+        rvUser.setLayoutManager(new GridLayoutManager(mContext, 5));
+        GroupDetailUserAdapter mAdapter = new GroupDetailUserAdapter();
+        rvUser.setAdapter(mAdapter);
+        for (int j = orderInfo.group_users.size();j<orderInfo.total_user;j++){
+            orderInfo.group_users.add("");
+        }
+        mAdapter.setNewData(orderInfo.group_users);
+
+
+
+
+    }
     @Override
     public int getLayoutId() {
         return R.layout.activity_mine_groupup_detail;
     }
 
 
-    @OnClick({R.id.tv_shop,R.id.tv_invite})
+    @OnClick({R.id.tv_shop,R.id.tv_invite,R.id.tv_copy_numbering})
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.tv_copy_numbering:
+                if(orderInfo != null)
+                    ClipBoardUtil.copy(mActivity, orderInfo.order_no);
+                break;
+
             case R.id.tv_shop:
-                ShopDetailActivity.launch(mActivity);
+                if (orderInfo != null)
+                ShopDetailActivity.launchShop(mActivity,orderInfo.store_id+"");
                 break;
             case R.id.tv_invite:
                 SecondDialogUtil.showPosterDialog(mContext, (payString1, bitmap) -> {

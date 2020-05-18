@@ -26,6 +26,7 @@ public class OrderBean {
     public int status;
     public String status_txt;
     public String create_at;
+
     public String send_sn;
     public String send_company;
 

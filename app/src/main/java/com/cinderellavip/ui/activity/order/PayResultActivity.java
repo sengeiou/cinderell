@@ -3,7 +3,6 @@ package com.cinderellavip.ui.activity.order;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,22 +10,19 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
-import com.cinderellavip.adapter.recycleview.LikeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.ui.activity.mine.MineGroupActivity;
 import com.cinderellavip.ui.activity.mine.MineOrderActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.GirdSpace;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListActivity;
 import com.tozzais.baselibrary.util.DpUtil;
-
-import java.util.TreeMap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -132,7 +128,12 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_look_order:
-                MineOrderActivity.launch(mActivity, OrderFragment.ALL);
+                if (createOrderBean.type == CreateOrderBean.PRODUCT || createOrderBean.type == CreateOrderBean.CART){
+                    MineOrderActivity.launch(mActivity, OrderFragment.ALL);
+                }else {
+                    MineGroupActivity.launch(mActivity);
+                }
+
 //                OrderDetailActivity.launch(mActivity,createOrderBean.order_id);
                 finish();
                 break;

@@ -23,7 +23,8 @@ public class GroupDetailUserAdapter extends BaseQuickAdapter<String, BaseViewHol
            if (TextUtils.isEmpty(item)){
                iv_avatar.setImageResource(R.drawable.shape_oval_gray50);
            }else {
-               iv_avatar.setImageResource(R.mipmap.avater);
+               ImageUtil.loadNet(getContext(),iv_avatar,item);
+//               iv_avatar.setImageResource(R.mipmap.avater);
            }
 
     }

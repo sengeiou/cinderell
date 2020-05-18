@@ -1,18 +1,22 @@
 package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.cinderellavip.adapter.recycleview.MineGroupUpAdapter;
+import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class MineGroupUpFragment extends BaseListFragment<String> {
+public class MineGroupUpFragment extends BaseListFragment<OrderBean> {
 
 
     private int type;
@@ -43,15 +47,27 @@ public class MineGroupUpFragment extends BaseListFragment<String> {
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
-            List<String> list = new ArrayList<>();
-            list.add(""+type);
-            list.add(""+type);
-            list.add(""+type);
-            setData(list);
-        },500);
+        getData();
 
 
+    }
+
+    private void  getData(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("status", ""+type);
+        hashMap.put("limit", ""+PageSize);
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<ListResult<OrderBean>>>().send(ApiManager.getService().getGroupOrderList(hashMap),
+                new Response<BaseResult<ListResult<OrderBean>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<OrderBean>> result) {
+                        setData(result.data.list);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
     }
 
 }
