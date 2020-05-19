@@ -150,7 +150,7 @@ public class CommonInterceptor implements Interceptor {
         String url = request.url().toString();
         int separatorIndex = url.lastIndexOf("?");
 
-        LogUtil.e(url);
+//        LogUtil.e(url);
         System.out.println(url);
         StringBuilder sb = new StringBuilder(url);
         String string = sb.toString();

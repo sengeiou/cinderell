@@ -11,17 +11,13 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
-import com.cinderellavip.bean.local.MineCouponsBean;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.global.Constant;
-import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
-import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
-import com.cinderellavip.util.PartMapUtils;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.weight.CircleImageView;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -32,9 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -42,7 +36,6 @@ import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import top.zibin.luban.CompressionPredicate;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 

@@ -6,13 +6,13 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.bean.net.life.ListServiceLocalItem;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class ServiceListAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class ServiceListAdapter extends BaseQuickAdapter<ListServiceLocalItem, BaseViewHolder> {
 
     public ServiceListAdapter() {
         super(R.layout.item_service_list, null);
@@ -20,9 +20,9 @@ public class ServiceListAdapter extends BaseQuickAdapter<String, BaseViewHolder>
 
 
     @Override
-    protected void convert( BaseViewHolder helper,  String item) {
+    protected void convert( BaseViewHolder helper,  ListServiceLocalItem item) {
         int position = helper.getAdapterPosition();
-//        helper.setText(R.id.tv_number,item);
+        helper.setText(R.id.tv_title,item.title);
 
         View view_space = helper.getView(R.id.view_space);
         if (position != getData().size())
@@ -37,7 +37,7 @@ public class ServiceListAdapter extends BaseQuickAdapter<String, BaseViewHolder>
         ServiceListProjectAdapter adapter = new ServiceListProjectAdapter();
         rv_goods.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_goods.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(2));
+        adapter.setNewData(item.data);
 
 
 

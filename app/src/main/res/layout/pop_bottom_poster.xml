@@ -32,11 +32,11 @@
                 android:id="@+id/iv_avatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@mipmap/avater"/>
+                tools:src="@mipmap/avater"/>
             <TextView
                 android:id="@+id/tv_name"
                 style="@style/base_text_style"
-                android:text="月岛tsuki"
+                tools:text="月岛tsuki"
                 android:layout_marginLeft="10dp"
                 />
             <TextView
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_comment"/>
+            tools:src="@mipmap/demo_comment"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:id="@+id/tv_product_name"
                     style="@style/base_text_style"
                     android:lines="2"
-                    android:text="北海道风味天然酵母面包独立包装270g"
+                    tools:text="北海道风味天然酵母面包独立包装270g"
                     />
 
                 <LinearLayout
@@ -83,7 +83,7 @@
                     <TextView
                         android:id="@+id/tv_price"
                         style="@style/base_text_style"
-                        android:text="￥238"
+                        tools:text="￥238"
                         android:textSize="14sp"
                         android:textColor="@color/red"
                         android:layout_marginLeft="3dp"

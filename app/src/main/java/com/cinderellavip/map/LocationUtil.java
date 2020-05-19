@@ -88,8 +88,8 @@ public class LocationUtil implements AMapLocationListener{
                     listener.onSuccess(amapLocation,amapLocation.getLatitude(),amapLocation.getLongitude());
 //                    BaseApplication.amapLocation = amapLocation;
                 }
-                LogUtil.e("amapLocation.getErrorCode()="+amapLocation.getErrorCode()+"=="+
-                        amapLocation.getLatitude()+"=="+amapLocation.getLongitude());
+//                LogUtil.e("amapLocation.getErrorCode()="+amapLocation.getErrorCode()+"=="+
+//                        amapLocation.getLatitude()+"=="+amapLocation.getLongitude());
             } else {
                 if (listener != null){
                     listener.onSuccess(amapLocation,-1,-1);

@@ -12,10 +12,10 @@ import com.cinderellavip.http.HttpUrl;
 public class Constant {
 
     //图片地址
-    public static final String PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/hk_fight/image";
-    public static final String ROOT_PATH = Environment.getExternalStorageDirectory() + "/hk_fight";
+    public static final String PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/hk_fight1/image";
+    public static final String ROOT_PATH = Environment.getExternalStorageDirectory() + "/hk_fight1";
     public static final String cacheDirPath = Environment
-            .getExternalStorageDirectory() + "/hk_fight";
+            .getExternalStorageDirectory() + "/hk_fight1";
 
 
     public static String user_login = "cinder_user_login";
@@ -27,6 +27,7 @@ public class Constant {
     public static String user_is_vip = "cinder_is_vip";
 
     public static String search = "cinder_user_search";
+    public static String user_bean_string = "cinder_user_login_bean";
 
 
 

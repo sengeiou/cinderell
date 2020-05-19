@@ -9,6 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.goods.GoodsInfo;
+import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.listener.ShareClickListener;
 import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.util.image.ImgUtils;
@@ -19,15 +24,25 @@ public class SecondDialogUtil {
     private static Dialog dialog;
 
 
-    public static void showPosterDialog(Context context,  onSelectListener listener) {
+    public static void showPosterDialog(Context context, GoodsResult goodsResult, onSelectListener listener) {
         View view = View.inflate(context, R.layout.pop_bottom_poster, null);
+        GoodsInfo product_info = goodsResult.product_info;
         dialog = DialogUtils.getCenterDialog(context, view);
         ImageView iv_avatar = view.findViewById(R.id.iv_avatar);
+        MineInfo userBean = GlobalParam.getUserBean();
+
         TextView tv_name = view.findViewById(R.id.tv_name);
         TextView tv_product_name = view.findViewById(R.id.tv_product_name);
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_advance_price = view.findViewById(R.id.tv_advance_price);
         ImageView iv_image = view.findViewById(R.id.iv_image);
+
+        ImageUtil.loadNet(context,iv_avatar,userBean.user_avatar);
+        tv_name.setText(userBean.username);
+        ImageUtil.loadNet(context, iv_image, product_info.images.get(0));
+        tv_product_name.setText(product_info.name);
+        tv_price.setText("￥"+product_info.getPrice());
+
         LinearLayout ll_poster = view.findViewById(R.id.ll_poster);
         ll_poster.setDrawingCacheEnabled(true);
         ll_poster.buildDrawingCache();

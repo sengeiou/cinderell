@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
-
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.util.PhotoUtils;
 
 import java.io.File;
@@ -15,6 +15,9 @@ import java.io.IOException;
 public class ImgUtils {
     //保存文件到指定路径
     public static boolean saveImageToGallery(Context context, Bitmap bmp) {
+
+
+
         // 首先保存图片
         String storePath = PhotoUtils.PATH;
         File appDir = new File(storePath);

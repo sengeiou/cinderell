@@ -12,5 +12,10 @@ public class ShareImageItem {
         this.isCheck = isCheck;
     }
 
+    public String path;
 
+    public ShareImageItem(boolean isCheck, String path) {
+        this.isCheck = isCheck;
+        this.path = path;
+    }
 }

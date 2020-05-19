@@ -14,4 +14,8 @@ public class LiftHomeServiceItem {
     public String price;
     public String unit_name;
     public String city;
+
+    public String duration;
+    public String contain;
+    public int typesof;
 }

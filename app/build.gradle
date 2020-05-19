@@ -99,8 +99,7 @@ dependencies {
     implementation files('libs/wechat-sdk-android-without-mta-5.1.4.jar')
     implementation files('libs/libammsdk.jar')
     implementation files('libs/org.apache.http.legacy.jar')
-    implementation files('libs/umeng-common-2.1.8.jar')
-    implementation files('libs/umeng-share-QQ-simplify-6.9.6.jar')
+    implementation files('libs/umeng-common-2.1.0.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.6.jar')
     implementation files('libs/umeng-share-core-6.9.6.jar')
 

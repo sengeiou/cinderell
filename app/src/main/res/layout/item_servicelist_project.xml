@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <View
@@ -30,11 +30,11 @@
         >
         <com.cinderellavip.weight.RoundImageView
             android:id="@+id/iv_product"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_life"/>
+            tools:src="@mipmap/demo_life"/>
 
 
     </RelativeLayout>
@@ -43,7 +43,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:layout_marginLeft="10dp"
         android:orientation="vertical">
 
@@ -57,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="物品整理"
+                tools:text="物品整理"
                 android:textSize="14sp"
                 android:textColor="@color/black_title_color"/>
 
@@ -66,18 +66,35 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_contain"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:text="服务项目：3小时"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:lines="1"
+            android:visibility="gone"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/grayText"/>
 
         <TextView
             android:id="@+id/tv_specification"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="服务时长：3小时"
+            tools:text="服务时长：3小时"
             android:textSize="12sp"
-            android:maxLines="2"
-            android:lines="2"
+            android:maxLines="1"
+            android:lines="1"
             android:layout_marginTop="3dp"
             android:textColor="@color/grayText"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
 
 
@@ -93,7 +110,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="3dp"
                 android:layout_height="wrap_content"
-                android:text="170元/次"
+                tools:text="170元/次"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/yellowText"/>

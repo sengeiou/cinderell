@@ -1,8 +1,6 @@
 package com.cinderellavip.adapter.recycleview;
 
 import android.app.Activity;
-import android.text.TextUtils;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,10 +9,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.OrderCommentImageItemBean;
 import com.cinderellavip.bean.local.ShareImageItem;
 import com.cinderellavip.global.ImageUtil;
-import com.cinderellavip.listener.OnDoublePositionClickListener;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.RoundImageView;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -37,6 +33,7 @@ public class ImageShareAdapter extends BaseQuickAdapter<ShareImageItem, BaseView
         ImageView iv_image_close = helper.getView(R.id.iv_image_close);
         RelativeLayout ll_root = helper.getView(R.id.ll_root);
 
+        ImageUtil.loadNet(getContext(),iv_image,item.path);
         if (!item.isCheck){
             iv_image_close.setImageResource(R.mipmap.share_image_default);
         }else {

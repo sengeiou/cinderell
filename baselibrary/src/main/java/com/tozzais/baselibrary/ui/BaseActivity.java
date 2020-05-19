@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.R;
 import com.tozzais.baselibrary.util.StatusBarUtil;
-import com.tozzais.baselibrary.util.log.LogUtil;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 import com.tozzais.baselibrary.weight.ProgressLayout;
 
@@ -101,7 +100,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        LogUtil.e("onBackPressed");
+//        LogUtil.e("onBackPressed");
         back();
     }
 

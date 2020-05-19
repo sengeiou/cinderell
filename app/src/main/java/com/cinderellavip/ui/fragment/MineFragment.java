@@ -129,6 +129,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 new Response<BaseResult<MineInfo>>(isLoad,getContext()) {
                     @Override
                     public void onSuccess(BaseResult<MineInfo> result) {
+                        GlobalParam.setUserBean(result.data);
                         setInfoData(result.data);
 
                     }

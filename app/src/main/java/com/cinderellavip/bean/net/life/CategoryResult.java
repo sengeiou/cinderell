@@ -15,7 +15,7 @@ public class CategoryResult {
     public List<LiftHomeServiceItem> pack_age;
 
     @SerializedName("long")
-    public LiftHomeServiceItem lo_ng;
+    public LiftHomeServiceItem longServiceItem;
 
     public String coupon;
 

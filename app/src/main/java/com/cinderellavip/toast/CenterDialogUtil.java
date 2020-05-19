@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
-import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -79,7 +79,7 @@ public class CenterDialogUtil {
 
     }
 
-    public static void showShare(Context context,OnSureClickListener listener) {
+    public static void showShare(Context context, OnSureClickListener listener) {
         View messageView = View.inflate(context, R.layout.pop_center_share, null);
         cityDialog = DialogUtils.getCenterDialog(context, messageView, false);
         TextView tv_commit = messageView.findViewById(R.id.tv_login);

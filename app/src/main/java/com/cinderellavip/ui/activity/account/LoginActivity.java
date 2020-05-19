@@ -22,16 +22,21 @@ import com.cinderellavip.util.KeyboardUtils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
+import com.tozzais.baselibrary.util.log.LogUtil;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements UMAuthListener {
     @BindView(R.id.et_phone)
     EditText etPhone;
     @BindView(R.id.et_pass)
@@ -142,6 +147,7 @@ public class LoginActivity extends BaseActivity {
                 FastLoginActivity.launch(mActivity,FastLoginActivity.FAST_LOGIN);
                 break;
             case R.id.tv_weChat_login:
+                UMShareAPI.get(mContext).getPlatformInfo(mActivity, SHARE_MEDIA.WEIXIN, this);
                 break;
             case R.id.tv_aLiPay_login:
                 break;
@@ -154,5 +160,37 @@ public class LoginActivity extends BaseActivity {
         if (o instanceof LoginFinishSuccess){
             finish();
         }
+    }
+
+    @Override
+    public void onStart(SHARE_MEDIA share_media) {
+        LogUtil.e("onStart");
+
+    }
+
+    @Override
+    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+        String uid = map.get("uid");
+        String name = map.get("name");
+
+        String gender = "0";
+        if ("男".equals(map.get("gender"))){
+            gender = "1";
+        }else if ("女".equals(map.get("gender"))){
+            gender = "2";
+        }
+        String iconurl = map.get("iconurl");
+
+        LogUtil.e(uid);
+    }
+
+    @Override
+    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+        LogUtil.e("onError");
+    }
+
+    @Override
+    public void onCancel(SHARE_MEDIA share_media, int i) {
+        LogUtil.e("onCancel");
     }
 }

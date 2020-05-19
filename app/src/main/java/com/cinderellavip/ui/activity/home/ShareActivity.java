@@ -2,16 +2,27 @@ package com.cinderellavip.ui.activity.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.ImageShareAdapter;
 import com.cinderellavip.bean.local.ShareImageItem;
+import com.cinderellavip.bean.net.goods.GoodsInfo;
+import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.SecondDialogUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +37,18 @@ public class ShareActivity extends CheckPermissionActivity {
 
     @BindView(R.id.rv_image)
     RecyclerView rvImage;
+    @BindView(R.id.tv_goods_title)
+    TextView tv_goods_title;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
 
-    public static void launch(Activity activity, int id) {
+    public static void launch(Activity activity, String id) {
         Intent intent = new Intent(activity, ShareActivity.class);
         intent.putExtra("id", id);
         activity.startActivity(intent);
     }
 
-    private int id;
+    private String id;
 
 
     @Override
@@ -44,6 +59,8 @@ public class ShareActivity extends CheckPermissionActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setBackTitle("商品分享");
+        id = getIntent().getStringExtra("id");
+
         rvImage.setLayoutManager(new GridLayoutManager(mActivity, 4));
         imageShareAdapter = new ImageShareAdapter();
         rvImage.setAdapter(imageShareAdapter);
@@ -51,17 +68,26 @@ public class ShareActivity extends CheckPermissionActivity {
 
     private ImageShareAdapter imageShareAdapter;
 
+    GoodsResult goodsResult;
 
     @Override
     public void loadData() {
-        List<ShareImageItem> list = new ArrayList<>();
-        list.add(new ShareImageItem(true));
-        list.add(new ShareImageItem(true));
-        list.add(new ShareImageItem(true));
-        list.add(new ShareImageItem(true));
-        list.add(new ShareImageItem(true));
-        list.add(new ShareImageItem(true));
-        imageShareAdapter.setNewData(list);
+        new RxHttp<BaseResult<GoodsResult>>().send(ApiManager.getService().getGoodsDetail(id),
+                new Response<BaseResult<GoodsResult>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<GoodsResult> result) {
+                        goodsResult = result.data;
+                        GoodsInfo productInfo = goodsResult.product_info;
+                        tv_goods_title.setText(productInfo.name);
+                        tvPrice.setText("原件：￥"+productInfo.getOld_price()+"    灰姑娘会员价：￥"+productInfo.getPrice());
+                        List<ShareImageItem> list = new ArrayList<>();
+                        for (String s:productInfo.images){
+                            list.add(new ShareImageItem(true,s));
+                        }
+                        imageShareAdapter.setNewData(list);
+
+                    }
+                });
     }
 
 
@@ -83,22 +109,25 @@ public class ShareActivity extends CheckPermissionActivity {
                 startActivity(Intent.createChooser(textIntent, "分享"));
                 break;
             case R.id.rl_share3:
-                CenterDialogUtil.showShare(mActivity,()->{
+                if (goodsResult != null)
+                CenterDialogUtil.showShare(mActivity, () -> {
 
                 });
                 break;
             case R.id.rl_share4:
+
                 break;
         }
     }
-    private void share(){
-        SecondDialogUtil.showPosterDialog(mContext, (payString1, bitmap) -> {
-            switch (payString1){
+
+    private void share() {
+        SecondDialogUtil.showPosterDialog(mContext,goodsResult, (payString1, bitmap) -> {
+            switch (payString1) {
                 case "1":
-                    tsg("分享微信");
+                    shareImage(SHARE_MEDIA.WEIXIN,bitmap);
                     break;
                 case "2":
-                    tsg("分享朋友圈");
+                    shareImage(SHARE_MEDIA.WEIXIN_CIRCLE,bitmap);
                     break;
                 case "down":
                     tsg("保存成功");
@@ -107,10 +136,30 @@ public class ShareActivity extends CheckPermissionActivity {
         });
 
 
-
-
-
-
-
     }
+
+    public void shareImage(SHARE_MEDIA share_media, Bitmap bitmap) {
+        UMImage imagelocal = new UMImage(mContext, bitmap);
+        imagelocal.setThumb(new UMImage(mContext, bitmap));
+        new ShareAction((Activity) mContext).withMedia(imagelocal )
+                .setPlatform(share_media)
+                .setCallback(shareListener).share();
+    }
+    private UMShareListener shareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+        }
+    };
 }

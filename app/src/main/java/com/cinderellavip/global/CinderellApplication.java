@@ -15,6 +15,8 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tozzais.baselibrary.weight.loadmore.CustomLoadMoreView;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 import com.ycbjie.webviewlib.X5WebUtils;
 
 import java.lang.reflect.Constructor;
@@ -49,6 +51,11 @@ public class CinderellApplication extends Application {
         resources.updateConfiguration(config, dm);
 
         closeAndroidPDialog();
+
+        UMConfigure.init(this,"5e8bfc81dbc2ec080a349f20"
+                ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
+        PlatformConfig.setWeixin(Constant.WX_APPID, Constant.WX_APP_SECRET);
+
 
 
     }

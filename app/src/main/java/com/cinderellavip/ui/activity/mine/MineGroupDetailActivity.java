@@ -207,7 +207,7 @@ public class MineGroupDetailActivity extends BaseActivity {
                 ShopDetailActivity.launchShop(mActivity,orderInfo.store_id+"");
                 break;
             case R.id.tv_invite:
-                SecondDialogUtil.showPosterDialog(mContext, (payString1, bitmap) -> {
+                SecondDialogUtil.showPosterDialog(mContext, null,(payString1, bitmap) -> {
                     switch (payString1){
                         case "1":
                             tsg("分享微信");

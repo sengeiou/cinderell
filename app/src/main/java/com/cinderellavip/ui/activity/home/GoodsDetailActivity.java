@@ -15,10 +15,12 @@ import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.goods.GroupInfo;
+import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.order.CartActivity;
 import com.cinderellavip.ui.fragment.goods.CommentFragment;
@@ -29,6 +31,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -198,13 +205,35 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rv_cart:
+//                shareTextAndImage(SHARE_MEDIA.WEIXIN);
                 if (GlobalParam.getUserLogin(mActivity))
                 CartActivity.launch(mActivity);
 
                 break;
             case R.id.iv_share:
-                if (GlobalParam.getUserLogin(mActivity))
-                ShareActivity.launch(mActivity,0);
+                if (GlobalParam.getUserLogin(mActivity)){
+                    if (GlobalParam.getIsVip()){
+                        //没有用户信息
+                        if (GlobalParam.getUserBean() == null){
+                            new RxHttp<BaseResult<MineInfo>>().send(ApiManager.getService().getMineInfo(),
+                                    new Response<BaseResult<MineInfo>>(isLoad,mActivity) {
+                                        @Override
+                                        public void onSuccess(BaseResult<MineInfo> result) {
+                                            GlobalParam.setUserBean(result.data);
+                                            ShareActivity.launch(mActivity,id);
+                                        }
+                                    });
+                        }else {
+                            ShareActivity.launch(mActivity,id);
+                        }
+
+                    }else {
+                        CenterDialogUtil.showBulletin(mActivity);
+                    }
+                }
+
+
+
                 break;
             case R.id.tv_service:
                 DialogUtil.showCallPhoneDialog(mActivity);
@@ -247,6 +276,41 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 break;
         }
     }
+
+    public void shareTextAndImage(SHARE_MEDIA share_media) {
+        String url = "https://hongkong-shopping.cn/gp/profile/html5/product/goodsDetail.html?" +
+                "choose_product_id=" + id + "&user_id=" + GlobalParam.getUserId();
+        UMWeb web = new UMWeb(url);
+        web.setTitle(goodsResult.product_info.name);
+        web.setThumb(new UMImage(this, goodsResult.product_info.store_name));
+        web.setDescription("邀请好友注册，可获得积分奖励");
+        new ShareAction(mActivity).withMedia(web)
+                .setPlatform(share_media)
+                .setCallback(shareListener).share();
+    }
+
+    private UMShareListener shareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            tsg("分享成功");
+//            Toast.makeText(ShareDetailActivity.this,"成功了",Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+//            Toast.makeText(ShareDetailActivity.this,"失败"+t.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+//            Toast.makeText(ShareDetailActivity.this,"取消了",Toast.LENGTH_LONG).show();
+
+        }
+    };
 
     private void addCart(String norm_id,String number){
             TreeMap<String, String> hashMap = new TreeMap<>();

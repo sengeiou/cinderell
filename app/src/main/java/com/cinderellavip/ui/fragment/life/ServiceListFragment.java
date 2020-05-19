@@ -12,19 +12,16 @@ import com.cinderellavip.adapter.recycleview.ServiceListAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.net.life.CategoryResult;
 import com.cinderellavip.bean.net.life.CategoryService;
-import com.cinderellavip.bean.net.life.LiftCategoryItem;
 import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.bean.net.life.LiftHomeServiceItem;
+import com.cinderellavip.bean.net.life.ListServiceLocalItem;
 import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
-import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.life.BuyLongServiceActivity;
-import com.cinderellavip.ui.fragment.mine.OrderFragment;
-import com.cinderellavip.util.DataUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
@@ -36,7 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.OnClick;
 
 
-public class ServiceListFragment extends BaseListFragment<String> implements View.OnClickListener {
+public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> implements View.OnClickListener {
 
 
     @Override
@@ -87,6 +84,7 @@ public class ServiceListFragment extends BaseListFragment<String> implements Vie
 
     @Override
     public void loadData() {
+        super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("city", CinderellApplication.name);
         hashMap.put("service",service.one+"");
@@ -103,8 +101,18 @@ public class ServiceListFragment extends BaseListFragment<String> implements Vie
                             iv_banner.setVisibility(View.VISIBLE);
                             ImageUtil.loadNet(mActivity,iv_banner,service.topimg);
                         }
-//                        LiftHomeServiceItem lo_ng = data.lo_ng;
-//                        if (lo_ng != null && )
+                        LiftHomeServiceItem lo_ng = data.longServiceItem;
+                        if (lo_ng != null && !TextUtils.isEmpty(lo_ng.thumb_nail)){
+                            iv_buy_long_service.setVisibility(View.VISIBLE);
+                            ImageUtil.loadNet(mActivity,iv_buy_long_service,lo_ng.thumb_nail);
+                        }else {
+                            iv_buy_long_service.setVisibility(View.GONE);
+
+                        }
+                        List<ListServiceLocalItem> list = new ArrayList<>();
+                        list.add(new ListServiceLocalItem(data.project,"服务项目"));
+                        list.add(new ListServiceLocalItem(data.pack_age,"服务套餐"));
+                        setData(true,list);
                     }
 
                     @Override
@@ -114,7 +122,7 @@ public class ServiceListFragment extends BaseListFragment<String> implements Vie
                 });
 
 
-        setData(DataUtil.getData(2));
+
 
     }
 

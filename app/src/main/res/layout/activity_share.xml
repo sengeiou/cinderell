@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -16,18 +16,20 @@
         />
 
     <TextView
+        android:id="@+id/tv_goods_title"
         style="@style/base_text_style_gray_small"
         android:lineSpacingExtra="4dp"
-        android:text="球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲"
+        tools:text="球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲球服罗中老年女装妈妈装春装休闲"
         android:paddingLeft="12dp"
         android:paddingTop="12dp"
         android:paddingRight="12dp"
         />
 
     <TextView
+        android:id="@+id/tv_price"
         style="@style/base_text_style_gray_small"
         android:lineSpacingExtra="4dp"
-        android:text="原件：￥178.00&#160;&#160;灰姑娘会员价：￥158.00"
+        tools:text="原件：￥178.00&#160;&#160;灰姑娘会员价：￥158.00"
         android:paddingLeft="12dp"
         android:paddingTop="20dp"
         android:paddingRight="12dp"
