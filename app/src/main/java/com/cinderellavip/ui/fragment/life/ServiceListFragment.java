@@ -8,13 +8,24 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.ServiceListAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.bean.net.life.CategoryResult;
+import com.cinderellavip.bean.net.life.LiftCategoryItem;
+import com.cinderellavip.bean.net.life.LiftHomeCategory;
+import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.life.BuyLongServiceActivity;
+import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.DataUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.OnClick;
@@ -29,19 +40,27 @@ public class ServiceListFragment extends BaseListFragment<String> implements Vie
     }
 
 
-    public static ServiceListFragment newInstance() {
+    public static ServiceListFragment newInstance(LiftHomeCategory service) {
         ServiceListFragment cartFragment = new ServiceListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("service",service);
+        cartFragment.setArguments(bundle);
         return cartFragment;
 
     }
 
+    private LiftHomeCategory service;
+
+
+
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        service = getArguments().getParcelable("service");
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new ServiceListAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        setEmptyView("暂无数据");
 
         View view = View.inflate(mActivity, R.layout.header_service_list, null);
         iv_buy_long_service = view.findViewById(R.id.iv_buy_long_service);
@@ -57,7 +76,22 @@ public class ServiceListFragment extends BaseListFragment<String> implements Vie
 
     @Override
     public void loadData() {
-        super.loadData();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("city", CinderellApplication.name);
+        hashMap.put("service",service.one+"");
+        hashMap.put("four",service.three+"");
+        new RxHttp<BaseResult<CategoryResult>>().send(ApiManager.getService().life_category(hashMap),
+                new Response<BaseResult<CategoryResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<CategoryResult> result) {
+
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
         setData(DataUtil.getData(2));

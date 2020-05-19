@@ -9,12 +9,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.CategoryItem;
+import com.cinderellavip.bean.net.life.LiftCategoryItem;
 import com.cinderellavip.listener.CategoryClickListener;
 
 import java.util.List;
 
 
-public class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
+public class CategoryAdapter extends BaseQuickAdapter<LiftCategoryItem, BaseViewHolder> {
 
     private CategoryClickListener categoryClickListener;
     public CategoryAdapter(CategoryClickListener categoryClickListener) {
@@ -24,7 +25,7 @@ public class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHold
 
 
     @Override
-    protected void convert(final BaseViewHolder helper, final CategoryItem item) {
+    protected void convert(final BaseViewHolder helper, final LiftCategoryItem item) {
         int position = helper.getAdapterPosition();
 
         TextView tv_name = helper.getView(R.id.tv_name);
@@ -40,9 +41,11 @@ public class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHold
             tv_name.setTextColor(getContext().getResources().getColor(R.color.black_title_color));
         }
 
-        tv_name.setText(item.type_name);
+        tv_name.setText(item.name);
         ll_root.setOnClickListener(view -> {
-            List<CategoryItem> data = getData();
+            categoryClickListener.onCategorySelect(position);
+
+            List<LiftCategoryItem> data = getData();
             for (int i = 0; i< data.size(); i++){
                 data.get(i).isCheck = (i == position);
             }

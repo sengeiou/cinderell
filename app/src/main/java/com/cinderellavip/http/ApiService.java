@@ -27,6 +27,8 @@ import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.life.CategoryResult;
+import com.cinderellavip.bean.net.life.LiftCategoryItem;
 import com.cinderellavip.bean.net.life.LiftHomeResult;
 import com.cinderellavip.bean.net.mine.ApplyResult;
 import com.cinderellavip.bean.net.mine.BlacklistResult;
@@ -424,11 +426,20 @@ public interface ApiService {
     Observable<BaseResult>
     topic_release(@FieldMap TreeMap<String, String> map);
 
-
     @POST(HttpUrl.life_home)
     @FormUrlEncoded
     Observable<BaseResult<LiftHomeResult>>
     life_home(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_checklist)
+    @FormUrlEncoded
+    Observable<BaseResult<ListResult<LiftCategoryItem>>>
+    life_checklist(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_category)
+    @FormUrlEncoded
+    Observable<BaseResult<CategoryResult>>
+    life_category(@FieldMap TreeMap<String, String> map);
 
 
 }
