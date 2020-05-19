@@ -17,7 +17,7 @@ public class CategoryResult {
     @SerializedName("long")
     public LiftHomeServiceItem lo_ng;
 
-    public NewPersonCoupon coupon;
+    public String coupon;
 
 
 
