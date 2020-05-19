@@ -65,7 +65,7 @@
                     android:paddingBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="上海市"
+                    android:text="南京"
                     android:textSize="12sp"
                     android:drawableRight="@mipmap/icon_arrow_down"
                     android:drawablePadding="5dp"

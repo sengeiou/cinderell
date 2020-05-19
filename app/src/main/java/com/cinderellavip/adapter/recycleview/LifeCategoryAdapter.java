@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.HomeCategoryItem;
+import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.life.DirectAppointmentActivity;
 import com.cinderellavip.ui.activity.life.ServiceCheckListActivity;
@@ -18,7 +19,7 @@ import com.cinderellavip.ui.activity.life.ServiceListActivity;
 import com.cinderellavip.util.ScreenUtil;
 
 
-public class LifeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, BaseViewHolder> {
+public class LifeCategoryAdapter extends BaseQuickAdapter<LiftHomeCategory, BaseViewHolder> {
 
     public LifeCategoryAdapter() {
         super(R.layout.item_home_category, null);
@@ -26,12 +27,13 @@ public class LifeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
 
 
     @Override
-    protected void convert( BaseViewHolder helper,  HomeCategoryItem item) {
+    protected void convert( BaseViewHolder helper,  LiftHomeCategory item) {
         int position = helper.getAdapterPosition();
 //        helper.setText(R.id.tv_number,item);
         ImageView iv_image = helper.getView(R.id.iv_image);
         TextView tv_number = helper.getView(R.id.tv_number);
-        ImageUtil.load(getContext(),iv_image,item.image);
+
+        ImageUtil.load(getContext(),iv_image,item.icon);
         tv_number.setText(item.name);
 
         LinearLayout rl_root = helper.getView(R.id.rl_root);

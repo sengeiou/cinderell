@@ -27,6 +27,7 @@ import java.util.Locale;
 
 public class CinderellApplication extends Application {
     public static Context mContext;
+    public static String name;
     @Override
     public void onCreate() {
         super.onCreate();

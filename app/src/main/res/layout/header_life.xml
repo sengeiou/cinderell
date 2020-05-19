@@ -83,12 +83,14 @@
 
 
     <com.cinderellavip.weight.ScaleImageView
+        android:id="@+id/iv_ad1"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:scale="0.251088534"
         android:scaleType="centerCrop"
         android:layout_marginLeft="12dp"
-        android:src="@mipmap/demo_lift_ad1"
+        tools:src="@mipmap/demo_lift_ad1"
         android:layout_marginRight="12dp"
         />
 
@@ -103,23 +105,27 @@
         >
 
             <com.cinderellavip.weight.ScaleImageView
+                android:id="@+id/iv_ad2"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="0dp"
                 app:scale="0.510324484"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/demo_lift_ad2"
+                tools:src="@mipmap/demo_lift_ad2"
                 android:layout_marginRight="5dp"
                 />
 
 
         <com.cinderellavip.weight.ScaleImageView
+            android:id="@+id/iv_ad3"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="0dp"
             app:scale="0.510324484"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_lift_ad3"
+            tools:src="@mipmap/demo_lift_ad3"
             android:layout_marginLeft="5dp"
             />
 
