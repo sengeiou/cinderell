@@ -3,7 +3,6 @@ package com.cinderellavip;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -28,9 +27,6 @@ import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -344,50 +340,12 @@ public class MainActivity extends CheckPermissionActivity {
 
     @Override
     public void permissionGranted() {
-        new Thread(() -> {
-            try {
-                File RootPath = new File(Constant.ROOT_PATH);
-                if (!RootPath.exists()) {
-                    RootPath.mkdirs();
-                }
-                File DBFile = new File(RootPath + "/static.dll");
-                if (!DBFile.exists()) {
-                    AssetManager assetManager = getApplicationContext().getAssets();
-                    InputStream fis = null;
-                    FileOutputStream fos = null;
-                    try {
-                        fis = assetManager.open(FILE_PATH);
-                        fos = new FileOutputStream(DBFile);
-                        byte[] buffer = new byte[1024 * 10];
-                        int len = 0;
-                        while ((len = fis.read(buffer)) != -1) {
-                            fos.write(buffer, 0, len);
-                        }
-                        fos.flush();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        if (fis != null) {
-                            try {
-                                fis.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if (fos != null) {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        File RootPath = new File(Constant.ROOT_PATH);
+        if (!RootPath.exists()) {
+            boolean b = RootPath.mkdirs();
+            tsg("创建"+b);
+        }
 
 
 
