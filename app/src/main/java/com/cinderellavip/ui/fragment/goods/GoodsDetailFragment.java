@@ -169,8 +169,6 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
         mVideoView = childAt.findViewById(R.id.player);
         xbanner.setOffscreenPageLimit(bannerList.size());
         xbanner.addOnPageChangeListener(this);
-
-
         tvGroupOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         tvGoodsName.setText(productInfo.name);
         tv_ship.setText(productInfo.getShip());
@@ -181,8 +179,6 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
             //是团购商品
             llGroup.setVisibility(View.VISIBLE);
             GroupInfo group_info = goodsResult.group_info;
-
-
                 if (goodsResult.user_is_vip){
                     tv_group_return.setVisibility(View.VISIBLE);
                     if (!TextUtils.isEmpty(goodsResult.integral_rate))
@@ -191,8 +187,6 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
                     tv_group_return.setVisibility(View.GONE);
 
                 }
-
-
             tvGroupPrice.setText(group_info.getGroup_price());
             tvGroupOldPrice.setText("￥"+group_info.getProduct_price());
             tvGroupTip.setText(group_info.group_user+"人团，"+group_info.has_user+"人已参团");

@@ -44,6 +44,10 @@ public class HomeGoods {
     public int product_id;
     public String product_name;
     public String product_thumb;
-    public String product_price;
+    public double product_price;
     public String category;
+
+    public String getProduct_price() {
+        return ArithmeticUtil.convert(product_price);
+    }
 }

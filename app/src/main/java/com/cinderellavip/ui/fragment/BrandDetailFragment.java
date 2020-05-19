@@ -240,7 +240,6 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements 
 
                     }
                 });
-
     }
 
     @Override

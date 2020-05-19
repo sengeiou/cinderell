@@ -30,7 +30,7 @@ public class PostDetailActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setBackTitle("冬季护肤秘籍");
+        setBackTitle("");
         setRightIcon(R.mipmap.icon_post_more);
         id = getIntent().getStringExtra("id");
     }
@@ -48,7 +48,7 @@ public class PostDetailActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         iv_right_icon.setOnClickListener(v -> {
-            ReportActivity.launch(mActivity);
+            ReportActivity.launch(mActivity,id,"1");
         });
     }
 }

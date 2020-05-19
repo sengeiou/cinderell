@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/demo_cardsale_banner1" />
+        tools:src="@mipmap/demo_cardsale_banner1" />
 
 
     <TextView
@@ -26,9 +26,9 @@
         android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
-        android:lines="2"
-        android:maxLines="2"
-        android:text="夹心口味吐司 营养早餐休闲食品"
+        android:lines="1"
+        android:maxLines="1"
+        tools:text="夹心口味吐司 营养早餐休闲食品"
         android:textColor="@color/black_title_color"
         android:textSize="12sp" />
 
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="￥238"
+        tools:text="￥238"
         android:textColor="@color/baseColor"
         android:textSize="12sp" />
 

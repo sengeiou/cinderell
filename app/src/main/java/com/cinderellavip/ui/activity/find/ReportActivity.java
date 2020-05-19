@@ -18,9 +18,16 @@ import com.tozzais.baselibrary.ui.BaseActivity;
 public class ReportActivity extends BaseActivity {
 
 
-
-    public static void launch(Context from) {
+    /**
+     *
+     * @param from
+     * @param id 举报的id
+     * @param type 1:帖子、话题， 2:用户
+     */
+    public static void launch(Context from,String id,String type) {
         Intent intent = new Intent(from, ReportActivity.class);
+        intent.putExtra("id",id);
+        intent.putExtra("type",type);
         from.startActivity(intent);
     }
 
@@ -36,7 +43,10 @@ public class ReportActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        ReportFragment fragment = new ReportFragment();
+        String id = getIntent().getStringExtra("id");
+        String type = getIntent().getStringExtra("type");
+        ReportFragment fragment = ReportFragment.newInstance(id,type);
+
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 

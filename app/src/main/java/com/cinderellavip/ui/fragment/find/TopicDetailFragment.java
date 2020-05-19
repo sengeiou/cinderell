@@ -136,13 +136,13 @@ public class TopicDetailFragment extends BaseListFragment<DiscussComment> {
                 isAttention = !isAttention;
                 break;
             case R.id.iv_more:
-                DialogUtil.showReportDialog(mActivity,payString -> {
-                    if ("0".equals(payString)){
-                        ReportActivity.launch(mActivity);
-                    }else {
-                        tsg("已拉黑");
-                    }
-                });
+//                DialogUtil.showReportDialog(mActivity,payString -> {
+//                    if ("0".equals(payString)){
+//                        ReportActivity.launch(mActivity);
+//                    }else {
+//                        tsg("已拉黑");
+//                    }
+//                });
                 break;
         }
     }

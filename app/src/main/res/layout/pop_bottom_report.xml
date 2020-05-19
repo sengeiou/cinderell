@@ -76,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_pull_back" />
             <TextView
+                android:id="@+id/tv_shield"
                 style="@style/base_text_style"
                 android:text="拉黑"
                 android:layout_marginTop="10dp"

@@ -72,6 +72,8 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
 
         initHeadView();
 
+        setEmptyView("暂无数据~");
+
     }
 
     private RecyclerView rv_hot_topic;

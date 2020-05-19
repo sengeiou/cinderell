@@ -49,7 +49,7 @@ public class TopicDetailActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         iv_right_icon.setOnClickListener(v -> {
-            ReportActivity.launch(mActivity);
+//            ReportActivity.launch(mActivity);
         });
     }
 

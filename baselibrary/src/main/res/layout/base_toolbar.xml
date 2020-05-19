@@ -17,6 +17,10 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:gravity="center"
+        android:maxWidth="240dp"
+        android:text=""
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="@color/black"
         android:textSize="18sp"
         />

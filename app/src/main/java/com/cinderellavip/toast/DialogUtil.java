@@ -201,11 +201,16 @@ public class DialogUtil {
         });
     }
 
-    public static void showReportDialog(Context context, onSelectListener listener) {
+    //isShield 是否已拉黑
+    public static void showReportDialog(Context context, boolean isShield,
+                                        onSelectListener listener) {
         View view = View.inflate(context, R.layout.pop_bottom_report, null);
         dialog = DialogUtils.getBottomDialog(context, view);
         LinearLayout ll_pullback = view.findViewById(R.id.ll_pullback);
         LinearLayout ll_report = view.findViewById(R.id.ll_report);
+        TextView tv_shield = view.findViewById(R.id.tv_shield);
+        if(isShield)
+            tv_shield.setText("解除拉黑");
         ImageView iv_close = view.findViewById(R.id.iv_close);
         iv_close.setOnClickListener(v -> {
             dialog.dismiss();

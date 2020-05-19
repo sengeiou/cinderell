@@ -379,6 +379,24 @@ public interface ApiService {
     Observable<BaseResult<DiscussInfoResult>>
     getDiscussInfo(@QueryMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.discuss_report)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    getDiscussReport(@FieldMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.discuss_collects)
+    Observable<BaseResult>
+    getDiscussCollects();
+
+    @POST(HttpUrl.discuss_reply)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    discussReply(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.discuss_comment)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    commentReply(@FieldMap TreeMap<String, String> map);
 
 
 

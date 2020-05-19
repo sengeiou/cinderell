@@ -34,7 +34,8 @@ public class CardSaleAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         CardSaleGoodsAdapter adapter = new CardSaleGoodsAdapter();
         rv_goods.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         rv_goods.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(6));
+
+//        adapter.setNewData(DataUtil.getData(6));
 
 
 
