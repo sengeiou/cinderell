@@ -32,7 +32,7 @@ public class TopicDetailActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         setLineVisibility();
         id = getIntent().getStringExtra("id");
-        setBackTitle("#我的百搭神仙单品#");
+        setBackTitle("");
         setRightIcon(R.mipmap.icon_post_more);
     }
 
@@ -49,7 +49,7 @@ public class TopicDetailActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         iv_right_icon.setOnClickListener(v -> {
-//            ReportActivity.launch(mActivity);
+            ReportActivity.launch(mActivity,id,"1");
         });
     }
 

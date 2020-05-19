@@ -7,14 +7,18 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.FindAdapter;
 import com.cinderellavip.adapter.recycleview.ImagePostAdapter;
-import com.cinderellavip.bean.net.find.DiscussComment;
-import com.cinderellavip.bean.net.find.DiscussInfoResult;
+import com.cinderellavip.bean.net.find.DiscussInfo;
+import com.cinderellavip.bean.net.find.DiscussUser;
+import com.cinderellavip.bean.net.find.FindItem;
+import com.cinderellavip.bean.net.find.TopicInfoResult;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.find.ReportActivity;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.ui.activity.find.TopicDetailActivity;
+import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.GirdSpaceStag;
 import com.cinderellavip.weight.TopSpace;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -30,19 +34,30 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class TopicDetailFragment extends BaseListFragment<DiscussComment> {
+public class TopicDetailFragment extends BaseListFragment<FindItem> {
 
 
     @BindView(R.id.rv_image)
     RecyclerView rvImage;
     @BindView(R.id.tv_attention)
     TextView tvAttention;
+    @BindView(R.id.iv_avatar)
+    CircleImageView ivAvatar;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_topic_title)
+    TextView tvTopicTitle;
+    @BindView(R.id.tv_content)
+    TextView tvContent;
 
     private String id;
-    public static TopicDetailFragment newInstance(String id){
+
+    public static TopicDetailFragment newInstance(String id) {
         TopicDetailFragment cartFragment = new TopicDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("id",id);
+        bundle.putString("id", id);
         cartFragment.setArguments(bundle);
         return cartFragment;
 
@@ -59,65 +74,82 @@ public class TopicDetailFragment extends BaseListFragment<DiscussComment> {
 
         id = getArguments().getString("id");
         //设置商品
-        GirdSpaceStag girdSpace = new GirdSpaceStag(DpUtil.dip2px(mActivity, 10),2);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        GirdSpaceStag girdSpace = new GirdSpaceStag(DpUtil.dip2px(mActivity, 10), 2);
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.addItemDecoration(girdSpace);
         mAdapter = new FindAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
+        //
+        rvImage.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        TopSpace girdSpace1 = new TopSpace(DpUtil.dip2px(mActivity, 10));
+        rvImage.addItemDecoration(girdSpace1);
+        imagePostAdapter = new ImagePostAdapter();
+        rvImage.setAdapter(imagePostAdapter);
 
 
     }
 
     @Override
     public void loadData() {
-        //这里只有通过Handler 已经到底啦 才会出来
-//        new Handler().postDelayed(() -> {
-//            setData(DataUtil.getData(8));
-//        }, 100);
-
-        rvImage.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        TopSpace girdSpace = new TopSpace(DpUtil.dip2px(mActivity, 10));
-        rvImage.addItemDecoration(girdSpace);
-        ImagePostAdapter adapter = new ImagePostAdapter();
-        rvImage.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(5));
-
-
-    }
-
-    private void  getData(){
+        super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("limit", ""+PageSize);
-        hashMap.put("page", ""+page);
-        hashMap.put("id", ""+id);
-
-        new RxHttp<BaseResult<DiscussInfoResult>>().send(ApiManager.getService().getDiscussInfo(hashMap),
-                new Response<BaseResult<DiscussInfoResult>>(isLoad,getContext()) {
+        hashMap.put("id", "" + id);
+        new RxHttp<BaseResult<TopicInfoResult>>().send(ApiManager.getService().getTopicInfo(hashMap),
+                new Response<BaseResult<TopicInfoResult>>(isLoad, getContext()) {
                     @Override
-                    public void onSuccess(BaseResult<DiscussInfoResult> result) {
-                        DiscussInfoResult discussesResult = result.data;
-                        if (page == DEFAULT_PAGE){
-//                            findHotTopicAdapter.setNewData(discussesResult.hot_topics);
+                    public void onSuccess(BaseResult<TopicInfoResult> result) {
+                        TopicInfoResult discussesResult = result.data;
+                        if (page == DEFAULT_PAGE) {
+                            setData(discussesResult);
                         }
-                        setData(discussesResult.comments);
-
+                        setData(discussesResult.discusses);
 
                     }
+
                     @Override
                     public void onErrorShow(String s) {
                         showError(s);
                     }
                 });
+
+
     }
 
+
+    private DiscussInfo data;
+    //图片的适配器
+    private ImagePostAdapter imagePostAdapter;
+
+    private void setData(TopicInfoResult discussesResult) {
+        this.data = discussesResult.info;
+        if (mActivity instanceof TopicDetailActivity) {
+            ((TopicDetailActivity) mActivity).setBackTitle(data.title);
+        }
+        imagePostAdapter.setNewData(data.images);
+        DiscussUser user = data.user;
+        ImageUtil.loadNet(mActivity, ivAvatar, user.avatar);
+        tvName.setText(user.user_name);
+        tvTime.setText(user.create_at);
+        setAttention(user.collect);
+        tvTopicTitle.setText(data.title);
+        tvContent.setText(data.content);
+    }
+
+    private void setAttention(boolean isCollect){
+        if (!isCollect) {
+            tvAttention.setText("关注");
+            tvAttention.setBackgroundResource(R.drawable.shape_red50);
+        } else {
+            tvAttention.setText("已关注");
+            tvAttention.setBackgroundResource(R.drawable.shape_gray50_cccccc);
+        }
+    }
 
 
     @Override
     public void initListener() {
-        super.initListener();
-        swipeLayout.setEnabled(false);
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
+        if (swipeLayout != null)
+            swipeLayout.setOnRefreshListener(this::onRefresh);
 
     }
 
@@ -126,25 +158,54 @@ public class TopicDetailFragment extends BaseListFragment<DiscussComment> {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_attention:
-                if (isAttention){
-                    tvAttention.setText("关注");
-                    tvAttention.setBackgroundResource(R.drawable.shape_red50);
-                }else {
-                    tvAttention.setText("已关注");
-                    tvAttention.setBackgroundResource(R.drawable.shape_gray50_cccccc);
-                }
-                isAttention = !isAttention;
+                if (data !=null)
+                    collect(data.user.id+"");
                 break;
             case R.id.iv_more:
-//                DialogUtil.showReportDialog(mActivity,payString -> {
-//                    if ("0".equals(payString)){
-//                        ReportActivity.launch(mActivity);
-//                    }else {
-//                        tsg("已拉黑");
-//                    }
-//                });
+                if (data != null)
+                    DialogUtil.showReportDialog(mActivity,data.user.shield, payString -> {
+                        if ("0".equals(payString)) {
+                            ReportActivity.launch(mActivity,data.user.id+"","2");
+                        } else {
+                            shield(data.user.id+"");
+                        }
+                    });
+//
                 break;
         }
     }
-    boolean isAttention;
+
+    //拉黑
+    private void shield(String user_id){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("user_id", user_id + "");
+        new RxHttp<BaseResult>().send(ApiManager.getService().getShield(hashMap),
+                new Response<BaseResult>( getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        data.user.shield = !data.user.shield;
+                        tsg(result.message);
+                    }
+                });
+    }
+    //收藏
+    private void collect(String id){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("id", id + "");
+        hashMap.put("type","4");
+        new RxHttp<BaseResult>().send(ApiManager.getService().getCollect(hashMap),
+                new Response<BaseResult>(getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        data.user.collect = !data.user.collect;
+                        if (data.user.collect){
+                            tsg("关注成功");
+                        }else {
+                            tsg("取消关注");
+                        }
+                        setAttention(data.user.collect);
+                    }
+                });
+    }
+
 }

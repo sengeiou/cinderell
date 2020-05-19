@@ -3,14 +3,22 @@ package com.cinderellavip.ui.fragment.find;
 import android.os.Bundle;
 
 import com.cinderellavip.adapter.recycleview.FindAdapter;
+import com.cinderellavip.bean.net.find.FindItem;
+import com.cinderellavip.bean.net.find.ListDiscussesResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.weight.GirdSpaceStag;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 
-public class FindAttentionFragment extends BaseListFragment<String> {
+public class FindAttentionFragment extends BaseListFragment<FindItem> {
 
 
     public static FindAttentionFragment newInstance() {
@@ -48,7 +56,7 @@ public class FindAttentionFragment extends BaseListFragment<String> {
         mAdapter = new FindAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView("没有更多商品，换个关键字试试");
+        setEmptyView("没有关注信息");
 
     }
 
@@ -57,19 +65,20 @@ public class FindAttentionFragment extends BaseListFragment<String> {
     @Override
     public void loadData() {
         super.loadData();
-//        new Handler().postDelayed(() -> {
-//            setData(DataUtil.getData(4));
-//        }, 100);
-
+        new RxHttp<BaseResult<ListDiscussesResult>>().send(ApiManager.getService().getDiscussCollects(),
+                new Response<BaseResult<ListDiscussesResult>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListDiscussesResult> result) {
+                            setData(result.data.discusses);
+                    }
+                });
 
     }
 
 
     @Override
     public void initListener() {
-        super.initListener();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-//            PostDetailActivity.launch(mActivity);
-        });
+        if (swipeLayout != null)
+            swipeLayout.setOnRefreshListener(this::onRefresh);
     }
 }

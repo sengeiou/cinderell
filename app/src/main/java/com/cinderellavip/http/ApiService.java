@@ -20,6 +20,7 @@ import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.cart.CartResult;
 import com.cinderellavip.bean.net.find.DiscussInfoResult;
 import com.cinderellavip.bean.net.find.ListDiscussesResult;
+import com.cinderellavip.bean.net.find.TopicInfoResult;
 import com.cinderellavip.bean.net.goods.GoodsCommentResult;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
@@ -379,13 +380,17 @@ public interface ApiService {
     Observable<BaseResult<DiscussInfoResult>>
     getDiscussInfo(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.topic_info)
+    Observable<BaseResult<TopicInfoResult>>
+    getTopicInfo(@QueryMap TreeMap<String, String> map);
+
     @POST(HttpUrl.discuss_report)
     @FormUrlEncoded
     Observable<BaseResult>
     getDiscussReport(@FieldMap TreeMap<String, String> map);
 
     @GET(HttpUrl.discuss_collects)
-    Observable<BaseResult>
+    Observable<BaseResult<ListDiscussesResult>>
     getDiscussCollects();
 
     @POST(HttpUrl.discuss_reply)

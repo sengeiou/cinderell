@@ -152,7 +152,7 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
     private void setData(DiscussInfoResult discussesResult) {
         this.data = discussesResult.info;
         if (mActivity instanceof PostDetailActivity){
-            ((PostDetailActivity)mActivity).setBackTitle(data.title+data.title);
+            ((PostDetailActivity)mActivity).setBackTitle(data.title);
         }
         imagePostAdapter.setNewData(data.images);
         DiscussUser user = data.user;
@@ -223,7 +223,7 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
                 if (data != null)
                 DialogUtil.showReportDialog(mActivity,data.user.shield, payString -> {
                     if ("0".equals(payString)) {
-                        ReportActivity.launch(mActivity,data.user.id+"","1");
+                        ReportActivity.launch(mActivity,data.user.id+"","2");
                     } else {
                         shield(data.user.id+"");
                     }
