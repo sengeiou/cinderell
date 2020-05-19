@@ -3,6 +3,7 @@ package com.cinderellavip.ui.activity.find;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -56,6 +57,8 @@ public class SearchTopicForPublishPostActivity extends BaseActivity {
         llSearch.setLayoutParams(lp);
 
         keyword = getIntent().getStringExtra("keyword");
+        if (TextUtils.isEmpty(keyword))
+            keyword = "";
         etSearch.setText(keyword);
     }
 
@@ -73,9 +76,10 @@ public class SearchTopicForPublishPostActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back,R.id.ll_not_join})
+    @OnClick({R.id.iv_back,R.id.tv_cancel,R.id.ll_not_join})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_cancel:
             case R.id.iv_back:
                 finish();
                 break;

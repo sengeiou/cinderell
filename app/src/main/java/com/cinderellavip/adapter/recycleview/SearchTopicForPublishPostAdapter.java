@@ -6,9 +6,10 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.find.HotTopicItem;
 
 
-public class SearchTopicForPublishPostAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class SearchTopicForPublishPostAdapter extends BaseQuickAdapter<HotTopicItem, BaseViewHolder> {
 
 
     public SearchTopicForPublishPostAdapter() {
@@ -17,9 +18,10 @@ public class SearchTopicForPublishPostAdapter extends BaseQuickAdapter<String, B
 
 
     @Override
-    protected void convert(final BaseViewHolder helper, final String item) {
+    protected void convert(final BaseViewHolder helper, final HotTopicItem item) {
         int position = helper.getAdapterPosition();
         helper.getView(R.id.view_linea).setVisibility(View.VISIBLE);
+        helper.setText(R.id.tv_title,item.title);
     }
 
 

@@ -6,20 +6,23 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.cinderellavip.adapter.recycleview.SearchTopicForPublishPostAdapter;
+import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.net.find.HotTopicItem;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.util.DataUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
+
+import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class SearchTopicForPublishPostFragment extends BaseListFragment<String> {
-
-
-
-
-
-
-
+public class SearchTopicForPublishPostFragment extends BaseListFragment<HotTopicItem> {
 
     /**
      *
@@ -46,7 +49,7 @@ public class SearchTopicForPublishPostFragment extends BaseListFragment<String> 
 
 
 
-        setEmptyView("没有更多商品，换个关键字试试");
+        setEmptyView("暂无话题信息");
 
     }
 
@@ -55,6 +58,8 @@ public class SearchTopicForPublishPostFragment extends BaseListFragment<String> 
         super.initListener();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             Intent intent = new Intent();
+            List<HotTopicItem> data = mAdapter.getData();
+            intent.putExtra("data",data.get(position));
             mActivity.setResult(Activity.RESULT_OK,intent);
             mActivity.finish();
 
@@ -64,9 +69,21 @@ public class SearchTopicForPublishPostFragment extends BaseListFragment<String> 
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getData(8));
-        }, 100);
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("keyword", ""+keyword);
+        hashMap.put("limit", ""+PageSize);
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<ListResult<HotTopicItem>>>().send(ApiManager.getService().discuss_search_topic(hashMap),
+                new Response<BaseResult<ListResult<HotTopicItem>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<HotTopicItem>> result) {
+                        setData(result.data.list);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
     }

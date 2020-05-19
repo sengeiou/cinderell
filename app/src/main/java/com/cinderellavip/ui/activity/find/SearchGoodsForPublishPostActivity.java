@@ -3,6 +3,7 @@ package com.cinderellavip.ui.activity.find;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -32,6 +33,8 @@ public class SearchGoodsForPublishPostActivity extends BaseActivity {
     ImageView ivBack;
     @BindView(R.id.ll_search)
     LinearLayout llSearch;
+    @BindView(R.id.ll_not_join)
+    LinearLayout ll_not_join;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
 
@@ -51,11 +54,14 @@ public class SearchGoodsForPublishPostActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         ivBack.setVisibility(View.GONE);
+        ll_not_join.setVisibility(View.GONE);
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) llSearch.getLayoutParams();
         lp.leftMargin = DpUtil.dip2px(mContext,12);
         llSearch.setLayoutParams(lp);
 
         keyword = getIntent().getStringExtra("keyword");
+        if (TextUtils.isEmpty(keyword))
+            keyword = "";
         etSearch.setText(keyword);
     }
 
@@ -73,9 +79,10 @@ public class SearchGoodsForPublishPostActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back,R.id.tv_cancel})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_cancel:
             case R.id.iv_back:
                 finish();
                 break;

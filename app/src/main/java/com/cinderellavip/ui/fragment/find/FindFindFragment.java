@@ -6,6 +6,7 @@ import android.view.View;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.FindAdapter;
 import com.cinderellavip.adapter.recycleview.FindHotTopicAdapter;
+import com.cinderellavip.bean.eventbus.UpdateFind;
 import com.cinderellavip.bean.net.find.FindItem;
 import com.cinderellavip.bean.net.find.ListDiscussesResult;
 import com.cinderellavip.http.ApiManager;
@@ -137,5 +138,13 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
 //            PostDetailActivity.launch(mActivity);
         });
 
+    }
+
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateFind){
+            onRefresh();
+        }
     }
 }

@@ -6,27 +6,30 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.cinderellavip.adapter.recycleview.SearchGoodsForPublishPostAdapter;
+import com.cinderellavip.bean.ListOrders;
+import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.util.DataUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
+
+import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class SearchGoodsForPublishPostFragment extends BaseListFragment<String> {
-
-
-
-
-
-
-
-
+public class SearchGoodsForPublishPostFragment extends BaseListFragment<HomeGoods> {
     /**
      *
      * @param keyword 所搜页面进入
      * @return
      */
-    private String keyword;
+    private String keyword = "";
     public static SearchGoodsForPublishPostFragment newInstance(String keyword) {
         SearchGoodsForPublishPostFragment cartFragment = new SearchGoodsForPublishPostFragment();
         Bundle bundle = new Bundle();
@@ -42,11 +45,11 @@ public class SearchGoodsForPublishPostFragment extends BaseListFragment<String> 
         super.initView(savedInstanceState);
         keyword = getArguments().getString("keyword");
 
-        setLayoutManager();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mAdapter = new SearchGoodsForPublishPostAdapter();
+        mRecyclerView.setAdapter(mAdapter);
 
-
-
-        setEmptyView("没有更多商品，换个关键字试试");
+        setEmptyView("暂无商品信息");
 
     }
 
@@ -55,6 +58,8 @@ public class SearchGoodsForPublishPostFragment extends BaseListFragment<String> 
         super.initListener();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             Intent intent = new Intent();
+            List<HomeGoods> data = mAdapter.getData();
+            intent.putExtra("data",data.get(position));
             mActivity.setResult(Activity.RESULT_OK,intent);
             mActivity.finish();
 
@@ -64,9 +69,21 @@ public class SearchGoodsForPublishPostFragment extends BaseListFragment<String> 
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(() -> {
-            setData(DataUtil.getData(8));
-        }, 100);
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("keyword", ""+keyword);
+        hashMap.put("limit", ""+PageSize);
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<ListResult<HomeGoods>>>().send(ApiManager.getService().discuss_search_product(hashMap),
+                new Response<BaseResult<ListResult<HomeGoods>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<HomeGoods>> result) {
+                        setData(result.data.list);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
     }
@@ -76,17 +93,6 @@ public class SearchGoodsForPublishPostFragment extends BaseListFragment<String> 
         onRefresh();
 
     }
-
-
-    private void setLayoutManager(){
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mAdapter = new SearchGoodsForPublishPostAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-
-
-
 
 
 

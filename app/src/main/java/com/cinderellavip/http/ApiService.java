@@ -19,6 +19,7 @@ import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.cart.CartResult;
 import com.cinderellavip.bean.net.find.DiscussInfoResult;
+import com.cinderellavip.bean.net.find.HotTopicItem;
 import com.cinderellavip.bean.net.find.ListDiscussesResult;
 import com.cinderellavip.bean.net.find.TopicInfoResult;
 import com.cinderellavip.bean.net.goods.GoodsCommentResult;
@@ -403,6 +404,19 @@ public interface ApiService {
     Observable<BaseResult>
     commentReply(@FieldMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.discuss_search_product)
+    Observable<BaseResult<ListResult<HomeGoods>>>
+    discuss_search_product(@QueryMap TreeMap<String, String> map);
+
+
+    @GET(HttpUrl.discuss_search_topic)
+    Observable<BaseResult<ListResult<HotTopicItem>>>
+    discuss_search_topic(@QueryMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.discuss_release)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    discuss_release(@FieldMap TreeMap<String, String> map);
 
 
 
