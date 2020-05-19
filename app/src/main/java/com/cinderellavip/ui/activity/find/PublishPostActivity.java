@@ -297,7 +297,7 @@ public class PublishPostActivity extends CheckPermissionActivity implements OnPu
             tsg("请选择图片");
             return;
         }
-        LogUtil.e(imageBeanList.size()+"");
+//        LogUtil.e(imageBeanList.size()+"");
         //防止压缩后上传不成功 无法计算压缩数量导致无妨上传的bug
         fileList.clear();
         List<String> list = new ArrayList<>();

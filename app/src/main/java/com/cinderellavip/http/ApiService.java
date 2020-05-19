@@ -418,6 +418,11 @@ public interface ApiService {
     Observable<BaseResult>
     discuss_release(@FieldMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.topic_release)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    topic_release(@FieldMap TreeMap<String, String> map);
+
 
 
 
