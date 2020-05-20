@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.ImageShareAdapter;
+import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.local.ShareImageItem;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -26,6 +28,7 @@ import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,7 +91,21 @@ public class ShareActivity extends CheckPermissionActivity {
 
                     }
                 });
+
+        getCode();
     }
+    private void getCode(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("scene", GlobalParam.getRecommendCode()+";1;"+id);
+        new RxHttp<BaseResult<AppletsCode>>().send(ApiManager.getService().getAppletsCode(hashMap),
+                new Response<BaseResult<AppletsCode>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<AppletsCode> result) {
+                        appletsCode = result.data;
+                    }
+                });
+    }
+    AppletsCode appletsCode;
 
 
     @Override
@@ -121,7 +138,7 @@ public class ShareActivity extends CheckPermissionActivity {
     }
 
     private void share() {
-        SecondDialogUtil.showPosterDialog(mContext,goodsResult, (payString1, bitmap) -> {
+        SecondDialogUtil.showPosterDialog(mContext,goodsResult,appletsCode, (payString1, bitmap) -> {
             switch (payString1) {
                 case "1":
                     shareImage(SHARE_MEDIA.WEIXIN,bitmap);

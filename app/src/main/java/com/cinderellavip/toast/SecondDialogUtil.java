@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
@@ -24,11 +25,13 @@ public class SecondDialogUtil {
     private static Dialog dialog;
 
 
-    public static void showPosterDialog(Context context, GoodsResult goodsResult, onSelectListener listener) {
+    public static void showPosterDialog(Context context,
+                                        GoodsResult goodsResult, AppletsCode appletsCode, onSelectListener listener) {
         View view = View.inflate(context, R.layout.pop_bottom_poster, null);
         GoodsInfo product_info = goodsResult.product_info;
         dialog = DialogUtils.getCenterDialog(context, view);
         ImageView iv_avatar = view.findViewById(R.id.iv_avatar);
+        ImageView iv_code = view.findViewById(R.id.iv_code);
         MineInfo userBean = GlobalParam.getUserBean();
 
         TextView tv_name = view.findViewById(R.id.tv_name);
@@ -40,6 +43,7 @@ public class SecondDialogUtil {
         ImageUtil.loadNet(context,iv_avatar,userBean.user_avatar);
         tv_name.setText(userBean.username);
         ImageUtil.loadNet(context, iv_image, product_info.images.get(0));
+        ImageUtil.loadNet(context, iv_code, appletsCode.url);
         tv_product_name.setText(product_info.name);
         tv_price.setText("￥"+product_info.getPrice());
 

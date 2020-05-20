@@ -1,6 +1,7 @@
 package com.cinderellavip.http;
 
 
+import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.ListCoupons;
 import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.OrderResult;
@@ -76,6 +77,10 @@ public interface ApiService {
     @POST(HttpUrl.uploads)
     Observable<BaseResult<UploadImageResult>>
     getUploadImgs(@Part() List<MultipartBody.Part> parts);
+
+    @GET(HttpUrl.get_qr_code)
+    Observable<BaseResult<AppletsCode>>
+    getAppletsCode(@QueryMap TreeMap<String, String> map);
     /**
      * 登录
      * @param
