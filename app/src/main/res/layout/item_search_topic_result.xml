@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:background="@color/white"
+
     android:orientation="vertical">
 
     <TextView
