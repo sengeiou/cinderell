@@ -3,18 +3,21 @@ package com.cinderellavip.ui.activity.find;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 
 import com.cinderellavip.R;
-import com.cinderellavip.listener.OnFilterListener;
-import com.cinderellavip.ui.fragment.find.FindAttentionFragment;
-import com.cinderellavip.ui.fragment.home.SearchResultFragment;
+import com.cinderellavip.bean.eventbus.UpdateSearchPost;
+import com.cinderellavip.bean.eventbus.UpdateSearchTopic;
+import com.cinderellavip.ui.fragment.find.SearchPostResultFragment;
+import com.cinderellavip.ui.fragment.find.SearchTopicResultFragment;
 import com.cinderellavip.util.KeyboardUtils;
-import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.ui.BaseFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,14 +32,19 @@ public class SearchFindResultActivity extends BaseActivity {
     @BindView(R.id.et_search)
     EditText etSearch;
 
-    public static void launch(Context from, String keyword) {
+    public static final int POST = 0;
+    public static final int TOPIC = 1;
+
+    public static void launch(Context from, String keyword,int type) {
         Intent intent = new Intent(from, SearchFindResultActivity.class);
         intent.putExtra("keyword", keyword);
+        intent.putExtra("type", type);
         from.startActivity(intent);
     }
 
 
     private String keyword;
+    private int type;
     @Override
     public int getLayoutId() {
         return R.layout.activity_search_result_find;
@@ -45,6 +53,7 @@ public class SearchFindResultActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         keyword = getIntent().getStringExtra("keyword");
+        type = getIntent().getIntExtra("type",0);
         etSearch.setText(keyword);
     }
 
@@ -55,7 +64,11 @@ public class SearchFindResultActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        fragment = FindAttentionFragment.newInstance();
+        if (type == POST){
+            fragment = SearchPostResultFragment.newInstance(keyword);
+        }else {
+            fragment = SearchTopicResultFragment.newInstance(keyword);
+        }
         getSupportFragmentManager().beginTransaction().add(R.id.fl_container, fragment).commit();
 
 
@@ -72,7 +85,7 @@ public class SearchFindResultActivity extends BaseActivity {
         }
     }
 
-    private FindAttentionFragment fragment;
+    private BaseFragment fragment;
 
     @Override
     public void initListener() {
@@ -82,7 +95,20 @@ public class SearchFindResultActivity extends BaseActivity {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 KeyboardUtils.hideKeyboard(etSearch);
                 String keyword = etSearch.getText().toString().trim();
-//                fragment.setKeyword(keyword);
+                if (!TextUtils.isEmpty(keyword)){
+                    if (type == POST){
+                        EventBus.getDefault().post(new UpdateSearchPost(keyword));
+                    }else if (type == TOPIC){
+                        EventBus.getDefault().post(new UpdateSearchTopic(keyword));
+                    }
+                    if (fragment instanceof  SearchPostResultFragment){
+                        ((SearchPostResultFragment)fragment).setKeyword(keyword);
+                    }else if (fragment instanceof  SearchTopicResultFragment){
+                        ((SearchTopicResultFragment)fragment).setKeyword(keyword);
+                    }
+
+                }
+
             }
             return false;
         });

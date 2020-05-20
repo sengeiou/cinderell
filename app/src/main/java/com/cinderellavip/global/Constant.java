@@ -26,8 +26,12 @@ public class Constant {
     public static String user_recommend_code = "cinder_user_recommend_code";
     public static String user_is_vip = "cinder_is_vip";
 
-    public static String search = "cinder_user_search";
     public static String user_bean_string = "cinder_user_login_bean";
+
+    public static String search = "cinder_user_search";
+    public static String search_post = "cinder_user_search_post";
+    public static String search_topic = "cinder_user_search_topic";
+
 
 
 

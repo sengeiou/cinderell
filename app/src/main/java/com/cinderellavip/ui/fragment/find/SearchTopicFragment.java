@@ -9,35 +9,38 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.adapter.recycleview.SearchHotTopicAdapter;
-import com.cinderellavip.bean.local.SearchItem;
-import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.bean.eventbus.UpdateSearchTopic;
+import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.ui.activity.find.SearchFindResultActivity;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.FlowLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
-public class SearchTopicFragment extends BaseFragment<String> {
+public class SearchTopicFragment extends BaseFragment<UpdateSearchTopic> {
 
     @BindView(R.id.fl_recent)
     FlowLayout flRecent;
-    @BindView(R.id.rv_hot)
-    RecyclerView rv_hot;
     @BindView(R.id.iv_clear)
     ImageView iv_clear;
+
+    @BindView(R.id.ll_history)
+    LinearLayout ll_history;
 
 
     @Override
     public int setLayout() {
-        return R.layout.fragment_search_find_topic;
+        return R.layout.fragment_search_find_post;
     }
 
     @Override
@@ -49,18 +52,31 @@ public class SearchTopicFragment extends BaseFragment<String> {
 
     @Override
     public void loadData() {
-        List<SearchItem> data = new ArrayList<>();
-        data.add(new SearchItem("#我的百搭神仙单品#"));
-        addRecent(flRecent, data);
-
-        SearchHotTopicAdapter adapter = new SearchHotTopicAdapter();
-        rv_hot.setLayoutManager(new LinearLayoutManager(mActivity));
-        rv_hot.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(6));
+        getHistoryData();
 
     }
 
-    private void addRecent(FlowLayout flowLayout, List<SearchItem> list) {
+    //得到历史数据
+    private List<String> historySet;
+
+    private void getHistoryData() {
+        Gson gson = new Gson();
+        String search = GlobalParam.getSearchTopic();
+        if (!TextUtils.isEmpty(search)) {
+            ll_history.setVisibility(View.VISIBLE);
+            flRecent.setVisibility(View.VISIBLE);
+            Type founderSetType = new TypeToken<ArrayList<String>>() {
+            }.getType();
+            historySet = gson.fromJson(search, founderSetType);
+            addRecent(flRecent, historySet);
+        } else {
+            historySet = new ArrayList<>();
+            ll_history.setVisibility(View.GONE);
+            flRecent.setVisibility(View.GONE);
+        }
+    }
+
+    private void addRecent(FlowLayout flowLayout, List<String> list) {
         if (list == null || list.size() == 0) {
             iv_clear.setVisibility(View.GONE);
         } else {
@@ -73,29 +89,51 @@ public class SearchTopicFragment extends BaseFragment<String> {
         if (flowLayout != null) {
             flowLayout.removeAllViews();
         }
-        for (SearchItem s : list) {
+        for (int i=list.size()-1;i>=0;i--) {
+            String s = list.get(i);
             TextView tv = new TextView(mActivity);
             tv.setPadding(DpUtil.dip2px(mActivity, 15), DpUtil.dip2px(mActivity, 3),
                     DpUtil.dip2px(mActivity, 15), DpUtil.dip2px(mActivity, 3));
-            tv.setText(s.name);
+            tv.setText(s);
             tv.setMaxWidth(ScreenUtil.getScreenWidth(mActivity) - DpUtil.dip2px(mActivity, 24));
             tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setSingleLine();
             tv.setTextSize(14);
             tv.setTextColor(getResources().getColor(R.color.black_title_color));
             tv.setBackgroundResource(R.drawable.shape_gray50);
-
             tv.setLayoutParams(layoutParams);
-
-//            Log.e("TAG",layoutParams.width+"=="+ScreenUtil.getScreenWidth(mActivity));
-//            if (layoutParams.width>ScreenUtil.getScreenWidth(mActivity)){
-//                layoutParams.width = ScreenUtil.getScreenWidth(mActivity);
-//            }
             tv.setOnClickListener(v -> {
-//                TopicDetailActivity.launch(mActivity);
+                SearchFindResultActivity.launch(mActivity, tv.getText().toString(),SearchFindResultActivity.TOPIC);
             });
             flowLayout.addView(tv, layoutParams);
         }
+    }
+
+    private void saveSearch(String data) {
+        for (String s : historySet) {
+            if (s.equals(data)) {
+                historySet.remove(s);
+                break;
+            }
+        }
+        historySet.add(data);
+        Gson gson = new Gson();
+        String usersJson = gson.toJson(historySet);
+        GlobalParam.setSearchTopic(usersJson);
+        getHistoryData();
+    }
+
+    @Override
+    public void onEvent(UpdateSearchTopic o) {
+        super.onEvent(o);
+        saveSearch(o.name);
+    }
+
+
+    @OnClick(R.id.iv_clear)
+    public void onClick() {
+        GlobalParam.setSearchTopic("");
+        getHistoryData();
     }
 
 

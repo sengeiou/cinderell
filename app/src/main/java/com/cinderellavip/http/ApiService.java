@@ -418,6 +418,10 @@ public interface ApiService {
     Observable<BaseResult<ListDiscussesResult>>
     getDiscussCollects();
 
+    @GET(HttpUrl.discuss_search)
+    Observable<BaseResult<ListDiscussesResult>>
+    getDiscussSearch(@QueryMap TreeMap<String, String> map);
+
     @POST(HttpUrl.discuss_reply)
     @FormUrlEncoded
     Observable<BaseResult>

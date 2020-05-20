@@ -46,9 +46,6 @@ public class SearchTopicForPublishPostFragment extends BaseListFragment<HotTopic
         keyword = getArguments().getString("keyword");
 
         setLayoutManager();
-
-
-
         setEmptyView("暂无话题信息");
 
     }

@@ -112,6 +112,24 @@ public class GlobalParam {
         return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.search,"");
     }
 
+    //存 帖子搜索记录
+    public static void setSearchPost(String userid) {
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.search_post, userid);
+    }
+    //取 帖子搜索记录
+    public static String getSearchPost() {
+        return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.search_post,"");
+    }
+
+    //存 话题搜索记录
+    public static void setSearchTopic(String userid) {
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.search_topic, userid);
+    }
+    //取 话题搜索记录
+    public static String getSearchTopic() {
+        return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.search_topic,"");
+    }
+
 
 
     //登录成功是否直接返回 用户没登录的情况 操作之后 返回当前界面

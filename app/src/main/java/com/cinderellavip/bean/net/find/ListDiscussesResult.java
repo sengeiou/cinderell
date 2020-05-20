@@ -9,4 +9,5 @@ import java.util.List;
 public class ListDiscussesResult{
     public List<FindItem> discusses;
     public List<HotTopicItem> hot_topics;
+    public int total;
 }

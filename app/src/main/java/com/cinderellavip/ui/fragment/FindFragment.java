@@ -1,15 +1,10 @@
 package com.cinderellavip.ui.fragment;
 
-import android.os.Bundle;
-
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.ui.activity.find.SearchFindActivity;
 import com.cinderellavip.ui.fragment.find.FindAttentionFragment;
 import com.cinderellavip.ui.fragment.find.FindFindFragment;
-import com.cinderellavip.ui.fragment.goods.CommentFragment;
-import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
-import com.cinderellavip.ui.fragment.goods.GraphicFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
@@ -51,6 +46,7 @@ public class FindFragment extends BaseFragment {
         viewPager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewPager);
     }
+
 
 
     @OnClick(R.id.iv_search)

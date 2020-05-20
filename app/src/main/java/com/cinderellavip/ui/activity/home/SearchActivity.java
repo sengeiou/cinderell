@@ -53,11 +53,6 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.ll_history)
     LinearLayout ll_history;
 
-//    public static void launch(Context from, int type) {
-//        Intent intent = new Intent(from, SearchActivity.class);
-//        intent.putExtra("type", type);
-//        from.startActivity(intent);
-//    }
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, SearchActivity.class);

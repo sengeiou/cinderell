@@ -9,12 +9,16 @@ import android.widget.EditText;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
+import com.cinderellavip.bean.eventbus.UpdateSearchPost;
+import com.cinderellavip.bean.eventbus.UpdateSearchTopic;
 import com.cinderellavip.ui.fragment.find.SearchPostFragment;
 import com.cinderellavip.ui.fragment.find.SearchTopicFragment;
 import com.cinderellavip.util.KeyboardUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +93,14 @@ public class SearchFindActivity extends BaseActivity {
                     KeyboardUtils.hideKeyboard(etSearch);
                     tsg("请输入关键字");
                 } else {
-                    SearchFindResultActivity.launch(mActivity, trim);
+                    if (viewPager.getCurrentItem() == 0){
+                        //帖子搜索
+                        EventBus.getDefault().post(new UpdateSearchPost(trim));
+                    }else {
+                        //话题搜索
+                        EventBus.getDefault().post(new UpdateSearchTopic(trim));
+                    }
+                    SearchFindResultActivity.launch(mActivity,trim,viewPager.getCurrentItem());
                 }
             }
             return false;
