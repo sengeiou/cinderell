@@ -33,6 +33,8 @@ public class ImageShareAdapter extends BaseQuickAdapter<ShareImageItem, BaseView
         ImageView iv_image_close = helper.getView(R.id.iv_image_close);
         RelativeLayout ll_root = helper.getView(R.id.ll_root);
 
+
+
         ImageUtil.loadNet(getContext(),iv_image,item.path);
         if (!item.isCheck){
             iv_image_close.setImageResource(R.mipmap.share_image_default);
@@ -40,8 +42,11 @@ public class ImageShareAdapter extends BaseQuickAdapter<ShareImageItem, BaseView
             iv_image_close.setImageResource(R.mipmap.share_image_select);
         }
         iv_image.setOnClickListener(v -> {
+
+
             item.isCheck = !item.isCheck ;
             notifyDataSetChanged();
+
 
         });
 

@@ -26,7 +26,7 @@ public class SecondDialogUtil {
 
 
     public static void showPosterDialog(Context context,
-                                        GoodsResult goodsResult, AppletsCode appletsCode, onSelectListener listener) {
+                                        GoodsResult goodsResult, Bitmap appletsCode, onSelectListener listener) {
         View view = View.inflate(context, R.layout.pop_bottom_poster, null);
         GoodsInfo product_info = goodsResult.product_info;
         dialog = DialogUtils.getCenterDialog(context, view);
@@ -43,7 +43,7 @@ public class SecondDialogUtil {
         ImageUtil.loadNet(context,iv_avatar,userBean.user_avatar);
         tv_name.setText(userBean.username);
         ImageUtil.loadNet(context, iv_image, product_info.images.get(0));
-        ImageUtil.loadNet(context, iv_code, appletsCode.url);
+        iv_code.setImageBitmap(appletsCode);
         tv_product_name.setText(product_info.name);
         tv_price.setText("￥"+product_info.getPrice());
 
