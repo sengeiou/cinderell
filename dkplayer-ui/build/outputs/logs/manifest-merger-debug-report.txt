@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml:1:1-2:45
-INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml:1:1-2:45
-INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml:1:1-2:45
+ADDED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml:1:1-2:45
+INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml:1:1-2:45
+INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml:1:1-2:45
 	package
-		ADDED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml:2:5-42
-		INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-		INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
+		ADDED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml:2:5-42
+		INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+		INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml:1:11-69
+		ADDED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml:1:11-69
 uses-sdk
-INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
+INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-		ADDED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-		INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
+		INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+		ADDED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+		INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-		ADDED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
-		INJECTED from D:\newproject\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
+		INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+		ADDED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml
+		INJECTED from /Users/xumingming/Desktop/cinderellavip/dkplayer-ui/src/main/AndroidManifest.xml

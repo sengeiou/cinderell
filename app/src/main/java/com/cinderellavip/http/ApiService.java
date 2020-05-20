@@ -20,6 +20,7 @@ import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.cart.CartResult;
 import com.cinderellavip.bean.net.find.DiscussInfoResult;
+import com.cinderellavip.bean.net.find.FindItem;
 import com.cinderellavip.bean.net.find.HotTopicItem;
 import com.cinderellavip.bean.net.find.ListDiscussesResult;
 import com.cinderellavip.bean.net.find.TopicInfoResult;
@@ -317,6 +318,10 @@ public interface ApiService {
     @GET(HttpUrl.balance)
     Observable<BaseResult<MineBalanceResult>>
     mineBalance(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.collects)
+    Observable<BaseResult<ListResult<FindItem>>>
+    mineCollect(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.withdrawal_apply)
     Observable<BaseResult>

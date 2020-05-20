@@ -23,5 +23,13 @@ public class FindItem{
     }
 
 
+    //为了收藏
+    public String store_name;
+    public String store_id;
+    public String brand_id;
+    public String brand_name;
+    public String brand_logo;
+
+
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:background="@color/white"
     android:orientation="vertical">
@@ -23,12 +23,12 @@
             android:id="@+id/merchant_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@mipmap/demo_brand_avater"/>
+            tools:src="@mipmap/demo_brand_avater"/>
         <TextView
             android:id="@+id/merchant_name"
             style="@style/base_text_style"
             android:gravity="right"
-            android:text="三只松鼠"
+            tools:text="三只松鼠"
             android:layout_marginLeft="12dp"
             />
 
