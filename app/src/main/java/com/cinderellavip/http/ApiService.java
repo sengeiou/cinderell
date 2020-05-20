@@ -85,6 +85,12 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult<UserInfo>>
     getLogin(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.is_bind)
+    @FormUrlEncoded
+    Observable<BaseResult<UserInfo>>
+    isBind(@FieldMap TreeMap<String, String> map);
+
     @POST(HttpUrl.get_code)
     @FormUrlEncoded
     Observable<BaseResult>
@@ -104,6 +110,11 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult>
     getForgetPass(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.bind)
+    @FormUrlEncoded
+    Observable<BaseResult<UserInfo>>
+    getBind(@FieldMap TreeMap<String, String> map);
 
     @GET(HttpUrl.home_category)
     Observable<BaseResult<HomeCategoryResult>>

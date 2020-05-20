@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
+import com.cinderellavip.bean.BindLogin;
 import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
 import com.cinderellavip.bean.eventbus.LoginSuccess;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
@@ -70,6 +71,14 @@ public class FastLoginActivity extends BaseActivity {
     public static void launch(Activity activity, int type) {
         Intent intent = new Intent(activity, FastLoginActivity.class);
         intent.putExtra("type", type);
+        activity.startActivityForResult(intent, 100);
+    }
+
+    private  BindLogin bindLogin;
+    public static void launch(Activity activity, BindLogin bindLogin) {
+        Intent intent = new Intent(activity, FastLoginActivity.class);
+        intent.putExtra("type", BIND_PHONE);
+        intent.putExtra("bindLogin",bindLogin);
         activity.startActivityForResult(intent, 100);
     }
 
@@ -216,9 +225,7 @@ public class FastLoginActivity extends BaseActivity {
         if (type == FAST_LOGIN) {
             codeLogin(phone,code);
         } else if (type == BIND_PHONE) {
-            EventBus.getDefault().post(new LoginFinishSuccess());
-            tsg("绑定成功");
-            MainActivity.launch(mActivity);
+           bind(phone,code,pass);
         } else if (type == FORGET_PASS) {
             forgetPass(phone,code,pass);
 
@@ -271,6 +278,41 @@ public class FastLoginActivity extends BaseActivity {
                     public void onSuccess(BaseResult result) {
                         tsg("修改成功");
                         setResult();
+                    }
+                });
+    }
+
+    /**
+     * 忘记密码
+     * @param mobile
+     * @param sms_code
+     */
+    private void bind(String mobile,String sms_code,String new_password){
+        BindLogin bindLogin = getIntent().getParcelableExtra("bindLogin");
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("unionid", bindLogin.unionid);
+        hashMap.put("nickname", bindLogin.nickname);
+        hashMap.put("avatar", bindLogin.avatar);
+        hashMap.put("sex", bindLogin.sex);
+        hashMap.put("mobile", mobile);
+        hashMap.put("sms_code", sms_code);
+        hashMap.put("password", new_password);
+        new RxHttp<BaseResult<UserInfo>>().send(ApiManager.getService().getBind(hashMap),
+                new Response<BaseResult<UserInfo>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<UserInfo> result) {
+                        EventBus.getDefault().post(new LoginFinishSuccess());
+                        UserInfo userInfo = result.data;
+                        GlobalParam.setUserInfo(userInfo);
+                        if (GlobalParam.getLoginFinish()){
+                            EventBus.getDefault().post(new UpdateMineInfo());
+                            EventBus.getDefault().post(new LoginSuccess());
+                            GlobalParam.setLoginFinish(false);
+                            KeyboardUtils.hideInput(mActivity);
+                            finish();
+                        }else {
+                            MainActivity.launch(mActivity);
+                        }
                     }
                 });
     }

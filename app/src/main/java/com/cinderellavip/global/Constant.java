@@ -12,10 +12,10 @@ import com.cinderellavip.http.HttpUrl;
 public class Constant {
 
     //图片地址
-    public static final String PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/com.cinderellavip/image";
-    public static final String ROOT_PATH = Environment.getExternalStorageDirectory() + "/com.cinderellavip";
+    public static final String PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/cinderellavip/image";
+    public static final String ROOT_PATH = Environment.getExternalStorageDirectory() + "/cinderellavip";
     public static final String cacheDirPath = Environment
-            .getExternalStorageDirectory() + "/com.cinderellavip";
+            .getExternalStorageDirectory() + "/cinderellavip";
 
 
     public static String user_login = "cinder_user_login";

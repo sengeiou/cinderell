@@ -10,6 +10,7 @@ public class UserInfo {
     public int user_id;
     public String invite_code;
     public int type;
+    public boolean is_bind;
 
 
 

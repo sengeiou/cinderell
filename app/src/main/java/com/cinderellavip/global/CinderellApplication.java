@@ -55,6 +55,7 @@ public class CinderellApplication extends Application {
         UMConfigure.init(this,"5e8bfc81dbc2ec080a349f20"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
         PlatformConfig.setWeixin(Constant.WX_APPID, Constant.WX_APP_SECRET);
+        PlatformConfig.setAlipay("2021001152637888");
 
 
 

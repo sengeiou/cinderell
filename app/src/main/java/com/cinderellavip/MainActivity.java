@@ -25,6 +25,7 @@ import com.cinderellavip.ui.fragment.ShopFragment;
 import com.flyco.roundview.RoundTextView;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.io.File;
 
@@ -343,8 +344,8 @@ public class MainActivity extends CheckPermissionActivity {
 
         File RootPath = new File(Constant.ROOT_PATH);
         if (!RootPath.exists()) {
-            boolean b = RootPath.mkdirs();
-            tsg("创建"+b);
+            boolean b = RootPath.mkdir();
+            LogUtil.e("创建"+b);
         }
 
 
