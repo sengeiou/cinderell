@@ -100,6 +100,7 @@ public class RegisterActivity extends BaseActivity {
         hashMap.put("sms_code", code);
         hashMap.put("password", pass);
         hashMap.put("invite_code", invite_code);
+        hashMap.put("from", "1");
 
         new RxHttp<BaseResult>().send(ApiManager.getService().getRegister(hashMap),
                 new Response<BaseResult>(mActivity) {

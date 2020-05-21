@@ -46,7 +46,7 @@ public class ServiceListProjectAdapter extends BaseQuickAdapter<LiftHomeServiceI
             BuyServiceActivity.launch(getContext());
         });
         helper.getView(R.id.ll_root).setOnClickListener(view -> {
-            ServiceDetailActivity.launch(getContext());
+            ServiceDetailActivity.launch(getContext(),item.id);
         });
 
 

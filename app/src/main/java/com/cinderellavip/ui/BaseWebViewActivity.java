@@ -16,6 +16,10 @@ public  abstract class BaseWebViewActivity extends BaseActivity {
         web_view.loadUrl(url);
     }
 
+    protected void loadData(String url){
+        web_view.loadData(url,"text/html", "UTF-8");
+    }
+
     @Override
     public void initView(Bundle savedInstanceState) {
         web_view = findViewById(R.id.veb_view);

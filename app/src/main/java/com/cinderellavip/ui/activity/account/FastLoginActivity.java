@@ -297,6 +297,7 @@ public class FastLoginActivity extends BaseActivity {
         hashMap.put("mobile", mobile);
         hashMap.put("sms_code", sms_code);
         hashMap.put("password", new_password);
+        hashMap.put("from", "1");
         new RxHttp<BaseResult<UserInfo>>().send(ApiManager.getService().getBind(hashMap),
                 new Response<BaseResult<UserInfo>>(mActivity) {
                     @Override

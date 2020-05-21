@@ -13,6 +13,7 @@ public interface HttpUrl {
     String uploads = "api/store/upload/images";  //上传图片
     String get_code = "api/store/sms/send";  //获取验证码
     String get_qr_code = "api/store/applets/qr-code";  //获取小程序码
+    String get_phone = "api/store/platform/customer";  //获取客服电话
     //登录注册
     String login = "api/store/login";  //用户名登录
     String code_login = "api/store/login/fast";  //短信验证码登录

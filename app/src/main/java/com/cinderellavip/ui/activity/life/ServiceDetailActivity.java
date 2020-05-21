@@ -7,10 +7,18 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.life.ServiceProjectDetail;
+import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.ShareClickListener;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.ui.BaseWebViewActivity;
+import com.tozzais.baselibrary.http.RxHttp;
+
+import java.util.TreeMap;
 
 import butterknife.OnClick;
 
@@ -21,8 +29,11 @@ import butterknife.OnClick;
 public class ServiceDetailActivity extends BaseWebViewActivity {
 
 
-    public static void launch(Context from) {
+    //服务项目和套餐ID
+    private int id;
+    public static void launch(Context from,int id) {
         Intent intent = new Intent(from, ServiceDetailActivity.class);
+        intent.putExtra("id",id);
         from.startActivity(intent);
     }
 
@@ -30,14 +41,36 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        setBackTitle("物品整理服务");
+        setLineVisibility();
+        id = getIntent().getIntExtra("id",-1);
+        setBackTitle("");
         setRightIcon(R.mipmap.share_service);
 
     }
 
     @Override
     public void loadData() {
-        loadUrl(url);
+        if (id == -1){
+            tsg("获取id出错");
+            return;
+        }
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("project", id+"");
+        hashMap.put("city",CinderellApplication.name+"");
+        new RxHttp<BaseResult<ServiceProjectDetail>>().send(ApiManager.getService().serviceProjectAndPackageDetail(hashMap),
+                new Response<BaseResult<ServiceProjectDetail>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ServiceProjectDetail> result) {
+                        ServiceProjectDetail serviceProjectDetail = result.data;
+                        setBackTitle(serviceProjectDetail.title);
+                        loadData(serviceProjectDetail.content);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
     }
 
