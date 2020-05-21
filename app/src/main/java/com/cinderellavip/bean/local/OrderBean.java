@@ -32,6 +32,8 @@ public class OrderBean {
 
     public int store_id;
     public String store_name;
+    public boolean virtual;//是否是虚拟订单
+    public String send_remark;//是否是虚拟订单
 
 
     //退款订单列表

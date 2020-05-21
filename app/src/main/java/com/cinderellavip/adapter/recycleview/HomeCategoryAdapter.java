@@ -70,7 +70,7 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
         helper.getView(R.id.rl_root).setOnClickListener(v -> {
             if ("-1".equals(item.type)){
                getGoods();
-            }else if (homeCategoryItem != null && "3".equals(item.type)){
+            }else if (homeCategoryItem != null && ("3".equals(item.type) || "2".equals(item.type))){
                 GoodsListActivity.launch(getContext(),item.name,item.id);
             }else if (onCategoryClick != null ){
                 onCategoryClick.onCategoryClick(item);

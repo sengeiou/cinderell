@@ -6,10 +6,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.CategoryItem;
+import com.cinderellavip.bean.net.HomeCategoryItem;
+import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.listener.CategoryClickListener;
 
 
-public class CategoryHomeAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
+public class CategoryHomeAdapter extends BaseQuickAdapter<HomeCategoryItem, BaseViewHolder> {
 
     private CategoryClickListener categoryClickListener;
     public CategoryHomeAdapter(CategoryClickListener categoryClickListener) {
@@ -19,7 +21,7 @@ public class CategoryHomeAdapter extends BaseQuickAdapter<CategoryItem, BaseView
 
 
     @Override
-    protected void convert(final BaseViewHolder helper, final CategoryItem item) {
+    protected void convert(final BaseViewHolder helper, final HomeCategoryItem item) {
         int position = helper.getAdapterPosition();
 
         TextView tv_name = helper.getView(R.id.tv_name);
@@ -31,9 +33,9 @@ public class CategoryHomeAdapter extends BaseQuickAdapter<CategoryItem, BaseView
             tv_name.setBackgroundResource(R.drawable.shape_white50);
         }
 
-        tv_name.setText(item.type_name);
+        tv_name.setText(item.name);
         tv_name.setOnClickListener(view -> {
-
+            categoryClickListener.onCategorySelect(position);
             for (int i = 0;i<getData().size();i++){
                 getData().get(i).isCheck = (i == position);
             }

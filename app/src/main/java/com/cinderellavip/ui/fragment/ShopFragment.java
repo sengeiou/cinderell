@@ -76,6 +76,9 @@ public class ShopFragment extends BaseFragment {
 
     @Override
     public void loadData() {
+        if (!isLoad){
+            showProress();
+        }
         getCategory();
         getSearchHint();
 

@@ -12,6 +12,7 @@ import com.cinderellavip.adapter.recycleview.CartAdapter;
 import com.cinderellavip.adapter.recycleview.CartEmptyAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.eventbus.AddCart;
+import com.cinderellavip.bean.eventbus.UpdateCart;
 import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.cart.CartItem;
 import com.cinderellavip.bean.local.HomeGoods;
@@ -120,6 +121,11 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
                     public void onSuccess(BaseResult<CartResult> result) {
                         setData(result.data.products);
                         setCartData(result.data.list);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
     }
@@ -242,7 +248,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);
-        if (o instanceof AddCart){
+        if (o instanceof AddCart || o instanceof UpdateCart){
             onRefresh();
         }
     }

@@ -72,6 +72,11 @@ public class GoodsListFragment extends BaseListFragment<HomeGoods> {
                     public void onSuccess(BaseResult<ListResult<HomeGoods>> result) {
                         setData(result.data.list);
                     }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }

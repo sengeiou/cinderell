@@ -7,26 +7,36 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CategoryHomeAdapter;
 import com.cinderellavip.adapter.recycleview.CategoryHomeListAdapter;
 import com.cinderellavip.bean.net.CategoryItem;
+import com.cinderellavip.bean.net.HomeCategoryItem;
+import com.cinderellavip.bean.net.HomeCategoryResult;
+import com.cinderellavip.bean.net.home.CateMoreList;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.CategoryClickListener;
+import com.cinderellavip.util.dialog.RightDialogUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.weight.ProgressLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 
-public class CategoryFragment extends BaseListFragment<String> implements CategoryClickListener {
+public class CategoryFragment extends BaseListFragment<CateMoreList> implements CategoryClickListener {
 
 
     @BindView(R.id.rv_category)
     RecyclerView rvCategory;
 
 
-    protected BaseQuickAdapter mCategoryAdapter;
+    protected CategoryHomeAdapter mCategoryAdapter;
     @BindView(R.id.progress_bar)
     ProgressLayout progressBar;
     @BindView(R.id.progress_bar1)
@@ -52,34 +62,11 @@ public class CategoryFragment extends BaseListFragment<String> implements Catego
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new CategoryHomeListAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
-
-
     }
-
 
     @Override
     public void loadData() {
-
-//        getOneCategory();
-
-        List<CategoryItem> data = new ArrayList<>();
-        data.add(new CategoryItem(true,"食品生鲜"));
-        data.add(new CategoryItem(false,"居家百货"));
-        data.add(new CategoryItem(false,"家电电器"));
-        data.add(new CategoryItem(false,"数码电子"));
-        data.add(new CategoryItem(false,"美妆日化"));
-        data.add(new CategoryItem(false,"母婴用品"));
-        data.add(new CategoryItem(false,"个护清洗"));
-        data.add(new CategoryItem(false,"服装鞋包"));
-        data.add(new CategoryItem(false,"童装童鞋"));
-        data.add(new CategoryItem(false,"宠物园艺"));
-        mCategoryAdapter.setNewData(data);
-
-
-        List<String> data1 = new ArrayList<>();
-        data1.add("常用分类");
-        mAdapter.setNewData(data1);
+        getCategory();
     }
 
     @Override
@@ -93,23 +80,60 @@ public class CategoryFragment extends BaseListFragment<String> implements Catego
 
 
 
-    CategoryItem categoryItem;
-
     private int onePosition = 0;//一级分类选择的位置。防止点击相同的item 还请求网络的bug
     @Override
     public void onCategorySelect(int position) {
+        if (onePosition == position){
+            return;
+        }
+        this.onePosition = position;
+        HomeCategoryItem homeCategoryItem = mCategoryAdapter.getData().get(position);
+        getTwoCategory(homeCategoryItem.id+"");
 
 
     }
 
-    private void getOneCategory() {
-
+    /**
+     * 获取一级分类
+     */
+    private void getCategory(){
+        new RxHttp<BaseResult<HomeCategoryResult>>().send(ApiManager.getService().getHomeCategory(),
+                new Response<BaseResult<HomeCategoryResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<HomeCategoryResult> result) {
+                        showContent();
+                        isLoad = true;
+                        List<HomeCategoryItem> list = result.data.list;
+                        HomeCategoryItem homeCategoryItem = list.get(0);
+                        homeCategoryItem.isCheck = true;
+                        mCategoryAdapter.setNewData(list);
+                        getTwoCategory(homeCategoryItem.id+"");
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        tsg(s);
+                    }
+                });
 
     }
 
-    private void getTwoCategory(int position, int type_id) {
-
-
+    private void getTwoCategory(String first_category_id) {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("first_category_id", ""+first_category_id);
+        new RxHttp<BaseResult<ListResult<CateMoreList>>>().send(ApiManager.getService().getHomeMoreCate(hashMap),
+                new Response<BaseResult<ListResult<CateMoreList>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<CateMoreList>> result) {
+                        List<CateMoreList> listListResult = new ArrayList<>();
+                        List<CateMoreList> list = result.data.list;
+                        for (CateMoreList cateMoreList:list){
+                            if (cateMoreList != null && cateMoreList.next != null && cateMoreList.next.size()>0){
+                                listListResult.add(cateMoreList);
+                            }
+                        }
+                        setData(true,listListResult);
+                    }
+                });
     }
 
 

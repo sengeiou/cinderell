@@ -3,6 +3,7 @@ package com.cinderellavip.ui.activity.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +32,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
+import com.tozzais.baselibrary.util.log.LogUtil;
+import com.tozzais.baselibrary.weight.ProgressLayout;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -61,6 +64,8 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     TextView tvLeftPrice;
     @BindView(R.id.tv_right_price)
     TextView tvRightPrice;
+    @BindView(R.id.goods_layout)
+    ProgressLayout goods_layout;
 
     private List<BaseFragment> fragmentList;
     private List<String> list_Title;
@@ -90,6 +95,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        LogUtil.e("initView");
         toolbar.setNavigationIcon(R.mipmap.back);
         toolbar.setNavigationOnClickListener(view -> back());
         id = getIntent().getStringExtra("id");
@@ -127,15 +133,16 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     @Override
     public void loadData() {
-
+        LogUtil.e("loadData");
         new RxHttp<BaseResult<GoodsResult>>().send(ApiManager.getService().getGoodsDetail(id),
-                new Response<BaseResult<GoodsResult>>(isLoad,mActivity) {
+                new Response<BaseResult<GoodsResult>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<GoodsResult> result) {
+                        goods_layout.showContent();
                         goodsResult = result.data;
                         GoodsInfo productInfo = goodsResult.product_info;
                         if (goodsDetailGoodsFragment != null)
-                        goodsDetailGoodsFragment.setData(goodsResult);
+                            goodsDetailGoodsFragment.setData(goodsResult);
                         if (graphicFragment != null) {
                             graphicFragment.setData(productInfo.detail);
                         }
@@ -149,7 +156,21 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                         }
 
                     }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        goods_layout.showError(s, v -> {
+                            loadData();
+                        });
+                    }
                 });
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        LogUtil.e("onSaveInstanceState");
     }
 
     GoodsResult goodsResult;

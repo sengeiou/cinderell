@@ -42,6 +42,9 @@ public class OrderInfo {
     public int  total_user;
     public List<String> group_users;
 
+    public boolean virtual;//是否是虚拟订单
+    public String send_remark;//是否是虚拟订单
+
 
 
 }

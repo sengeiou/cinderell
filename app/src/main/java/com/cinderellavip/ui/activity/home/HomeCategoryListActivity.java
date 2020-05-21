@@ -4,13 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.home.CategoryFragment;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
-import com.tozzais.baselibrary.util.StatusBarUtil;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
@@ -21,6 +27,9 @@ import butterknife.OnClick;
 public class HomeCategoryListActivity extends BaseActivity {
 
 
+    @BindView(R.id.tv_hint)
+    TextView tv_hint;
+
     public static void launch(Activity from) {
         Intent intent = new Intent(from, HomeCategoryListActivity.class);
         from.startActivityForResult(intent, RequestCode.request_service_coupon);
@@ -29,10 +38,20 @@ public class HomeCategoryListActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        getSearchHint();
 
     }
 
+    private void getSearchHint(){
+        new RxHttp<BaseResult<HotList<String>>>().send(ApiManager.getService().getSearchWords(),
+                new Response<BaseResult<HotList<String>>>(mActivity,Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseResult<HotList<String>> result) {
+                        HotList<String> data = result.data;
+                        tv_hint.setText(data.keyword);
+                    }
+                });
+    }
 
     @Override
     public void loadData() {

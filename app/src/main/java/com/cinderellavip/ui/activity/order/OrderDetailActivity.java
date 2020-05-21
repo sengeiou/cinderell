@@ -1,5 +1,6 @@
 package com.cinderellavip.ui.activity.order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.ReturnUtil;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.mine.LogisticsActivity;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.weight.MyListView;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -189,7 +191,7 @@ public class OrderDetailActivity extends BaseActivity {
                 break;
             case 2:
                 tvStatus.setText("待发货");
-                tvStatus1.setVisibility(View.VISIBLE);
+                tvStatus1.setVisibility(View.GONE);
                 tvBtnBottom2.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 llBottom.setVisibility(View.VISIBLE);
@@ -281,7 +283,11 @@ public class OrderDetailActivity extends BaseActivity {
                     case 3:
                     case 5:
                     case 4:
-                        LogisticsActivity.launch(mActivity,orderInfo.id+"");
+                        if (orderInfo.virtual){
+                            AgreementWebViewActivity.launch(mActivity,orderInfo.send_remark);
+                        }else {
+                            LogisticsActivity.launch(mActivity,orderInfo.id+"");
+                        }
                         break;
                 }
 //

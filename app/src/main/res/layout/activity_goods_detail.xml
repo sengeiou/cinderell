@@ -71,12 +71,19 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <com.tozzais.baselibrary.weight.ProgressLayout
+        android:id="@+id/goods_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <com.cinderellavip.weight.VerticalViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </com.tozzais.baselibrary.weight.ProgressLayout>
 
-   <com.cinderellavip.weight.VerticalViewPager
-       android:id="@+id/viewpager"
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:layout_weight="1"/>
+
 
 
     <View
@@ -145,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content"
-                    tools:text="￥278\n单独购买"
+                    android:text="加入购物车"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:lineSpacingExtra="3dp"
@@ -168,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content"
-                    tools:text="￥200\n参团购买"
+                    android:text="立即购买"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:lineSpacingExtra="3dp"

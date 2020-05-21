@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.EnsureOrderAdapter;
+import com.cinderellavip.bean.eventbus.UpdateCart;
 import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.local.SelectCouponsBean;
 import com.cinderellavip.bean.net.NetCityBean;
@@ -23,6 +24,8 @@ import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.util.CouponsStringUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.TreeMap;
 
@@ -287,6 +290,7 @@ public class EnsureOrderActivity extends BaseActivity {
                 new Response<BaseResult<CreateOrderBean>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<CreateOrderBean> result) {
+                        EventBus.getDefault().post(new UpdateCart());
                         CreateOrderBean settleResult = result.data;
                         settleResult.type = CreateOrderBean.CART;
                         SelectPayWayActivity.launch(mActivity, settleResult);

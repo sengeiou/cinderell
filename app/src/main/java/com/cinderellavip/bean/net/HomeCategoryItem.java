@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 public class HomeCategoryItem implements Parcelable {
 
+    public boolean isCheck;
+
 
     public int id;
     public String name;

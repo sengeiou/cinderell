@@ -72,6 +72,8 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
 
     @BindView(R.id.ll_recommet_cookbook_space)
     View llRecommetCookbookSpace;//间隔
+    @BindView(R.id.ll_merchant)
+    LinearLayout ll_merchant;//品牌布局
     @BindView(R.id.rl_comment)
     RecyclerView rlComment; //评价
     @BindView(R.id.rl_recommend)
@@ -227,8 +229,15 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
         } else {
 
         }
-        ImageUtil.loadNet1(mActivity, merchantIcon, productInfo.brand_image);
-        merchantName.setText(productInfo.brand_name);
+        if (productInfo.brand_id == 0){
+            ll_merchant.setVisibility(View.GONE);
+            llRecommetCookbookSpace.setVisibility(View.GONE);
+        }else {
+            ll_merchant.setVisibility(View.VISIBLE);
+            llRecommetCookbookSpace.setVisibility(View.VISIBLE);
+            ImageUtil.loadNet1(mActivity, merchantIcon, productInfo.brand_image);
+            merchantName.setText(productInfo.brand_name);
+        }
 
         tvCommentNumber.setText("商品评价(" + goodsResult.comments_num + ")");
         recommentInAdapter.setNewData(goodsResult.recommend_products);

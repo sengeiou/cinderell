@@ -25,6 +25,7 @@ import com.cinderellavip.ui.activity.mine.LogisticsActivity;
 import com.cinderellavip.ui.activity.order.OrderCommentActivity;
 import com.cinderellavip.ui.activity.order.OrderDetailActivity;
 import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
@@ -118,7 +119,12 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
                     OrderDetailActivity.launch(getContext(),item.id);
                     break;
                 case 3:
-                    LogisticsActivity.launch((Activity) getContext(),item.id+"");
+                    if (item.virtual){
+                        AgreementWebViewActivity.launch(getContext(),item.send_remark);
+                    }else {
+                        LogisticsActivity.launch((Activity) getContext(),item.id+"");
+                    }
+
                     break;
 
             }
