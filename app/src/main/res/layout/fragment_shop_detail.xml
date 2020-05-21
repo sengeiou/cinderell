@@ -36,14 +36,6 @@
 
 
 
-                    <com.cinderellavip.weight.ScaleImageView
-                        android:id="@+id/iv_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        app:scale="0.496"
-                        tools:src="@mipmap/demo_brand_image"/>
-
 
 
 
@@ -52,14 +44,7 @@
                 </LinearLayout>
 
 
-                <com.cinderellavip.weight.FilterView
-                    android:id="@+id/filter_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    app:tabIndicatorHeight="0dp"
-                    android:background="@color/gray_bg"
-                    app:tabMode="fixed"
-                    />
+
 
 
 

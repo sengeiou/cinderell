@@ -49,8 +49,6 @@ public class GoodsListFragment extends BaseListFragment<HomeGoods> {
         girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10),2,0,true);
         setLayoutManager();
 
-
-
         setEmptyView("暂无数据");
 
     }

@@ -37,6 +37,7 @@ public interface HttpUrl {
     String goods_for_brand_and_shop = "api/store/product/list/by-store-brand";//品牌 店铺 商品
     String collect = "api/store/collect/third";//收藏
     String banner_detail = "api/store/banner/info";//轮播详情
+    String store_category = "api/store/store/categories";//轮播详情
     //订单
     String add_cart = "api/store/cart/add";//加入购物车
     String modify_cart_number = "api/store/cart/num";//修改购物车数量

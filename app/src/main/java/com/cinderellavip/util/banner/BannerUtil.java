@@ -63,7 +63,7 @@ public class BannerUtil {
 //                    BrandDetailActivity.launch(context);
                     break;
                 case 6:
-                    ShopDetailActivity.launch(context);
+                    ShopDetailActivity.launchShop(context,((HomeBanner) model).value);
                     break;
                 case 7:
 

@@ -13,6 +13,7 @@ import com.cinderellavip.bean.local.OperateProductBean;
 import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.bean.local.SelectCouponsBean;
 import com.cinderellavip.bean.net.BrandResult;
+import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.bean.net.IntegralExchangeLogistics;
@@ -219,6 +220,10 @@ public interface ApiService {
     @GET(HttpUrl.collect)
     Observable<BaseResult>
     getCollect(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.store_category)
+    Observable<BaseResult<ListResult<HomeCategoryItem>>>
+    storeCategory(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.add_cart)
     Observable<BaseResult>

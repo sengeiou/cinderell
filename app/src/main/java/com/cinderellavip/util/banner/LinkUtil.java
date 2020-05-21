@@ -26,7 +26,7 @@ public class LinkUtil {
 //                    BrandDetailActivity.launch(context);
                     break;
                 case 6:
-                    ShopDetailActivity.launch(context);
+                    ShopDetailActivity.launchShop(context,value);
                     break;
                 case 7:
 

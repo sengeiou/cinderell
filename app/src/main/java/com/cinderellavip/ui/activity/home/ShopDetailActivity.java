@@ -2,6 +2,8 @@ package com.cinderellavip.ui.activity.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -11,12 +13,16 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.ShopInfo;
 import com.cinderellavip.bean.net.ShopResult;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.ui.fragment.ShopDetailFragment;
+import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.StatusBarUtil;
 import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.TreeMap;
@@ -28,13 +34,20 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class ShopDetailActivity extends BaseActivity{
+public class ShopDetailActivity extends BaseActivity implements OnSureClickListener {
 
 
     @BindView(R.id.tv_title_name)
     TextView tvTitleName;
-    @BindView(R.id.iv_collect)
-    ImageView ivCollect;
+    @BindView(R.id.tv_collect)
+    TextView tv_collect;
+    @BindView(R.id.iv_logo)
+    ImageView iv_logo;
+    @BindView(R.id.iv_image)
+    ImageView iv_image;
+
+    @BindView(R.id.filter_view)
+    FilterView filter_view;
 
     public void setTvTitleName(String title) {
         tvTitleName.setText(title);
@@ -46,13 +59,6 @@ public class ShopDetailActivity extends BaseActivity{
         intent.putExtra("id",id);
         from.startActivity(intent);
     }
-
-    public static void launch(Context from) {
-        Intent intent = new Intent(from, ShopDetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        from.startActivity(intent);
-    }
-
     String id;
 
 
@@ -60,8 +66,13 @@ public class ShopDetailActivity extends BaseActivity{
     public void initView(Bundle savedInstanceState) {
         Intent intent = getIntent();
          id = intent.getStringExtra("id");
-//        tvTitleName.setText("id");
-//        setIvCollect(true);
+        filter_view.setTv_comment("新品");
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTransparentForImageViewInFragment(ShopDetailActivity.this,null);
+        StatusBarUtil.setLightMode(this);
     }
 
     private ShopInfo storeInfo;
@@ -74,19 +85,16 @@ public class ShopDetailActivity extends BaseActivity{
                     public void onSuccess(BaseResult<ShopResult> result) {
                         storeInfo = result.data.store_info;
                         if(mActivity instanceof ShopDetailActivity ){
-                            LogUtil.e(storeInfo.toString());
-                            ShopDetailActivity activity = (ShopDetailActivity) mActivity;
                             setTvTitleName(storeInfo.name);
                             setIvCollect(storeInfo.collect);
-
+                            ImageUtil.loadNet(mActivity,iv_logo,storeInfo.logo);
+                            ImageUtil.loadNet(mActivity,iv_image,storeInfo.image);
                         }
+
                     }
                 });
     }
-    @Override
-    protected int getToolbarLayout() {
-        return -1;
-    }
+
 
     @Override
     public int getLayoutId() {
@@ -100,31 +108,38 @@ public class ShopDetailActivity extends BaseActivity{
 
     @Override
     public void loadData() {
+        getShopInfo();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_container,
-                ShopDetailFragment.newInstance(id)).commit();
+        fragment =  ShopDetailFragment.newInstance(id);
+        getSupportFragmentManager().beginTransaction().add(R.id.brand_container,
+                fragment).commit();
 
     }
+    private ShopDetailFragment fragment;
 
     @Override
     public void initListener() {
+        filter_view.setOnDialogClickListener(this);
     }
 
 
 
 
 
-    @OnClick({R.id.ll_back, R.id.ll_search, R.id.rl_collect})
+    @OnClick({R.id.iv_back, R.id.ll_search, R.id.ll_service, R.id.ll_category})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ll_back:
+            case R.id.iv_back:
                 mActivity.finish();
                 break;
             case R.id.ll_search:
                 SearchListActivity.launch(mActivity,id,SearchListActivity.SHOP);
                 break;
-            case R.id.rl_collect:
+            case R.id.ll_service:
                 collect();
+                break;
+            case R.id.ll_category:
+                ShopGoodsCategoryActivity.launch(mActivity,Integer.parseInt(id));
                 break;
 
         }
@@ -138,25 +153,30 @@ public class ShopDetailActivity extends BaseActivity{
                 new Response<BaseResult>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult result) {
-                        isCollect = !isCollect;
-                        setIvCollect(isCollect);
-
-
+                        storeInfo.collect = !storeInfo.collect;
+                        tsg(storeInfo.collect?"收藏成功":"取消收藏");
+                        setIvCollect(storeInfo.collect);
                     }
                 });
 
     }
-
-    private boolean isCollect;
+//
     public void setIvCollect(boolean isCollect){
-        this.isCollect = isCollect;
-        LogUtil.e(isCollect+"");
-        if (this.isCollect) {
-            ivCollect.setImageResource(R.mipmap.brand_collect_select);
+        if (isCollect) {
+
+            Drawable drawable= getResources().getDrawable(R.mipmap.brand_collect_select);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tv_collect.setCompoundDrawables(drawable,null,null,null);
         } else {
-            ivCollect.setImageResource(R.mipmap.brand_collect);
+            Drawable drawable= getResources().getDrawable(R.mipmap.brand_collect);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tv_collect.setCompoundDrawables(drawable,null,null,null);
         }
     }
 
 
+    @Override
+    public void onSure() {
+        fragment.setSortAndArea(filter_view.getSort()+"",filter_view.getSort_type()+"");
+    }
 }

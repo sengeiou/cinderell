@@ -154,6 +154,8 @@
         <activity android:name=".ui.activity.life.ServiceCheckListActivity"/>
         <activity android:name=".ui.web.AgreementWebViewActivity"/>
         <activity android:name=".ui.activity.home.SearchListActivity"/>
+        <activity android:name=".ui.activity.home.ShopGoodsListActivity"/>
+        <activity android:name=".ui.activity.home.ShopGoodsCategoryActivity"/>
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -184,12 +186,7 @@
         </meta-data>
 
 
-        <activity
-            android:name=".apshare.ShareEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
     </application>
 
 </manifest>

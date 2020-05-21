@@ -1,6 +1,7 @@
 package com.cinderellavip.ui.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,68 +37,61 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class ShopDetailFragment extends BaseListFragment<HomeGoods> implements OnSureClickListener {
-
-    @BindView(R.id.iv_top)
-    ImageView iv_top; //最上面的标题
+public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
 
 
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
 
-
-    @BindView(R.id.iv_image)
-    ImageView iv_image;
-    @BindView(R.id.filter_view)
-    FilterView filter_view;
-
-
-    public static ShopDetailFragment newInstance(String id) {
+    //店铺id
+    public static ShopDetailFragment newInstance(String store_id) {
         ShopDetailFragment cartFragment = new ShopDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("id", id);
+        bundle.putString("id", store_id);
         cartFragment.setArguments(bundle);
         return cartFragment;
 
     }
 
+    public static ShopDetailFragment newInstance(String store_id,String category_id) {
+        ShopDetailFragment cartFragment = new ShopDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", store_id);
+        bundle.putString("category_id", category_id);
+        cartFragment.setArguments(bundle);
+        return cartFragment;
 
+    }
 
     public String sort = "0", sort_type = "0";
-
     private  String id;
+    private  String category_id;
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         id = getArguments().getString("id");
-
-        getShopInfo();
-
+        category_id = getArguments().getString("category_id");
+        if (TextUtils.isEmpty(category_id)){
+            category_id = "";
+        }
 
         //设置商品
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        GirdSpace girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10), 2,0,true);
+        GirdSpace girdSpace =  new GirdSpace(DpUtil.dip2px(mActivity, 10),2,0,true);
         mRecyclerView.addItemDecoration(girdSpace);
         mAdapter = new HomeGoodsAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
-        filter_view.setTv_comment("新品");
     }
 
-    @Override
-    public int setLayout() {
-        return R.layout.fragment_shop_detail;
-    }
 
     @Override
     public void loadData() {
-
+        super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("store_id", "" + id);
         hashMap.put("sort", sort);
         hashMap.put("sort_type", sort_type);
         hashMap.put("limit", "" + PageSize);
         hashMap.put("page", "" + page);
+        hashMap.put("category_id", "" + category_id);
         new RxHttp<BaseResult<ListResult<HomeGoods>>>().send(ApiManager.getService().getBrandGoods(hashMap),
                 new Response<BaseResult<ListResult<HomeGoods>>>(isLoad, getContext()) {
                     @Override
@@ -112,99 +106,12 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> implements O
                 });
 
     }
-
-    private ShopInfo storeInfo;
-    private void getShopInfo() {
-        TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("store_id", id + "");
-        new RxHttp<BaseResult<ShopResult>>().send(ApiManager.getService().getShopInfo(hashMap),
-                new Response<BaseResult<ShopResult>>(getContext(),Response.BOTH) {
-                    @Override
-                    public void onSuccess(BaseResult<ShopResult> result) {
-                        storeInfo = result.data.store_info;
-                        if(mActivity instanceof ShopDetailActivity ){
-                            LogUtil.e(storeInfo.toString());
-                            ShopDetailActivity activity = (ShopDetailActivity) mActivity;
-                            activity.setTvTitleName(storeInfo.name);
-                            activity.setIvCollect(storeInfo.collect);
-                            ImageUtil.loadNet(mActivity,iv_image,storeInfo.image);
-
-                        }
-
-                    }
-                });
-    }
-
-    @Override
-    public void initListener() {
-        super.initListener();
-        swipeLayout.setEnabled(true);
-        filter_view.setOnDialogClickListener(this);
-
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            private int totalDy = 0;
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                totalDy += dy;
-//                LogUtil.e("totalDy"+totalDy);
-                if (totalDy > 100) {
-                    iv_top.setVisibility(View.VISIBLE);
-                } else {
-                    iv_top.setVisibility(View.GONE);
-                }
-            }
-        });
-        //SwipeRefreshLayout和CoordinatorLayout滑动冲突
-        appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
-            if (i >= 0) {
-                swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
-            } else {
-                swipeLayout.setEnabled(false); //否则关闭
-            }
-        });
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-    @OnClick({R.id.iv_top})
-    public void onClick(View view) {
-        switch (view.getId()) {
-
-            case R.id.iv_top:
-                mRecyclerView.smoothScrollToPosition(0);
-                CoordinatorLayout.Behavior behavior =
-                        ((CoordinatorLayout.LayoutParams) appbar.getLayoutParams()).getBehavior();
-                if (behavior instanceof AppBarLayout.Behavior) {
-                    AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
-                    int topAndBottomOffset = appBarLayoutBehavior.getTopAndBottomOffset();
-                    if (topAndBottomOffset != 0) {
-                        appBarLayoutBehavior.setTopAndBottomOffset(0);
-                    }
-                }
-                iv_top.setVisibility(View.GONE);
-                break;
-        }
-    }
-
-
-    @Override
-    public void onSure() {
-        this.sort = filter_view.getSort()+"";
-        this.sort_type = filter_view.getSort_type()+"";
+    public void setSortAndArea(String sort, String sort_type){
+        this.sort = sort;
+        this.sort_type = sort_type;
         swipeLayout.setRefreshing(true);
         onRefresh();
 
     }
+
 }

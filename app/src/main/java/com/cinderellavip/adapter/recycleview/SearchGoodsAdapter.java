@@ -53,7 +53,7 @@ public class SearchGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHold
             GoodsDetailActivity.launch((Activity) getContext(),homeGoods.id+"");
         });
         baseViewHolder.getView(R.id.tv_go_shop).setOnClickListener(v -> {
-            ShopDetailActivity.launch(getContext());
+            ShopDetailActivity.launchShop(getContext(),homeGoods.store_id+"");
         });
     }
 }

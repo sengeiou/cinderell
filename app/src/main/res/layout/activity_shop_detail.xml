@@ -5,106 +5,161 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/gray_bg"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-
-    <LinearLayout
-        android:id="@+id/title"
-        android:background="@color/white"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior=".weight.behavior.TechnicalDetailTitleBehavior"
-        android:orientation="vertical">
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/demo_lift_ad3" />
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/statusbar_view_height"
-            />
+            android:layout_height="match_parent"
+            android:background="#60000000"/>
 
-        <RelativeLayout
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/statusbar_view_height"
+                />
 
             <RelativeLayout
-                android:id="@+id/ll_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/shape_oval_white"
-                android:layout_marginLeft="15dp"
-                android:layout_centerVertical="true"
-                android:gravity="center">
-                <ImageView
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
+
+                <ImageView
+                    android:id="@+id/iv_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/back"
+                    style="@style/click_toolbar_style"
+                    android:src="@mipmap/back_white"
                     />
-            </RelativeLayout>
 
 
 
-
-            <TextView
-                android:id="@+id/tv_title_name"
-                style="@style/base_text_style"
-                tools:text="三只松鼠"
-                android:layout_centerInParent="true"
-                android:textColor="@color/black_title_color"
-                android:textSize="18sp"/>
-            <RelativeLayout
-                android:id="@+id/ll_search"
-                android:layout_alignParentRight="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                style="@style/click_toolbar_style"
-                android:background="@drawable/shape_oval_white"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="12dp"
-                android:layout_centerVertical="true"
-                android:gravity="center">
                 <ImageView
+                    android:id="@+id/ll_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_search_black"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/search_white"
+                    style="@style/click_toolbar_style"
                     />
+
+
+
+
+
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
 
-            <RelativeLayout
-                android:id="@+id/rl_collect"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                style="@style/click_toolbar_style"
-                android:background="@drawable/shape_oval_white"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/ll_search"
-                android:gravity="center">
-                <ImageView
-                    android:id="@+id/iv_collect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:src="@mipmap/brand_collect"
-                    />
-            </RelativeLayout>
+                <com.cinderellavip.weight.SquareImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="centerCrop"
+                    tools:src="@mipmap/demo_brand_avater"/>
+                <TextView
+                    android:id="@+id/tv_title_name"
+                    style="@style/base_text_style"
+                    tools:text="三只松鼠"
+                    android:layout_marginLeft="12dp"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
 
+    </RelativeLayout>
 
-
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    <com.cinderellavip.weight.FilterView
+        android:id="@+id/filter_view"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tabIndicatorHeight="0dp"
+        android:background="@color/gray_bg"
+        app:tabMode="fixed"
+        />
 
     <FrameLayout
-        android:id="@+id/fl_container"
+        android:id="@+id/brand_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="45dp">
+
+        <LinearLayout
+            android:id="@+id/ll_category"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <TextView
+                style="@style/base_text_style"
+                android:text="商品分类"
+                android:textColor="@color/black_title_color"
+                android:drawableLeft="@mipmap/shop_category_icon"
+                android:drawablePadding="10dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="@color/grayText"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/ll_service"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_collect"
+                style="@style/base_text_style"
+                android:text="收藏店铺"
+                android:textColor="@color/black_title_color"
+                android:drawableLeft="@mipmap/brand_collect"
+                android:drawablePadding="10dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 
