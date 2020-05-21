@@ -70,6 +70,14 @@ public class SearchPostResultFragment extends BaseListFragment<FindItem> {
                     public void onSuccess(BaseResult<ListDiscussesResult> result) {
                         setData(result.data.discusses);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
 

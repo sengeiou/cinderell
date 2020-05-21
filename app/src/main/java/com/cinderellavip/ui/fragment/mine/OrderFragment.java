@@ -72,6 +72,10 @@ public class OrderFragment extends BaseListFragment<OrderBean> {
                         setData(result.data.orders);
                     }
                     @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
                     public void onErrorShow(String s) {
                         showError(s);
                     }

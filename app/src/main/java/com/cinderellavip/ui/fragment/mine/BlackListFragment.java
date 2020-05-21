@@ -53,6 +53,14 @@ public class BlackListFragment extends BaseListFragment<BlacklistItem> {
 
                         setData(result.data.users);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }

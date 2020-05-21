@@ -80,6 +80,10 @@ public class SearchGoodsForPublishPostFragment extends BaseListFragment<HomeGood
                         setData(result.data.list);
                     }
                     @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
                     public void onErrorShow(String s) {
                         showError(s);
                     }

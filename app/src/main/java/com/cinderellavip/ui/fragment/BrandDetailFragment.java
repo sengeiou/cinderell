@@ -116,11 +116,17 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements 
                     public void onSuccess(BaseResult<ListResult<HomeGoods>> result) {
                         setData(result.data.list);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
 
                     @Override
                     public void onErrorShow(String s) {
                         showError(s);
                     }
+
+
                 });
 
 

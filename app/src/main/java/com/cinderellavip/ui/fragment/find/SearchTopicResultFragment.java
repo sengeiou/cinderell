@@ -82,6 +82,14 @@ public class SearchTopicResultFragment extends BaseListFragment<FindItem> {
                             tv_number.setText(spannableString);
                             setData(result.data.discusses);
                         }
+                        @Override
+                        public void onError(Throwable e) {
+                            onErrorResult(e);
+                        }
+                        @Override
+                        public void onErrorShow(String s) {
+                            showError(s);
+                        }
                     });
 
 

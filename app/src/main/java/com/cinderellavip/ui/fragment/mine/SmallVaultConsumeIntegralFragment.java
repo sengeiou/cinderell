@@ -56,6 +56,14 @@ public class SmallVaultConsumeIntegralFragment extends BaseListFragment<Integral
                     public void onSuccess(BaseResult<IntegralResult> result) {
                         setData(result.data.list);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }

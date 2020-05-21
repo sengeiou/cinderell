@@ -63,6 +63,14 @@ public class LeaderBoardFragment extends BaseListFragment<RankItem> {
                         }
                         setData(result.data.teams);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
     }
 

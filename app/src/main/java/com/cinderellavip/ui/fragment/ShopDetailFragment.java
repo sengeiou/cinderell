@@ -2,39 +2,21 @@ package com.cinderellavip.ui.fragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
-import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
-import com.cinderellavip.bean.net.ShopInfo;
-import com.cinderellavip.bean.net.ShopResult;
-import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
-import com.cinderellavip.listener.OnSureClickListener;
-import com.cinderellavip.ui.activity.home.ShopDetailActivity;
-import com.cinderellavip.util.ImageUtils;
-import com.cinderellavip.weight.FilterView;
 import com.cinderellavip.weight.GirdSpace;
-import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.TreeMap;
 
-import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
@@ -97,6 +79,11 @@ public class ShopDetailFragment extends BaseListFragment<HomeGoods> {
                     @Override
                     public void onSuccess(BaseResult<ListResult<HomeGoods>> result) {
                         setData(result.data.list);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
                     }
 
                     @Override

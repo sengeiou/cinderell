@@ -121,9 +121,13 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
                             findHotTopicAdapter.setNewData(discussesResult.hot_topics);
                         }
                         setData(discussesResult.discusses);
-
-
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+
                     @Override
                     public void onErrorShow(String s) {
                         showError(s);

@@ -74,6 +74,14 @@ public class MineBalanceFragment extends BaseListFragment<MineBalanceItem> imple
                         tv_balance.setText(data.balance);
                         setData(data.list);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
 

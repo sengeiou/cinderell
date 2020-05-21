@@ -77,6 +77,14 @@ public class MineCouponFragment extends BaseListFragment<MineCouponsBean> {
                     public void onSuccess(BaseResult<ListResult<MineCouponsBean>> result) {
                         setData(result.data.list);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }

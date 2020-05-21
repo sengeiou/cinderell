@@ -72,6 +72,10 @@ public class CommentFragment extends BaseListFragment<GoodsCommentItem> {
                         setData(data.comments);
                     }
                     @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
                     public void onErrorShow(String s) {
                         showError(s);
                     }

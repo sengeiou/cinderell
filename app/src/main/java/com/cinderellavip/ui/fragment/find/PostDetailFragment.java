@@ -141,6 +141,10 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
                         setData(discussesResult.comments);
                     }
                     @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
                     public void onErrorShow(String s) {
                         showError(s);
                     }
