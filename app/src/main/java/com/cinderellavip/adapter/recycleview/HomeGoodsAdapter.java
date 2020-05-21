@@ -84,8 +84,8 @@ public class HomeGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
            tv_name.setLines(2);
            tv_group_number.setVisibility(View.GONE);
            iv_national_flag.setVisibility(View.GONE);
-           tv_price.setText("￥88");
-           tv_former_price.setText("￥128");
+           tv_price.setText("￥"+homeGoods.getPrice());
+           tv_former_price.setText("￥"+homeGoods.getOld_price());
            tv_former_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //取消划线
        }else if (type == AFFORDABLE){
            //实惠
@@ -93,8 +93,8 @@ public class HomeGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
            tv_name.setLines(2);
            tv_group_number.setVisibility(View.GONE);
            iv_national_flag.setVisibility(View.GONE);
-           tv_price.setText("￥88");
-           tv_former_price.setText("￥128");
+           tv_price.setText("￥"+homeGoods.getPrice());
+           tv_former_price.setText("￥"+homeGoods.getOld_price());
            tv_former_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //取消划线
        }
 

@@ -1,7 +1,10 @@
 package com.cinderellavip.ui.activity.home;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -51,7 +55,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -292,7 +295,8 @@ public class ShareActivity extends BaseActivity {
             dirFile.mkdir();
         }
         String fileName = System.currentTimeMillis() + ".jpg";
-        File myCaptureFile = new File(Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/" + fileName);
+
+        File myCaptureFile = new File( Constant.PATH +"/"+ fileName);
 
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
         bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
@@ -302,16 +306,44 @@ public class ShareActivity extends BaseActivity {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri uri;
         if (Build.VERSION.SDK_INT >= 24) {
-            uri = FileProvider.getUriForFile(this,"com.cinderellavip.provider", myCaptureFile);
+//            uri = FileProvider.getUriForFile(this,"com.cinderellavip.provider", myCaptureFile);
+            uri = getImageContentUri(this, myCaptureFile);
         } else {
             uri = Uri.fromFile(myCaptureFile);
         }
+        intent.setData(uri);
+        sendBroadcast(intent);
+
         saveList.add(uri);
         if (saveList.size() == number) {
             saveShare();
         }
-        intent.setData(uri);
-        sendBroadcast(intent);
+
+    }
+    //解决7.0以上生成uri 无法通过系统分享微信和无法刷新相册的bug
+    public  Uri getImageContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
+                new String[] { filePath }, null);
+        Uri uri = null;
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+                Uri baseUri = Uri.parse("content://media/external/images/media");
+                uri = Uri.withAppendedPath(baseUri, "" + id);
+            }
+            cursor.close();
+        }
+
+        if (uri == null) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATA, filePath);
+            uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        }
+
+        return uri;
     }
 
     private void saveShare(){
