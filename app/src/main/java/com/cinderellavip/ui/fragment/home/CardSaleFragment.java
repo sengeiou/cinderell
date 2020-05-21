@@ -3,25 +3,19 @@ package com.cinderellavip.ui.fragment.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CardSaleAdapter;
-import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.util.DataUtil;
-import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.GirdSpace;
-import com.cinderellavip.weight.LinearSpace;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 
 public class CardSaleFragment extends BaseListFragment<HomeGoods> {

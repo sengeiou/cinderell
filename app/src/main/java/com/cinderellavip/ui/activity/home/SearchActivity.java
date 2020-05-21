@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.UpdateSearch;
+import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -79,11 +80,13 @@ public class SearchActivity extends BaseActivity {
     public void loadData() {
 
        getHistoryData();
-        new RxHttp<BaseResult<ListResult<String>>>().send(ApiManager.getService().getSearchWords(),
-                new Response<BaseResult<ListResult<String>>>(isLoad,mActivity) {
+        new RxHttp<BaseResult<HotList<String>>>().send(ApiManager.getService().getSearchWords(),
+                new Response<BaseResult<HotList<String>>>(isLoad,mActivity) {
                     @Override
-                    public void onSuccess(BaseResult<ListResult<String>> result) {
-                        addHotData(flHot, result.data.list);
+                    public void onSuccess(BaseResult<HotList<String>> result) {
+                        HotList<String> data = result.data;
+                        addHotData(flHot, data.list);
+                        etSearch.setHint(data.keyword);
                     }
                 });
     }

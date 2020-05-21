@@ -14,6 +14,7 @@ import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.bean.local.SelectCouponsBean;
 import com.cinderellavip.bean.net.BrandResult;
 import com.cinderellavip.bean.net.HomeCategoryResult;
+import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.bean.net.IntegralExchangeLogistics;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.ShopResult;
@@ -149,7 +150,7 @@ public interface ApiService {
     getSearchGoods(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.search_words)
-    Observable<BaseResult<ListResult<String>>>
+    Observable<BaseResult<HotList<String>>>
     getSearchWords();
 
     @GET(HttpUrl.goods_detail+"{id}")

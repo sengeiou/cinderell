@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:boy="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
 
@@ -12,6 +12,7 @@
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:orientation="vertical">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -34,6 +35,7 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:id="@+id/rl_banner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -80,11 +82,14 @@
 
 
 
-                    <com.lishide.recyclerview.scroll.ScrollRecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/scroll_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"/>
+
+
 
 
 
@@ -94,29 +99,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        >
 
 
 
                         <com.cinderellavip.weight.ScaleImageView
+                            android:id="@+id/iv_ad_left"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="0dp"
                             app:scale="0.6084"
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/ad_home"
+                            tools:src="@mipmap/ad_home"
                             android:layout_marginRight="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone"
                             />
 
 
                         <com.cinderellavip.weight.ScaleImageView
+                            android:id="@+id/iv_ad_right"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="0dp"
                             app:scale="0.6084"
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/ad_home"
+                            tools:src="@mipmap/ad_home"
                             android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone"
                             />
 
 

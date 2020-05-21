@@ -1,6 +1,5 @@
 package com.cinderellavip;
 
-import com.cinderellavip.bean.net.cart.CartGoodsItem;
 import com.cinderellavip.http.SignUtil;
 import com.cinderellavip.util.CouponsStringUtil;
 import com.google.gson.Gson;
@@ -98,6 +97,32 @@ public class ExampleUnitTest {
         String removeUrl = "25";
         System.out.println(CouponsStringUtil.getString(url,removeUrl,false));
 
+
+    }
+
+
+    @Test
+    public void testSort() {
+       List<String> list = new ArrayList<>();
+       for (int i=0;i<12;i++){
+           list.add(i+"");
+       }
+        for (int i=0;i<list.size();i++){
+            System.out.print(list.get(i)+" ");
+        }
+
+       List<String> sortList = new ArrayList<>();
+       //6
+       int column = list.size()/2+list.size()%2;
+       for (int i=0;i<column;i++){
+               sortList.add(list.get(i));
+               if (i+column<list.size())
+               sortList.add(list.get(i+column));
+       }
+        System.out.println(" ");
+        for (int i=0;i<sortList.size();i++){
+            System.out.print(sortList.get(i)+" ");
+        }
 
     }
 }

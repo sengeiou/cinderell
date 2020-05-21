@@ -258,7 +258,6 @@ public class LoginActivity extends BaseActivity implements UMAuthListener {
                             }
                         }else {
                             FastLoginActivity.launch(mActivity,bindLogin);
-
                         }
                     }
                 });

@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.home.Ad;
@@ -18,6 +19,7 @@ import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.ui.activity.home.GoodsListActivity;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.banner.BannerUtil;
 import com.cinderellavip.util.banner.LinkUtil;
@@ -29,6 +31,8 @@ import com.stx.xhb.xbanner.XBanner;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.LazyListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +77,6 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     private HomeCategoryAdapter homeCategoryAdapter;
 
 
-    private HomeCategoryItem homeCategoryItem;
     public static ShopMainGoodsFragment newInstance(HomeCategoryItem homeCategoryItem){
         ShopMainGoodsFragment cartFragment = new ShopMainGoodsFragment();
         Bundle bundle = new Bundle();
@@ -90,9 +93,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        homeCategoryItem = getArguments().getParcelable("homeCategoryItem");
-        if (homeCategoryItem == null)
-            homeCategoryItem = new HomeCategoryItem(0);
+
 
         //设置商品
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
@@ -104,7 +105,14 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
         scrollRecyclerView.setItemAnimator(new DefaultItemAnimator());
         scrollRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.HORIZONTAL));
-        homeCategoryAdapter = new HomeCategoryAdapter(homeCategoryItem);
+        homeCategoryAdapter = new HomeCategoryAdapter(item -> {
+            if ( "3".equals(item.type) || "2".equals(item.type)){
+                GoodsListActivity.launch(getContext(),item.name,item.id);
+            }else if ("1".equals(item.type)){
+                EventBus.getDefault().post(new UpdateShopPage(item.name));
+            }
+
+        });
         scrollRecyclerView.setAdapter(homeCategoryAdapter);
 
         List<String> data1 = new ArrayList<>();
@@ -113,10 +121,6 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
         data1.add("进口");
         data1.add("实惠");
         tabLabel.setTitle(data1);
-
-        if (homeCategoryItem.id != 0){
-            rlIndicator.setVisibility(View.GONE);
-        }
     }
 
 
@@ -133,7 +137,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     private void getGoods(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("type", type);
-        hashMap.put("first_category_id", ""+homeCategoryItem.id);
+        hashMap.put("first_category_id", "0");
         hashMap.put("limit", PageSize+"");
         hashMap.put("page", page+"");
         new RxHttp<BaseResult<HomeGoodsResult>>().send(ApiManager.getService().getHomeGoods(hashMap),
@@ -150,7 +154,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
      * 获取一级分类
      */
     private void getCategory(){
-        new RxHttp<BaseResult<ShopHomeResult>>().send(ApiManager.getService().getHome(""+homeCategoryItem.id),
+        new RxHttp<BaseResult<ShopHomeResult>>().send(ApiManager.getService().getHome("0"),
                 new Response<BaseResult<ShopHomeResult>>(mActivity,Response.BOTH) {
                     @Override
                     public void onSuccess(BaseResult<ShopHomeResult> result) {
@@ -161,11 +165,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
                             rl_banner.setVisibility(View.VISIBLE);
                             BannerUtil.setData(mActivity,xbanner,homeResult.banners);
                         }
-
-                        List<HomeCategoryItem> typeList = homeResult.third_categories;
-                        if (homeCategoryItem.id != 0 && typeList.size()>0){
-                            typeList.add(new HomeCategoryItem("-1"));
-                        }
+                        List<HomeCategoryItem> typeList = getSortCategory(homeResult.third_categories);
                         homeCategoryAdapter.setNewData(typeList);
                         if (typeList == null || typeList.size()<=10){
                             //如果小于10则 宽度一样
@@ -173,11 +173,12 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
                             ViewGroup.LayoutParams linearParams1 = rlIndicator.getLayoutParams();
                             linearParams1.width = linearParams.width;
                             rlIndicator.setLayoutParams(linearParams1);
+                            rlIndicator.setVisibility(View.GONE);
                         }else {
                             //为了计算大于10的时候 滑动的距离
+                            rlIndicator.setVisibility(View.VISIBLE);
                             categoryNumber = typeList.size();
                         }
-
                         List<Ad> advertisements = homeResult.advertisements;
                         if (advertisements != null){
                             if (advertisements.size() == 0){
@@ -210,6 +211,17 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
 
     }
 
+
+    private List<HomeCategoryItem> getSortCategory(List<HomeCategoryItem> list){
+        List<HomeCategoryItem> sortList = new ArrayList<>();
+        int column = list.size()/2+list.size()%2;
+        for (int i=0;i<column;i++){
+            sortList.add(list.get(i));
+            if (i+column<list.size())
+                sortList.add(list.get(i+column));
+        }
+        return sortList;
+    }
 
 
     @OnClick({R.id.iv_top})

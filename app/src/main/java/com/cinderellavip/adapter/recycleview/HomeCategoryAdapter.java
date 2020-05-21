@@ -27,10 +27,22 @@ import java.util.TreeMap;
 
 public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, BaseViewHolder> {
 
+    /**
+     * 为了 一级分类下  加载更多 使用 。如果为null说明是首页
+     */
     private HomeCategoryItem homeCategoryItem;
     public HomeCategoryAdapter(HomeCategoryItem homeCategoryItem) {
         super(R.layout.item_home_category, null);
         this.homeCategoryItem = homeCategoryItem;
+    }
+
+    private onCategoryClick onCategoryClick;
+    public HomeCategoryAdapter(onCategoryClick onCategoryClick) {
+        super(R.layout.item_home_category, null);
+        this.onCategoryClick = onCategoryClick;
+    }
+    public interface onCategoryClick{
+        void onCategoryClick(HomeCategoryItem item);
     }
 
 
@@ -44,11 +56,9 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
             iv_image.setImageResource(R.mipmap.icon_more);
             tv_number.setText("更多");
         }else {
-            ImageUtil.loadNet2(getContext(),iv_image,item.image);
+            ImageUtil.loadNet1(getContext(),iv_image,item.image);
             tv_number.setText(item.name);
         }
-
-
         LinearLayout rl_root = helper.getView(R.id.rl_root);
         ViewGroup.LayoutParams linearParams = rl_root.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
         int screenWidth = ScreenUtil.getScreenWidth((Activity) getContext());
@@ -60,17 +70,11 @@ public class HomeCategoryAdapter extends BaseQuickAdapter<HomeCategoryItem, Base
         helper.getView(R.id.rl_root).setOnClickListener(v -> {
             if ("-1".equals(item.type)){
                getGoods();
-            }else if (!"-".equals(item.type)){
+            }else if (homeCategoryItem != null && "3".equals(item.type)){
                 GoodsListActivity.launch(getContext(),item.name,item.id);
-
+            }else if (onCategoryClick != null ){
+                onCategoryClick.onCategoryClick(item);
             }
-//            if (item.name.equals("更多")){
-//
-//            }else if (item.name.equals("大牌特卖")){
-//                CardSaleActivity.launch(getContext());
-//            }else {
-//                GoodsListActivity.launch(getContext(),item.name,0,0);
-//            }
         });
 
 

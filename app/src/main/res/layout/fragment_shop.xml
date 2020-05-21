@@ -42,11 +42,12 @@
                     android:src="@mipmap/search_red_icon"/>
 
                 <TextView
+                    android:id="@+id/tv_hint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="雅诗兰黛小棕瓶"
+                    android:text=""
                     android:textSize="12sp"
-                    android:textColor="@color/black_title_color"
+                    android:textColor="@color/grayText"
                     android:layout_gravity="center_vertical"/>
 
 

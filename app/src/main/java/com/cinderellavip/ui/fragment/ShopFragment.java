@@ -4,10 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.HomeCategoryResult;
+import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -37,6 +40,8 @@ public class ShopFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.status)
     StatusBarHeightView status;
+    @BindView(R.id.tv_hint)
+    TextView tv_hint;
 
     private List<String>myTitle;
     private List<BaseFragment>myFragment;
@@ -72,7 +77,18 @@ public class ShopFragment extends BaseFragment {
     @Override
     public void loadData() {
         getCategory();
+        getSearchHint();
 
+    }
+    private void getSearchHint(){
+        new RxHttp<BaseResult<HotList<String>>>().send(ApiManager.getService().getSearchWords(),
+                new Response<BaseResult<HotList<String>>>(mActivity,Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseResult<HotList<String>> result) {
+                        HotList<String> data = result.data;
+                        tv_hint.setText(data.keyword);
+                    }
+                });
     }
 
     @OnClick({R.id.ll_search, R.id.iv_category})
@@ -92,10 +108,16 @@ public class ShopFragment extends BaseFragment {
      */
     private void getCategory(){
         new RxHttp<BaseResult<HomeCategoryResult>>().send(ApiManager.getService().getHomeCategory(),
-                new Response<BaseResult<HomeCategoryResult>>(mActivity) {
+                new Response<BaseResult<HomeCategoryResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<HomeCategoryResult> result) {
+                        showContent();
+                        isLoad = true;
                         setTabCategory(result.data.list);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
 
@@ -108,7 +130,7 @@ public class ShopFragment extends BaseFragment {
         myFragment.add(ShopMainGoodsFragment.newInstance(null));
         for (HomeCategoryItem category1:category){
             myTitle.add(category1.name);
-            myFragment.add(ShopMainGoodsFragment.newInstance(category1));
+            myFragment.add(ShopCategoryGoodsFragment.newInstance(category1));
         }
         tabCategory.setTitle(myTitle);
         //预加载
@@ -131,7 +153,19 @@ public class ShopFragment extends BaseFragment {
                 return myTitle.get(position);
             }
         });
-
         tabCategory.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateShopPage){
+            String name = ((UpdateShopPage)o).name;
+            for (int i = 0;i<myTitle.size();i++){
+                if (name.equals(myTitle.get(i))){
+                    viewPager.setCurrentItem(i);
+                }
+            }
+        }
     }
 }
