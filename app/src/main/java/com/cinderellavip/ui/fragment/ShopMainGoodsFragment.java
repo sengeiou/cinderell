@@ -146,6 +146,15 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
                     public void onSuccess(BaseResult<HomeGoodsResult> result) {
                         setData(result.data.products);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }

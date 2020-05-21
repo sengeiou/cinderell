@@ -19,6 +19,10 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.util.TreeMap;
 
@@ -104,10 +108,10 @@ public class XiaoHuiRecommentFragment extends BaseListFragment<MineInviteItem> {
         SecondDialogUtil.showRecommendDialog(mActivity, (payString1, bitmap) -> {
             switch (payString1){
                 case "1":
-                    tsg("分享微信");
+                    shareTextAndImage(SHARE_MEDIA.WEIXIN);
                     break;
                 case "2":
-                    tsg("分享朋友圈");
+                    shareTextAndImage(SHARE_MEDIA.WEIXIN_CIRCLE);
                     break;
                 case "down":
                     tsg("保存成功");
@@ -115,5 +119,17 @@ public class XiaoHuiRecommentFragment extends BaseListFragment<MineInviteItem> {
             }
 
         });
+    }
+    public void shareTextAndImage(SHARE_MEDIA share_media) {
+        String url = "http://api.huiguniangvip.com/h5/#/register/" + GlobalParam.getRecommendCode();
+        UMWeb web = new UMWeb(url);
+        web.setTitle("免费加入灰姑娘");
+        String content = GlobalParam.getUserBean().username+"，邀请您加入灰姑娘，省钱、赚钱～";
+        UMImage thumb =  new UMImage(mActivity, R.drawable.logo1);
+        web.setThumb(thumb);
+        web.setDescription(content);
+        new ShareAction(mActivity).withMedia(web)
+                .setPlatform(share_media)
+                .setCallback(null).share();
     }
 }

@@ -13,11 +13,14 @@ import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.listener.ShareClickListener;
 import com.cinderellavip.util.ClipBoardUtil;
+import com.cinderellavip.util.QRCodeUtil;
 import com.cinderellavip.util.image.ImgUtils;
+import com.tozzais.baselibrary.util.DpUtil;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 
@@ -37,7 +40,6 @@ public class SecondDialogUtil {
         TextView tv_name = view.findViewById(R.id.tv_name);
         TextView tv_product_name = view.findViewById(R.id.tv_product_name);
         TextView tv_price = view.findViewById(R.id.tv_price);
-        TextView tv_advance_price = view.findViewById(R.id.tv_advance_price);
         ImageView iv_image = view.findViewById(R.id.iv_image);
 
         ImageUtil.loadNet(context,iv_avatar,userBean.user_avatar);
@@ -46,6 +48,53 @@ public class SecondDialogUtil {
         iv_code.setImageBitmap(appletsCode);
         tv_product_name.setText(product_info.name);
         tv_price.setText("￥"+product_info.getPrice());
+
+        LinearLayout ll_poster = view.findViewById(R.id.ll_poster);
+        ll_poster.setDrawingCacheEnabled(true);
+        ll_poster.buildDrawingCache();
+        view.findViewById(R.id.ll_root).setOnClickListener(v -> {
+            dialog.dismiss();
+            dialog = null;
+        });
+        view.findViewById(R.id.iv_down).setOnClickListener(v -> {
+            Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
+            boolean isSuccess = ImgUtils.saveImageToGallery(context, bitmap);
+            if (isSuccess) {
+                listener.onFinish("down",null);
+                dialog.dismiss();
+                dialog = null;
+            }
+        });
+        view.findViewById(R.id.iv_weChat).setOnClickListener(v -> {
+            Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
+            listener.onFinish("1",bitmap);
+        });
+        view.findViewById(R.id.iv_weChat_circle).setOnClickListener(v -> {
+            Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
+            listener.onFinish("2",bitmap);
+        });
+
+    }
+
+    public static void showPosterGroupDialog(Context context,
+                                             OrderGoodsInfo goodsResult, String appletsCode, onSelectListener listener) {
+        View view = View.inflate(context, R.layout.pop_bottom_poster, null);
+        dialog = DialogUtils.getCenterDialog(context, view);
+        ImageView iv_avatar = view.findViewById(R.id.iv_avatar);
+        ImageView iv_code = view.findViewById(R.id.iv_code);
+        MineInfo userBean = GlobalParam.getUserBean();
+
+        TextView tv_name = view.findViewById(R.id.tv_name);
+        TextView tv_product_name = view.findViewById(R.id.tv_product_name);
+        TextView tv_price = view.findViewById(R.id.tv_price);
+        ImageView iv_image = view.findViewById(R.id.iv_image);
+
+        ImageUtil.loadNet(context,iv_avatar,userBean.user_avatar);
+        tv_name.setText(userBean.username);
+        ImageUtil.loadNet(context, iv_image, goodsResult.product_thumb);
+        ImageUtil.loadNet(context, iv_code, appletsCode);
+        tv_product_name.setText(goodsResult.product_name);
+        tv_price.setText("￥"+goodsResult.product_price);
 
         LinearLayout ll_poster = view.findViewById(R.id.ll_poster);
         ll_poster.setDrawingCacheEnabled(true);
@@ -112,6 +161,19 @@ public class SecondDialogUtil {
     public static void showRecommendDialog(Context context,  onSelectListener listener) {
         View view = View.inflate(context, R.layout.pop_bottom_recommend, null);
         dialog = DialogUtils.getCenterDialog(context, view);
+        ImageView iv_avatar = view.findViewById(R.id.iv_avatar);
+        TextView tv_name = view.findViewById(R.id.tv_name);
+        TextView tv_code = view.findViewById(R.id.tv_code);
+        ImageView iv_image = view.findViewById(R.id.iv_image);
+
+        String recommendCode = GlobalParam.getRecommendCode();
+        Bitmap qrCode = QRCodeUtil.createQRCode(recommendCode, DpUtil.dip2px(context,150));
+        iv_image.setImageBitmap(qrCode);
+        tv_code.setText(recommendCode);
+
+        MineInfo userBean = GlobalParam.getUserBean();
+        ImageUtil.loadNet(context,iv_avatar,userBean.user_avatar);
+        tv_name.setText(userBean.username);
 
         LinearLayout ll_poster = view.findViewById(R.id.ll_poster);
         ll_poster.setDrawingCacheEnabled(true);
@@ -123,7 +185,7 @@ public class SecondDialogUtil {
 
         });
         view.findViewById(R.id.tv_copy_code).setOnClickListener(v -> {
-            ClipBoardUtil.copy(context,"245523");
+            ClipBoardUtil.copy(context,recommendCode);
 
         });
         view.findViewById(R.id.iv_down).setOnClickListener(v -> {

@@ -1,8 +1,12 @@
 package com.cinderellavip.ui.activity.mine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,10 +14,13 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.GroupDetailUserAdapter;
 import com.cinderellavip.adapter.recycleview.OrderGoodsAdapter;
+import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
+import com.cinderellavip.global.Constant;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -23,8 +30,17 @@ import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.weight.CountDownView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMMin;
+import com.umeng.socialize.media.UMWeb;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -116,6 +132,18 @@ public class MineGroupDetailActivity extends BaseActivity {
                 });
 
     }
+    private String codePath;
+    private void getCode(String id) {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("scene", GlobalParam.getRecommendCode() + ";1;" + id);
+        new RxHttp<BaseResult<AppletsCode>>().send(ApiManager.getService().getAppletsCode(hashMap),
+                new Response<BaseResult<AppletsCode>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<AppletsCode> result) {
+                        codePath = result.data.url;
+                    }
+                });
+    }
 
     private OrderInfo orderInfo;
     private void setData(OrderInfo orderInfo) {
@@ -163,7 +191,9 @@ public class MineGroupDetailActivity extends BaseActivity {
         OrderGoodsAdapter adapter = new OrderGoodsAdapter(OrderGoodsAdapter.RETURN);
         lvGoods.setAdapter(adapter);
         adapter.setNewData(orderInfo.goods);
-
+        if (orderInfo != null &&orderInfo.goods != null && orderInfo.goods.size()>0){
+            getCode(orderInfo.goods.get(0).product_id+"");
+        }
 
         tvGoodsPrice.setText("￥"+orderInfo.goods_amount);
         tvDiscountedPrice.setText("￥"+orderInfo.dis_amount);
@@ -207,15 +237,14 @@ public class MineGroupDetailActivity extends BaseActivity {
                 ShopDetailActivity.launchShop(mActivity,orderInfo.store_id+"");
                 break;
             case R.id.tv_invite:
-                SecondDialogUtil.showPosterDialog(mContext, null,null,(payString1, bitmap) -> {
+                if (orderInfo != null &&orderInfo.goods != null && orderInfo.goods.size()>0 && !TextUtils.isEmpty(codePath))
+                SecondDialogUtil.showPosterGroupDialog(mContext, orderInfo.goods.get(0),codePath,(payString1, bitmap) -> {
                     switch (payString1){
                         case "1":
-                            tsg("分享微信");
-//                            shareImage(SHARE_MEDIA.WEIXIN,bitmap);
+                            shareMINApp(SHARE_MEDIA.WEIXIN);
                             break;
                         case "2":
-                            tsg("分享朋友圈");
-//                            shareImage(SHARE_MEDIA.WEIXIN_CIRCLE,bitmap);
+                            shareImage(SHARE_MEDIA.WEIXIN_CIRCLE,bitmap);
                             break;
                         case "down":
                             tsg("保存成功");
@@ -226,5 +255,25 @@ public class MineGroupDetailActivity extends BaseActivity {
                 break;
         }
 
+    }
+    public void shareImage(SHARE_MEDIA share_media, Bitmap bitmap) {
+        UMImage imagelocal = new UMImage(mContext, bitmap);
+        imagelocal.setThumb(new UMImage(mContext, bitmap));
+        new ShareAction((Activity) mContext).withMedia(imagelocal)
+                .setPlatform(share_media)
+                .setCallback(null).share();
+    }
+    public void shareMINApp(SHARE_MEDIA share_media) {
+        OrderGoodsInfo goodsInfo = orderInfo.goods.get(0);
+        String path = "/pages/index/index?shareType=1&shareUserId=" + GlobalParam.getRecommendCode() + "&shareValue=" + goodsInfo.product_id;
+        UMMin umMin = new UMMin("url");
+        umMin.setThumb(new UMImage(this, goodsInfo.product_thumb));
+        umMin.setTitle(goodsInfo.product_name);
+        umMin.setPath(path);
+        umMin.setUserName(Constant.SMALL_APPLICATION_ID);
+        new ShareAction(mActivity)
+                .withMedia(umMin)
+                .setPlatform(share_media)
+                .setCallback(null).share();
     }
 }
