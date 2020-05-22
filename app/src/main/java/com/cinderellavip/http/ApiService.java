@@ -32,6 +32,7 @@ import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
 import com.cinderellavip.bean.net.life.CategoryResult;
+import com.cinderellavip.bean.net.life.HotSearchItem;
 import com.cinderellavip.bean.net.life.LiftCategoryItem;
 import com.cinderellavip.bean.net.life.LiftHomeResult;
 import com.cinderellavip.bean.net.life.ServiceProjectDetail;
@@ -478,5 +479,8 @@ public interface ApiService {
     Observable<BaseResult<ServiceProjectDetail>>
     serviceProjectAndPackageDetail(@FieldMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.life_search_popular)
+    Observable<BaseResult<List<HotSearchItem>>>
+    getLifeSearchWords();
 
 }

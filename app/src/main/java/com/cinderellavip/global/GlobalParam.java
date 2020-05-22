@@ -112,6 +112,15 @@ public class GlobalParam {
         return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.search,"");
     }
 
+    //存 生活服务搜索记录
+    public static void setLifeSearch(String userid) {
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.search_life, userid);
+    }
+    //取  生活服务搜索记录
+    public static String getLifeSearch() {
+        return SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.search_life,"");
+    }
+
     //存 帖子搜索记录
     public static void setSearchPost(String userid) {
         SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.search_post, userid);

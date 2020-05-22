@@ -31,6 +31,8 @@ public class Constant {
     public static String search = "cinder_user_search";
     public static String search_post = "cinder_user_search_post";
     public static String search_topic = "cinder_user_search_topic";
+    public static String search_life = "cinder_user_search_life";
+
 
 
 

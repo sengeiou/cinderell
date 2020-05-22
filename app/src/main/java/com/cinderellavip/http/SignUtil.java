@@ -19,8 +19,6 @@ public class SignUtil {
         }
         sign.append("secret=241cd2aa2aae01cd2&");
         sign.append("timestamp="+time);
-//        LogUtil.e(sign.toString());
-//        System.out.println(sign.toString());
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update((sign.toString()).getBytes("UTF-8"));

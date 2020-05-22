@@ -90,6 +90,7 @@ public class CommonInterceptor implements Interceptor {
 
     private Request rebuildRequest(Request request) throws IOException {
         Request newRequest;
+
         if ("POST".equals(request.method())) {
             newRequest = rebuildPostRequest(request);
         } else if ("GET".equals(request.method())) {
@@ -105,6 +106,7 @@ public class CommonInterceptor implements Interceptor {
      * 对post请求添加统一参数
      */
     private Request rebuildPostRequest(Request request) {
+        LogUtil.e("rebuildPostRequest = "+(request.body() instanceof FormBody));
             if (request.body() instanceof FormBody) {
                 TreeMap<String, String> signParams = new TreeMap<>(); // 假设你的项目需要对参数进行签名
                 FormBody formBody = (FormBody) request.body();
@@ -113,23 +115,30 @@ public class CommonInterceptor implements Interceptor {
                     try {
                         signParams.put(formBody.encodedName(i), URLDecoder.decode(formBody.encodedValue(i), "UTF-8"));
                     }catch (Exception e){
-
                     }
-
-//                    LogUtil.e( formBody.encodedName(i)+"==="+formBody.encodedValue(i));
                 }
-
                 String time = "" + System.currentTimeMillis() / 1000;
                 String userToken = GlobalParam.getUserToken();
-
                 request = request.newBuilder()
                         .addHeader("X-Timestamp", time)
                         .addHeader("Accept","application/json")
                         .addHeader("X-User-Token",userToken)
                         .addHeader("X-Sign",SignUtil.getMd5(signParams,time))
                         .build();
+//                LogUtil.e( "X-Timestamp"+"==="+time);
+//                LogUtil.e( "Accept"+"===application/json");
+//                LogUtil.e( "X-User-Token==="+userToken);
+//                LogUtil.e( "X-Sign==="+SignUtil.getMd5(signParams,time));
                 return request;
             }else {
+                String time = "" + System.currentTimeMillis() / 1000;
+                String userToken = GlobalParam.getUserToken();
+                request = request.newBuilder()
+                        .addHeader("X-Timestamp", time)
+                        .addHeader("Accept","application/json")
+                        .addHeader("X-User-Token",userToken)
+                        .addHeader("X-Sign",SignUtil.getMd5(new TreeMap<>(),time))
+                        .build();
                 return request;
             }
     }

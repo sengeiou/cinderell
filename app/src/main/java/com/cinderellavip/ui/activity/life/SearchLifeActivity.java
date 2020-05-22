@@ -14,13 +14,23 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.SearchItem;
+import com.cinderellavip.bean.net.HotList;
+import com.cinderellavip.bean.net.life.HotSearchItem;
+import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.home.SearchResultActivity;
 import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.FlowLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.DpUtil;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +53,10 @@ public class SearchLifeActivity extends BaseActivity {
     @BindView(R.id.iv_clear)
     ImageView iv_clear;
     private int type;
+
+    @BindView(R.id.ll_history)
+    LinearLayout ll_history;
+    private List<String> historySet;
 
 //    ArrayList<String> searchHistory = new ArrayList<>();
 
@@ -75,20 +89,33 @@ public class SearchLifeActivity extends BaseActivity {
     @Override
     public void loadData() {
 
-        List<SearchItem> data1 = new ArrayList<>();
-        data1.add(new SearchItem("搬家"));
-        data1.add(new SearchItem("擦玻璃"));
-        data1.add(new SearchItem("开换锁"));
-        data1.add(new SearchItem("开荒保洁"));
-        data1.add(new SearchItem("日常保洁"));
-        data1.add(new SearchItem("清洁"));
-        data1.add(new SearchItem("春节大扫除"));
-        data1.add(new SearchItem("下水道"));
-        addHotData(flHot, data1);
-        addRecent(flRecent, data1);
-//
+        getHistoryData();
+        new RxHttp<BaseResult<List<HotSearchItem>>>().send(ApiManager.getService().getLifeSearchWords(),
+                new Response<BaseResult<List<HotSearchItem>>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<List<HotSearchItem>> result) {
+                        List<HotSearchItem> data = result.data;
+                        addHotData(flHot, data);
+                    }
+                });
     }
 
+    //得到历史数据
+    private void getHistoryData(){
+        Gson gson = new Gson();
+        String search = GlobalParam.getLifeSearch();
+        if (!TextUtils.isEmpty(search)){
+            ll_history.setVisibility(View.VISIBLE);
+            flRecent.setVisibility(View.VISIBLE);
+            Type founderSetType = new TypeToken<ArrayList<String>>(){}.getType();
+            historySet = gson.fromJson(search, founderSetType);
+            addRecent(flRecent, historySet);
+        }else {
+            historySet = new ArrayList<>();
+            ll_history.setVisibility(View.GONE);
+            flRecent.setVisibility(View.GONE);
+        }
+    }
 //    @Override
 //    public void onEvent(Object o) {
 //        super.onEvent(o);
@@ -97,7 +124,7 @@ public class SearchLifeActivity extends BaseActivity {
 //        }
 //    }
 
-    private void addRecent(FlowLayout flowLayout, List<SearchItem> list) {
+    private void addRecent(FlowLayout flowLayout, List<String> list) {
         if (list == null || list.size() == 0) {
             iv_clear.setVisibility(View.GONE);
         } else {
@@ -110,11 +137,11 @@ public class SearchLifeActivity extends BaseActivity {
         if (flowLayout != null) {
             flowLayout.removeAllViews();
         }
-        for (SearchItem s : list) {
+        for (String s : list) {
             TextView tv = new TextView(this);
             tv.setPadding(DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3),
                     DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3));
-            tv.setText(s.name);
+            tv.setText(s);
             tv.setMaxWidth(ScreenUtil.getScreenWidth(mActivity) - DpUtil.dip2px(mContext, 24));
             tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setSingleLine();
@@ -124,20 +151,15 @@ public class SearchLifeActivity extends BaseActivity {
 
             tv.setLayoutParams(layoutParams);
 
-//            Log.e("TAG",layoutParams.width+"=="+ScreenUtil.getScreenWidth(mActivity));
-//            if (layoutParams.width>ScreenUtil.getScreenWidth(mActivity)){
-//                layoutParams.width = ScreenUtil.getScreenWidth(mActivity);
-//            }
             tv.setOnClickListener(v -> {
                 ServiceListActivity.launch(mActivity,tv.getText().toString());
-//                SearchResultActivity.launch(mActivity, tv.getText().toString());
             });
             flowLayout.addView(tv, layoutParams);
         }
     }
 
 
-    private void addHotData(FlowLayout flowLayout, List<SearchItem> list) {
+    private void addHotData(FlowLayout flowLayout, List<HotSearchItem> list) {
         //往容器内添加TextView数据
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(DpUtil.dip2px(mContext, 12), DpUtil.dip2px(mContext, 5),
@@ -145,11 +167,11 @@ public class SearchLifeActivity extends BaseActivity {
         if (flowLayout != null) {
             flowLayout.removeAllViews();
         }
-        for (SearchItem s : list) {
+        for (HotSearchItem s : list) {
             TextView tv = new TextView(this);
             tv.setPadding(DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3),
                     DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3));
-            tv.setText(s.name);
+            tv.setText(s.word);
             tv.setMaxWidth(ScreenUtil.getScreenWidth(mActivity) - DpUtil.dip2px(mContext, 24));
             tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setSingleLine();
