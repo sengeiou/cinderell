@@ -10,11 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.net.LifeCityBean;
+import com.cinderellavip.bean.net.life.ShortPreOrderResult;
+import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.global.RequestCode;
-import com.cinderellavip.toast.TimeUtil3s;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.WebViewActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -67,26 +74,54 @@ public class BuyServiceActivity extends BaseActivity {
         from.startActivity(intent);
     }
 
-    private int type;
-    public static void launch(Context from,int type) {
+
+    //项目id
+    private int project;
+    public static void launch(Context from,int project) {
         Intent intent = new Intent(from, BuyServiceActivity.class);
-        intent.putExtra("type",type);
+        intent.putExtra("project",project);
         from.startActivity(intent);
     }
 
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        setLineVisibility();
         setBackTitle("购买服务");
+        project = getIntent().getIntExtra("project",-1);
 
 
     }
+    public String address = "";
+    public String coupon = "";
+    public String starttime = "";
+    public String endtime = "";
+    public String sign = "";
+
+
 
 
     @Override
     public void loadData() {
+        TreeMap<String,String> map = new TreeMap<>();
+        map.put("city", CinderellApplication.name +"");
+        map.put("project",project+"");
+        map.put("address",""+address);
+        map.put("coupon",""+coupon);
+        map.put("starttime",""+starttime);
+        map.put("endtime",""+endtime);
+        map.put("sign",""+sign);
+        new RxHttp<BaseResult<ShortPreOrderResult>>().send(ApiManager.getService().shortPreOrder(map),
+                new Response<BaseResult<ShortPreOrderResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ShortPreOrderResult> result) {
+                        ShortPreOrderResult shortPreOrderResult = result.data;
+                        tvOrderMoney.setText(shortPreOrderResult.getPrice()+"元");
+                        tvCouponMoney.setText("-"+shortPreOrderResult.getDiscount()+"元");
+                        tvPayMoney.setText(shortPreOrderResult.getActual()+"元");
 
+                    }
+                });
     }
 
     @Override
@@ -103,10 +138,10 @@ public class BuyServiceActivity extends BaseActivity {
                 SelectServiceAddressActivity.launch(mActivity, SelectServiceAddressActivity.SELECT);
                 break;
             case R.id.ll_service_time:
-                TimeUtil3s.getInstance().showSelectDialog(mContext,(year, month, day) -> {
-                    tvServiceTime.setText("1月6号 今天 18:00");
-                });
-//                SelectServiceTimeActivity.launch(mActivity);
+//                TimeUtil3s.getInstance().showSelectDialog(mContext,(year, month, day) -> {
+//                    tvServiceTime.setText("1月6号 今天 18:00");
+//                });
+                SelectServiceTimeActivity.launch(mActivity);
                 break;
             case R.id.ll_service_coupon:
                 ServiceSelectCouponActivity.launch(mActivity);
@@ -145,7 +180,10 @@ public class BuyServiceActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCode.request_service_address && resultCode == RESULT_OK) {
-            setAddress(new NetCityBean(true));
+            netCityBean  = data.getParcelableExtra("netCityBean");
+            setAddress(netCityBean);
+            address = netCityBean.id+"";
+            loadData();
         }if (requestCode == RequestCode.request_service_time && resultCode == RESULT_OK) {
             tvServiceTime.setText("1月6号 今天 18:00");
         }if (requestCode == RequestCode.request_service_coupon && resultCode == RESULT_OK) {
@@ -158,8 +196,8 @@ public class BuyServiceActivity extends BaseActivity {
         }
     }
 
-    NetCityBean netCityBean;
-    private void setAddress(NetCityBean address) {
+    LifeCityBean netCityBean;
+    private void setAddress(LifeCityBean address) {
         netCityBean = address;
         if (address == null ) {
             tvAddressTip.setVisibility(View.VISIBLE);
@@ -167,6 +205,9 @@ public class BuyServiceActivity extends BaseActivity {
         } else {
             tvAddressTip.setVisibility(View.GONE);
             llAddressInfo.setVisibility(View.VISIBLE);
+            tvName1.setText(netCityBean.title);
+            tvName2.setText(netCityBean.address+netCityBean.doorplate);
+            tvName3.setText(netCityBean.name+netCityBean.phone);
         }
     }
     private boolean isSelect = false;

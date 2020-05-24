@@ -3,20 +3,16 @@ package com.cinderellavip.ui.fragment.life;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
-import com.cinderellavip.adapter.recycleview.OrderAdapter;
 import com.cinderellavip.adapter.recycleview.SelectServiceTimeAdapter;
-import com.cinderellavip.bean.local.OrderBean;
-import com.cinderellavip.bean.local.TimeBean;
+import com.cinderellavip.bean.net.life.ShortTime;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class SelectServiceTimeFragment extends BaseListFragment<TimeBean> {
+public class SelectServiceTimeFragment extends BaseListFragment<ShortTime> {
 
 
 
@@ -48,37 +44,18 @@ public class SelectServiceTimeFragment extends BaseListFragment<TimeBean> {
 
     @Override
     public void loadData() {
-        List<TimeBean> list = new ArrayList<>();
-        list.add(new TimeBean(0,"08:00"));
-        list.add(new TimeBean(0,"08:30"));
-        list.add(new TimeBean(0,"09:00"));
-        list.add(new TimeBean(0,"09:30"));
-        list.add(new TimeBean(0,"10:00"));
-        list.add(new TimeBean(0,"10:30"));
-        list.add(new TimeBean(0,"11:00"));
-        list.add(new TimeBean(0,"11:30"));
-        list.add(new TimeBean(0,"12:00"));
-        list.add(new TimeBean(0,"12:30"));
-        list.add(new TimeBean(1,"13:00"));
-        list.add(new TimeBean(1,"13:30"));
-        list.add(new TimeBean(1,"14:00"));
-        list.add(new TimeBean(1,"14:30"));
-        list.add(new TimeBean(1,"15:00"));
-        list.add(new TimeBean(1,"15:30"));
-        list.add(new TimeBean(1,"16:00"));
-        list.add(new TimeBean(1,"16:30"));
-        list.add(new TimeBean(1,"17:00"));
-        list.add(new TimeBean(1,"17:30"));
-        list.add(new TimeBean(1,"18:00"));
-
-       setData(true, list);
 
 
     }
+
 
     @Override
     public void initListener() {
         super.initListener();
 
+    }
+
+    public void setDate(List<ShortTime> time) {
+        setData(true,time);
     }
 }

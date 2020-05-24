@@ -44,6 +44,8 @@ import com.cinderellavip.bean.net.life.LongOrderDetailResult;
 import com.cinderellavip.bean.net.life.LongOrderItem;
 import com.cinderellavip.bean.net.life.PayCheckResult;
 import com.cinderellavip.bean.net.life.ServiceProjectDetail;
+import com.cinderellavip.bean.net.life.ShortPreOrderResult;
+import com.cinderellavip.bean.net.life.ShortTimeResult;
 import com.cinderellavip.bean.net.mine.ApplyResult;
 import com.cinderellavip.bean.net.mine.BlacklistResult;
 import com.cinderellavip.bean.net.mine.IntegralResult;
@@ -564,5 +566,15 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult<LongOrderDetailResult>>
     longOrderDetail(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_order_pre_order)
+    @FormUrlEncoded
+    Observable<BaseResult<ShortPreOrderResult>>
+    shortPreOrder(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_order_time)
+    @FormUrlEncoded
+    Observable<BaseResult<ShortTimeResult>>
+    shortOrderTime(@FieldMap TreeMap<String, String> map);
 
 }
