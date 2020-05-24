@@ -156,6 +156,7 @@
         <activity android:name=".ui.activity.home.SearchListActivity"/>
         <activity android:name=".ui.activity.home.ShopGoodsListActivity"/>
         <activity android:name=".ui.activity.home.ShopGoodsCategoryActivity"/>
+        <activity android:name=".ui.activity.life.SearchLifeResultActivity"/>
 
         <activity
             android:name=".wxapi.WXEntryActivity"

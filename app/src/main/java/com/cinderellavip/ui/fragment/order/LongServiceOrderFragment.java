@@ -2,17 +2,22 @@ package com.cinderellavip.ui.fragment.order;
 
 import android.os.Bundle;
 
-import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.LongServiceOrderAdapter;
+import com.cinderellavip.bean.ListData;
+import com.cinderellavip.bean.eventbus.UpdateLongServiceOrder;
+import com.cinderellavip.bean.net.life.LongOrderItem;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class LongServiceOrderFragment extends BaseListFragment<Integer> {
+public class LongServiceOrderFragment extends BaseListFragment<LongOrderItem> {
 
 
     private int type;
@@ -35,9 +40,7 @@ public class LongServiceOrderFragment extends BaseListFragment<Integer> {
         mAdapter = new LongServiceOrderAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView(R.mipmap.empty_view,"您还没有相关订单哦~","去逛逛", view->{
-
-        });
+        setEmptyView("暂无长期服务订单");
 
 
 
@@ -45,25 +48,35 @@ public class LongServiceOrderFragment extends BaseListFragment<Integer> {
 
     @Override
     public void loadData() {
-        if (swipeLayout != null)
-        swipeLayout.setRefreshing(false);
-        List<Integer> list = new ArrayList<>();
-        if (type == 4)
-        list.add(5);
-        list.add(type);
-        list.add(type);
-        list.add(type);
-        list.add(type);
-        list.add(type);
-       setData(true, list);
+        super.loadData();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("type", ""+type);
+        hashMap.put("count", ""+PageSize);
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<ListData<LongOrderItem>>>().send(ApiManager.getService().longOrderList(hashMap),
+                new Response<BaseResult<ListData<LongOrderItem>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListData<LongOrderItem>> result) {
+                        setData(result.data.data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
     }
 
     @Override
-    public void initListener() {
-        super.initListener();
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
-
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateLongServiceOrder){
+            onRefresh();
+        }
     }
 }

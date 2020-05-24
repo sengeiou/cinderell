@@ -3,28 +3,32 @@ package com.cinderellavip.ui.fragment.life;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.SelectServiceCouponAdapter;
-import com.cinderellavip.adapter.recycleview.SeleteCoupondapter;
-import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.bean.ListData;
+import com.cinderellavip.bean.net.life.LifeCoupon;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.OnClick;
 
 
-public class SelectServiceCouponFragment extends BaseListFragment<CouponsBean> {
+public class SelectServiceCouponFragment extends BaseListFragment<LifeCoupon> {
 
 
-    public static SelectServiceCouponFragment newInstance( ) {
+    public static SelectServiceCouponFragment newInstance( String contracts_id) {
         SelectServiceCouponFragment cartFragment = new SelectServiceCouponFragment();
         Bundle bundle = new Bundle();
-
+        bundle.putString("contracts_id",contracts_id);
+        cartFragment.setArguments(bundle);
         return cartFragment;
 
     }
@@ -43,35 +47,47 @@ public class SelectServiceCouponFragment extends BaseListFragment<CouponsBean> {
         mAdapter = new SelectServiceCouponAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView(R.mipmap.empty_view_coupon,"您还没有优惠券哦~");
+        setEmptyView(R.mipmap.empty_view_coupon,"暂无可用优惠券~");
 
+
+        contracts_id = getArguments().getString("contracts_id");
 
     }
 
+    private String contracts_id;
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
-            List<CouponsBean> list = new ArrayList<>();
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            list.add(new CouponsBean());
-            setData(list);
-        },500);
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("contracts_id", ""+contracts_id);
+        new RxHttp<BaseResult<ListData<LifeCoupon>>>().send(ApiManager.getService().longOrderCanUse(hashMap),
+                new Response<BaseResult<ListData<LifeCoupon>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListData<LifeCoupon>> result) {
+                        setData(result.data.data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
     }
 
     @Override
     public void initListener() {
-        super.initListener();
+        if (swipeLayout != null)
+            swipeLayout.setOnRefreshListener(this::onRefresh);
 
         mAdapter.setOnItemClickListener(((baseQuickAdapter, view, position) -> {
 
-            List<CouponsBean> data = mAdapter.getData();
-            CouponsBean couponsBean = data.get(position);
+            List<LifeCoupon> data = mAdapter.getData();
+            LifeCoupon couponsBean = data.get(position);
                 Intent intent = new Intent();
                 intent.putExtra("couponsBean", couponsBean);
                 mActivity.setResult(Activity.RESULT_OK, intent);

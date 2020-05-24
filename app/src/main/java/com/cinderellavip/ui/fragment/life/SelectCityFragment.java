@@ -2,16 +2,12 @@ package com.cinderellavip.ui.fragment.life;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.TextView;
 
-import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.util.lifeaddress.SelectCityAdapter;
 import com.cinderellavip.util.lifeaddress.User;
 import com.cinderellavip.util.lifeaddress.UserModel;
 import com.lwkandroid.rcvadapter.bean.RcvSectionWrapper;
-import com.lwkandroid.rcvadapter.ui.RcvStickyLayout;
-import com.lwkandroid.rcvadapter.utils.RcvLinearDecoration;
 import com.lwkandroid.widget.indexbar.IndexBar;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
@@ -51,6 +47,7 @@ public class SelectCityFragment extends BaseFragment  implements IndexBar.OnInde
 
 
     }
+
 
     @Override
     public void loadData() {
@@ -97,7 +94,7 @@ public class SelectCityFragment extends BaseFragment  implements IndexBar.OnInde
             @Override
             public void run()
             {
-                List<User> list = UserModel.getUserDatas();
+                List<User> list = UserModel.getUserDatas(mActivity);
                 final List<RcvSectionWrapper<String, User>> resultList = new ArrayList<>();
                 Set<String> charSet = new HashSet<>();
 

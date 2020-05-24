@@ -160,7 +160,7 @@
                 <TextView
                     android:id="@+id/tv_address"
                     style="@style/base_text_style"
-                    android:text="中国·梦古"
+                    tools:text="中国·梦古"
                     android:drawableLeft="@mipmap/address_green"
                     android:drawablePadding="8dp"/>
 
@@ -170,7 +170,7 @@
                     android:lines="1"
                     android:layout_marginTop="4dp"
                     android:ellipsize="end"
-                    android:text="上海市青浦区华徐公路888号1楼号2楼ipd"/>
+                    tools:text="上海市青浦区华徐公路888号1楼号2楼ipd"/>
 
             </LinearLayout>
 
@@ -235,13 +235,16 @@
                 style="@style/base_text_style"
                 android:layout_weight="1"
                 android:text="设为默认地址"
+                android:layout_gravity="center_vertical"
                 />
+
             <CheckBox
+                android:button="@drawable/selector_life"
                 android:id="@+id/cb_default_address"
-                style="@style/base_text_style"
-                android:textColor="@color/grayText"
-                android:button="@mipmap/agreement_selete_no"
-                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="5dp"
                 />
 
         </LinearLayout>

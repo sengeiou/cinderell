@@ -3,7 +3,6 @@ package com.cinderellavip.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,6 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.LifeAdapter;
 import com.cinderellavip.adapter.recycleview.LifeCategoryAdapter;
-import com.cinderellavip.bean.eventbus.UpdateFind;
-import com.cinderellavip.bean.net.HomeCategoryItem;
-import com.cinderellavip.bean.net.home.HomeBanner;
 import com.cinderellavip.bean.net.life.LiftHomeAd;
 import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.bean.net.life.LiftHomeListItem;
@@ -28,12 +24,10 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.map.LocationUtil;
-import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.activity.life.SearchLifeActivity;
 import com.cinderellavip.ui.activity.life.SelectCityActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.ColorUtil;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.banner.BannerUtil;
 import com.lishide.recyclerview.scroll.ScrollRecyclerView;
@@ -41,8 +35,6 @@ import com.stx.xhb.xbanner.XBanner;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -81,7 +73,7 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
 
         initHeadView();
 
-        location();
+
     }
 
     private XBanner xbanner;  //banner
@@ -134,9 +126,7 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
     @Override
     public void loadData() {
         super.loadData();
-
-        getData("南京");
-
+        location();
 
     }
     private void location(){
@@ -270,5 +260,10 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
                     AgreementWebViewActivity.launch(mActivity,liftHomeResult.billing.get(2).url);
                 break;
         }
+    }
+
+    public void setAddress(String name) {
+        tv_address.setText(name);
+        getData(name);
     }
 }

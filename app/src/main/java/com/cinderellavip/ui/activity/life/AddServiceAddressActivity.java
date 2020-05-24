@@ -18,7 +18,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.UpdateLifeAddress;
+import com.cinderellavip.bean.net.LifeCityBean;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.cinderellavip.map.LocationUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,6 +70,14 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
         activity.startActivityForResult(intent, REQUESTCODE);
     }
 
+    private LifeCityBean item;
+    public static void launch(Activity activity, int type, LifeCityBean item) {
+        Intent intent = new Intent(activity, AddServiceAddressActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("item", item);
+        activity.startActivityForResult(intent, REQUESTCODE);
+    }
+
 
     @Override
     public void initView(Bundle savedInstanceState) {
@@ -68,6 +87,21 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
             setBackTitle("新增服务地址");
         } else {
             setBackTitle("编辑服务地址");
+            item = getIntent().getParcelableExtra("item");
+            etName.setText(item.name);
+            etPhone.setText(item.phone);
+            tvAddress.setText(item.title);
+            tvAddressDetail.setText(item.address);
+            etHouseNumber.setText(item.doorplate);
+            isDefault = item.isDefault();
+            cbDefaultAddress.setChecked(item.isDefault());
+
+            if (item.isGender())
+                rbWoman.setChecked(true);
+            else
+                rbMan.setChecked(true);
+
+
         }
 
     }
@@ -75,7 +109,20 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
 
     @Override
     public void loadData() {
+            location();
+    }
 
+    private void location(){
+        LocationUtil.getInstance().start(mActivity,(aMapLocation, lat, lnt) -> {
+            if (aMapLocation.getErrorCode() == 0){
+                tvAddress.setText(aMapLocation.getPoiName());
+                tvAddressDetail.setText(aMapLocation.getProvince()+
+                        aMapLocation.getCity()+ aMapLocation.getDistrict()+
+                        aMapLocation.getStreet()+aMapLocation.getStreetNum());
+            }else {
+            }
+
+        });
     }
 
     @Override
@@ -91,6 +138,8 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
                 checkPermissions(needPermissions);
                 break;
             case R.id.cb_default_address:
+                isDefault = !isDefault;
+                cbDefaultAddress.setChecked(isDefault);
                 break;
             case R.id.ll_address:
                 SelectLocationActivity.launch(mActivity);
@@ -100,6 +149,8 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
                 break;
         }
     }
+
+    public boolean isDefault;
 
     private void commit(){
         String name = etName.getText().toString().trim();
@@ -115,10 +166,49 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
             tsg("请输入门牌号");
             return;
         }
-        tsg("添加成功");
-        finish();
 
 
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        if (type == EDIT){
+            hashMap.put("addressannal", ""+item.id);
+        }
+        hashMap.put("name", ""+name);
+        hashMap.put("phone", ""+phone);
+        hashMap.put("title", ""+tvAddress.getText().toString().trim());
+        hashMap.put("address", ""+tvAddressDetail.getText().toString().trim());
+        hashMap.put("doorplate", house_number);
+        hashMap.put("gender", rbMan.isChecked()?"0":"1");
+        hashMap.put("default", isDefault?"1":"0");
+        new RxHttp<BaseResult>().send(ApiManager.getService().editLifeAddress(hashMap),
+                new Response<BaseResult>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+
+                        if (type == ADD) {
+                            tsg("添加成功");
+                        } else {
+                            tsg("修改成功");
+                        }
+
+                        EventBus.getDefault().post(new UpdateLifeAddress());
+                        finish();
+
+                    }
+
+                });
+
+
+    }
+
+    @Override
+    public void initListener() {
+        super.initListener();
+        rgSex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+            }
+        });
     }
 
     public static String[] needPermissions = {

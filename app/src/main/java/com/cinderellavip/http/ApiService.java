@@ -3,8 +3,10 @@ package com.cinderellavip.http;
 
 import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.ListCoupons;
+import com.cinderellavip.bean.ListData;
 import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.OrderResult;
+import com.cinderellavip.bean.ServiceType;
 import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
@@ -17,6 +19,7 @@ import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.HomeCategoryResult;
 import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.bean.net.IntegralExchangeLogistics;
+import com.cinderellavip.bean.net.LifeCityBean;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
@@ -33,8 +36,13 @@ import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
 import com.cinderellavip.bean.net.life.CategoryResult;
 import com.cinderellavip.bean.net.life.HotSearchItem;
+import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.bean.net.life.LiftCategoryItem;
 import com.cinderellavip.bean.net.life.LiftHomeResult;
+import com.cinderellavip.bean.net.life.LiftHomeServiceItem;
+import com.cinderellavip.bean.net.life.LongOrderDetailResult;
+import com.cinderellavip.bean.net.life.LongOrderItem;
+import com.cinderellavip.bean.net.life.PayCheckResult;
 import com.cinderellavip.bean.net.life.ServiceProjectDetail;
 import com.cinderellavip.bean.net.mine.ApplyResult;
 import com.cinderellavip.bean.net.mine.BlacklistResult;
@@ -482,5 +490,79 @@ public interface ApiService {
     @POST(HttpUrl.life_search_popular)
     Observable<BaseResult<List<HotSearchItem>>>
     getLifeSearchWords();
+
+    @POST(HttpUrl.life_searchList)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<LiftHomeServiceItem>>>
+    getLifeSearchResult(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_address_list)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<LifeCityBean>>>
+    lifeAddress(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_address_edit)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    editLifeAddress(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_OneProjectList)
+    Observable<BaseResult<List<ServiceType>>>
+    lifeCategory();
+
+    @POST(HttpUrl.life_long_order_confirm_order)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    preLongOrder(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_long_order_list)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<LongOrderItem>>>
+    longOrderList(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_long_order_confirm_price)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    longOrderConfirm(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_long_cancel)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    cancelLongOrder(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_long_order_prepay)
+    @FormUrlEncoded
+    Observable<BaseResult<PayCheckResult>>
+    prePayLongOrder(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_coupons)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<LifeCoupon>>>
+    lifeCoupon(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_coupons_receive_condition)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<LifeCoupon>>>
+    categoryCoupon(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_coupons_receive)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    receiveCategoryCoupon(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_long_order_coupons)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<LifeCoupon>>>
+    longOrderCanUse(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_long_pay)
+    @FormUrlEncoded
+    Observable<BaseResult<GetPayResult>>
+    lifeOrderPay(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_long_order_info)
+    @FormUrlEncoded
+    Observable<BaseResult<LongOrderDetailResult>>
+    longOrderDetail(@FieldMap TreeMap<String, String> map);
 
 }

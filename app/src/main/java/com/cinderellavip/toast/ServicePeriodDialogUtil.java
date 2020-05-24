@@ -7,11 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.ReturnReasonItem;
 import com.cinderellavip.weight.wheel.WheelView;
 import com.cinderellavip.weight.wheel.adapters.AbstractWheelTextAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,7 +33,7 @@ public class ServicePeriodDialogUtil {
 		TextView mBtnConfirm = view.findViewById(R.id.tv_sure);
 		mBtnConfirm.setOnClickListener(v->{
 			cityDialog.dismiss();
-			listener.onFinish(data.get(mViewProvince.getCurrentItem()));
+			listener.onFinish(data.get(mViewProvince.getCurrentItem()),mViewProvince.getCurrentItem()+1+"");
 		});
 
 
@@ -69,7 +67,7 @@ public class ServicePeriodDialogUtil {
 	}
 
 	public interface onSelectListener {
-		void onFinish(String reason);
+		void onFinish(String reason,String position);
 	}
 
 }

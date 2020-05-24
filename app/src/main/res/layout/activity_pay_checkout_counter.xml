@@ -73,7 +73,6 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="170元"
             android:textSize="12sp"
             android:textColor="@color/black_title_color"
             android:gravity="right"
@@ -102,7 +101,7 @@
             android:textSize="12sp"
             android:textColor="@color/black_title_color"
             android:gravity="right"
-            tools:text="170元"/>
+            />
 
 
     </LinearLayout>
@@ -129,7 +128,7 @@
             android:textSize="12sp"
             android:textColor="@color/yellow_deep"
             android:gravity="right"
-            android:text="170元"/>
+            />
 
 
     </LinearLayout>

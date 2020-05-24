@@ -115,8 +115,23 @@ public class Response<T> extends Subscriber<T> {
                  *  不是首页的时候
                  */
                 GlobalParam.setUserLogin(false);
-//                GlobalParam.setUserId("0");
-                LoginActivity.launch((Activity) mContext);
+                LoginActivity.launch((Activity) mContext,true);
+            }else {
+                if (!TextUtils.isEmpty(base.message)){
+                    if (mNeedReturn && !isLoad){
+                        onErrorShow(base.message);
+                    }if (mNeedTip){
+                        onToast(base.message);
+                    }
+                }
+            }
+        }else if (str instanceof BaseListResult){
+            BaseListResult base = (BaseListResult) str;
+            if (200 == base.code){
+                onSuccess(str);
+            }else if (20001 == base.code || 20014 == base.code || 20015 == base.code ){
+                GlobalParam.setUserLogin(false);
+                LoginActivity.launch((Activity) mContext,true);
             }else {
                 if (!TextUtils.isEmpty(base.message)){
                     if (mNeedReturn && !isLoad){
@@ -127,25 +142,6 @@ public class Response<T> extends Subscriber<T> {
                 }
             }
         }
-//        if (str instanceof BaseListResult){
-//            BaseListResult base = (BaseListResult) str;
-//            if (0 == base.code || "0".equals(base.code)){
-//                onSuccess(str);
-//            }else if (20000 == base.code || "20000".equals(base.code)){
-//                GlobalParam.setUserLogin(false);
-//                GlobalParam.setUserId("0");
-//                EventBus.getDefault().post(new UpdateMineInfo());
-//                SelectLoginWayActivity.launch(true,(Activity) mContext);
-//            }else {
-//                if (!TextUtils.isEmpty(base.msg)){
-//                    if (mNeedReturn && !isLoad){
-//                        onErrorShow(base.msg);
-//                    }if (mNeedTip){
-//                        onToast(base.msg);
-//                    }
-//                }
-//            }
-//        }
         onCompleted();
     }
 

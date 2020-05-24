@@ -15,6 +15,7 @@ import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.net.SpecialItem;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.find.PublishPostActivity;
 import com.cinderellavip.ui.activity.find.PublishTopicActivity;
@@ -186,7 +187,7 @@ public class DialogUtil {
         });
     }
 
-    public  static void showServiceCouponDialog(Context context, List<CouponsBean> data) {
+    public  static void showServiceCouponDialog(Context context, List<LifeCoupon> data) {
         View view = View.inflate(context, R.layout.pop_bottom_selete_coupon, null);
         dialog = DialogUtils.getBottomDialog(context,view);
         ImageView iv_close = view.findViewById(R.id.iv_close);

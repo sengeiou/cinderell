@@ -11,5 +11,7 @@ public class RequestCode {
     public static final int request_service_coupon = 2;
 
 
+    public static final int request_service_city = 3;
+    public static final int request_service_address = 4;
 
 }

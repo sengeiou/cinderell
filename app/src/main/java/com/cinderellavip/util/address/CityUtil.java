@@ -2,6 +2,8 @@ package com.cinderellavip.util.address;
 
 import android.content.Context;
 
+import com.cinderellavip.util.lifeaddress.LifeAddress;
+import com.cinderellavip.util.lifeaddress.LifeAddressResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -49,6 +51,23 @@ public class CityUtil {
                 LocalCity bean1 = gson.fromJson(bean, LocalCity.class);//解析
                 beans.add(bean1);
             }
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return beans;
+    }
+
+    public static ArrayList<LifeAddress> getLifeCity(Context context){
+        InputStream inputStream = null;
+        ArrayList<LifeAddress> beans = new ArrayList<>();
+        try {
+            inputStream = context.getAssets().open("city1.json");
+            String str = convertStreamToString(inputStream);
+            Gson gson = new Gson();
+
+            LifeAddressResult lifeAddressResult = gson.fromJson(str, LifeAddressResult.class);
+            beans = lifeAddressResult.city;
 
         }catch (IOException e){
             e.printStackTrace();

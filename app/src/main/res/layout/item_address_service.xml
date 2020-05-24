@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:background="@drawable/touch_bg"
     android:orientation="vertical">
@@ -37,7 +37,7 @@
                     <TextView
                         android:id="@+id/tv_name"
                         style="@style/base_text_style"
-                        android:text="上海涵予信息科技有限公司"/>
+                        tools:text="上海涵予信息科技有限公司"/>
 
                     <TextView
                         android:id="@+id/tv_default_status"
@@ -56,14 +56,14 @@
                     style="@style/base_text_style_gray_small"
                     android:textSize="12sp"
                     android:layout_marginTop="5dp"
-                    android:text="上海市青浦徐华徐公路888号 1号楼2楼IPD"/>
+                    tools:text="上海市青浦徐华徐公路888号 1号楼2楼IPD"/>
 
                 <TextView
                     android:id="@+id/tv_detail_address"
                     style="@style/base_text_style_gray_small"
                     android:textSize="12sp"
                     android:layout_marginTop="5dp"
-                    android:text="荀先生 13132153153"/>
+                    tools:text="荀先生 13132153153"/>
 
             </LinearLayout>
 

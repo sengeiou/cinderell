@@ -67,6 +67,7 @@ public class Constant {
     public static String H14 = HttpUrl.server_url+"api/user/agreements/14";
     public static String H15 = HttpUrl.server_url+"api/user/agreements/15";
     public static String H16 = HttpUrl.server_url+"api/user/agreements/16";
+    public static String H17 = HttpUrl.server_url+"api/user/agreements/17";
 
 
     public static final int ALL = 0;

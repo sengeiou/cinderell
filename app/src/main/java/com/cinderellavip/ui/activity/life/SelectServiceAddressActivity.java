@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.LifeAddressFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -17,19 +18,20 @@ public class SelectServiceAddressActivity extends BaseActivity {
 
     public static final int LOOK = 1;
     public static final int SELECT = 2;
-    public static final int REQUEST_CODE = 101;
+
 
     private int type;
 
     public static void launch(Activity activity, int type){
         Intent intent = new Intent(activity, SelectServiceAddressActivity.class);
         intent.putExtra("type",type);
-        activity.startActivityForResult(intent,REQUEST_CODE);
+        activity.startActivityForResult(intent, RequestCode.request_service_address);
     }
 
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        setLineVisibility();
         type = getIntent().getIntExtra("type", LOOK);
         setBackTitle("选择城市");
         if (type == SELECT){

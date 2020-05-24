@@ -22,32 +22,33 @@
 
         <TextView
             android:id="@+id/tv_address_tip"
+
             style="@style/base_text_style"
             android:layout_weight="1"
             android:text="请选择服务地址"/>
 
         <LinearLayout
             android:id="@+id/ll_address_info"
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_name1"
                 style="@style/base_text_style"
-                android:text="上海涵予信息科技有限公司"/>
+                tools:text="上海涵予信息科技有限公司"/>
             <TextView
                 android:id="@+id/tv_name2"
                 style="@style/base_text_style_gray_small"
-                android:text="上海市青浦区华徐公路888号1号楼2楼"
+                tools:text="上海市青浦区华徐公路888号1号楼2楼"
                 android:layout_marginTop="3dp"/>
 
             <TextView
                 android:id="@+id/tv_name3"
                 style="@style/base_text_style"
-                android:text="荀先生 15851759843"
+                tools:text="荀先生 15851759843"
                 android:layout_marginTop="3dp"/>
 
         </LinearLayout>
@@ -171,6 +172,7 @@
             android:background="@null"
             android:hint="请输入您的服务要求内容"
             android:minHeight="100dp"
+            android:padding="5dp"
             android:maxLength="16"
             android:textSize="14sp"
             android:textColorHint="@color/grayText"
@@ -209,7 +211,7 @@
                     android:src="@mipmap/service_agreement_default"/>
                 <TextView
                     style="@style/base_text_style"
-                    android:text="已阅读并同意《"/>
+                    android:text="已阅读并同意"/>
 
                 <TextView
                     android:id="@+id/tv_register_agreement"
@@ -219,11 +221,8 @@
                     style="@style/click_toolbar_style"
                     android:textColor="@color/yellow_deep"
                     android:padding="5dp"
-                    android:text="灰姑娘服务协议"/>
+                    android:text="《灰姑娘服务协议》"/>
 
-                <TextView
-                    style="@style/base_text_style"
-                    android:text="》"/>
 
 
             </LinearLayout>

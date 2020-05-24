@@ -3,25 +3,30 @@ package com.cinderellavip.ui.fragment.life;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.SelectServiceAddressAdapter;
-import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.ListData;
+import com.cinderellavip.bean.eventbus.UpdateLifeAddress;
+import com.cinderellavip.bean.net.LifeCityBean;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.life.AddServiceAddressActivity;
 import com.cinderellavip.ui.activity.life.SelectServiceAddressActivity;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LifeAddressFragment extends BaseListFragment<NetCityBean> {
+public class LifeAddressFragment extends BaseListFragment<LifeCityBean> {
 
 
     @BindView(R.id.tv_add)
@@ -41,35 +46,44 @@ public class LifeAddressFragment extends BaseListFragment<NetCityBean> {
         mAdapter = new SelectServiceAddressAdapter(type);
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView("暂无地址");
+        setEmptyView("暂无服务地址信息");
 
     }
 
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(()->{
-            List<NetCityBean> list = new ArrayList<>();
-            list.add(new NetCityBean(true));
-            list.add(new NetCityBean(false));
-            list.add(new NetCityBean(false));
-            setData(list);
-        },500);
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<ListData<LifeCityBean>>>().send(ApiManager.getService().lifeAddress(hashMap),
+                new Response<BaseResult<ListData<LifeCityBean>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListData<LifeCityBean>> result) {
+                        setData(result.data.data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
 
     }
 
-    //选中的item
-    private NetCityBean netCityBean;
+
 
     @Override
     public void initListener() {
         super.initListener();
         mAdapter.setOnItemClickListener(((baseQuickAdapter, view, position) -> {
 
-            List<NetCityBean> data = mAdapter.getData();
-            netCityBean = data.get(position);
+            List<LifeCityBean> data = mAdapter.getData();
+            LifeCityBean netCityBean = data.get(position);
             if (type == SelectServiceAddressActivity.SELECT) {
                 Intent intent = new Intent();
                 intent.putExtra("netCityBean", netCityBean);
@@ -89,5 +103,11 @@ public class LifeAddressFragment extends BaseListFragment<NetCityBean> {
         }
     }
 
-
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateLifeAddress){
+            onRefresh();
+        }
+    }
 }

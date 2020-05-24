@@ -8,10 +8,16 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.bean.net.life.LifeCoupon;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
+
+import java.util.TreeMap;
 
 
-public class CouponReceiveDialogForServiceAdapter extends BaseQuickAdapter<CouponsBean, BaseViewHolder> {
+public class CouponReceiveDialogForServiceAdapter extends BaseQuickAdapter<LifeCoupon, BaseViewHolder> {
 
 
     public CouponReceiveDialogForServiceAdapter() {
@@ -20,7 +26,7 @@ public class CouponReceiveDialogForServiceAdapter extends BaseQuickAdapter<Coupo
 
 
     @Override
-    protected void convert(BaseViewHolder helper, CouponsBean item) {
+    protected void convert(BaseViewHolder helper, LifeCoupon item) {
         int position = helper.getAdapterPosition();
 //        RelativeLayout ll_root = helper.getView(R.id.ll_root);
         TextView tv_money_unit = helper.getView(R.id.tv_money_unit);
@@ -35,32 +41,48 @@ public class CouponReceiveDialogForServiceAdapter extends BaseQuickAdapter<Coupo
 //
         ImageView iv_selete = helper.getView(R.id.iv_selete);
 
-//
-        switch (item.id) {
+        helper.setText(R.id.tv_title,item.title)
+                .setText(R.id.tv_money,item.getLess())
+                .setText(R.id.tv_money_condition,"满"+item.getFull()+"减"+item.getLess())
+                .setText(R.id.tv_complain,item.getScenes());
+
+        switch (item.receive) {
             case 0:
-            case 1:
                 iv_selete.setVisibility(View.GONE);
                 tv_use.setVisibility(View.VISIBLE);
                 break;
-            case 2:
+            case 1:
                 //已领取
                 iv_selete.setVisibility(View.VISIBLE);
                 iv_selete.setImageResource(R.mipmap.yilingqu);
                 tv_use.setVisibility(View.GONE);
                 break;
-            case 3:
+            case 2:
                 //已抢光
                 iv_selete.setVisibility(View.VISIBLE);
                 iv_selete.setImageResource(R.mipmap.yiqinagguang);
                 tv_use.setVisibility(View.GONE);
                 break;
         }
-//        tv_use.setOnClickListener(v -> {
-//            CouponUtil.receiveCoupon(mContext,item.coupons_id+"",()->{
-//                item.setStatus(CouponsBean.RECEIVED);
-//                notifyDataSetChanged();
-//            });
-//        });
+        tv_use.setOnClickListener(v -> {
+            receive(item);
+        });
+
+
+    }
+
+    public void receive(LifeCoupon coupon) {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("coupon", ""+coupon.id);
+        new RxHttp<BaseResult>().send(ApiManager.getService().receiveCategoryCoupon(hashMap),
+                new Response<BaseResult>(getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        coupon.receive = 1;
+                        notifyDataSetChanged();
+                    }
+                });
+
 
     }
 

@@ -9,10 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.life.LongOrderDetailResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.WebViewActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,13 +31,46 @@ import butterknife.OnClick;
 public class LongServiceOrderDetailActivity extends BaseActivity {
 
 
+    @BindView(R.id.ll_progress)
+    LinearLayout ll_progress;
     @BindView(R.id.tv_btn1)
     TextView tvBtn1;
     @BindView(R.id.tv_btn2)
     TextView tvBtn2;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
+    @BindView(R.id.tv_service_number)
+    TextView tvServiceNumber;
+    @BindView(R.id.tv_service_type)
+    TextView tvServiceType;
+    @BindView(R.id.tv_service_time)
+    TextView tvServiceTime;
+    @BindView(R.id.tv_claim)
+    TextView tvClaim;
+    @BindView(R.id.tv_city)
+    TextView tvCity;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.tv_username)
+    TextView tvUsername;
+    @BindView(R.id.tv_id)
+    TextView tvId;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_look)
+    TextView tvLook;
+    @BindView(R.id.tv_cost_explain)
+    TextView tvCostExplain;
+    @BindView(R.id.tv_money)
+    TextView tvMoney;
+    @BindView(R.id.tv_money_pay)
+    TextView tvMoneyPay;
+    @BindView(R.id.tv_money_coupon)
+    TextView tvMoneyCoupon;
 
+    //订单id
     private int type;
 
     public static void launch(Context from, int type) {
@@ -42,6 +82,7 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        setLineVisibility();
         type = getIntent().getIntExtra("type", 0);
         setBackTitle("订单详情");
         setRightText("联系客服");
@@ -51,12 +92,44 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (!isLoad) showProress();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("order", "" + type);
+        new RxHttp<BaseResult<LongOrderDetailResult>>().send(ApiManager.getService().longOrderDetail(hashMap),
+                new Response<BaseResult<LongOrderDetailResult>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<LongOrderDetailResult> result) {
+                        showContent();
+                        longOrderDetailResult = result.data;
+                        setData();
+                    }
 
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
+
+    }
+
+    private void setData() {
+        tvServiceNumber.setText("服务编号："+longOrderDetailResult.code);
+        tvServiceType.setText("服务类型："+longOrderDetailResult.service_name+"-"+longOrderDetailResult.project_title);
+        tvServiceTime.setText("服务周期："+longOrderDetailResult.cycle+"个月");
+        tvClaim.setText(""+longOrderDetailResult.claim);
+        tvAddress.setText("服务地址："+longOrderDetailResult.address.address);
+        tvPhone.setText("联系电话："+longOrderDetailResult.address.phone);
+        tvUsername.setText("联系人："+longOrderDetailResult.address.name);
+        tvId.setText("合同编号："+longOrderDetailResult.cont_code);
+        tvTime.setText("合同起止时间："+longOrderDetailResult.cont_startTime+""+longOrderDetailResult.cont_endTime);
+        tvMoney.setText(longOrderDetailResult.getPrice()+"元");
+        tvMoneyPay.setText(longOrderDetailResult.getActual()+"元");
+        tvMoneyCoupon.setText(longOrderDetailResult.getDiscount()+"元");
         setStatus();
 
     }
 
-
+    LongOrderDetailResult longOrderDetailResult;
 
 
     @Override
@@ -69,10 +142,11 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_cost_explain:
-                CenterDialogUtil.showCostExplain(mActivity,s -> {});
-            break;
+                CenterDialogUtil.showCostExplain(mActivity, s -> {
+                });
+                break;
             case R.id.tv_look:
-                WebViewActivity.launch(mActivity,"服务签约电子合同","https://www.baidu.com");
+                WebViewActivity.launch(mActivity, "服务签约电子合同", "https://www.baidu.com");
                 break;
             case R.id.tv_btn1:
                 if (type == 1 || type == 2) {
@@ -88,8 +162,8 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
                             , "取消", "确定", s -> {
                                 tsg("订单已确定，请完成支付");
                             });
-                }else if (type == 2) {
-                    PayCheckoutCounterActivity.launch(mActivity,1);
+                } else if (type == 2) {
+                    PayCheckoutCounterActivity.launch(mActivity, 1);
                 } else if (type == 5) {
                     ServiceOrderCommentActivity.launch(mActivity);
                 }
@@ -133,37 +207,54 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
     ImageView ivProgress4;
     @BindView(R.id.tv_progress4)
     TextView tvProgress4;
+
     private void setStatus() {
-        if (type == 1) {
+        setStatus(longOrderDetailResult.type);
+        if (longOrderDetailResult.type == 1) {
             ivProgress1.setImageResource(R.mipmap.progress_left_select);
             view1.setBackgroundColor(getColor(R.color.yellow_progress));
             tvBtn1.setText("取消");
             tvBtn2.setText("确定");
-        }else if (type == 2) {
-            ivProgress1.setImageResource(R.mipmap.progress_left_select);
-            view1.setBackgroundColor(getColor(R.color.yellow_progress));
-            view2.setBackgroundColor(getColor(R.color.yellow_progress));
-            ivProgress2.setImageResource(R.mipmap.progress_center_select);
-            view3.setBackgroundColor(getColor(R.color.yellow_progress));
+        } else if (longOrderDetailResult.type == 2) {
             tvBtn1.setText("取消");
             tvBtn2.setText("支付");
-        }else if (type == 3) {
+        } else if (longOrderDetailResult.type == 3 ||longOrderDetailResult.type == 4||longOrderDetailResult.type == 7) {
             llBottom.setVisibility(View.GONE);
-            ivProgress1.setImageResource(R.mipmap.progress_left_select);
-            view1.setBackgroundColor(getColor(R.color.yellow_progress));
-            view2.setBackgroundColor(getColor(R.color.yellow_progress));
-            ivProgress2.setImageResource(R.mipmap.progress_center_select);
-            view3.setBackgroundColor(getColor(R.color.yellow_progress));
-            view4.setBackgroundColor(getColor(R.color.yellow_progress));
-            ivProgress3.setImageResource(R.mipmap.progress_center_select);
-            view5.setBackgroundColor(getColor(R.color.yellow_progress));
-        }else if (type == 4 ||type == 5) {
-            if (type == 4){
+        } else if (longOrderDetailResult.type == 5 || type == 6) {
+            if (type == 6) {
                 llBottom.setVisibility(View.GONE);
-            }else {
+            } else {
                 tvBtn1.setVisibility(View.GONE);
                 tvBtn2.setText("评价");
             }
+        }
+    }
+
+    private void setStatus(int type) {
+        ll_progress.setVisibility(View.VISIBLE);
+        if (type == 1){
+            ivProgress1.setImageResource(R.mipmap.progress_left_select);
+            view1.setBackgroundColor(getColor(R.color.yellow_progress));
+            view2.setBackgroundColor(getColor(R.color.gray_progress));
+            ivProgress2.setImageResource(R.mipmap.progress_center);
+            view3.setBackgroundColor(getColor(R.color.gray_progress));
+            view4.setBackgroundColor(getColor(R.color.gray_progress));
+            ivProgress3.setImageResource(R.mipmap.progress_center);
+            view5.setBackgroundColor(getColor(R.color.gray_progress));
+            view6.setBackgroundColor(getColor(R.color.gray_progress));
+            ivProgress4.setImageResource(R.mipmap.progress_right);
+        }else if (type == 2 || type == 3){
+            ivProgress1.setImageResource(R.mipmap.progress_left_select);
+            view1.setBackgroundColor(getColor(R.color.yellow_progress));
+            view2.setBackgroundColor(getColor(R.color.yellow_progress));
+            ivProgress2.setImageResource(R.mipmap.progress_center_select);
+            view3.setBackgroundColor(getColor(R.color.yellow_progress));
+            view4.setBackgroundColor(getColor(R.color.gray_progress));
+            ivProgress3.setImageResource(R.mipmap.progress_center);
+            view5.setBackgroundColor(getColor(R.color.gray_progress));
+            view6.setBackgroundColor(getColor(R.color.gray_progress));
+            ivProgress4.setImageResource(R.mipmap.progress_right);
+        }else if (type == 4){
             ivProgress1.setImageResource(R.mipmap.progress_left_select);
             view1.setBackgroundColor(getColor(R.color.yellow_progress));
             view2.setBackgroundColor(getColor(R.color.yellow_progress));
@@ -172,9 +263,25 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
             view4.setBackgroundColor(getColor(R.color.yellow_progress));
             ivProgress3.setImageResource(R.mipmap.progress_center_select);
             view5.setBackgroundColor(getColor(R.color.yellow_progress));
+            view6.setBackgroundColor(getColor(R.color.gray_progress));
+            ivProgress4.setImageResource(R.mipmap.progress_right);
+        }else if (type == 5 || type == 6){
+            ivProgress1.setImageResource(R.mipmap.progress_left_select);
+            view1.setBackgroundColor(getColor(R.color.yellow_progress));
+            view2.setBackgroundColor(getColor(R.color.yellow_progress));
+            ivProgress2.setImageResource(R.mipmap.progress_center_select);
+            view3.setBackgroundColor(getColor(R.color.yellow_progress));
+            view4.setBackgroundColor(getColor(R.color.yellow_progress));
+            ivProgress3.setImageResource(R.mipmap.progress_center_select);
             view5.setBackgroundColor(getColor(R.color.yellow_progress));
-            ivProgress3.setImageResource(R.mipmap.progress_right_select);
+            view6.setBackgroundColor(getColor(R.color.yellow_progress));
+            ivProgress4.setImageResource(R.mipmap.progress_right_select);
+        }else {
+            ll_progress.setVisibility(View.GONE);
         }
+
     }
+
+
 
 }

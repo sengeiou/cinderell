@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
+import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.fragment.CartFragment;
@@ -29,6 +30,7 @@ import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.io.File;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
@@ -386,5 +388,12 @@ public class MainActivity extends CheckPermissionActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestCode.request_service_city && resultCode == Activity.RESULT_OK){
+            lifeFragment.setAddress(data.getStringExtra("name"));
+        }
     }
 }

@@ -12,18 +12,18 @@
         android:id="@+id/tv_title"
         style="@style/base_text_style"
         tools:text="服务项目"
-        android:padding="12dp"
+        android:paddingTop="12dp"
+        android:paddingLeft="12dp"
         android:layout_weight="1"
         android:textStyle="bold"
         />
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_goods"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+       />
 
     <View
         android:id="@+id/view_space"

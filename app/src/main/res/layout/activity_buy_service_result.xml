@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:gravity="center_horizontal"
     android:paddingBottom="50dp"
@@ -31,7 +31,7 @@
         android:gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="您购买的月嫂-母婴护理长期服务已经提交，我们会有专人与您联系，与您确认长期服务相关信息，确认后，会生成长期服务订单。请您注意接听电话哦"
+        tools:text="您购买的月嫂-母婴护理长期服务已经提交，我们会有专人与您联系，与您确认长期服务相关信息，确认后，会生成长期服务订单。请您注意接听电话哦"
         android:layout_marginTop="15dp"/>
     <TextView
         android:id="@+id/tv_sure"

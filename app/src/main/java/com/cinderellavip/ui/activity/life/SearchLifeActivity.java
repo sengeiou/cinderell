@@ -13,14 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.SearchItem;
-import com.cinderellavip.bean.net.HotList;
+import com.cinderellavip.bean.eventbus.UpdateSearchLife;
 import com.cinderellavip.bean.net.life.HotSearchItem;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
-import com.cinderellavip.ui.activity.home.SearchResultActivity;
 import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.FlowLayout;
@@ -98,6 +96,8 @@ public class SearchLifeActivity extends BaseActivity {
                         addHotData(flHot, data);
                     }
                 });
+
+
     }
 
     //得到历史数据
@@ -116,13 +116,27 @@ public class SearchLifeActivity extends BaseActivity {
             flRecent.setVisibility(View.GONE);
         }
     }
-//    @Override
-//    public void onEvent(Object o) {
-//        super.onEvent(o);
-//        if (o instanceof UpdateHistorySearch){
-//            loadData();
-//        }
-//    }
+
+    private void saveSearch(String data){
+        for (String s:historySet){
+            if (s.equals(data)){
+                historySet.remove(s);
+                break;
+            }
+        }
+        historySet.add(data);
+        Gson gson = new Gson();
+        String usersJson = gson.toJson(historySet);
+        GlobalParam.setLifeSearch(usersJson);
+        getHistoryData();
+    }
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateSearchLife){
+            saveSearch(((UpdateSearchLife)o).name);
+        }
+    }
 
     private void addRecent(FlowLayout flowLayout, List<String> list) {
         if (list == null || list.size() == 0) {
@@ -137,7 +151,8 @@ public class SearchLifeActivity extends BaseActivity {
         if (flowLayout != null) {
             flowLayout.removeAllViews();
         }
-        for (String s : list) {
+        for (int i=list.size()-1;i>=0;i--) {
+            String s = list.get(i);
             TextView tv = new TextView(this);
             tv.setPadding(DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3),
                     DpUtil.dip2px(mContext, 15), DpUtil.dip2px(mContext, 3));
@@ -152,7 +167,9 @@ public class SearchLifeActivity extends BaseActivity {
             tv.setLayoutParams(layoutParams);
 
             tv.setOnClickListener(v -> {
-                ServiceListActivity.launch(mActivity,tv.getText().toString());
+                String string = tv.getText().toString();
+                saveSearch(string);
+                SearchLifeResultActivity.launch(mActivity, string);
             });
             flowLayout.addView(tv, layoutParams);
         }
@@ -180,8 +197,9 @@ public class SearchLifeActivity extends BaseActivity {
             tv.setBackgroundResource(R.drawable.shape_gray5);
             tv.setLayoutParams(layoutParams);
             tv.setOnClickListener(v -> {
-                ServiceListActivity.launch(mActivity,tv.getText().toString());
-//                SearchResultActivity.launch(mActivity, tv.getText().toString());
+                String string = tv.getText().toString();
+                saveSearch(string);
+                SearchLifeResultActivity.launch(mActivity, string);
             });
             flowLayout.addView(tv, layoutParams);
         }
@@ -217,7 +235,8 @@ public class SearchLifeActivity extends BaseActivity {
                     KeyboardUtils.hideKeyboard(etSearch);
                     tsg("请输入关键字");
                 } else {
-                    SearchResultActivity.launch(mActivity, trim);
+                    saveSearch(trim);
+                    SearchLifeResultActivity.launch(mActivity, trim);
                 }
             }
             return false;
@@ -225,15 +244,8 @@ public class SearchLifeActivity extends BaseActivity {
     }
 
     private void clean() {
-//        TreeMap<String, String> hashMap = new TreeMap<>();
-//        hashMap.put("user_id", GlobalParam.getUserId());
-//        hashMap.put("sign", SignUtil.getMd5(hashMap));
-//        new RxHttp<BaseResult>().send(ApiManager.getService().getRemoveSearch(hashMap),
-//                new Response<BaseResult>(mActivity) {
-//                    @Override
-//                    public void onSuccess(BaseResult result) {
-//                        loadData();
-//                    }
-//                });
+        GlobalParam.setLifeSearch("");
+        getHistoryData();
+//
     }
 }

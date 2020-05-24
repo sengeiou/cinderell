@@ -1,14 +1,12 @@
 package com.cinderellavip.ui.activity.life;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.SelectServiceCouponFragment;
-import com.cinderellavip.ui.fragment.mine.SelectCouponFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -19,8 +17,16 @@ public class ServiceSelectCouponActivity extends BaseActivity {
 
 
 
+    //后期删除
     public static void launch(Activity from) {
         Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
+        from.startActivityForResult(intent, RequestCode.request_service_coupon);
+    }
+
+
+    public static void launch(Activity from,String contracts_id) {
+        Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
+        intent.putExtra("contracts_id",contracts_id);
         from.startActivityForResult(intent, RequestCode.request_service_coupon);
     }
 
@@ -37,8 +43,9 @@ public class ServiceSelectCouponActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        String contracts_id = getIntent().getStringExtra("contracts_id");
         getSupportFragmentManager().beginTransaction().add(R.id.content_container,
-                SelectServiceCouponFragment.newInstance()).commit();
+                SelectServiceCouponFragment.newInstance(contracts_id)).commit();
     }
 
     @Override

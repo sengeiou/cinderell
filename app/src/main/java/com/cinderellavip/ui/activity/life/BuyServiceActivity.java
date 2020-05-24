@@ -14,7 +14,6 @@ import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.toast.TimeUtil3s;
 import com.cinderellavip.ui.activity.WebViewActivity;
-import com.cinderellavip.ui.activity.mine.SelectCouponActivity;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import androidx.annotation.Nullable;
@@ -145,7 +144,7 @@ public class BuyServiceActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SelectServiceAddressActivity.REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == RequestCode.request_service_address && resultCode == RESULT_OK) {
             setAddress(new NetCityBean(true));
         }if (requestCode == RequestCode.request_service_time && resultCode == RESULT_OK) {
             tvServiceTime.setText("1月6号 今天 18:00");

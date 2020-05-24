@@ -7,10 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.OperateProductBean;
+import com.cinderellavip.bean.ServiceType;
 import com.cinderellavip.weight.wheel.OnWheelChangedListener;
 import com.cinderellavip.weight.wheel.WheelView;
 import com.cinderellavip.weight.wheel.adapters.AbstractWheelTextAdapter;
+import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +37,13 @@ public class ServiceTypeDialogUtil implements OnWheelChangedListener {
 	private WheelView mViewCity;
 	private TextView mBtnConfirm;
 	private Context context;
-	private List<OperateProductBean> localCities;
+	private List<ServiceType> localCities;
 	private ProvinceWheelAdapter provinceAdapter;
-	private CityWheelAdapter cityAdapter;
+	private ProvinceWheelAdapter cityAdapter;
 	private Dialog cityDialog;
 
 
-	public void showSelectDialog(Context context,List<OperateProductBean> list, final onSelectCityFinishListener listener) {
+	public void showSelectDialog(Context context, List<ServiceType> list, final onSelectCityFinishListener listener) {
 		localCities = new ArrayList<>();
 		this.context = context;
 		this.localCities = list;
@@ -56,8 +57,13 @@ public class ServiceTypeDialogUtil implements OnWheelChangedListener {
 		ImageView iv_close =view.findViewById(R.id.iv_close);
 		mBtnConfirm.setOnClickListener(v ->{
 
-			OperateProductBean province = localCities.get(mViewProvince.getCurrentItem());
-			String cityListBean = province.children.get(mViewCity.getCurrentItem());
+			ServiceType province = localCities.get(mViewProvince.getCurrentItem());
+			List<ServiceType> data = province.data;
+			if (data == null || data.size() == 0){
+				ToastCommom.createToastConfig().ToastShow(context,"请选择服务项目");
+				return;
+			}
+			ServiceType cityListBean = data.get(mViewCity.getCurrentItem());
 			if (listener != null) {
 				listener.onFinish(province,
 						cityListBean);
@@ -75,7 +81,7 @@ public class ServiceTypeDialogUtil implements OnWheelChangedListener {
 	}
 
 	private void setUpData() {
-		List<OperateProductBean> province = localCities;
+		List<ServiceType> province = localCities;
 		provinceAdapter = new ProvinceWheelAdapter(context, province);
 		mViewProvince.setViewAdapter(provinceAdapter);
 		
@@ -98,17 +104,17 @@ public class ServiceTypeDialogUtil implements OnWheelChangedListener {
 
 	private void updateCities() {
 
-		List<String> city = localCities.get(mViewProvince.getCurrentItem()).children;
-		cityAdapter = new CityWheelAdapter(context, city);
+		List<ServiceType> city = localCities.get(mViewProvince.getCurrentItem()).data;
+		cityAdapter = new ProvinceWheelAdapter(context, city);
 		mViewCity.setViewAdapter(cityAdapter);
 		mViewCity.setCurrentItem(0);
 	}
 
 
 	class ProvinceWheelAdapter extends AbstractWheelTextAdapter {
-		List<OperateProductBean> list;
+		List<ServiceType> list;
 
-		public ProvinceWheelAdapter(Context context, List<OperateProductBean> list) {
+		public ProvinceWheelAdapter(Context context, List<ServiceType> list) {
 			super(context);
 			this.list = list;
 		}
@@ -122,7 +128,7 @@ public class ServiceTypeDialogUtil implements OnWheelChangedListener {
 
 		@Override
 		protected CharSequence getItemText(int index) {
-			return list.get(index).name;
+			return list.get(index).title;
 		}
 
 	}
@@ -150,7 +156,7 @@ public class ServiceTypeDialogUtil implements OnWheelChangedListener {
 
 
 	public interface onSelectCityFinishListener {
-		 void onFinish(OperateProductBean province, String city);
+		 void onFinish(ServiceType province, ServiceType city);
 	}
 
 }

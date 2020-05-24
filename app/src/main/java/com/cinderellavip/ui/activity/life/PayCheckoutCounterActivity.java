@@ -9,8 +9,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.PrePayLongOrder;
+import com.cinderellavip.bean.eventbus.UpdateLongServiceOrder;
+import com.cinderellavip.bean.net.life.LifeCoupon;
+import com.cinderellavip.bean.net.life.PayCheckResult;
+import com.cinderellavip.bean.net.order.GetPayResult;
 import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.cinderellavip.util.pay.PayUtil;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -39,6 +53,12 @@ public class PayCheckoutCounterActivity extends BaseActivity {
     LinearLayout ll_coupon;
     @BindView(R.id.tv_service_coupon)
     TextView tvServiceCoupon;
+    @BindView(R.id.tv_order_money)
+    TextView tvOrderMoney;
+    @BindView(R.id.tv_coupon_money)
+    TextView tvCouponMoney;
+    @BindView(R.id.tv_pay_money)
+    TextView tvPayMoney;
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, PayCheckoutCounterActivity.class);
@@ -46,11 +66,23 @@ public class PayCheckoutCounterActivity extends BaseActivity {
     }
 
 
-
     public int type;
-    public static void launch(Context from,int type) {
+
+    public static void launch(Context from, int type) {
         Intent intent = new Intent(from, PayCheckoutCounterActivity.class);
-        intent.putExtra("type",type);
+        intent.putExtra("type", type);
+        from.startActivity(intent);
+    }
+
+    //请求参数
+    public PrePayLongOrder prePayLongOrder;
+    //结果
+    private PayCheckResult payCheckResult;
+
+    public static void launch(Context from, PrePayLongOrder prePayLongOrder) {
+        Intent intent = new Intent(from, PayCheckoutCounterActivity.class);
+        intent.putExtra("type", 1);
+        intent.putExtra("prePayLongOrder", prePayLongOrder);
         from.startActivity(intent);
     }
 
@@ -58,19 +90,40 @@ public class PayCheckoutCounterActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        type = getIntent().getIntExtra("type",0);
-        if (type == 1){
+        type = getIntent().getIntExtra("type", 0);
+        if (type == 1) {
             ll_coupon.setVisibility(View.VISIBLE);
         }
         setBackTitle("支付收银台");
 
-
+        prePayLongOrder = getIntent().getParcelableExtra("prePayLongOrder");
 
     }
 
 
     @Override
     public void loadData() {
+        if (!isLoad) showProress();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("contracts_id", "" + prePayLongOrder.contracts_id);
+        hashMap.put("coupon", "" + prePayLongOrder.coupon);
+        new RxHttp<BaseResult<PayCheckResult>>().send(ApiManager.getService().prePayLongOrder(hashMap),
+                new Response<BaseResult<PayCheckResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<PayCheckResult> result) {
+                        showContent();
+                        payCheckResult = result.data;
+                        tvOrderMoney.setText(payCheckResult.getPrice()+"元");
+                        tvCouponMoney.setText("-"+payCheckResult.getDiscount()+"元");
+                        tvPayMoney.setText(payCheckResult.getActual()+"元");
+
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
     }
 
@@ -80,48 +133,75 @@ public class PayCheckoutCounterActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.ll_service_coupon,R.id.ll_pay_ali, R.id.ll_pay_wechat, R.id.ll_pay_balance, R.id.tv_buy})
+    @OnClick({R.id.ll_service_coupon, R.id.ll_pay_ali, R.id.ll_pay_wechat, R.id.ll_pay_balance, R.id.tv_buy})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_service_coupon:
-                ServiceSelectCouponActivity.launch(mActivity);
+                ServiceSelectCouponActivity.launch(mActivity,prePayLongOrder.contracts_id);
                 break;
             case R.id.ll_pay_ali:
                 setPayWay(1);
                 break;
             case R.id.ll_pay_wechat:
-                setPayWay(3);
+                setPayWay(2);
                 break;
             case R.id.ll_pay_balance:
-                setPayWay(5);
+                setPayWay(0);
                 break;
             case R.id.tv_buy:
-                tsg("支付成功");
-                finish();
+                pay();
 
                 break;
         }
     }
 
     private String payway = "1";
+
     private void setPayWay(int way) {
         payway = way + "";
-        ivPayWechat.setImageResource(way == 3 ? R.mipmap.service_agreement_select : R.mipmap.service_agreement_default);
+        ivPayWechat.setImageResource(way == 2 ? R.mipmap.service_agreement_select : R.mipmap.service_agreement_default);
         ivPayAli.setImageResource(way == 1 ? R.mipmap.service_agreement_select : R.mipmap.service_agreement_default);
-        ivPayBalance.setImageResource(way == 5 ? R.mipmap.service_agreement_select : R.mipmap.service_agreement_default);
+        ivPayBalance.setImageResource(way == 0 ? R.mipmap.service_agreement_select : R.mipmap.service_agreement_default);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       if (requestCode == RequestCode.request_service_coupon && resultCode == RESULT_OK) {
-            if (data != null)
-                tvServiceCoupon.setText("-30元");
-            else {
+        if (requestCode == RequestCode.request_service_coupon && resultCode == RESULT_OK) {
+            if (data != null){
+                LifeCoupon couponsBean = data.getParcelableExtra("couponsBean");
+                tvServiceCoupon.setText("满"+couponsBean.getFull()+"元减"+couponsBean.getLess());
+                prePayLongOrder.coupon = couponsBean.id+"";
+                loadData();
+            } else {
                 tvServiceCoupon.setText("");
                 tvServiceCoupon.setHint("请选择");
+                prePayLongOrder.coupon = "";
+                loadData();
             }
         }
+    }
+
+    private void pay(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("contracts_id", prePayLongOrder.contracts_id);
+        hashMap.put("coupon", prePayLongOrder.coupon);
+        hashMap.put("type", payway);
+        new RxHttp<BaseResult<GetPayResult>>().send(ApiManager.getService().lifeOrderPay(hashMap),
+                new Response<BaseResult<GetPayResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<GetPayResult> result) {
+                        PayUtil.payLifeOrder(mActivity,payway,result.data, isSuccess -> {
+                            if (isSuccess){
+                                tsg("支付成功");
+                                EventBus.getDefault().post(new UpdateLongServiceOrder());
+                                finish();
+                            }else {
+                                tsg("支付失败");
+                            }
+
+                        });
+                    }
+                });
     }
 }

@@ -1,5 +1,9 @@
 package com.cinderellavip.util.lifeaddress;
 
+import android.content.Context;
+
+import com.cinderellavip.util.address.CityUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,100 +15,17 @@ import java.util.List;
 
 public class UserModel
 {
-    public static List<User> getUserDatas()
+    public static List<User> getUserDatas(Context context)
     {
         List<User> list = new ArrayList<>();
-        list.add(new User("%^&14555", "#"));
-        list.add(new User("阿坝", "A"));
-        list.add(new User("阿克苏", "A"));
-        list.add(new User("阿拉尔", "A"));
-        list.add(new User("阿拉善", "A"));
-        list.add(new User("阿里", "A"));
-        list.add(new User("安康", "A"));
-        list.add(new User("安庆", "A"));
-        list.add(new User("安顺", "A"));
-        list.add(new User("鞍山", "A"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("包哩哩", "B"));
-        list.add(new User("陈哩哩", "C"));
-        list.add(new User("陈哩哩", "C"));
-        list.add(new User("东哩哩", "D"));
-        list.add(new User("东哩哩", "C"));
-        list.add(new User("发哩哩", "F"));
-        list.add(new User("发哩哩", "F"));
-        list.add(new User("发哩哩", "F"));
-        list.add(new User("发哩哩", "F"));
-        list.add(new User("发哩哩", "F"));
-        list.add(new User("发哩哩", "F"));
-        list.add(new User("发哩哩", "F"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("高哩哩", "G"));
-        list.add(new User("可哩哩", "K"));
-        list.add(new User("可哩哩", "K"));
-        list.add(new User("可哩哩", "K"));
-        list.add(new User("可哩哩", "K"));
-        list.add(new User("可哩哩", "K"));
-        list.add(new User("萌哩哩", "M"));
-        list.add(new User("萌哩哩", "M"));
-        list.add(new User("萌哩哩", "M"));
-        list.add(new User("萌哩哩", "M"));
-        list.add(new User("您哩哩", "N"));
-        list.add(new User("您哩哩", "N"));
-        list.add(new User("哦哩哩", "O"));
-        list.add(new User("哦哩哩", "O"));
-        list.add(new User("哦哩哩", "O"));
-        list.add(new User("哦哩哩", "O"));
-        list.add(new User("哦哩哩", "O"));
-        list.add(new User("鹏哩哩", "P"));
-        list.add(new User("鹏哩哩", "P"));
-        list.add(new User("鹏哩哩", "P"));
-        list.add(new User("鹏哩哩", "P"));
-        list.add(new User("鹏哩哩", "P"));
-        list.add(new User("求哩哩", "Q"));
-        list.add(new User("求哩哩", "Q"));
-        list.add(new User("惹哩哩", "R"));
-        list.add(new User("惹哩哩", "R"));
-        list.add(new User("惹哩哩", "R"));
-        list.add(new User("惹哩哩", "R"));
-        list.add(new User("蛇哩哩", "S"));
-        list.add(new User("蛇哩哩", "S"));
-        list.add(new User("蛇哩哩", "S"));
-        list.add(new User("蛇哩哩", "S"));
-        list.add(new User("蛇哩哩", "S"));
-        list.add(new User("蛇哩哩", "S"));
-        list.add(new User("蛇哩哩", "S"));
-        list.add(new User("特哩哩", "T"));
-        list.add(new User("特哩哩", "T"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("无哩哩", "W"));
-        list.add(new User("这哩哩", "Z"));
-        list.add(new User("这哩哩", "Z"));
-        list.add(new User("这哩哩", "Z"));
-        list.add(new User("这哩哩", "Z"));
-        list.add(new User("这哩哩", "Z"));
+        ArrayList<LifeAddress> lifeCity = CityUtil.getLifeCity(context);
+        for (LifeAddress address:lifeCity){
+            for (LifeAddressItem lifeAddressItem:address.list){
+                list.add(new User(lifeAddressItem.name, address.initial));
+            }
+        }
         return list;
     }
+
+
 }

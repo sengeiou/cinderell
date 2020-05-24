@@ -24,7 +24,7 @@ public class ServiceListProjectAdapter extends BaseQuickAdapter<LiftHomeServiceI
     @Override
     protected void convert( BaseViewHolder helper,  LiftHomeServiceItem item) {
         int position = helper.getAdapterPosition();
-        View view_space = helper.getView(R.id.view_space);
+//        View view_space = helper.getView(R.id.view_space);
         ImageView iv_product = helper.getView(R.id.iv_product);
         TextView tv_contain = helper.getView(R.id.tv_contain);
         if (item.typesof == 1){
@@ -37,10 +37,10 @@ public class ServiceListProjectAdapter extends BaseQuickAdapter<LiftHomeServiceI
         helper.setText(R.id.tv_title,item.title)
                 .setText(R.id.tv_specification,"服务时长："+item.duration+"")
                 .setText(R.id.tv_price,"￥"+item.price+"/"+item.unit_name);
-        if (position == 0)
-        view_space.setVisibility(View.GONE);
-        else
-        view_space.setVisibility(View.VISIBLE);
+//        if (position == 0)
+//        view_space.setVisibility(View.GONE);
+//        else
+//        view_space.setVisibility(View.VISIBLE);
 
         helper.getView(R.id.tv_buy).setOnClickListener(view -> {
             BuyServiceActivity.launch(getContext());

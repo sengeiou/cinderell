@@ -11,14 +11,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.OperateProductBean;
-import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.ServiceType;
+import com.cinderellavip.bean.net.LifeCityBean;
+import com.cinderellavip.bean.net.life.PreLongOrderResult;
+import com.cinderellavip.global.Constant;
+import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.ServicePeriodDialogUtil;
-import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.toast.ServiceTypeDialogUtil;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -51,6 +60,10 @@ public class BuyLongServiceActivity extends BaseActivity {
     ImageView ivAgreement;
     @BindView(R.id.tv_register_agreement)
     TextView tvRegisterAgreement;
+
+    private String cycle;
+    private String service;
+    private String service_project;
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, BuyLongServiceActivity.class);
@@ -96,7 +109,7 @@ public class BuyLongServiceActivity extends BaseActivity {
                 ivAgreement.setImageResource(isSelect ?R.mipmap.service_agreement_select:R.mipmap.service_agreement_default);
                 break;
             case R.id.tv_register_agreement:
-                WebViewActivity.launch(mActivity,"灰姑娘服务协议","https://www.baidu.com");
+                AgreementWebViewActivity.launch(mActivity, Constant.H5_SERVICE);
                 break;
             case R.id.tv_buy:
                 buy();
@@ -105,6 +118,7 @@ public class BuyLongServiceActivity extends BaseActivity {
     }
 
     private void buy(){
+
         if (netCityBean == null){
             tsg("请选择服务地址");
             return;
@@ -120,23 +134,48 @@ public class BuyLongServiceActivity extends BaseActivity {
             return;
         }
 
-        BuyServiceResultActivity.launch(mActivity);
-        finish();
+        preOrder();
+
+
 
 
     }
+    private void preOrder(){
+        String claim = etAddress.getText().toString().trim();
+        TreeMap<String,String> map = new TreeMap<>();
+        map.put("address",netCityBean.id+"");
+        map.put("cycle",cycle+"");
+        map.put("service",service+"");
+        map.put("service_project",service_project+"");
+
+        map.put("claim",claim+"");
+        new RxHttp<BaseResult>().send(ApiManager.getService().preLongOrder(map),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        BuyServiceResultActivity.launch(mActivity,tvServiceType.getText().toString().trim());
+                        finish();
+
+                    }
+                });
+
+
+    }
+
+
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SelectServiceAddressActivity.REQUEST_CODE && resultCode == RESULT_OK) {
-//            setAddress(new NetCityBean(true));
+        if (requestCode == RequestCode.request_service_address && resultCode == RESULT_OK) {
+            netCityBean  = data.getParcelableExtra("netCityBean");
+            setAddress(netCityBean);
         }
     }
 
-    NetCityBean netCityBean;
-    private void setAddress(NetCityBean address) {
+    LifeCityBean netCityBean;
+    private void setAddress(LifeCityBean address) {
         netCityBean = address;
         if (address == null ) {
             tvAddressTip.setVisibility(View.VISIBLE);
@@ -144,7 +183,11 @@ public class BuyLongServiceActivity extends BaseActivity {
         } else {
             tvAddressTip.setVisibility(View.GONE);
             llAddressInfo.setVisibility(View.VISIBLE);
+            tvName1.setText(netCityBean.title);
+            tvName2.setText(netCityBean.address+netCityBean.doorplate);
+            tvName3.setText(netCityBean.name+netCityBean.phone);
         }
+
     }
     private boolean isSelect = false;
 
@@ -152,32 +195,28 @@ public class BuyLongServiceActivity extends BaseActivity {
         List<String> list = new ArrayList<>();
         for (int i=1;i<=12;i++)
         list.add(i+"个月");
-        ServicePeriodDialogUtil.showSelectDialog(mActivity,list,reason -> {
-           tvServicePeriod.setText(reason);
-        });
+        ServicePeriodDialogUtil.showSelectDialog(mActivity,list,
+                (reason, position) -> {
+                    tvServicePeriod.setText(reason);
+                    cycle = position+"";
+                });
     }
 
     private void selectServiceType(){
-        List<OperateProductBean> list = new ArrayList<>();
+
+        new RxHttp<BaseResult<List<ServiceType>>>().send(ApiManager.getService().lifeCategory(),
+                new Response<BaseResult<List<ServiceType>>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<List<ServiceType>> result) {
+                        ServiceTypeDialogUtil.getInstance().showSelectDialog(mContext, result.data, (province, city) -> {
+                            tvServiceType.setText(province.title + "-" + city.title);
+                            service = province.id+"";
+                            service_project = city.id+"";
+
+                        });
+                    }
+                });
 
 
-
-
-//        List<OperateProductSecondBean> list3 = new ArrayList<>();
-//        list3.add(new OperateProductSecondBean("日常护理"));
-//        list3.add(new OperateProductSecondBean("母婴护理"));
-//        list3.add(new OperateProductSecondBean("母乳喂养"));
-//        list3.add(new OperateProductSecondBean("日常看护"));
-//        list3.add(new OperateProductSecondBean("生活起居"));
-//
-//        list.add(new OperateProductBean("日常清洁", list3));
-//        list.add(new OperateProductBean("清理养护", list3));
-//        list.add(new OperateProductBean("月嫂", list3));
-//        list.add(new OperateProductBean("保姆", list3));
-//        list.add(new OperateProductBean("育儿嫂", list3));
-//
-//        ServiceTypeDialogUtil.getInstance().showSelectDialog(mContext, list, (province, city) -> {
-//            tvServiceType.setText(province.name + "-" + city.name);
-//        });
     }
 }
