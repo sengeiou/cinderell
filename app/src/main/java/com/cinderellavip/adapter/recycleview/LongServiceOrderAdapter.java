@@ -67,7 +67,7 @@ public class LongServiceOrderAdapter extends BaseQuickAdapter<LongOrderItem, Bas
                 tv_btn2.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                tv_btn1.setText("详情");
+                tv_btn1.setText("取消");
                 tv_btn2.setText("支付");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.VISIBLE);
@@ -90,6 +90,7 @@ public class LongServiceOrderAdapter extends BaseQuickAdapter<LongOrderItem, Bas
         tv_btn1.setOnClickListener(view -> {
             switch (item.type) {
                 case 1:
+                case 2:
                     CenterDialogUtil.showServiceOrder(getContext(), "确认提示", "您确定要取消该订单吗？\n取消后不可撤回"
                             , "取消", "确定", s -> {
                                 cancel(item.id+"");

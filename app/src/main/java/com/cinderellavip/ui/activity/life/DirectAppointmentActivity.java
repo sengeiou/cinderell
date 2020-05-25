@@ -8,10 +8,17 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.ViewPagerFragmentAdapter;
+import com.cinderellavip.bean.net.life.DirectCategory;
+import com.cinderellavip.bean.net.life.ShortDate;
+import com.cinderellavip.bean.net.life.ShortTimeResult;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.life.DirectAppointListFragment;
 import com.cinderellavip.ui.fragment.life.DirectAppointMapFragment;
 import com.cinderellavip.weight.IndexViewPager;
 import com.google.android.material.tabs.TabLayout;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
@@ -45,8 +52,6 @@ public class DirectAppointmentActivity extends BaseActivity {
 //    初始化地图控制器对象
 //    AMap aMap;
 
-    private String[] title = {"家电维修", "企业服务", "家庭保洁", "家教培训", "家政保洁", "便民服务", "美体按摩", "美容美妆",};
-
     private ViewPagerFragmentAdapter adapter;
     private List<BaseFragment> fragmentList = new ArrayList<>();
 
@@ -61,18 +66,13 @@ public class DirectAppointmentActivity extends BaseActivity {
         toolbar.setNavigationIcon(R.mipmap.back);
         toolbar.setNavigationOnClickListener(view -> back());
 
-//        mMapView.onCreate(savedInstanceState);
-//        if (aMap == null) {
-//            aMap = mMapView.getMap();
-//        }
+
     }
 
 
     @Override
     public void loadData() {
-        for (String s : title) {
-            tablayout.addTab(tablayout.newTab().setText(s));
-        }
+
 
         fragmentList.add(new DirectAppointMapFragment());
         fragmentList.add(new DirectAppointListFragment());
@@ -80,7 +80,19 @@ public class DirectAppointmentActivity extends BaseActivity {
         viewpager.setAdapter(adapter);
 
 
+        new RxHttp<BaseResult<List<DirectCategory>>>().send(ApiManager.getService().directCate(),
+                new Response<BaseResult<List<DirectCategory>>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<List<DirectCategory>> result) {
+                        categories = result.data;
+                        for (DirectCategory s :categories) {
+                            tablayout.addTab(tablayout.newTab().setText(s.name));
+                        }
+                    }
+                });
+
     }
+    List<DirectCategory> categories;
 
 
     @Override

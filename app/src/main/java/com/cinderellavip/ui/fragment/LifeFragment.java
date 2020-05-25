@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.LifeAdapter;
 import com.cinderellavip.adapter.recycleview.LifeCategoryAdapter;
+import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.life.LiftHomeAd;
 import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.bean.net.life.LiftHomeListItem;
@@ -36,6 +37,7 @@ import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -156,15 +158,13 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
                        liftHomeResult = result.data;
                        setData();
                        setData(true,liftHomeResult.list);
-
                     }
                 });
     }
 
     private void setData(){
         BannerUtil.setData(mActivity,xbanner,liftHomeResult.banner);
-
-        List<LiftHomeCategory> typeList = liftHomeResult.topJust;
+        List<LiftHomeCategory> typeList = getSortCategory(liftHomeResult.topJust);
         homeCategoryAdapter.setNewData(typeList);
         if (typeList == null || typeList.size() <= 10) {
             //如果小于10则 宽度一样
@@ -199,6 +199,17 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
             ImageUtil.loadNet(mActivity,iv_ad3,billing.get(2).img);
         }
 
+    }
+
+    private List<LiftHomeCategory> getSortCategory(List<LiftHomeCategory> list){
+        List<LiftHomeCategory> sortList = new ArrayList<>();
+        int column = list.size()/2+list.size()%2;
+        for (int i=0;i<column;i++){
+            sortList.add(list.get(i));
+            if (i+column<list.size())
+                sortList.add(list.get(i+column));
+        }
+        return sortList;
     }
 
     @Override

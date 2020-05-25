@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.amap.api.maps.AMap;
@@ -29,11 +31,11 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyLocationChangeListener
         , AMap.OnMarkerClickListener, AMap.OnInfoWindowClickListener
         , AMap.CancelableCallback, AMap.OnCameraChangeListener {
-
 
 
     @BindView(R.id.map)
@@ -76,8 +78,8 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
         addMarker(new MapItem());
 
 
-
     }
+
 //
 //    private void getData() {
 //        TreeMap<String, String> map = new TreeMap<>();
@@ -119,7 +121,6 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
         markerOption.position(latLng).draggable(false);
 
 
-
 //        Glide.with(mActivity).load(HttpUrl.image_url+mapItem.logo).addListener(new RequestListener<Drawable>() {
 //            @Override
 //            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -129,15 +130,14 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
 //            @Override
 //            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
 //                iv_image.setImageDrawable(resource);
-                Bitmap bitmap = getViewBitmap(view);
-                markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-                Marker marker = aMap.addMarker(markerOption);
-                map.put(marker, mapItem);
-                marker.showInfoWindow();
+        Bitmap bitmap = getViewBitmap(view);
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+        Marker marker = aMap.addMarker(markerOption);
+        map.put(marker, mapItem);
+        marker.showInfoWindow();
 //                return false;
 //            }
 //        }).into(iv_image);
-
 
 
     }
@@ -145,8 +145,8 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
     public Bitmap getViewBitmap(View view) {
         view.setDrawingCacheEnabled(true);
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
-        view.layout(0,0,view.getMeasuredWidth(),view.getMeasuredHeight());
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         view.buildDrawingCache();
         return Bitmap.createBitmap(view.getDrawingCache());
     }
@@ -156,25 +156,28 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
     public void onDestroy() {
         super.onDestroy();
         if (mMapView != null)
-        mMapView.onDestroy();
+            mMapView.onDestroy();
     }
+
     @Override
     public void onResume() {
         super.onResume();
         if (mMapView != null)
-        mMapView.onResume();
+            mMapView.onResume();
     }
+
     @Override
     public void onPause() {
         super.onPause();
         if (mMapView != null)
-        mMapView.onPause();
+            mMapView.onPause();
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mMapView != null)
-        mMapView.onSaveInstanceState(outState);
+            mMapView.onSaveInstanceState(outState);
     }
 
 
@@ -186,6 +189,9 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
         CameraUpdate cameraUpdate = CameraUpdateFactory.zoomTo(zoom);
         aMap.animateCamera(cameraUpdate, 100, null);
         aMap.setOnCameraChangeListener(this);
+
+//        aMap.setLocationSource(this);// 设置定位监听
+//        mUiSettings.setMyLocationButtonEnabled(true); // 是否显示默认的定位按钮
     }
 
     @Override
@@ -220,8 +226,29 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
         return false;
     }
 
+    private double latitude,longitude;
     @Override
     public void onMyLocationChange(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        Log.e("latitude", location.getLatitude() + "");
+        Log.e("longitude", location.getLongitude() + "");
+    }
 
+    @OnClick(R.id.iv_location)
+    public void onClick() {
+        LatLng latLng = new LatLng(latitude,longitude);
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.zoomTo(zoom);
+        aMap.animateCamera(cameraUpdate, zoom, new AMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+                aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+            }
+            @Override
+            public void onCancel() {
+
+            }
+        });
     }
 }

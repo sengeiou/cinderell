@@ -120,7 +120,7 @@ public interface HttpUrl {
     String life_long_order_confirm_price = "api/service/long/ConfirmPricing";//长期订单 确认定价
     String life_long_order_list = "api/service/long/OrderLongList";//长期订单 列表
     String life_long_order_confirm_order = "api/service/long/ConfirmOrder";//长期订单 确认下单
-    String life_long_order_pre_order = "api/service/long/PreOrder";//长期订单 预下单
+    String life_long_order_pre_order = "api/service/long/PreOrder";//长期订单 预下单（没用）
     String life_order_comment = "api/service/evaluation/CommentPost";//评价提交-短期项目
     String life_order_comment_can = "api/service/evaluation/orderCanComment";//订单是否可以评价
     String life_order_comment_label = "api/service/evaluation/getLabel";//评价评价标签
@@ -138,7 +138,7 @@ public interface HttpUrl {
     String life_order_category = "api/service/life/lifeordersort";//生活订单-可选择分类
     String life_order_list = "api/service/life/lifeorderlist";//生活订单-列表
     String life_order_time = "api/service/order/selectTime";//服务项目-选择时间-短期项目
-    String life_order_pay = "api/service/order/orderpay";//订单支付-- 短期项目
+    String life_order_pay = "api/service/order/orderpay";//订单支付-- 短期项目 （没用）
     String life_order_pay_info = "api/service/order/tobepaid";//更具id获取订单待支付信息-- 短期项目
     String life_order_confirm_order = "api/service/order/confirm_order";//服务项目--确认下单-- 短期项目
     String life_order_pre_order = "api/service/order/pre_order";//服务项目--预下单  -- 短期项目

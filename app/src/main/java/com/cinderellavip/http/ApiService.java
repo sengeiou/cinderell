@@ -35,6 +35,7 @@ import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
 import com.cinderellavip.bean.net.life.CategoryResult;
+import com.cinderellavip.bean.net.life.DirectCategory;
 import com.cinderellavip.bean.net.life.HotSearchItem;
 import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.bean.net.life.LiftCategoryItem;
@@ -607,4 +608,8 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult<GetPayResult>>
     projectOrderPay(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_direct_cate)
+    Observable<BaseResult<List<DirectCategory>>>
+    directCate();
 }
