@@ -106,7 +106,7 @@ public class CommonInterceptor implements Interceptor {
      * 对post请求添加统一参数
      */
     private Request rebuildPostRequest(Request request) {
-        LogUtil.e("rebuildPostRequest = "+(request.body() instanceof FormBody));
+//        LogUtil.e("rebuildPostRequest = "+(request.body() instanceof FormBody));
             if (request.body() instanceof FormBody) {
                 TreeMap<String, String> signParams = new TreeMap<>(); // 假设你的项目需要对参数进行签名
                 FormBody formBody = (FormBody) request.body();

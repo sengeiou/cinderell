@@ -15,6 +15,8 @@ import com.tozzais.baselibrary.ui.BaseActivity;
  */
 public class ServiceSelectCouponActivity extends BaseActivity {
 
+    public static final int LONG = 0;
+    public static final int PROJECT = 1;
 
 
     //后期删除
@@ -24,9 +26,18 @@ public class ServiceSelectCouponActivity extends BaseActivity {
     }
 
 
+    //合同id
+    public static void launch(Activity from,String contracts_id,int type) {
+        Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
+        intent.putExtra("contracts_id",contracts_id);
+        intent.putExtra("type",type);
+        from.startActivityForResult(intent, RequestCode.request_service_coupon);
+    }
+
     public static void launch(Activity from,String contracts_id) {
         Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
         intent.putExtra("contracts_id",contracts_id);
+        intent.putExtra("type",LONG);
         from.startActivityForResult(intent, RequestCode.request_service_coupon);
     }
 
@@ -44,8 +55,9 @@ public class ServiceSelectCouponActivity extends BaseActivity {
     @Override
     public void loadData() {
         String contracts_id = getIntent().getStringExtra("contracts_id");
+        int type = getIntent().getIntExtra("type",LONG);
         getSupportFragmentManager().beginTransaction().add(R.id.content_container,
-                SelectServiceCouponFragment.newInstance(contracts_id)).commit();
+                SelectServiceCouponFragment.newInstance(contracts_id,type)).commit();
     }
 
     @Override

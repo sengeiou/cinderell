@@ -5,9 +5,7 @@ package com.cinderellavip.http;
  */
 public interface HttpUrl {
 
-
     String server_url = "https://api.huiguniangvip.com/";
-
     //上传图片
     String upload = "api/store/upload/image";  //上传图片
     String uploads = "api/store/upload/images";  //上传图片

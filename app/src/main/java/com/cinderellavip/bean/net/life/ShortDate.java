@@ -1,9 +1,12 @@
 package com.cinderellavip.bean.net.life;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  */
-public class ShortDate {
+public class ShortDate implements Parcelable {
 
 
 
@@ -40,4 +43,39 @@ public class ShortDate {
         }
         return s;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.nian);
+        dest.writeString(this.yue);
+        dest.writeString(this.ri);
+        dest.writeString(this.week);
+    }
+
+    public ShortDate() {
+    }
+
+    protected ShortDate(Parcel in) {
+        this.nian = in.readString();
+        this.yue = in.readString();
+        this.ri = in.readString();
+        this.week = in.readString();
+    }
+
+    public static final Parcelable.Creator<ShortDate> CREATOR = new Parcelable.Creator<ShortDate>() {
+        @Override
+        public ShortDate createFromParcel(Parcel source) {
+            return new ShortDate(source);
+        }
+
+        @Override
+        public ShortDate[] newArray(int size) {
+            return new ShortDate[size];
+        }
+    };
 }

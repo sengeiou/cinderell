@@ -5,16 +5,25 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.OrderAdapter;
 import com.cinderellavip.adapter.recycleview.SingleOrderAdapter;
+import com.cinderellavip.bean.ListData;
+import com.cinderellavip.bean.eventbus.UpdateShortServiceOrder;
 import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.bean.net.life.LongOrderItem;
+import com.cinderellavip.bean.net.life.ShortOrderItem;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class SingleOrderFragment extends BaseListFragment<Integer> {
+public class SingleOrderFragment extends BaseListFragment<ShortOrderItem> {
 
 
     private int type;
@@ -37,35 +46,41 @@ public class SingleOrderFragment extends BaseListFragment<Integer> {
         mAdapter = new SingleOrderAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        setEmptyView(R.mipmap.empty_view,"您还没有相关订单哦~","去逛逛", view->{
-
-        });
-
-
+        setEmptyView("暂无单次服务订单");
 
     }
 
     @Override
     public void loadData() {
-        if (swipeLayout != null)
-        swipeLayout.setRefreshing(false);
-        List<Integer> list = new ArrayList<>();
-        if (type == 3)
-        list.add(4);
-        list.add(type);
-        list.add(type);
-        list.add(type);
-        list.add(type);
-        list.add(type);
-       setData(true, list);
+        super.loadData();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("pay", ""+(type-1));
+        hashMap.put("count", ""+PageSize);
+        hashMap.put("page", ""+page);
+        new RxHttp<BaseResult<ListData<ShortOrderItem>>>().send(ApiManager.getService().shortOrderList(hashMap),
+                new Response<BaseResult<ListData<ShortOrderItem>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListData<ShortOrderItem>> result) {
+                        setData(result.data.data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
 
     }
 
     @Override
-    public void initListener() {
-        super.initListener();
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
-
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateShortServiceOrder){
+            onRefresh();
+        }
     }
 }

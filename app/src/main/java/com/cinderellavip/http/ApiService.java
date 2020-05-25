@@ -44,6 +44,7 @@ import com.cinderellavip.bean.net.life.LongOrderDetailResult;
 import com.cinderellavip.bean.net.life.LongOrderItem;
 import com.cinderellavip.bean.net.life.PayCheckResult;
 import com.cinderellavip.bean.net.life.ServiceProjectDetail;
+import com.cinderellavip.bean.net.life.ShortOrderItem;
 import com.cinderellavip.bean.net.life.ShortPreOrderResult;
 import com.cinderellavip.bean.net.life.ShortTimeResult;
 import com.cinderellavip.bean.net.mine.ApplyResult;
@@ -522,6 +523,11 @@ public interface ApiService {
     Observable<BaseResult<ListData<LongOrderItem>>>
     longOrderList(@FieldMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.life_order_list)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<ShortOrderItem>>>
+    shortOrderList(@FieldMap TreeMap<String, String> map);
+
     @POST(HttpUrl.life_long_order_confirm_price)
     @FormUrlEncoded
     Observable<BaseResult>
@@ -531,6 +537,11 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult>
     cancelLongOrder(@FieldMap TreeMap<String, String> map);
+
+     @POST(HttpUrl.life_order_cancel)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    cancelShortOrder(@FieldMap TreeMap<String, String> map);
 
     @POST(HttpUrl.life_long_order_prepay)
     @FormUrlEncoded
@@ -567,6 +578,11 @@ public interface ApiService {
     Observable<BaseResult<LongOrderDetailResult>>
     longOrderDetail(@FieldMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.life_order_info)
+    @FormUrlEncoded
+    Observable<BaseResult<ShortOrderItem>>
+    shortOrderDetail(@FieldMap TreeMap<String, String> map);
+
     @POST(HttpUrl.life_order_pre_order)
     @FormUrlEncoded
     Observable<BaseResult<ShortPreOrderResult>>
@@ -577,4 +593,18 @@ public interface ApiService {
     Observable<BaseResult<ShortTimeResult>>
     shortOrderTime(@FieldMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.life_order_confirm_order)
+    @FormUrlEncoded
+    Observable<BaseResult<Integer>>
+    createShortPreOrder(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_order_pay_info)
+    @FormUrlEncoded
+    Observable<BaseResult<PayCheckResult>>
+    prePayShortOrder(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_pay)
+    @FormUrlEncoded
+    Observable<BaseResult<GetPayResult>>
+    projectOrderPay(@FieldMap TreeMap<String, String> map);
 }

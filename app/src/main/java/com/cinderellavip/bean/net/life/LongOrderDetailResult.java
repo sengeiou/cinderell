@@ -30,6 +30,8 @@ public class LongOrderDetailResult {
     public int type;
     public String url;
 
+    //生活服务
+
     public String getPrice() {
         return ArithmeticUtil.convert(price);
     }

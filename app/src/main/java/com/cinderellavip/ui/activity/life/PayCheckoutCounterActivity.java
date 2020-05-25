@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.PrePayLongOrder;
 import com.cinderellavip.bean.eventbus.UpdateLongServiceOrder;
+import com.cinderellavip.bean.eventbus.UpdateShortServiceOrder;
 import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.bean.net.life.PayCheckResult;
 import com.cinderellavip.bean.net.order.GetPayResult;
@@ -60,28 +61,12 @@ public class PayCheckoutCounterActivity extends BaseActivity {
     @BindView(R.id.tv_pay_money)
     TextView tvPayMoney;
 
-    public static void launch(Context from) {
-        Intent intent = new Intent(from, PayCheckoutCounterActivity.class);
-        from.startActivity(intent);
-    }
-
-
-    public int type;
-
-    public static void launch(Context from, int type) {
-        Intent intent = new Intent(from, PayCheckoutCounterActivity.class);
-        intent.putExtra("type", type);
-        from.startActivity(intent);
-    }
-
     //请求参数
     public PrePayLongOrder prePayLongOrder;
     //结果
     private PayCheckResult payCheckResult;
-
     public static void launch(Context from, PrePayLongOrder prePayLongOrder) {
         Intent intent = new Intent(from, PayCheckoutCounterActivity.class);
-        intent.putExtra("type", 1);
         intent.putExtra("prePayLongOrder", prePayLongOrder);
         from.startActivity(intent);
     }
@@ -89,14 +74,15 @@ public class PayCheckoutCounterActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
-        type = getIntent().getIntExtra("type", 0);
-        if (type == 1) {
+        prePayLongOrder = getIntent().getParcelableExtra("prePayLongOrder");
+        if (prePayLongOrder.type == PrePayLongOrder.LONG) {
             ll_coupon.setVisibility(View.VISIBLE);
+        }if (prePayLongOrder.type == PrePayLongOrder.PROJECT) {
+            ll_coupon.setVisibility(View.GONE);
         }
         setBackTitle("支付收银台");
 
-        prePayLongOrder = getIntent().getParcelableExtra("prePayLongOrder");
+
 
     }
 
@@ -104,11 +90,22 @@ public class PayCheckoutCounterActivity extends BaseActivity {
     @Override
     public void loadData() {
         if (!isLoad) showProress();
+        if (prePayLongOrder.type == PrePayLongOrder.LONG) {
+            ll_coupon.setVisibility(View.VISIBLE);
+            getLongPreOrder();
+        }else if (prePayLongOrder.type == PrePayLongOrder.PROJECT) {
+            ll_coupon.setVisibility(View.GONE);
+            getProjectPreOrder();
+        }
+
+    }
+
+    private void getLongPreOrder(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("contracts_id", "" + prePayLongOrder.contracts_id);
         hashMap.put("coupon", "" + prePayLongOrder.coupon);
         new RxHttp<BaseResult<PayCheckResult>>().send(ApiManager.getService().prePayLongOrder(hashMap),
-                new Response<BaseResult<PayCheckResult>>(mActivity) {
+                new Response<BaseResult<PayCheckResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<PayCheckResult> result) {
                         showContent();
@@ -118,13 +115,32 @@ public class PayCheckoutCounterActivity extends BaseActivity {
                         tvPayMoney.setText(payCheckResult.getActual()+"元");
 
                     }
-
                     @Override
                     public void onErrorShow(String s) {
                         showError(s);
                     }
                 });
+    }
 
+    private void getProjectPreOrder(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("order", "" + prePayLongOrder.project);
+        new RxHttp<BaseResult<PayCheckResult>>().send(ApiManager.getService().prePayShortOrder(hashMap),
+                new Response<BaseResult<PayCheckResult>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<PayCheckResult> result) {
+                        showContent();
+                        payCheckResult = result.data;
+                        tvOrderMoney.setText(payCheckResult.getPrice()+"元");
+                        tvCouponMoney.setText("-"+payCheckResult.getDiscount()+"元");
+                        tvPayMoney.setText(payCheckResult.getActual()+"元");
+
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
     }
 
     @Override
@@ -149,14 +165,17 @@ public class PayCheckoutCounterActivity extends BaseActivity {
                 setPayWay(0);
                 break;
             case R.id.tv_buy:
-                pay();
+                if (prePayLongOrder.type == PrePayLongOrder.LONG) {
+                    pay();
+                }else if (prePayLongOrder.type == PrePayLongOrder.PROJECT) {
+                     projectPay();
+                }
 
                 break;
         }
     }
 
     private String payway = "1";
-
     private void setPayWay(int way) {
         payway = way + "";
         ivPayWechat.setImageResource(way == 2 ? R.mipmap.service_agreement_select : R.mipmap.service_agreement_default);
@@ -195,6 +214,28 @@ public class PayCheckoutCounterActivity extends BaseActivity {
                             if (isSuccess){
                                 tsg("支付成功");
                                 EventBus.getDefault().post(new UpdateLongServiceOrder());
+                                finish();
+                            }else {
+                                tsg("支付失败");
+                            }
+
+                        });
+                    }
+                });
+    }
+
+    private void projectPay(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("order", prePayLongOrder.project);
+        hashMap.put("type", payway);
+        new RxHttp<BaseResult<GetPayResult>>().send(ApiManager.getService().projectOrderPay(hashMap),
+                new Response<BaseResult<GetPayResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<GetPayResult> result) {
+                        PayUtil.payLifeOrder(mActivity,payway,result.data, isSuccess -> {
+                            if (isSuccess){
+                                SingleServiceOrderListActivity.launch(mActivity,SingleServiceOrderListActivity.ALL);
+                                EventBus.getDefault().post(new UpdateShortServiceOrder());
                                 finish();
                             }else {
                                 tsg("支付失败");

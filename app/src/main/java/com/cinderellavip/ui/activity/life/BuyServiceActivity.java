@@ -10,16 +10,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.PrePayLongOrder;
 import com.cinderellavip.bean.net.LifeCityBean;
+import com.cinderellavip.bean.net.life.LifeCoupon;
+import com.cinderellavip.bean.net.life.ShortDate;
 import com.cinderellavip.bean.net.life.ShortPreOrderResult;
+import com.cinderellavip.bean.net.life.ShortTime;
 import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.TreeMap;
 
@@ -62,6 +69,8 @@ public class BuyServiceActivity extends BaseActivity {
     TextView tvCouponMoney;
     @BindView(R.id.tv_pay_money)
     TextView tvPayMoney;
+    @BindView(R.id.tv_money)
+    TextView tv_money;
     @BindView(R.id.iv_agreement)
     ImageView ivAgreement;
     @BindView(R.id.tv_register_agreement)
@@ -69,17 +78,13 @@ public class BuyServiceActivity extends BaseActivity {
     @BindView(R.id.tv_buy)
     TextView tvBuy;
 
-    public static void launch(Context from) {
-        Intent intent = new Intent(from, BuyServiceActivity.class);
-        from.startActivity(intent);
-    }
-
-
     //项目id
     private int project;
-    public static void launch(Context from,int project) {
+    private String city;
+    public static void launch(Context from,int project,String city) {
         Intent intent = new Intent(from, BuyServiceActivity.class);
         intent.putExtra("project",project);
+        intent.putExtra("city",city);
         from.startActivity(intent);
     }
 
@@ -89,28 +94,22 @@ public class BuyServiceActivity extends BaseActivity {
         setLineVisibility();
         setBackTitle("购买服务");
         project = getIntent().getIntExtra("project",-1);
-
+        city = getIntent().getStringExtra("city");
+        prePayLongOrder = new PrePayLongOrder(""+project,city);
 
     }
-    public String address = "";
-    public String coupon = "";
-    public String starttime = "";
-    public String endtime = "";
-    public String sign = "";
-
-
-
+    //请求参数封装
+    private PrePayLongOrder prePayLongOrder;
 
     @Override
     public void loadData() {
         TreeMap<String,String> map = new TreeMap<>();
-        map.put("city", CinderellApplication.name +"");
+        map.put("city", city +"");
         map.put("project",project+"");
-        map.put("address",""+address);
-        map.put("coupon",""+coupon);
-        map.put("starttime",""+starttime);
-        map.put("endtime",""+endtime);
-        map.put("sign",""+sign);
+        map.put("address",""+prePayLongOrder.address);
+        map.put("coupon",""+prePayLongOrder.coupon);
+        map.put("starttime",""+prePayLongOrder.starttime);
+        map.put("endtime",""+prePayLongOrder.endtime);
         new RxHttp<BaseResult<ShortPreOrderResult>>().send(ApiManager.getService().shortPreOrder(map),
                 new Response<BaseResult<ShortPreOrderResult>>(mActivity) {
                     @Override
@@ -119,6 +118,7 @@ public class BuyServiceActivity extends BaseActivity {
                         tvOrderMoney.setText(shortPreOrderResult.getPrice()+"元");
                         tvCouponMoney.setText("-"+shortPreOrderResult.getDiscount()+"元");
                         tvPayMoney.setText(shortPreOrderResult.getActual()+"元");
+                        tv_money.setText(shortPreOrderResult.getActual()+"元");
 
                     }
                 });
@@ -144,14 +144,15 @@ public class BuyServiceActivity extends BaseActivity {
                 SelectServiceTimeActivity.launch(mActivity);
                 break;
             case R.id.ll_service_coupon:
-                ServiceSelectCouponActivity.launch(mActivity);
+                ServiceSelectCouponActivity.launch(mActivity,""+project,ServiceSelectCouponActivity.PROJECT);
+//                ServiceSelectCouponActivity.launch(mActivity);
                 break;
             case R.id.iv_agreement:
                 isSelect = !isSelect;
                 ivAgreement.setImageResource(isSelect ?R.mipmap.service_agreement_select:R.mipmap.service_agreement_default);
                 break;
             case R.id.tv_register_agreement:
-                WebViewActivity.launch(mActivity,"灰姑娘服务协议","https://www.baidu.com");
+                AgreementWebViewActivity.launch(mActivity, Constant.H5_SERVICE);
                 break;
             case R.id.tv_buy:
                 buy();
@@ -168,12 +169,40 @@ public class BuyServiceActivity extends BaseActivity {
             tsg("请选择服务时间");
             return;
         }if (!isSelect){
-            tsg("请阅读并勾选灰姑娘服务协议");
+            tsg("请先同意灰姑娘服务协议");
             return;
         }
-        PayCheckoutCounterActivity.launch(mActivity);
-        finish();
+        prePayLongOrder.type = PrePayLongOrder.PROJECT;
+        prePayLongOrder.project = project+"";
+        prePayLongOrder.address = netCityBean.id+"";
+        prePayLongOrder.coupon = prePayLongOrder.coupon+"";
+        prePayLongOrder.starttime = prePayLongOrder.starttime+"";
+        prePayLongOrder.endtime = prePayLongOrder.endtime+"";
+        prePayLongOrder.city = prePayLongOrder.city+"";
+        createOrder();
 
+
+
+    }
+
+    private void createOrder(){
+        TreeMap<String,String> map = new TreeMap<>();
+        map.put("city", prePayLongOrder.city +"");
+        map.put("project",project+"");
+        map.put("address",""+prePayLongOrder.address);
+        map.put("coupon",""+prePayLongOrder.coupon);
+        map.put("starttime",""+prePayLongOrder.starttime);
+        map.put("endtime",""+prePayLongOrder.endtime);
+        new RxHttp<BaseResult<Integer>>().send(ApiManager.getService().createShortPreOrder(map),
+                new Response<BaseResult<Integer>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<Integer> result) {
+                        prePayLongOrder.project = result.data+"";
+                        LogUtil.e(prePayLongOrder.toString());
+                        PayCheckoutCounterActivity.launch(mActivity,prePayLongOrder);
+                        finish();
+                    }
+                });
 
     }
     @Override
@@ -182,18 +211,28 @@ public class BuyServiceActivity extends BaseActivity {
         if (requestCode == RequestCode.request_service_address && resultCode == RESULT_OK) {
             netCityBean  = data.getParcelableExtra("netCityBean");
             setAddress(netCityBean);
-            address = netCityBean.id+"";
+            prePayLongOrder.address = netCityBean.id+"";
             loadData();
-        }if (requestCode == RequestCode.request_service_time && resultCode == RESULT_OK) {
-            tvServiceTime.setText("1月6号 今天 18:00");
+        }else if (requestCode == RequestCode.request_service_time && resultCode == RESULT_OK) {
+            ShortTime time = data.getParcelableExtra("time");
+            ShortDate shortDate = data.getParcelableExtra("shortDate");
+            prePayLongOrder.starttime = shortDate.nian+"-"+shortDate.yue+"-"+shortDate.ri+" "+time.start;
+            prePayLongOrder.endtime = shortDate.nian+"-"+shortDate.yue+"-"+shortDate.ri+" "+time.end;
+            tvServiceTime.setText(prePayLongOrder.starttime);
         }if (requestCode == RequestCode.request_service_coupon && resultCode == RESULT_OK) {
-            if (data != null)
-                tvServiceCoupon.setText("-30元");
-            else {
+            if (data != null){
+                LifeCoupon couponsBean = data.getParcelableExtra("couponsBean");
+                tvServiceCoupon.setText("满"+couponsBean.getFull()+"元减"+couponsBean.getLess());
+                prePayLongOrder.coupon = couponsBean.id+"";
+                loadData();
+            } else {
                 tvServiceCoupon.setText("");
                 tvServiceCoupon.setHint("请选择");
+                prePayLongOrder.coupon = "";
+                loadData();
             }
         }
+
     }
 
     LifeCityBean netCityBean;

@@ -74,11 +74,8 @@ public class LongServiceOrderAdapter extends BaseQuickAdapter<LongOrderItem, Bas
                 break;
             case 3:
             case 4:
-                tv_btn1.setText("详情");
-                tv_btn1.setVisibility(View.VISIBLE);
-                tv_btn2.setVisibility(View.GONE);
-                break;
             case 6:
+            case 7:
                 tv_btn1.setText("详情");
                 tv_btn1.setVisibility(View.VISIBLE);
                 tv_btn2.setVisibility(View.GONE);
@@ -88,11 +85,7 @@ public class LongServiceOrderAdapter extends BaseQuickAdapter<LongOrderItem, Bas
                 tv_btn1.setVisibility(View.GONE);
                 tv_btn2.setVisibility(View.VISIBLE);
                 break;
-            case 7:
-                tv_btn1.setText("详情");
-                tv_btn1.setVisibility(View.VISIBLE);
-                tv_btn2.setVisibility(View.GONE);
-                break;
+
         }
         tv_btn1.setOnClickListener(view -> {
             switch (item.type) {
@@ -122,6 +115,7 @@ public class LongServiceOrderAdapter extends BaseQuickAdapter<LongOrderItem, Bas
                      PrePayLongOrder prePayLongOrder = new PrePayLongOrder();
                      prePayLongOrder.contracts_id = item.cont_id+"";
                      prePayLongOrder.coupon = "";
+                     prePayLongOrder.type = PrePayLongOrder.LONG;
                      PayCheckoutCounterActivity.launch(getContext(),prePayLongOrder);
                     break;
                 default:

@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.PrePayLongOrder;
+import com.cinderellavip.bean.eventbus.UpdateLongServiceOrder;
 import com.cinderellavip.bean.net.life.LongOrderDetailResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -18,6 +20,9 @@ import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.WebViewActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.toast.ToastCommom;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.TreeMap;
 
@@ -149,22 +154,28 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
                 WebViewActivity.launch(mActivity, "服务签约电子合同", "https://www.baidu.com");
                 break;
             case R.id.tv_btn1:
-                if (type == 1 || type == 2) {
-                    CenterDialogUtil.showServiceOrder(mActivity, "操作提示", "您确定要取消订单吗？\n取消后不可撤回"
+                if (longOrderDetailResult.type == 1) {
+                    CenterDialogUtil.showServiceOrder(mActivity, "确认提示", "您确定要取消该订单吗？\n取消后不可撤回"
                             , "取消", "确定", s -> {
-                                tsg("订单已取消");
+                                cancel(type+"");
                             });
                 }
                 break;
             case R.id.tv_btn2:
-                if (type == 1) {
-                    CenterDialogUtil.showServiceOrder(mActivity, "操作提示", "请仔细核对订单信息？\n如有问题，请联系客服修改"
+                if (longOrderDetailResult.type == 1) {
+                    CenterDialogUtil.showServiceOrder(mActivity, "确认提示", "请仔细核对订单信息\n确认后不可撤回"
                             , "取消", "确定", s -> {
-                                tsg("订单已确定，请完成支付");
+                                confirm(type+"");
                             });
-                } else if (type == 2) {
-                    PayCheckoutCounterActivity.launch(mActivity, 1);
-                } else if (type == 5) {
+                } else if (longOrderDetailResult.type == 2) {
+                    //去支付
+                    PrePayLongOrder prePayLongOrder = new PrePayLongOrder();
+                    prePayLongOrder.contracts_id = longOrderDetailResult.cont_id+"";
+                    prePayLongOrder.coupon = "";
+                    prePayLongOrder.type = PrePayLongOrder.LONG;
+                    PayCheckoutCounterActivity.launch(mActivity,prePayLongOrder);
+                } else if (longOrderDetailResult.type == 5) {
+                    //评价
                     ServiceOrderCommentActivity.launch(mActivity);
                 }
                 break;
@@ -177,6 +188,35 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
         tv_right.setOnClickListener(v -> {
             DialogUtil.showCallPhoneDialog(mActivity);
         });
+    }
+
+    public void cancel(String contracts_id) {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("order", ""+contracts_id);
+        new RxHttp<BaseResult>().send(ApiManager.getService().cancelLongOrder(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        loadData();
+                        ToastCommom.createToastConfig().ToastShow(mActivity,"操作成功");
+                        EventBus.getDefault().post(new UpdateLongServiceOrder());
+                    }
+                });
+    }
+    public void confirm(String contracts_id) {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("contracts_id", ""+contracts_id);
+        new RxHttp<BaseResult>().send(ApiManager.getService().longOrderConfirm(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        loadData();
+                        ToastCommom.createToastConfig().ToastShow(mActivity,"操作成功");
+                        EventBus.getDefault().post(new UpdateLongServiceOrder());
+                    }
+                });
+
+
     }
 
     @BindView(R.id.iv_progress1)

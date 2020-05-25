@@ -97,8 +97,10 @@ public class AgreementWebViewActivity extends BaseActivity {
         public void onProgressChanged(WebView webView, int i) {
             super.onProgressChanged(webView, i);
             mProgress.setProgress(i);
+            if (i == 100)
             title.setText(webView.getTitle());
         }
+
     }
 
     @Override

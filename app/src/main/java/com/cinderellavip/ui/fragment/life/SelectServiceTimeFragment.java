@@ -45,9 +45,7 @@ public class SelectServiceTimeFragment extends BaseListFragment<ShortTime> {
     @Override
     public void loadData() {
 
-
     }
-
 
     @Override
     public void initListener() {
@@ -58,4 +56,17 @@ public class SelectServiceTimeFragment extends BaseListFragment<ShortTime> {
     public void setDate(List<ShortTime> time) {
         setData(true,time);
     }
+
+    public ShortTime getShortTime(){
+        ShortTime shortTime = null;
+        List<ShortTime> list =  mAdapter.getData();
+        for (ShortTime shortTime1:list){
+            if (shortTime1.isCheck){
+                shortTime = shortTime1;
+                break;
+            }
+        }
+        return shortTime;
+
+     }
 }

@@ -105,7 +105,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
                 DialogUtil.showCallPhoneDialog(mActivity);
                 break;
             case R.id.tv_buy:
-                BuyServiceActivity.launch(mActivity);
+//                BuyServiceActivity.launch(mActivity);
                 break;
         }
     }

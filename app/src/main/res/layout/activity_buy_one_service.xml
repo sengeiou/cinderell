@@ -251,7 +251,7 @@
                     android:src="@mipmap/service_agreement_default"/>
                 <TextView
                     style="@style/base_text_style"
-                    android:text="已阅读并同意《"/>
+                    android:text="已阅读并同意"/>
 
                 <TextView
                     android:id="@+id/tv_register_agreement"
@@ -261,11 +261,9 @@
                     style="@style/click_toolbar_style"
                     android:textColor="@color/yellow_deep"
                     android:padding="5dp"
-                    android:text="灰姑娘服务协议"/>
+                    android:text="《灰姑娘服务协议》"/>
 
-                <TextView
-                    style="@style/base_text_style"
-                    android:text="》"/>
+
 
 
             </LinearLayout>
@@ -295,8 +293,9 @@
             />
 
         <TextView
+            android:id="@+id/tv_money"
             style="@style/base_text_style"
-            android:text="170元"
+            tools:text="170元"
             android:layout_marginLeft="12dp"
             android:textColor="@color/yellow_deep"
             />

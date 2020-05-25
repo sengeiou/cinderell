@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -20,22 +20,25 @@
         />
 
     <TextView
+        android:id="@+id/tv_service_number"
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
-        android:text="服务编号：20022115611032156165"
+        tools:text="服务编号：20022115611032156165"
         />
 
     <TextView
+        android:id="@+id/tv_service_type"
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
-        android:text="服务类型：日常保洁-物品清理"
+        tools:text="服务类型：日常保洁-物品清理"
         android:layout_marginTop="6dp"
         />
 
     <TextView
+        android:id="@+id/tv_service_time"
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
-        android:text="服务时间：2019-12-28 11:00"
+        tools:text="服务时间：2019-12-28 11:00"
         android:layout_marginTop="6dp"
         />
 
@@ -55,29 +58,26 @@
         />
 
     <TextView
+        android:id="@+id/tv_address"
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
-        android:text="服务城市：上海-上海市"
-        />
-
-    <TextView
-        style="@style/base_text_style"
-        android:layout_marginLeft="12dp"
-        android:text="服务地市：华徐公路888号中国梦古1号楼2楼"
+        tools:text="服务地市：华徐公路888号中国梦古1号楼2楼"
         android:layout_marginTop="6dp"
         />
 
     <TextView
+        android:id="@+id/tv_phone"
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
-        android:text="联系电话：13166015580"
+        tools:text="联系电话：13166015580"
         android:layout_marginTop="6dp"
         />
 
     <TextView
+        android:id="@+id/tv_username"
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
-        android:text="联系人：王明"
+        tools:text="联系人：王明"
         android:layout_marginTop="6dp"
         />
 
@@ -90,7 +90,7 @@
 
     <TextView
         style="@style/base_text_style"
-        android:text="订单费用"
+        android:text="支付费用明细"
         android:padding="12dp"
         android:textColor="@color/black"
         />
@@ -106,8 +106,9 @@
             android:text="服务费用："
             />
         <TextView
+            android:id="@+id/tv_money"
             style="@style/base_text_style"
-            android:text="150元"
+            tools:text="150元"
             />
     </LinearLayout>
 
@@ -124,8 +125,9 @@
             android:text="优惠金额："
             />
         <TextView
+            android:id="@+id/tv_money_coupon"
             style="@style/base_text_style"
-            android:text="-0元"
+            tools:text="-0元"
             />
     </LinearLayout>
 
@@ -143,8 +145,9 @@
             android:text="实付金额："
             />
         <TextView
+            android:id="@+id/tv_money_pay"
             style="@style/base_text_style"
-            android:text="150元"
+            tools:text="150元"
             android:textColor="@color/yellow_deep"
             />
     </LinearLayout>
@@ -172,8 +175,6 @@
         android:paddingLeft="12dp"
         android:gravity="center_vertical"
         >
-
-
 
         <View
             android:layout_width="0dp"
