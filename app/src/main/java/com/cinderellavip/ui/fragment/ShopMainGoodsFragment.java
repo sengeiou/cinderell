@@ -109,7 +109,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
             if ( "3".equals(item.type) || "2".equals(item.type)){
                 GoodsListActivity.launch(getContext(),item.name,item.id);
             }else if ("1".equals(item.type)){
-                EventBus.getDefault().post(new UpdateShopPage(item.name));
+                EventBus.getDefault().post(new UpdateShopPage(item.id+""));
             }
 
         });

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.net.home.HomeBanner;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.WebViewActivity;
@@ -12,6 +13,8 @@ import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.stx.xhb.xbanner.XBanner;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -66,7 +69,7 @@ public class BannerUtil {
                     ShopDetailActivity.launchShop(context,((HomeBanner) model).value);
                     break;
                 case 7:
-
+//                    EventBus.getDefault().post(new UpdateShopPage(item.name));
                     break;
             }
 

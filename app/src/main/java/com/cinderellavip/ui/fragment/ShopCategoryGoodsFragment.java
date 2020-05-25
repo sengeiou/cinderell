@@ -82,9 +82,6 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         homeCategoryItem = getArguments().getParcelable("homeCategoryItem");
-        if (homeCategoryItem == null)
-            homeCategoryItem = new HomeCategoryItem(0);
-
         //设置商品
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         GirdSpace girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10), 2);

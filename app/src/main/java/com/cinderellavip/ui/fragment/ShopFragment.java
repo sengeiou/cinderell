@@ -20,6 +20,7 @@ import com.cinderellavip.weight.MyTabLayout;
 import com.cinderellavip.weight.StatusBarHeightView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,6 @@ public class ShopFragment extends BaseFragment {
     @BindView(R.id.tv_hint)
     TextView tv_hint;
 
-    private List<String>myTitle;
     private List<BaseFragment>myFragment;
 
 
@@ -80,9 +80,17 @@ public class ShopFragment extends BaseFragment {
             showProress();
         }
         getCategory();
-        getSearchHint();
+
 
     }
+
+    @Override
+    public void onResume() {
+        LogUtil.e("onResume");
+        super.onResume();
+        getSearchHint();
+    }
+
     private void getSearchHint(){
         new RxHttp<BaseResult<HotList<String>>>().send(ApiManager.getService().getSearchWords(),
                 new Response<BaseResult<HotList<String>>>(mActivity,Response.BOTH) {
@@ -126,16 +134,18 @@ public class ShopFragment extends BaseFragment {
 
     }
 
+    List<HomeCategoryItem> categoryItemList;
     private void  setTabCategory(List<HomeCategoryItem> category){
-        myTitle = new ArrayList<>();
+        categoryItemList = category;
         myFragment = new ArrayList<>();
-        myTitle.add("首页");
+        HomeCategoryItem homeCategoryItem = new HomeCategoryItem();
+        homeCategoryItem.name = "首页";
         myFragment.add(ShopMainGoodsFragment.newInstance(null));
         for (HomeCategoryItem category1:category){
-            myTitle.add(category1.name);
             myFragment.add(ShopCategoryGoodsFragment.newInstance(category1));
         }
-        tabCategory.setTitle(myTitle);
+        categoryItemList.add(0,homeCategoryItem);
+        tabCategory.setTitle(categoryItemList);
         //预加载
         viewPager.setOffscreenPageLimit(myFragment.size());
         //适配器（容器都需要适配器）
@@ -153,7 +163,7 @@ public class ShopFragment extends BaseFragment {
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return myTitle.get(position);
+                return categoryItemList.get(position).name;
             }
         });
         tabCategory.setupWithViewPager(viewPager);
@@ -163,10 +173,18 @@ public class ShopFragment extends BaseFragment {
     public void onEvent(Object o) {
         super.onEvent(o);
         if (o instanceof UpdateShopPage){
+            //id
             String name = ((UpdateShopPage)o).name;
-            for (int i = 0;i<myTitle.size();i++){
-                if (name.equals(myTitle.get(i))){
+            if ("-1".equals(name)){
+                //回到首页
+                viewPager.setCurrentItem(0);
+                return;
+            }
+            for (int i = 0;i<categoryItemList.size();i++){
+                HomeCategoryItem item = categoryItemList.get(i);
+                if (name.equals(item.id+"")){
                     viewPager.setCurrentItem(i);
+                    break;
                 }
             }
         }

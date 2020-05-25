@@ -2,10 +2,14 @@ package com.cinderellavip.util.banner;
 
 import android.app.Activity;
 
+import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.ui.activity.home.BrandDetailActivity;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 public class LinkUtil {
@@ -23,13 +27,13 @@ public class LinkUtil {
                     WebViewActivity.launch(context,value,WebViewActivity.GRAPHIC);
                     break;
                 case 5:
-//                    BrandDetailActivity.launch(context);
+                    BrandDetailActivity.launch(context,value);
                     break;
                 case 6:
                     ShopDetailActivity.launchShop(context,value);
                     break;
                 case 7:
-
+                    EventBus.getDefault().post(new UpdateShopPage(value));
                     break;
             }
 

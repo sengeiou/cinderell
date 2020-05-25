@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.util.ScreenUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -73,13 +74,13 @@ public class MyTabLayout extends TabLayout {
 
 
 
-    public void setTitle(List<String> titles) {
+    public void setTitle(List<HomeCategoryItem> titles) {
         removeAllTabs();
         /**
          * 开始添加切换的Tab。
          */
         for (int i = 0; i < titles.size(); i++) {
-            String title = titles.get(i);
+            String title = titles.get(i).name;
             Tab tab = newTab();
             tab.setCustomView(R.layout.tab_item_home_category);
             if (tab.getCustomView() != null) {

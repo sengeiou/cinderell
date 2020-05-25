@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.RequestCode;
@@ -27,6 +28,8 @@ import com.flyco.roundview.RoundTextView;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 import com.tozzais.baselibrary.util.log.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -144,7 +147,11 @@ public class MainActivity extends CheckPermissionActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_shop:
-                selectFragment(SHOP);
+                if (mPosition == SHOP){
+                    EventBus.getDefault().post(new UpdateShopPage("-1"));
+                }else {
+                    selectFragment(SHOP);
+                }
                 break;
             case R.id.ll_life_service:
                 selectFragment(LIFE);

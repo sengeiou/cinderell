@@ -19,9 +19,7 @@ public class HomeCategoryItem implements Parcelable {
         this.type = type;
     }
 
-    //id == 0  代表首页
-    public HomeCategoryItem(int id) {
-        this.id = id;
+    public HomeCategoryItem() {
     }
 
     @Override
