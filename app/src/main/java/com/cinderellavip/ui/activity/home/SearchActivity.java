@@ -18,7 +18,6 @@ import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
-import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.util.ScreenUtil;
@@ -60,14 +59,26 @@ public class SearchActivity extends BaseActivity {
         from.startActivity(intent);
     }
 
+    public static void launch(Context from,String hint) {
+        Intent intent = new Intent(from, SearchActivity.class);
+        intent.putExtra("hint",hint);
+        from.startActivity(intent);
+    }
+
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_search;
     }
 
+    private String hint;
     @Override
     public void initView(Bundle savedInstanceState) {
+         hint = getIntent().getStringExtra("hint");
+        if (!TextUtils.isEmpty(hint)){
+            etSearch.setHint(hint);
+        }
+
     }
 
     @Override
@@ -86,7 +97,7 @@ public class SearchActivity extends BaseActivity {
                     public void onSuccess(BaseResult<HotList<String>> result) {
                         HotList<String> data = result.data;
                         addHotData(flHot, data.list);
-                        etSearch.setHint(data.keyword);
+//                        etSearch.setHint(data.keyword);
                     }
                 });
     }
@@ -215,8 +226,13 @@ public class SearchActivity extends BaseActivity {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 String trim = etSearch.getText().toString().trim();
                 if (TextUtils.isEmpty(trim)) {
-                    KeyboardUtils.hideKeyboard(etSearch);
-                    tsg("请输入关键字");
+                    if (TextUtils.isEmpty(hint)) {
+                        KeyboardUtils.hideKeyboard(etSearch);
+                        tsg("请输入搜索内容");
+                    }else {
+                        saveSearch(hint);
+                        SearchResultActivity.launch(mActivity, hint);
+                    }
                 } else {
                     saveSearch(trim);
                     SearchResultActivity.launch(mActivity, trim);

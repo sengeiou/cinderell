@@ -2,10 +2,12 @@ package com.cinderellavip.ui.activity.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
@@ -371,5 +373,23 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 获取当前焦点所在的控件；
+            View view = getCurrentFocus();
+            if (view != null && view instanceof EditText) {
+                Rect r = new Rect();
+                view.getGlobalVisibleRect(r);
+                int rawX = (int) ev.getRawX();
+                int rawY = (int) ev.getRawY();
+                // 判断点击的点是否落在当前焦点所在的 view 上；
+                if (!r.contains(rawX, rawY)) {
+                    view.clearFocus();
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
 }

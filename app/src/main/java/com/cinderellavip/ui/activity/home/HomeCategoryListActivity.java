@@ -48,7 +48,7 @@ public class HomeCategoryListActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseResult<HotList<String>> result) {
                         HotList<String> data = result.data;
-                        tv_hint.setText(data.keyword);
+                        tv_hint.setHint(data.keyword);
                     }
                 });
     }
@@ -84,7 +84,7 @@ public class HomeCategoryListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_search:
-                SearchActivity.launch(mActivity);
+                SearchActivity.launch(mActivity,tv_hint.getHint().toString());
                 break;
         }
     }

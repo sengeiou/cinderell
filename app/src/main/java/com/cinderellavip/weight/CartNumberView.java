@@ -94,11 +94,11 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
                     tv_number.setText("9999");
                     tv_number.setSelection(tv_number.getText().toString().length());
                 }
-                if (TextUtils.isEmpty(content)){
-                    tv_number.setText("1");
-                    tv_number.setSelection(tv_number.getText().toString().length());
-                    return;
-                }
+//                if (TextUtils.isEmpty(content)){
+//                    tv_number.setText("");
+//                    tv_number.setSelection(tv_number.getText().toString().length());
+//                    return;
+//                }
                 try {
                     number = Integer.parseInt(content);
                     if (number>1){

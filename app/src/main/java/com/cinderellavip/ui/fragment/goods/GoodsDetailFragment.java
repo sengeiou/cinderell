@@ -173,7 +173,7 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
         xbanner.addOnPageChangeListener(this);
         tvGroupOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         tvGoodsName.setText(productInfo.name);
-        tv_ship.setText(productInfo.getShip());
+        tv_ship.setText("运费：" +productInfo.getShip());
         tv_tax.setText("销量：" + productInfo.sale + "件");
         tv_intro.setText("发货：" + productInfo.send_area);
 

@@ -381,7 +381,6 @@ public class MainActivity extends CheckPermissionActivity {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             // 获取当前焦点所在的控件；
-//            LogUtil.e("dispatchTouchEvent= ");
             View view = getCurrentFocus();
             if (view != null && view instanceof EditText) {
                 Rect r = new Rect();

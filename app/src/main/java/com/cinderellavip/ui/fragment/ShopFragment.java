@@ -106,7 +106,7 @@ public class ShopFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_search:
-                SearchActivity.launch(mActivity);
+                SearchActivity.launch(mActivity,tv_hint.getText().toString());
                 break;
             case R.id.iv_category:
                 HomeCategoryListActivity.launch(mActivity);

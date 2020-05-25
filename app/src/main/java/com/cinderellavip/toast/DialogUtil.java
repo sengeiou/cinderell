@@ -3,6 +3,7 @@ package com.cinderellavip.toast;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -52,6 +53,9 @@ public class DialogUtil {
 
 
         CartNumberView cart_view = view.findViewById(R.id.cart_view);
+        EditText tv_number = cart_view.getTv_number();
+
+
         cart_view.setNumber(1);
         TextView tv_unit = view.findViewById(R.id.tv_unit);
         TextView tv_price = view.findViewById(R.id.tv_price);
@@ -181,6 +185,13 @@ public class DialogUtil {
         CouponReceiveDialogAdapter adpter = new CouponReceiveDialogAdapter();
         rv_coupon.setAdapter(adpter);
         adpter.setNewData(data);
+
+        View empty_view = View.inflate(context, com.tozzais.baselibrary.R.layout.base_empty_view, null);
+        TextView tv_content = empty_view.findViewById(com.tozzais.baselibrary.R.id.tv_content);
+        tv_content.setText("暂无优惠券");
+        adpter.setEmptyView(empty_view);
+
+
         iv_close.setOnClickListener(v -> {
             dialog.dismiss();
             dialog = null;
