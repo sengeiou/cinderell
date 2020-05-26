@@ -12,6 +12,8 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.tozzais.baselibrary.util.toast.ToastCommom;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,7 +66,7 @@ public class DonwloadSaveImg {
         @Override
         public void handleMessage(Message msg) {
             mSaveDialog.dismiss();
-            Toast.makeText(context, mSaveMessage, Toast.LENGTH_SHORT).show();
+            ToastCommom.createToastConfig().ToastShow(context,mSaveMessage);
         }
     };
     /**

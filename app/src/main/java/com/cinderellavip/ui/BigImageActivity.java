@@ -3,6 +3,7 @@ package com.cinderellavip.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -65,7 +66,13 @@ public class BigImageActivity extends BaseActivity {
             data = intent.getStringArrayExtra("data");
             viewpager.setAdapter(new BigImageAdapter(data, mActivity));
         pointIndex = intent.getIntExtra("position", 0);
-        tv_pic_number.setText(pointIndex + 1 + "/" + data.length);
+        if (data.length == 1){
+            tv_pic_number.setVisibility(View.GONE);
+        }else {
+            tv_pic_number.setVisibility(View.VISIBLE);
+            tv_pic_number.setText(pointIndex + 1 + "/" + data.length);
+        }
+
 
 
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

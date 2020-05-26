@@ -22,6 +22,7 @@ import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.BigImageActivity;
 import com.cinderellavip.ui.activity.find.PublishPostActivity;
 import com.cinderellavip.ui.activity.find.PublishTopicActivity;
 import com.cinderellavip.util.KeyboardUtils;
@@ -48,21 +49,13 @@ public class DialogUtil {
 
     @SuppressLint("ClickableViewAccessibility")
     public static void showSpeciSpecialDialog(Context context, GoodsResult goodsResult, boolean isLeft, onNormSelectListener listener) {
-
         View view = View.inflate(context, R.layout.pop_bottom_specification, null);
         dialog = DialogUtils.getBottomDialog(context, view);
         ImageView iv_close = view.findViewById(R.id.iv_close);
-
         LinearLayout ll_root = view.findViewById(R.id.ll_root);
         NestedScrollView scrollview = view.findViewById(R.id.scrollview);
-
-
-
         TextView tv_sure = view.findViewById(R.id.tv_sure);
-
         SquareRoundImageView iv_image = view.findViewById(R.id.iv_image);
-
-
         CartNumberView cart_view = view.findViewById(R.id.cart_view);
         EditText tv_number = cart_view.getTv_number();
         scrollview.setOnTouchListener((v, event) -> {
@@ -84,10 +77,7 @@ public class DialogUtil {
                     tv_number.setText("1");
                 }
             }
-
-
         });
-
         TextView tv_unit = view.findViewById(R.id.tv_unit);
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_former_price = view.findViewById(R.id.tv_former_price);
@@ -120,7 +110,11 @@ public class DialogUtil {
         }
         ImageUtil.loadNet(context,iv_image,specialItem2.thumb);
         tv_specification.setText("已选：“"+specialItem2.name+"”");
-
+        iv_image.setTag(specialItem2.thumb);
+        iv_image.setOnClickListener(v -> {
+            String[] s = new String[]{((String)iv_image.getTag())};
+            BigImageActivity.launch(context,s,0);
+        });
 
         final SpecialItem specialItem = specialItem2;
         final  List<SpecialItem> list = list1;
@@ -157,6 +151,7 @@ public class DialogUtil {
                     }
                     if (specialItem1.isCheck){
                         ImageUtil.loadNet(context,iv_image,text.thumb);
+                        iv_image.setTag(text.thumb);
                         if (product_info.hasGroup && !isLeft){
                             //如果是灰姑娘
                             tv_unit.setText("拼团价");
