@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -18,6 +19,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.CartGoodsClickListener;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
+import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.weight.CartNumberView1;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.log.LogUtil;
@@ -44,82 +46,53 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
     protected void convert( BaseViewHolder helper, CartGoodsItem item) {
         helper.setIsRecyclable(false);
         int position = helper.getAdapterPosition();
-        LogUtil.e("convert"+position+"==="+item.product_num);
         ImageView iv_product = helper.getView(R.id.iv_product);
         CartNumberView1 cart_view = helper.getView(R.id.cart_view);
         EditText tv_number = cart_view.getTv_number();
-
         helper.setText(R.id.tv_title,item.product_name)
                 .setText(R.id.tv_specification,"规格："+item.product_norm)
                 .setText(R.id.tv_price,"￥"+item.getProduct_price());
-
         ImageUtil.loadNet(getContext(),iv_product,item.product_thumb);
-
-
         ImageView iv_selete = helper.getView(R.id.iv_selete);
-
         if (item.isCheck){
             iv_selete.setImageResource(R.mipmap.gwcxz);
         }else {
             iv_selete.setImageResource(R.mipmap.gwcmx);
         }
-
         cart_view.setNumber(item.product_num+"");
         cart_view.setOnNumberClickListener(new CartNumberView1.OnNumberClickListener() {
             @Override
             public void add() {
-                modify(item,item.product_num+1+"",cart_view);
+                modify(item,item.product_num+1+"",tv_number);
             }
             @Override
             public void reduce() {
-                modify(item,item.product_num-1+"",cart_view);
+                modify(item,item.product_num-1+"",tv_number);
             }
 
         });
-        if (tv_number.getTag() instanceof TextWatcher){
-            tv_number.removeTextChangedListener((TextWatcher) tv_number.getTag());
-        }
-        TextWatcher textWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                String content = s.toString();
-                LogUtil.e("content1= "+content);
+        View.OnFocusChangeListener onFocusChangeListener = (v, hasFocus) -> {
+            if (!hasFocus){
+                KeyboardUtils.hideKeyboard(tv_number);
+                String content = tv_number.getText().toString().trim();
                 if (content.length()>4){
                     content = "9999";
-                }else if (TextUtils.isEmpty(content)){
+                }else if (TextUtils.isEmpty(content) || "0".equals(content)){
                     content = "1";
                 }
-                item.product_num = Integer.parseInt(content);
+                //修改后的内容
+                int i = Integer.parseInt(content);
+                if (item.product_num != i){
+                    modify(item,i+"",tv_number);
+                }
             }
         };
-
-
-        tv_number.setTag(textWatcher);
-
-        tv_number.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
-                tv_number.addTextChangedListener(textWatcher);
-            }else {
-                tv_number.removeTextChangedListener(textWatcher);
-                modify(item,item.product_num+"",cart_view);
-            }
-
-            String content = tv_number.getText().toString().trim();
-            LogUtil.e("content1= "+content+"=="+hasFocus);
-
-        });
-
+        tv_number.setOnFocusChangeListener(onFocusChangeListener);
         tv_number.clearFocus();
         iv_selete.setOnClickListener(v -> {
             item.isCheck = !item.isCheck;
-            cartClickListener.onClick();
+            cartClickListener.onClick(true);
             notifyDataSetChanged();
         });
 
@@ -140,27 +113,30 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
 
 
 
-    private void modify(CartGoodsItem item,String number,CartNumberView1 cart_view){
-        LogUtil.e("content1= "+"modify");
+    private void modify(CartGoodsItem item,String number,EditText tv_number){
+        LogUtil.e("content1= "+"modify"+number);
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("cart_id", item.cart_id + "");
         hashMap.put("number",   number);
         new RxHttp<BaseResult>().send(ApiManager.getService().modifyCartNumber(hashMap),
-                new Response<BaseResult>(false,getContext()) {
+                new Response<BaseResult>(getContext(),Response.DIALOG) {
                     @Override
                     public void onSuccess(BaseResult result) {
                         item.product_num = Integer.parseInt(number);
                         //计算价格
-                        cartClickListener.onClick();
-                        notifyDataSetChanged();
-
-//                        notifyItemChanged(position);
+                        tv_number.setText(number);
+                        cartClickListener.onClick(false);
+//                        notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onToast(String s) {
+                        super.onToast(s);
+                        tv_number.setText(""+item.product_num);
                     }
                 });
     }
 
     private void delete(CartGoodsItem item,int position){
-        LogUtil.e("delete= "+"modify");
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("cart_ids", item.cart_id + "");
         new RxHttp<BaseResult>().send(ApiManager.getService().deleteCart(hashMap),
@@ -169,7 +145,7 @@ public class CartGoodsAdapter extends BaseQuickAdapter<CartGoodsItem, BaseViewHo
                     public void onSuccess(BaseResult result) {
                         remove(position);
                         //计算价格
-                        cartClickListener.onClick();
+                        cartClickListener.onClick(true);
                     }
                 });
     }

@@ -9,14 +9,13 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CartAdapter;
-import com.cinderellavip.adapter.recycleview.CartEmptyAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.eventbus.AddCart;
 import com.cinderellavip.bean.eventbus.UpdateCart;
-import com.cinderellavip.bean.local.RequestSettlePara;
-import com.cinderellavip.bean.net.cart.CartItem;
 import com.cinderellavip.bean.local.HomeGoods;
+import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.cart.CartGoodsItem;
+import com.cinderellavip.bean.net.cart.CartItem;
 import com.cinderellavip.bean.net.cart.CartResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -28,6 +27,7 @@ import com.cinderellavip.weight.MarginDecorationextendsHeader;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,13 +127,19 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
                     public void onErrorShow(String s) {
                         showError(s);
                     }
+
+                    @Override
+                    public void onCompleted() {
+                        super.onCompleted();
+                        swipeLayout.setRefreshing(false);
+                    }
                 });
     }
 
     private void setCartData(List<CartItem> list) {
         cartAdapter.setNewData(list);
         //解决删除购物车后不重置的bug。放在setData后面，解决刷新不重置总价格的bug
-        onClick();
+        onClick(false);
 
     }
 
@@ -143,6 +149,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_selete_all://选择全部
+                LogUtil.e("onClick11111");
                 isSeleteAll = !isSeleteAll;
                 ivSeleteAll.setImageResource(isSeleteAll ? R.mipmap.gwcxz : R.mipmap.gwcmx);
                 List<CartItem> mdata = cartAdapter.getData();
@@ -216,12 +223,13 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
     }
 
     @Override
-    public void onClick() {
+    public void onClick(boolean b) {
+        LogUtil.e("onClick"+b);
         this.isSeleteAll = true;
         for (CartItem cartItem:cartAdapter.getData()){
             boolean allSelect = true;
             for (CartGoodsItem goodsItem:cartItem.products){
-                if (!cartItem.isCheck){
+                if (!goodsItem.isCheck){
                     isSeleteAll = false;
                     allSelect = false;
                     break;

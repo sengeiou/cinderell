@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -72,6 +74,12 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     private List<BaseFragment> fragmentList;
     private List<String> list_Title;
 
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        super.onCreate(savedInstanceState);
+    }
 
     public static void launch(Activity activity, String id) {
         Intent intent = new Intent(activity, GoodsDetailActivity.class);

@@ -77,45 +77,38 @@ public class CartNumberView extends FrameLayout implements View.OnClickListener 
             rl_add.setOnClickListener(this);
         }
 
-        tv_number.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                String content = s.toString();
-                if (content.length()>4){
-                    content = "9999";
-                    tv_number.setText("9999");
-                    tv_number.setSelection(tv_number.getText().toString().length());
-                }
-//                if (TextUtils.isEmpty(content)){
-//                    tv_number.setText("");
+//        tv_number.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                String content = s.toString();
+//                if (content.length()>4){
+//                    content = "9999";
+//                    tv_number.setText("9999");
 //                    tv_number.setSelection(tv_number.getText().toString().length());
-//                    return;
 //                }
-                try {
-                    number = Integer.parseInt(content);
-                    if (number>1){
-                        rl_reduce.setEnabled(true);
-                        iv_reduce.setImageResource(R.mipmap.cart_reduce);
-                    }else {
-                        rl_reduce.setEnabled(false);
-                        iv_reduce.setImageResource(R.mipmap.caer_reduce_unclick);
-                    }
-
-                }catch (Exception e){
-
-                }
-
-
-            }
-        });
+//                try {
+//                    number = Integer.parseInt(content);
+//                    if (number>1){
+//                        rl_reduce.setEnabled(true);
+//                        iv_reduce.setImageResource(R.mipmap.cart_reduce);
+//                    }else {
+//                        rl_reduce.setEnabled(false);
+//                        iv_reduce.setImageResource(R.mipmap.caer_reduce_unclick);
+//                    }
+//
+//                }catch (Exception e){
+//
+//                }
+//            }
+//        });
     }
 
 

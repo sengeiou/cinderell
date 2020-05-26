@@ -1,7 +1,11 @@
 package com.cinderellavip.toast;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,10 +24,12 @@ import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.find.PublishPostActivity;
 import com.cinderellavip.ui.activity.find.PublishTopicActivity;
+import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.weight.CartNumberView;
 import com.cinderellavip.weight.SquareRoundImageView;
 import com.nex3z.flowlayout.FlowLayout;
 import com.tozzais.baselibrary.util.CommonUtils;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.List;
 
@@ -40,11 +46,16 @@ public class DialogUtil {
 
 
 
-    public static void showSpeciSpecialDialog(Context context, GoodsResult goodsResult,boolean isLeft, onNormSelectListener listener) {
+    @SuppressLint("ClickableViewAccessibility")
+    public static void showSpeciSpecialDialog(Context context, GoodsResult goodsResult, boolean isLeft, onNormSelectListener listener) {
 
         View view = View.inflate(context, R.layout.pop_bottom_specification, null);
         dialog = DialogUtils.getBottomDialog(context, view);
         ImageView iv_close = view.findViewById(R.id.iv_close);
+
+        LinearLayout ll_root = view.findViewById(R.id.ll_root);
+        NestedScrollView scrollview = view.findViewById(R.id.scrollview);
+
 
 
         TextView tv_sure = view.findViewById(R.id.tv_sure);
@@ -54,9 +65,29 @@ public class DialogUtil {
 
         CartNumberView cart_view = view.findViewById(R.id.cart_view);
         EditText tv_number = cart_view.getTv_number();
-
-
+        scrollview.setOnTouchListener((v, event) -> {
+            tv_number.clearFocus();
+            KeyboardUtils.hideKeyboard(tv_number);
+            return false;
+        });
+        ll_root.setOnClickListener(v -> {
+            tv_number.clearFocus();
+            KeyboardUtils.hideKeyboard(tv_number);
+        });
         cart_view.setNumber(1);
+        tv_number.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus){
+                String content = tv_number.getText().toString().trim();
+                if (content.length()>4){
+                    tv_number.setText("9999");
+                }else if (TextUtils.isEmpty(content)  || "0".equals(content)){
+                    tv_number.setText("1");
+                }
+            }
+
+
+        });
+
         TextView tv_unit = view.findViewById(R.id.tv_unit);
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_former_price = view.findViewById(R.id.tv_former_price);
@@ -64,8 +95,6 @@ public class DialogUtil {
 //        tv_former_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         //商品规格
         FlowLayout fl_special = view.findViewById(R.id.fl_flag);
-        NestedScrollView scrollview = view.findViewById(R.id.scrollview);
-
         List<SpecialItem> list1 = goodsResult.product_norm;
         GoodsInfo product_info = goodsResult.product_info;
         //设置默认规格

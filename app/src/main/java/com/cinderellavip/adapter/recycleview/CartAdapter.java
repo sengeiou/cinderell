@@ -33,10 +33,11 @@ public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rv_list.setLayoutManager(manager);
-        CartGoodsAdapter cartGoodsAdapter =  new CartGoodsAdapter(() -> {
+        CartGoodsAdapter cartGoodsAdapter =  new CartGoodsAdapter(isRefresh -> {
             if (item.products.size() == 0){
                 //全部删除
                 remove(position);
+                notifyDataSetChanged();
             }else {
                 boolean allSelect = true;
                 for (CartGoodsItem cartItem:item.products){
@@ -46,10 +47,10 @@ public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
                     }
                 }
                 item.isCheck = allSelect;
+                if (isRefresh)
                 notifyDataSetChanged();
             }
-            cartClickListener.onClick();
-
+            cartClickListener.onClick(true);
         });
         rv_list.setAdapter(cartGoodsAdapter);
         cartGoodsAdapter.setNewData(item.products);
@@ -64,7 +65,7 @@ public class CartAdapter extends BaseQuickAdapter<CartItem, BaseViewHolder> {
                 cartItem.isCheck = item.isCheck;
             }
             notifyDataSetChanged();
-            cartClickListener.onClick();
+            cartClickListener.onClick(true);
         });
         helper.getView(R.id.tv_shop).setOnClickListener(v -> {
             ShopDetailActivity.launchShop(getContext(),item.store_id+"");

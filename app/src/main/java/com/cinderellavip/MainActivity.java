@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -376,6 +377,11 @@ public class MainActivity extends CheckPermissionActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

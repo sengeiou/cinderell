@@ -55,7 +55,8 @@
         >
         <activity android:name=".ui.activity.account.GuideActivity"
             android:launchMode="singleTask"
-            android:theme="@style/WelComeTheme">
+            android:theme="@style/WelComeTheme"
+            >
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +66,8 @@
 
         <activity android:name=".ui.activity.account.WelcomeActivity"/>
         <activity android:name=".MainActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            />
         <activity android:name=".ui.activity.account.ModifyPassActivity"/>
         <activity android:name=".ui.activity.account.LoginActivity"/>
         <activity android:name=".ui.activity.account.FastLoginActivity"/>
@@ -77,7 +79,8 @@
         <activity android:name=".ui.activity.home.SearchResultActivity"/>
         <activity android:name=".ui.activity.home.GoodsDetailActivity"
             android:configChanges="orientation|screenSize"
-                />
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            />
         <activity android:name=".ui.BigImageActivity"/>
         <activity android:name=".ui.BigImageActivity1"/>
         <activity android:name=".ui.activity.order.CartActivity"/>
