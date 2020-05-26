@@ -35,9 +35,9 @@ public class PostCommentReplyAdapter extends BaseQuickAdapter<DiscussCommentRepl
         String s= "";
         if (TextUtils.isEmpty(item.u_name)){
             //被回复人为kong
-            s = item.m_name + ":"+item.content;
+            s = item.m_name + "："+item.content;
         }else {
-            s = item.m_name + " 回复 "+item.u_name+":"+item.content;
+            s = item.m_name + " 回复 "+item.u_name+"："+item.content;
         }
         SpannableString string = new SpannableString(s);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#3E91E6"));

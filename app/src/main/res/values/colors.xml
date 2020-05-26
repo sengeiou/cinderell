@@ -13,4 +13,6 @@
     <color name="gray_progress">#CCCCCC</color>
 
     <color name="yellow_progress">#F07701</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

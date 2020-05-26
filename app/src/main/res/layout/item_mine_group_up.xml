@@ -40,6 +40,7 @@
             android:id="@+id/tv_shop"
             style="@style/base_text_style"
             tools:text="夺伊服装店"
+            android:textSize="12sp"
             android:padding="12dp"
             android:drawableRight="@mipmap/right_black_icon"
             android:drawablePadding="5dp"
@@ -53,6 +54,7 @@
         <TextView
             android:id="@+id/tv_status"
             style="@style/base_text_style"
+            android:textSize="12sp"
             android:textColor="@color/baseColor"
             android:layout_gravity="center_vertical"
             tools:text="未成团"/>
@@ -84,11 +86,13 @@
             <TextView
                 android:id="@+id/tv_goods_number"
                 style="@style/base_text_style"
+                android:textSize="12sp"
                 tools:text="共2件 应付金额：" />
 
             <TextView
                 android:id="@+id/tv_money"
                 style="@style/base_text_style"
+                android:textSize="12sp"
                 tools:text="￥188.00" />
         </LinearLayout>
 
@@ -104,6 +108,7 @@
                 style="@style/base_btn_style"
                 android:background="@drawable/shape_line_blacktitle50"
                 android:textColor="@color/black_title_color"
+                android:textSize="10sp"
                 android:text="详情" />
 
             <TextView
@@ -112,6 +117,7 @@
                 android:background="@drawable/shape_line_red50"
                 android:textColor="@color/red"
                 android:layout_marginLeft="12dp"
+                android:textSize="10sp"
                 android:text="邀请" />
         </LinearLayout>
 

@@ -110,6 +110,7 @@
                     android:id="@+id/tv_group_number"
                     style="@style/base_text_style"
                     tools:text="5人团，还差3人"
+
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     />
@@ -168,6 +169,7 @@
                     style="@style/base_text_style"
                     tools:text="夺伊服装店"
                     android:padding="12dp"
+                    android:textSize="12sp"
                     android:drawableRight="@mipmap/right_black_icon"
                     android:drawablePadding="5dp"
                     android:src="@mipmap/icon_shop_forcart"/>

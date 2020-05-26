@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="服务编号:1483759861938"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/black_title_color"/>
         
 
@@ -34,6 +34,7 @@
             style="@style/base_text_style"
             android:layout_marginLeft="12dp"
             tools:text="已取消"
+            android:textSize="12sp"
             android:textColor="@color/yellow_deep"
             />
     </LinearLayout>
@@ -72,6 +73,7 @@
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
         tools:text="服务类型：育儿嫂-启蒙教育"
+        android:textSize="12sp"
         />
 
     <TextView
@@ -80,19 +82,17 @@
         android:layout_marginLeft="12dp"
         tools:text="服务时间：2020-10-03"
         android:layout_marginTop="6dp"
+        android:textSize="12sp"
         />
+
 
     <TextView
         android:id="@+id/tv_service_address"
         style="@style/base_text_style"
         android:layout_marginLeft="12dp"
-        tools:text="服务地址：上海市青浦区明珠路32号"
         android:layout_marginTop="6dp"
-        />
-
-
-
-
+        android:textSize="12sp"
+        tools:text="服务地址：上海市青浦区明珠路32号" />
 
     <LinearLayout
         style="@style/base_hor_style"
@@ -105,6 +105,7 @@
         <TextView
             style="@style/base_text_style"
             android:text="订单费用："
+            android:textSize="12sp"
             />
 
         <TextView
@@ -125,6 +126,7 @@
             style="@style/base_btn_style"
             android:background="@drawable/shape_line_gray5"
             android:textColor="@color/black_title_color"
+            android:textSize="10sp"
             android:text="取消" />
 
         <TextView
@@ -133,6 +135,7 @@
             android:background="@drawable/shape_line_life_yellow_deep5"
             android:textColor="@color/yellow_deep"
             android:layout_marginLeft="12dp"
+            android:textSize="10sp"
             android:text="支付" />
     </LinearLayout>
 

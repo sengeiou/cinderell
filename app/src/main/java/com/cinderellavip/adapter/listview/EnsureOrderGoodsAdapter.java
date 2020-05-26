@@ -39,7 +39,7 @@ public class EnsureOrderGoodsAdapter extends BaseAdapter<OrderSettleGoods> {
         ImageUtil.loadNet(context,hodler.ivProduct,item.product_thumb);
         hodler.tvTitle.setText(item.product_name);
         hodler.tvSpecification.setText("规格："+item.product_norm);
-        hodler.tvNumber.setText("规格：X"+item.product_num);
+        hodler.tvNumber.setText("数量：X"+item.product_num);
         hodler.tvPrice.setText("￥"+item.product_price);
 
         return convertView;

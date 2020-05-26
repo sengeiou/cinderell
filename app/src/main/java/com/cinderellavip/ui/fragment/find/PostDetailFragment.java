@@ -1,16 +1,22 @@
 package com.cinderellavip.ui.fragment.find;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CardSaleGoodsAdapter;
 import com.cinderellavip.adapter.recycleview.ImagePostAdapter;
@@ -26,12 +32,16 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnCommentReplyClickListener;
 import com.cinderellavip.listener.SoftKeyBoardListener;
 import com.cinderellavip.toast.DialogUtil;
+import com.cinderellavip.toast.InputTextMsgDialog;
 import com.cinderellavip.ui.activity.find.PostDetailActivity;
 import com.cinderellavip.ui.activity.find.ReportActivity;
+import com.cinderellavip.ui.activity.find.TopicDetailActivity;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.MyRecycleView;
 import com.cinderellavip.weight.TopSpace;
+import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -48,6 +58,8 @@ import butterknife.OnClick;
 
 public class PostDetailFragment extends BaseListFragment<DiscussComment> implements OnCommentReplyClickListener {
 
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
 
     @BindView(R.id.rv_image)
     MyRecycleView rvImage;
@@ -55,12 +67,8 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
     RecyclerView rvBaby;
     @BindView(R.id.tv_attention)
     TextView tvAttention;
-    @BindView(R.id.et_content)
-    EditText etContent;
     @BindView(R.id.iv_collect)
     ImageView ivCollect;
-    @BindView(R.id.tv_send)
-    TextView tv_send;
     @BindView(R.id.iv_avatar)
     CircleImageView ivAvatar;
     @BindView(R.id.tv_name)
@@ -76,8 +84,6 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
     @BindView(R.id.ll_goods)
     LinearLayout ll_goods;
 
-    @BindView(R.id.ll_comment)//评价的布局
-    LinearLayout ll_comment;
     @BindView(R.id.ll_bottom)//评价的布局
     LinearLayout ll_bottom;
 
@@ -174,7 +180,7 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
             cardSaleGoodsAdapter.setNewData(data.products);
         }
 
-        tvCommentNumber.setText("评价 ("+discussesResult.total+")");
+        tvCommentNumber.setText("评论 ("+discussesResult.total+")");
     }
 
     private void setAttention(boolean isCollect){
@@ -199,26 +205,24 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
         swipeLayout.setEnabled(false);
         mAdapter.getLoadMoreModule().setEnableLoadMore(false);
 
-        SoftKeyBoardListener.setListener(mActivity, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
-            @Override
-            public void keyBoardShow(int height) {
-                ll_comment.setVisibility(View.VISIBLE);
-                ll_bottom.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void keyBoardHide(int height) {
-                ll_comment.setVisibility(View.GONE);
-                ll_bottom.setVisibility(View.VISIBLE);
+        appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
+            if (i >= 0) {
+                swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
+            } else {
+                swipeLayout.setEnabled(false); //否则关闭
             }
         });
 
     }
 
 
-    @OnClick({R.id.tv_attention, R.id.iv_more, R.id.iv_collect, R.id.tv_send, R.id.tv_comment})
+    @OnClick({R.id.tv_post_name, R.id.tv_attention, R.id.iv_more, R.id.iv_collect, R.id.tv_comment})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_post_name:
+                if (data !=null)
+                    TopicDetailActivity.launch(mActivity,data.topic_id);
+                break;
             case R.id.tv_attention:
                 if (data !=null)
                     collect(data.user.id+"","4");
@@ -237,20 +241,9 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
                 if (data !=null)
                 collect(id+"","3");
                 break;
-            case R.id.tv_send:
-                String content = etContent.getText().toString().trim();
-                if (!TextUtils.isEmpty(content)){
-                    etContent.setText("");
-                    KeyboardUtils.hideKeyboard(etContent);
-                    if (!TextUtils.isEmpty(comment_id)){
-                        //回复评论
-                        reply(content);
-                    }else {
-                        //直接评价
-                        comment(content);
-                    }
-                }
-                break;
+//            case R.id.tv_send:
+//
+//                break;
             case R.id.tv_comment:
                 onSure("","","说点什么吧");
                 break;
@@ -301,21 +294,57 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
                     }
                 });
     }
+    private InputTextMsgDialog inputTextMsgDialog;
 
     @Override
     public void onSure(String id, String reply_id, String hint) {
         this.comment_id = id;
         this.reply_id = reply_id;
-        etContent.setHint(hint);
-        KeyboardUtils.showKeyboard(etContent);
+//        etContent.setHint(hint);
+//        KeyboardUtils.showKeyboard(etContent);
+        initInputTextMsgDialog(hint);
+
+    }
+    private void initInputTextMsgDialog(String hint) {
+        dismissInputDialog();
+        if (inputTextMsgDialog == null) {
+            inputTextMsgDialog = new InputTextMsgDialog(mActivity, R.style.dialog_center,hint);
+            inputTextMsgDialog.setmOnTextSendListener(new InputTextMsgDialog.OnTextSendListener() {
+                @Override
+                public void onTextSend(String msg) {
+                    if (!TextUtils.isEmpty(comment_id)){
+                        //回复评论
+                        reply(msg);
+                    }else {
+                        //直接评价
+                        comment(msg);
+                    }
+                }
+                @Override
+                public void dismiss() {
+                }
+            });
+        }else {
+            inputTextMsgDialog.setHint(hint);
+        }
+        showInputTextMsgDialog();
+    }
+    private void dismissInputDialog() {
+        if (inputTextMsgDialog != null) {
+            if (inputTextMsgDialog.isShowing()) inputTextMsgDialog.dismiss();
+            inputTextMsgDialog.cancel();
+            inputTextMsgDialog = null;
+        }
+    }
+
+    private void showInputTextMsgDialog() {
+        inputTextMsgDialog.show();
     }
     private String comment_id;
     private String reply_id;
 
-
     //回复评论
     private void reply(String content) {
-
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("id", comment_id + "");
         hashMap.put("reply_id", reply_id + "");

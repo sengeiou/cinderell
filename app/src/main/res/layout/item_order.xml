@@ -26,6 +26,7 @@
             style="@style/base_text_style"
             tools:text="夺伊服装店"
             android:padding="12dp"
+            android:textSize="12sp"
             android:drawableRight="@mipmap/right_black_icon"
             android:drawablePadding="5dp"
             android:src="@mipmap/icon_shop_forcart"/>
@@ -40,6 +41,7 @@
             style="@style/base_text_style"
             android:layout_marginLeft="12dp"
             tools:text="待付款"
+            android:textSize="12sp"
             android:textColor="@color/red"
             />
     </LinearLayout>
@@ -65,11 +67,13 @@
         <TextView
             android:id="@+id/tv_goods_number"
             style="@style/base_text_style"
+            android:textSize="12sp"
             tools:text="共2件 应付金额：" />
 
         <TextView
             android:id="@+id/tv_money"
             style="@style/base_text_style"
+            android:textSize="12sp"
             tools:text="￥188.00" />
     </LinearLayout>
 
@@ -93,6 +97,7 @@
             android:background="@drawable/shape_line_blacktitle50"
             android:textColor="@color/black_title_color"
             android:layout_marginLeft="12dp"
+            android:textSize="10sp"
             android:text="取消" />
 
         <TextView
@@ -101,6 +106,7 @@
             android:background="@drawable/shape_line_red50"
             android:textColor="@color/red"
             android:layout_marginLeft="12dp"
+            android:textSize="10sp"
             android:text="付款" />
     </LinearLayout>
 

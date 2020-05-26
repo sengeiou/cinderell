@@ -21,6 +21,7 @@ import com.cinderellavip.ui.activity.find.TopicDetailActivity;
 import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.GirdSpaceStag;
 import com.cinderellavip.weight.TopSpace;
+import com.google.android.material.appbar.AppBarLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -36,6 +37,9 @@ import butterknife.OnClick;
 
 public class TopicDetailFragment extends BaseListFragment<FindItem> {
 
+
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
 
     @BindView(R.id.rv_image)
     RecyclerView rvImage;
@@ -150,6 +154,14 @@ public class TopicDetailFragment extends BaseListFragment<FindItem> {
     public void initListener() {
         if (swipeLayout != null)
             swipeLayout.setOnRefreshListener(this::onRefresh);
+
+        appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
+            if (i >= 0) {
+                swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
+            } else {
+                swipeLayout.setEnabled(false); //否则关闭
+            }
+        });
 
     }
 

@@ -45,10 +45,11 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:maxLines="2"
+                android:lines="2"
                 android:ellipsize="end"
                 android:layout_height="wrap_content"
                 tools:text="吊带连衣裙女夏小清新2019款粉色格子裙法式仙女裙"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="@color/black_title_color"/>
 
 
@@ -64,7 +65,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             tools:text="规格：L"
-            android:textSize="12sp"
+            android:textSize="10sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_marginTop="3dp"
             android:textColor="@color/grayText"/>
 
@@ -85,7 +88,7 @@
                 android:layout_height="wrap_content"
                 tools:text="￥90.00"
                 android:layout_marginLeft="3dp"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="@color/baseColor"/>
 
             <TextView
@@ -94,7 +97,7 @@
                 android:layout_height="match_parent"
                 tools:text="数量x1"
                 android:gravity="center"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textColor="@color/black_title_color"/>
 
 

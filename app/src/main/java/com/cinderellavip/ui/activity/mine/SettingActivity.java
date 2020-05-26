@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.AccountExit;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.toast.CenterDialogUtil;
@@ -19,6 +20,8 @@ import com.cinderellavip.ui.activity.account.ModifyPassActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.CacheClear;
 import com.tozzais.baselibrary.ui.BaseActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -108,6 +111,7 @@ public class SettingActivity extends BaseActivity {
             if (s.equals("1")){
                 GlobalParam.exitLogin();
                 LoginActivity.launch(mActivity);
+                EventBus.getDefault().post(new AccountExit());
                 finish();
             }
 

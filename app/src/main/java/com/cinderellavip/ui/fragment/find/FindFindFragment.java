@@ -77,18 +77,16 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
 
     }
 
-    private RecyclerView rv_hot_topic;
+    private View headerView;
     private FindHotTopicAdapter findHotTopicAdapter;
     private void initHeadView() {
-        View headerView = View.inflate(mActivity, R.layout.header_find_find, null);
+        headerView = View.inflate(mActivity, R.layout.header_find_find, null);
         RecyclerView rv_hot_topic = headerView.findViewById(R.id.rv_hot_topic);
         rv_hot_topic.setLayoutManager(new GridLayoutManager(mActivity,2));
         findHotTopicAdapter = new FindHotTopicAdapter();
         rv_hot_topic.setAdapter(findHotTopicAdapter);
         mAdapter.addHeaderView(headerView);
-        findHotTopicAdapter.setOnItemClickListener((adapter1, view, position) -> {
-//            TopicDetailActivity.launch(mActivity);
-        });
+
 
 
 
@@ -99,16 +97,6 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
     @Override
     public void loadData() {
         super.loadData();
-//
-//        new Handler().postDelayed(() -> {
-//            setData(DataUtil.getData(4));
-//        }, 100);
-        getData();
-
-
-    }
-
-    private void  getData(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("limit", ""+PageSize);
         hashMap.put("page", ""+page);
@@ -118,6 +106,11 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
                     public void onSuccess(BaseResult<ListDiscussesResult> result) {
                         ListDiscussesResult discussesResult = result.data;
                         if (page == DEFAULT_PAGE){
+                            if (discussesResult.hot_topics == null || discussesResult.hot_topics.size() == 0){
+                                headerView.setVisibility(View.GONE);
+                            }else {
+                                headerView.setVisibility(View.VISIBLE);
+                            }
                             findHotTopicAdapter.setNewData(discussesResult.hot_topics);
                         }
                         setData(discussesResult.discusses);
@@ -133,17 +126,9 @@ public class FindFindFragment extends BaseListFragment<FindItem> {
                         showError(s);
                     }
                 });
-    }
 
-    @Override
-    public void initListener() {
-        super.initListener();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-//            PostDetailActivity.launch(mActivity);
-        });
 
     }
-
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);

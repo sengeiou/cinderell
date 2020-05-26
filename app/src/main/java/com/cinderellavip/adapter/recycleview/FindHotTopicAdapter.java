@@ -1,6 +1,7 @@
 package com.cinderellavip.adapter.recycleview;
 
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.find.HotTopicItem;
+import com.cinderellavip.ui.activity.find.TopicDetailActivity;
 
 
 public class FindHotTopicAdapter extends BaseQuickAdapter<HotTopicItem, BaseViewHolder> {
@@ -32,8 +34,10 @@ public class FindHotTopicAdapter extends BaseQuickAdapter<HotTopicItem, BaseView
             view_line.setVisibility(View.GONE);
         }else {
             view_line.setVisibility(View.VISIBLE);
-
         }
+        helper.getView(R.id.ll_root).setOnClickListener(v -> {
+            TopicDetailActivity.launch((Activity) getContext(),item.id+"");
+        });
 
     }
 

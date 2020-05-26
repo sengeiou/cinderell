@@ -93,6 +93,7 @@ public abstract class BaseListFragment<T> extends BaseFragment {
         setEmptyView(R.mipmap.empty_view, tip, null, null);
     }
 
+
     protected void setEmptyView(int res, String tip) {
         setEmptyView(res, tip, null, null);
     }
