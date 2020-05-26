@@ -102,7 +102,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_service:
-                DialogUtil.showCallPhoneDialog(mActivity);
+                DialogUtil.showCallPhoneDialog(mActivity,3);
                 break;
             case R.id.tv_buy:
 //                BuyServiceActivity.launch(mActivity);

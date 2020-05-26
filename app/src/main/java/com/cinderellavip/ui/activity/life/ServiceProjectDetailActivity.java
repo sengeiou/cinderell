@@ -19,7 +19,6 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.DirectCommentAdapter;
 import com.cinderellavip.adapter.recycleview.ServiceDetailContentAdapter;
 import com.cinderellavip.adapter.viewpager.BannerViewPagerAdapter;
-import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.util.ColorUtil;
@@ -195,7 +194,7 @@ public class ServiceProjectDetailActivity extends BaseActivity {
                 SelectServiceTimeActivity.launch(mActivity);
                 break;
             case R.id.tv_service:
-                DialogUtil.showCallPhoneDialog(mActivity);
+                DialogUtil.showCallPhoneDialog(mActivity,3);
                 break;
             case R.id.tv_buy:
 //                BuyServiceActivity.launch(mActivity);

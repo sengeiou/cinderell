@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
@@ -164,6 +163,7 @@ public class SecondDialogUtil {
         ImageView iv_avatar = view.findViewById(R.id.iv_avatar);
         TextView tv_name = view.findViewById(R.id.tv_name);
         TextView tv_code = view.findViewById(R.id.tv_code);
+        TextView tv_copy_code = view.findViewById(R.id.tv_copy_code);
         ImageView iv_image = view.findViewById(R.id.iv_image);
 
         String recommendCode = GlobalParam.getRecommendCode();
@@ -184,11 +184,12 @@ public class SecondDialogUtil {
             dialog = null;
 
         });
-        view.findViewById(R.id.tv_copy_code).setOnClickListener(v -> {
+        tv_copy_code.setOnClickListener(v -> {
             ClipBoardUtil.copy(context,recommendCode);
 
         });
         view.findViewById(R.id.iv_down).setOnClickListener(v -> {
+            tv_copy_code.setVisibility(View.GONE);
             Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
             boolean isSuccess = ImgUtils.saveImageToGallery(context, bitmap);
             if (isSuccess) {
@@ -196,6 +197,7 @@ public class SecondDialogUtil {
                 dialog.dismiss();
                 dialog = null;
             }
+            tv_copy_code.setVisibility(View.VISIBLE);
         });
         view.findViewById(R.id.iv_weChat).setOnClickListener(v -> {
             Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片

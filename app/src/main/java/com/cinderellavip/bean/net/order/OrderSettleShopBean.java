@@ -2,7 +2,6 @@ package com.cinderellavip.bean.net.order;
 
 import com.cinderellavip.bean.local.SelectCouponsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderSettleShopBean {
@@ -15,6 +14,9 @@ public class OrderSettleShopBean {
 
     public String store_name;
     public String store_id;
+
+    public String remark = "";
+
 
 
 }

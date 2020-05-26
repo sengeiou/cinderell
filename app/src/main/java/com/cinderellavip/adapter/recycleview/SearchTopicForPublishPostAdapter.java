@@ -13,7 +13,7 @@ public class SearchTopicForPublishPostAdapter extends BaseQuickAdapter<HotTopicI
 
 
     public SearchTopicForPublishPostAdapter() {
-        super(R.layout.item_find_hottopic_search, null);
+        super(R.layout.item_find_topic_search_for_publish, null);
     }
 
 

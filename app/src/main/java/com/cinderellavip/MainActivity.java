@@ -15,9 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
+import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.fragment.CartFragment;
@@ -26,6 +30,7 @@ import com.cinderellavip.ui.fragment.LifeFragment;
 import com.cinderellavip.ui.fragment.MineFragment;
 import com.cinderellavip.ui.fragment.ShopFragment;
 import com.flyco.roundview.RoundTextView;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 import com.tozzais.baselibrary.util.log.LogUtil;
@@ -119,6 +124,13 @@ public class MainActivity extends CheckPermissionActivity {
 
     @Override
     public void initListener() {
+        new RxHttp<BaseResult<PhoneResult>>().send(ApiManager.getService().getPhone(),
+                new Response<BaseResult<PhoneResult>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<PhoneResult> result) {
+                        GlobalParam.setPhoneBean(result.data);
+                    }
+                });
 
     }
 

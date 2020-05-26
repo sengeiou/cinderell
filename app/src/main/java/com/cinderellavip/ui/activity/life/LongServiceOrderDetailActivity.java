@@ -186,7 +186,7 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         tv_right.setOnClickListener(v -> {
-            DialogUtil.showCallPhoneDialog(mActivity);
+            DialogUtil.showCallPhoneDialog(mActivity,3);
         });
     }
 

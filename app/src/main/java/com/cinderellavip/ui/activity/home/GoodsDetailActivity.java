@@ -267,7 +267,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
                 break;
             case R.id.tv_service:
-                DialogUtil.showCallPhoneDialog(mActivity);
+                DialogUtil.showCallPhoneDialog(mActivity,1);
                 break;
             case R.id.tv_shop:
                 if (goodsResult != null){

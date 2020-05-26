@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="90dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:orientation="horizontal"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -15,8 +15,6 @@
         <RelativeLayout
             android:id="@+id/rl_reduce"
             android:layout_width="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:gravity="center"
             android:layout_height="match_parent"
             android:background="@drawable/shape_white_left50">
@@ -49,8 +47,6 @@
         <RelativeLayout
             android:id="@+id/rl_add"
             android:layout_width="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:gravity="center"
             android:layout_height="match_parent"
             android:background="@drawable/shape_white_right50">

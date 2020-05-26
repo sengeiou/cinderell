@@ -16,17 +16,22 @@ import com.cinderellavip.bean.local.SelectCouponsBean;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
+import com.cinderellavip.bean.net.order.OrderSettleShopBean;
+import com.cinderellavip.bean.request.OrderRemark;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
 import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.util.CouponsStringUtil;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
@@ -236,6 +241,8 @@ public class EnsureOrderActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.tv_commit:
+
+
                 if (requestSettlePara.type == RequestSettlePara.PRODUCT){
                     createOrderForProduct();
                 }else if (requestSettlePara.type == RequestSettlePara.CART){
@@ -255,6 +262,15 @@ public class EnsureOrderActivity extends BaseActivity {
         }
     }
 
+    private String getRemark(){
+        List<OrderSettleShopBean> data = ensureOrderAdapter.getData();
+        List<OrderRemark> orderRemarks = new ArrayList<>();
+        for (OrderSettleShopBean orderSettleShopBean:data){
+            orderRemarks.add(new OrderRemark(orderSettleShopBean.store_id,orderSettleShopBean.remark));
+        }
+        return new Gson().toJson(orderRemarks);
+    }
+
     private void createOrderForProduct() {
         if ("0".equals(requestSettlePara.address_id)){
             tsg("请选择收货地址");
@@ -266,6 +282,7 @@ public class EnsureOrderActivity extends BaseActivity {
         hashMap.put("number", requestSettlePara.number);
         hashMap.put("address_id", requestSettlePara.address_id);
         hashMap.put("coupon_id", requestSettlePara.coupon_ids);
+        hashMap.put("remarks", getRemark());
         new RxHttp<BaseResult<CreateOrderBean>>().send(ApiManager.getService().createOrderByProduct(hashMap),
                 new Response<BaseResult<CreateOrderBean>>(mActivity) {
                     @Override
@@ -286,6 +303,7 @@ public class EnsureOrderActivity extends BaseActivity {
         hashMap.put("cart_ids", requestSettlePara.cart_ids);
         hashMap.put("address_id", requestSettlePara.address_id);
         hashMap.put("coupon_id", requestSettlePara.coupon_ids);
+        hashMap.put("remarks", getRemark());
         new RxHttp<BaseResult<CreateOrderBean>>().send(ApiManager.getService().createOrderByCart(hashMap),
                 new Response<BaseResult<CreateOrderBean>>(mActivity) {
                     @Override
@@ -311,6 +329,7 @@ public class EnsureOrderActivity extends BaseActivity {
         hashMap.put("number", requestSettlePara.number);
         hashMap.put("address_id", requestSettlePara.address_id);
         hashMap.put("coupon_id", requestSettlePara.coupon_ids);
+        hashMap.put("remarks", getRemark());
         new RxHttp<BaseResult<CreateOrderBean>>().send(ApiManager.getService().createOrderByGroup(hashMap),
                 new Response<BaseResult<CreateOrderBean>>(mActivity) {
                     @Override

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.ui.activity.account.LoginActivity;
@@ -160,6 +161,18 @@ public class GlobalParam {
             return null;
         }
         return new Gson().fromJson(data,MineInfo.class);
+    }
+
+    public static void setPhoneBean(PhoneResult userInfo) {
+        Gson gson = new Gson();
+        SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.user_bean_phone, gson.toJson(userInfo));
+    }
+    public static PhoneResult getPhoneBean() {
+        String data = SharedPreferencesUtil.getStringData(CinderellApplication.mContext, Constant.user_bean_phone, "");
+        if (TextUtils.isEmpty(data)){
+            return null;
+        }
+        return new Gson().fromJson(data,PhoneResult.class);
     }
 
 }

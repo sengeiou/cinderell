@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
+        android:paddingLeft="2dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:paddingRight="12dp"
@@ -41,13 +41,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginLeft="10dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="top"
             android:orientation="horizontal">
 
             <TextView
@@ -56,10 +57,9 @@
                 android:layout_weight="1"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 tools:text="农家新语 马丹90红颜奶油草莓3斤 新鲜现摘水果"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="@color/black_title_color"/>
 
 
@@ -68,7 +68,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:padding="12dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="18dp"
                 android:src="@mipmap/close"/>
 
 
@@ -82,7 +84,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             tools:text="规格：L"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:layout_marginTop="3dp"
             android:textColor="@color/grayText"/>
 
@@ -105,7 +107,7 @@
             <com.cinderellavip.weight.CartNumberView1
                 android:id="@+id/cart_view"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="20dp"/>
 
 
 

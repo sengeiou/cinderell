@@ -389,7 +389,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 break;
             case R.id.rl_mine_service11:
                 if (GlobalParam.getUserLogin(mActivity))
-                DialogUtil.showCallPhoneDialog(mActivity);
+                DialogUtil.showCallPhoneDialog(mActivity,2);
 
                 break;
             case R.id.iv_message:

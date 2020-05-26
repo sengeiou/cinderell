@@ -139,7 +139,7 @@ public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> 
 
     @OnClick(R.id.tv_service)
     public void onClick() {
-        DialogUtil.showCallPhoneDialog(mActivity);
+        DialogUtil.showCallPhoneDialog(mActivity,3);
     }
 
     @Override

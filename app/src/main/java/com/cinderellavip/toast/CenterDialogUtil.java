@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
-import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -59,7 +58,7 @@ public class CenterDialogUtil {
 
         });
         tv_add.setOnClickListener(v -> {
-            DialogUtil.showCallPhoneDialog(context);
+            DialogUtil.showCallPhoneDialog(context,2);
         });
 
     }

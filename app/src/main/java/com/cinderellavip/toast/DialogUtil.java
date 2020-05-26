@@ -1,11 +1,9 @@
 package com.cinderellavip.toast;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,10 +15,12 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CouponReceiveDialogAdapter;
 import com.cinderellavip.adapter.recycleview.CouponReceiveDialogForServiceAdapter;
 import com.cinderellavip.bean.local.CouponsBean;
+import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.bean.net.SpecialItem;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.life.LifeCoupon;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.BigImageActivity;
 import com.cinderellavip.ui.activity.find.PublishPostActivity;
@@ -30,7 +30,6 @@ import com.cinderellavip.weight.CartNumberView;
 import com.cinderellavip.weight.SquareRoundImageView;
 import com.nex3z.flowlayout.FlowLayout;
 import com.tozzais.baselibrary.util.CommonUtils;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.List;
 
@@ -309,6 +308,10 @@ public class DialogUtil {
     }
 
     public static void showCallPhoneDialog(Context context) {
+        PhoneResult phoneBean = GlobalParam.getPhoneBean();
+        if (phoneBean == null){
+            return;
+        }
         View view = View.inflate(context, R.layout.pop_bottom_callphone, null);
         dialog = DialogUtils.getBottomDialog(context, view);
         TextView tv_phone = view.findViewById(R.id.tv_phone);
@@ -316,6 +319,47 @@ public class DialogUtil {
         RelativeLayout tv_cancel = view.findViewById(R.id.tv_cancel);
         ll_phone.setOnClickListener(v -> {
             CommonUtils.callPhone(context,"69765809");
+            dialog.dismiss();
+            dialog = null;
+        });
+        tv_cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+            dialog = null;
+        });
+
+    }
+
+    /**
+     * @param context
+     * @param type 1 商品咨询电话 2平台客服电话 3生活服务
+     */
+    public static void showCallPhoneDialog(Context context,int type) {
+        PhoneResult phoneBean = GlobalParam.getPhoneBean();
+        if (phoneBean == null){
+            return;
+        }
+        View view = View.inflate(context, R.layout.pop_bottom_callphone, null);
+        dialog = DialogUtils.getBottomDialog(context, view);
+        TextView tv_phone = view.findViewById(R.id.tv_phone);
+        if (type == 1){
+            tv_phone.setText("呼叫"+phoneBean.products_tel_phone);
+        }else  if (type == 2){
+            tv_phone.setText("呼叫"+phoneBean.platform_tel_phone);
+        }else  if (type == 3){
+            tv_phone.setText("呼叫"+phoneBean.service_tel_phone);
+        }
+
+        RelativeLayout ll_phone = view.findViewById(R.id.ll_phone);
+        RelativeLayout tv_cancel = view.findViewById(R.id.tv_cancel);
+        ll_phone.setOnClickListener(v -> {
+            if (type == 1){
+                CommonUtils.callPhone(context,phoneBean.products_tel_phone);
+            }else  if (type == 2){
+                CommonUtils.callPhone(context,phoneBean.platform_tel_phone);
+            }else  if (type == 3){
+                CommonUtils.callPhone(context,phoneBean.service_tel_phone);
+            }
+
             dialog.dismiss();
             dialog = null;
         });

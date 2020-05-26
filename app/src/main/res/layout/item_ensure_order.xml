@@ -135,6 +135,36 @@
                 android:textSize="12sp"
                 tools:text="￥488" />
         </LinearLayout>
+
+        <LinearLayout
+            style="@style/base_hor_style"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:background="@drawable/touch_bg">
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="订单备注"
+                android:textSize="12sp"
+                />
+
+            <EditText
+                android:id="@+id/et_remark"
+                style="@style/base_text_style"
+                android:textSize="12sp"
+                android:background="@null"
+                android:layout_weight="1"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:lines="1"
+                android:singleLine="true"
+                android:maxLength="100"
+                android:textColor="@color/black_title_color"
+                android:textColorHint="@color/grayText"
+                android:layout_marginLeft="12dp"
+                android:hint="选填，填写需要给商家的留言内容"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <View

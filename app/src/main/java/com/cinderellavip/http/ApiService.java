@@ -21,6 +21,7 @@ import com.cinderellavip.bean.net.HotList;
 import com.cinderellavip.bean.net.IntegralExchangeLogistics;
 import com.cinderellavip.bean.net.LifeCityBean;
 import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.bean.net.ShopResult;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.bean.net.cart.CartResult;
@@ -98,6 +99,10 @@ public interface ApiService {
     @GET(HttpUrl.get_qr_code)
     Observable<BaseResult<AppletsCode>>
     getAppletsCode(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.get_phone)
+    Observable<BaseResult<PhoneResult>>
+    getPhone();
     /**
      * 登录
      * @param

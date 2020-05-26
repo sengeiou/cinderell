@@ -8,9 +8,67 @@
     android:orientation="vertical">
 
 
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:padding="10dp"
+            android:layout_marginTop="4dp"
+            style="@style/click_toolbar_style"
+            android:layout_gravity="center_vertical"/>
 
-   <include
-       layout="@layout/layout_title_search"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="6dp"
+            >
+
+            <include layout="@layout/layout_search_gray"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black_title_color"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center_vertical"
+            android:text="取消"
+            style="@style/click_toolbar_style"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
 
 
 

@@ -2,6 +2,9 @@ package com.cinderellavip.adapter.recycleview;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +16,6 @@ import com.cinderellavip.bean.net.order.OrderSettleShopAmount;
 import com.cinderellavip.bean.net.order.OrderSettleShopBean;
 import com.cinderellavip.bean.net.order.RequestSelectCoupons;
 import com.cinderellavip.ui.activity.mine.SelectCouponActivity;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyListView;
 
 import androidx.core.content.ContextCompat;
@@ -36,11 +38,28 @@ public class EnsureOrderAdapter extends BaseQuickAdapter<OrderSettleShopBean, Ba
                 .setText(R.id.tv_goods_money,"￥"+amount.total);
 
 
+        EditText et_remark = helper.getView(R.id.et_remark);
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                item.remark = editable.toString().trim();
+
+            }
+        };
+        et_remark.addTextChangedListener(textWatcher);
+
         MyListView lv_goods = helper.getView(R.id.lv_goods);
         EnsureOrderGoodsAdapter ensureOrderAdapter = new EnsureOrderGoodsAdapter(item.products, getContext());
         lv_goods.setAdapter(ensureOrderAdapter);
-
-
 
         LinearLayout ll_coupon = helper.getView(R.id.ll_coupon);
         TextView tv_coupon = helper.getView(R.id.tv_coupon);

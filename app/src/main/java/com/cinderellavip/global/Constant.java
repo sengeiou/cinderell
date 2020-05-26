@@ -27,6 +27,7 @@ public class Constant {
     public static String user_is_vip = "cinder_is_vip";
 
     public static String user_bean_string = "cinder_user_login_bean";
+    public static String user_bean_phone = "cinder_phone_bean";
 
     public static String search = "cinder_user_search";
     public static String search_post = "cinder_user_search_post";

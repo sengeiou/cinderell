@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.PrePayLongOrder;
-import com.cinderellavip.bean.eventbus.UpdateLongServiceOrder;
 import com.cinderellavip.bean.eventbus.UpdateShortServiceOrder;
 import com.cinderellavip.bean.net.life.ShortOrderItem;
 import com.cinderellavip.http.ApiManager;
@@ -19,7 +18,6 @@ import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
-import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -171,7 +169,7 @@ public class SingleServiceOrderDetailActivity extends BaseActivity {
     public void initListener() {
         super.initListener();
         tv_right.setOnClickListener(v -> {
-            DialogUtil.showCallPhoneDialog(mActivity);
+            DialogUtil.showCallPhoneDialog(mActivity,3);
         });
     }
 
