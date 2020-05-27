@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.life.LiftHomeServiceItem;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.activity.life.ServiceDetailActivity;
 import com.cinderellavip.util.ScreenUtil;
 
 
@@ -38,8 +39,7 @@ public class LifeServiceAdapter extends BaseQuickAdapter<LiftHomeServiceItem, Ba
                 .setText(R.id.tv_price,item.price+"元/"+item.unit_name);
 
         helper.getView(R.id.ll_root).setOnClickListener(v -> {
-//            ServiceDetailActivity.launch(getContext());
-//            GoodsDetailActivity.launch((Activity) getContext(),0);
+            ServiceDetailActivity.launch(getContext(),item.id,item.city);
         });
 
 

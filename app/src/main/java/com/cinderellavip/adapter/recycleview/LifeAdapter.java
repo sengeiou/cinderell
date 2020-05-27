@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.bean.net.life.LiftHomeListItem;
 import com.cinderellavip.ui.activity.life.ServiceListActivity;
 import com.cinderellavip.util.DataUtil;
@@ -41,21 +42,13 @@ public class LifeAdapter extends BaseQuickAdapter<LiftHomeListItem, BaseViewHold
 
 
         helper.getView(R.id.tv_more).setOnClickListener(v -> {
-            String name1 = "";
-            if (position == 0){
-                name1 = "日常养护";
-            }else if (position == 1){
-                name1 = "保姆";
-            }else if (position == 2){
-                name1 = "清洗服务";
-            }else if (position == 3){
-                name1 = "房屋维修";
-            }else if (position == 4){
-                name1 = "家电维修";
-            }else{
-                name1 = "家具维修";
-            }
-            ServiceListActivity.launch(getContext(),name1);
+
+            LiftHomeCategory liftHomeCategory = new LiftHomeCategory();
+            liftHomeCategory.name = item.title;
+            liftHomeCategory.one = item.id;
+            liftHomeCategory.three = -1;
+
+            ServiceListActivity.launch(getContext(),liftHomeCategory);
 
         });
 

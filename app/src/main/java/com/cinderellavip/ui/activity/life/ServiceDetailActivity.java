@@ -31,9 +31,11 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
 
     //服务项目和套餐ID
     private int id;
-    public static void launch(Context from,int id) {
+    private String city;
+    public static void launch(Context from,int id,String city) {
         Intent intent = new Intent(from, ServiceDetailActivity.class);
         intent.putExtra("id",id);
+        intent.putExtra("city",city);
         from.startActivity(intent);
     }
 
@@ -43,6 +45,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
         super.initView(savedInstanceState);
         setLineVisibility();
         id = getIntent().getIntExtra("id",-1);
+        city = getIntent().getStringExtra("city");
         setBackTitle("");
         setRightIcon(R.mipmap.share_service);
 
@@ -56,7 +59,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
         }
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("project", id+"");
-        hashMap.put("city",CinderellApplication.name+"");
+        hashMap.put("city",city);
         new RxHttp<BaseResult<ServiceProjectDetail>>().send(ApiManager.getService().serviceProjectAndPackageDetail(hashMap),
                 new Response<BaseResult<ServiceProjectDetail>>(isLoad,mActivity) {
                     @Override
@@ -105,7 +108,8 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
                 DialogUtil.showCallPhoneDialog(mActivity,3);
                 break;
             case R.id.tv_buy:
-//                BuyServiceActivity.launch(mActivity);
+                if (id != -1)
+                BuyServiceActivity.launch(mActivity,id,city);
                 break;
         }
     }

@@ -46,7 +46,6 @@ public class LifeCategoryAdapter extends BaseQuickAdapter<LiftHomeCategory, Base
 
         helper.getView(R.id.rl_root).setOnClickListener(v -> {
             //0:分类  1：服务清单 2：直约
-
             if (2 == (item.type)){
                 DirectAppointmentActivity.launch(getContext());
             }else  if (1 == (item.type)){

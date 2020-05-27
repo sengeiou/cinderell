@@ -38,10 +38,12 @@ import butterknife.OnClick;
 public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> implements View.OnClickListener {
 
 
-    @Override
-    public int setLayout() {
-        return R.layout.fragment_service_list;
-    }
+
+    //设置一个地址的参数 用来修改地址时候刷新数据
+    private String city;
+    //网络请求的需要的参数
+    private LiftHomeCategory service;
+
 
 
     public static ServiceListFragment newInstance(LiftHomeCategory service) {
@@ -52,14 +54,19 @@ public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> 
         return cartFragment;
 
     }
-
-    private LiftHomeCategory service;
+    @Override
+    public int setLayout() {
+        return R.layout.fragment_service_list;
+    }
 
 
 
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        //第一次用带过来的数据
+        city = CinderellApplication.name;
+
         service = getArguments().getParcelable("service");
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -84,12 +91,14 @@ public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> 
     private ImageView iv_buy_long_service;
     private TextView tv_receive_coupon;
 
+
     @Override
     public void loadData() {
         super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("city", CinderellApplication.name);
+        hashMap.put("city", city);
         hashMap.put("service",service.one+"");
+        if (service.three != -1)
         hashMap.put("four",service.three+"");
         new RxHttp<BaseResult<CategoryResult>>().send(ApiManager.getService().life_category(hashMap),
                 new Response<BaseResult<CategoryResult>>(isLoad,mActivity) {
@@ -165,5 +174,10 @@ public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> 
                         DialogUtil.showServiceCouponDialog(mActivity, result.data.data);
                     }
                 });
+    }
+
+    public void setAddress(String name) {
+        city = name;
+        onRefresh();
     }
 }

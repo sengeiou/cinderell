@@ -75,6 +75,8 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
 
         initHeadView();
 
+        location();
+
 
     }
 
@@ -128,7 +130,7 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
     @Override
     public void loadData() {
         super.loadData();
-        location();
+        getData(CinderellApplication.name);
 
     }
     private void location(){
@@ -274,6 +276,7 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
     }
 
     public void setAddress(String name) {
+        CinderellApplication.name = name;
         tv_address.setText(name);
         getData(name);
     }

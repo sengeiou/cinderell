@@ -30,14 +30,12 @@ import java.util.Locale;
 public class CinderellApplication extends Application {
     public static Context mContext;
     //城市名
-    public static String name;
+    public static String name = "南京";
     @Override
     public void onCreate() {
         super.onCreate();
 
-
         X5WebUtils.init(this);
-
         // 在 Application 中配置全局自定义的 LoadMoreView
         LoadMoreModuleConfig.setDefLoadMoreView(new CustomLoadMoreView());
 

@@ -1,5 +1,6 @@
 package com.cinderellavip.ui.activity.life;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -8,9 +9,12 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.ServiceListFragment;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.DpUtil;
+
+import androidx.annotation.Nullable;
 
 
 /**
@@ -18,13 +22,6 @@ import com.tozzais.baselibrary.util.DpUtil;
  */
 public class ServiceListActivity extends BaseActivity {
 
-
-
-    public static void launch(Context from,String name) {
-        Intent intent = new Intent(from, ServiceListActivity.class);
-        intent.putExtra("name",name);
-        from.startActivity(intent);
-    }
 
     LiftHomeCategory item;
     public static void launch(Context from, LiftHomeCategory item) {
@@ -58,9 +55,11 @@ public class ServiceListActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        serviceListFragment = ServiceListFragment.newInstance(item);
         getSupportFragmentManager().beginTransaction().add(R.id.content_container,
-                ServiceListFragment.newInstance(item)).commit();
+                serviceListFragment).commit();
     }
+    private ServiceListFragment serviceListFragment;
 
     @Override
     public int getLayoutId() {
@@ -73,5 +72,16 @@ public class ServiceListActivity extends BaseActivity {
         tv_right.setOnClickListener(v -> {
             SelectCityActivity.launch(mActivity);
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestCode.request_service_city && resultCode == Activity.RESULT_OK){
+            String name = data.getStringExtra("name");
+            tv_right.setText(name);
+            serviceListFragment.setAddress(name);
+        }
     }
 }
