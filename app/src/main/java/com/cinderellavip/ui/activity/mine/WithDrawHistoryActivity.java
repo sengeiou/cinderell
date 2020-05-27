@@ -3,6 +3,7 @@ package com.cinderellavip.ui.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.mine.WithDrawHistoryFragment;
@@ -15,19 +16,29 @@ import com.tozzais.baselibrary.ui.BaseActivity;
  */
 public class WithDrawHistoryActivity extends BaseActivity {
 
-
+    public static final int BALANCE = 0;
+    public static final int SCORE = 1;
+    private int type;
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, WithDrawHistoryActivity.class);
         from.startActivity(intent);
     }
 
+    public static void launch(Context from,int type) {
+        Intent intent = new Intent(from, WithDrawHistoryActivity.class);
+        intent.putExtra("type",type);
+        from.startActivity(intent);
+    }
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
-        setBackTitle("提现记录");
-//        setRightIcon(R.mipmap.icon_search_black);
+        type = getIntent().getIntExtra("type",BALANCE);
+        if(type == BALANCE){
+            setBackTitle("提现记录");
+        }if(type == SCORE){
+            setBackTitle("积分提现记录");
+        }
 
 
 
@@ -36,7 +47,7 @@ public class WithDrawHistoryActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        WithDrawHistoryFragment fragment = new WithDrawHistoryFragment();
+        WithDrawHistoryFragment fragment =  WithDrawHistoryFragment.newInstance(type);
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
     }
 

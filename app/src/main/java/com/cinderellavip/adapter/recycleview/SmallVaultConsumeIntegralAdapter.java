@@ -2,6 +2,8 @@ package com.cinderellavip.adapter.recycleview;
 
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,11 +28,15 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
     @Override
     protected void convert(final BaseViewHolder helper, final IntegralItem item) {
         int position = helper.getAdapterPosition();
+        ImageView iv_rank_image = helper.getView(R.id.iv_rank_image);
+        TextView tv_rank_text = helper.getView(R.id.tv_rank_text);
+        RelativeLayout rl_rank = helper.getView(R.id.rl_rank);
+
         CircleImageView iv_image = helper.getView(R.id.iv_image);
         TextView tv_id = helper.getView(R.id.tv_id);
         TextView tv_time = helper.getView(R.id.tv_id);
         helper.setText(R.id.tv_title,item.title)
-                .setText(R.id.tv_number,"+"+item.integral);
+                .setText(R.id.tv_number,item.integral);
         if (type == 1){
             tv_id.setVisibility(View.VISIBLE);
             tv_time.setVisibility(View.VISIBLE);
@@ -42,8 +48,26 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
             tv_time.setVisibility(View.VISIBLE);
             tv_time.setText(item.create_at);
         }else if (type == 3){
+            rl_rank.setVisibility(View.VISIBLE);
             tv_time.setVisibility(View.VISIBLE);
             tv_time.setText(item.create_at);
+            if (position == 0){
+                iv_rank_image.setImageResource(R.mipmap.icon_rank_first);
+                iv_rank_image.setVisibility(View.VISIBLE);
+                tv_rank_text.setVisibility(View.GONE);
+            }else if (position == 1){
+                iv_rank_image.setImageResource(R.mipmap.icon_rank_second);
+                iv_rank_image.setVisibility(View.VISIBLE);
+                tv_rank_text.setVisibility(View.GONE);
+            }else if (position == 2){
+                iv_rank_image.setImageResource(R.mipmap.icon_rank_three);
+                iv_rank_image.setVisibility(View.VISIBLE);
+                tv_rank_text.setVisibility(View.GONE);
+            }else {
+                tv_rank_text.setText((position+1)+"");
+                iv_rank_image.setVisibility(View.GONE);
+                tv_rank_text.setVisibility(View.VISIBLE);
+            }
         }else if (type == 4){
 
         }

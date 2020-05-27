@@ -5,12 +5,14 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
+import com.cinderellavip.bean.eventbus.UpdateMineScore;
 import com.cinderellavip.bean.net.mine.IntegralNumber;
 import com.cinderellavip.bean.net.mine.IntegralResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.LeaderBoardActivity;
+import com.cinderellavip.ui.activity.mine.WithDrawActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -65,12 +67,10 @@ public class SmallVaultFragment extends BaseFragment {
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(1));
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(2));
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(3));
-        fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(4));
         List<String> list = new ArrayList<>();
         list.add("消费积分");
         list.add("推荐积分");
-        list.add("月冠积分");
-        list.add("利息积分");
+        list.add("积分排行");
         adapter = new GoodsDetailPagerAdapter(getChildFragmentManager(), fragmentList, list);
         viewpager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewpager);
@@ -99,8 +99,8 @@ public class SmallVaultFragment extends BaseFragment {
                         tvScoreConsume.setText(data.consumption);
                         tvScoreRecommend.setText(data.invite);
                         tvScoreMoonCrown.setText(data.month_best);
-                        tvScoreInterest.setText(data.interest);
-                        mineCode.setText(data.total);
+                        tvScoreInterest.setText(data.total);
+                        mineCode.setText(data.with_int);
                     }
                 });
     }
@@ -115,6 +115,15 @@ public class SmallVaultFragment extends BaseFragment {
 
     @OnClick(R.id.tv_invite)
     public void onClick() {
-        LeaderBoardActivity.launch(mActivity);
+        WithDrawActivity.launch(mActivity,WithDrawActivity.SCORE);
+//        LeaderBoardActivity.launch(mActivity);
+    }
+
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateMineScore){
+            getNumber();
+        }
     }
 }

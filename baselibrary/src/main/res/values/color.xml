@@ -25,5 +25,6 @@
     <color name="yellowText">#F07903</color>
 
     <color name="tran">#55000000</color>
+    <color name="rule_color">#6f1200</color>
 
 </resources>

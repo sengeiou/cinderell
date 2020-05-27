@@ -11,8 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.eventbus.UpdateMineScore;
 import com.cinderellavip.bean.eventbus.UpdateMinebalance;
 import com.cinderellavip.bean.net.mine.MineBalanceResult;
+import com.cinderellavip.bean.score.WithDrawExplain;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -35,6 +37,9 @@ import butterknife.OnClick;
  */
 public class WithDrawActivity extends BaseActivity {
 
+    public static final int BALANCE = 0;
+    public static final int SCORE = 1;
+    private int type;
 
     @BindView(R.id.et_phone)
     EditText etPhone;
@@ -42,6 +47,10 @@ public class WithDrawActivity extends BaseActivity {
     EditText etMoney;
     @BindView(R.id.tv_balance)
     TextView tv_balance;
+    @BindView(R.id.tv_time)
+    TextView tv_time;
+    @BindView(R.id.tv_explain)
+    TextView tv_explain;
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, WithDrawActivity.class);
@@ -49,17 +58,38 @@ public class WithDrawActivity extends BaseActivity {
     }
 
 
+    public static void launch(Context from,int type) {
+        Intent intent = new Intent(from, WithDrawActivity.class);
+        intent.putExtra("type",type);
+        from.startActivity(intent);
+    }
+
+
     @Override
     public void initView(Bundle savedInstanceState) {
-
-        setBackTitle("提现申请");
-        setRightText("提现说明");
-
+        setLineVisibility();
+        type = getIntent().getIntExtra("type",BALANCE);
+        if(type == BALANCE){
+            setBackTitle("提现申请");
+            setRightText("提现说明");
+            tv_time.setText("到账时间：1~2个工作日");
+        }if(type == SCORE){
+            setBackTitle("积分提现");
+            setRightText("提现记录");
+            tv_explain.setVisibility(View.VISIBLE);
+        }
     }
 
 
     @Override
     public void loadData() {
+        if(type == BALANCE){
+            getBalance();
+        }if(type == SCORE){
+            withDrawExplain();
+        }
+    }
+    private void getBalance(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("page", 1+"");
         hashMap.put("limit", 1+"");
@@ -71,7 +101,18 @@ public class WithDrawActivity extends BaseActivity {
                         tv_balance.setText("账户余额：￥"+data.balance);
                     }
                 });
+    }
+    private void withDrawExplain(){
 
+        new RxHttp<BaseResult<WithDrawExplain>>().send(ApiManager.getService().withDrawExplain(),
+                new Response<BaseResult<WithDrawExplain>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<WithDrawExplain> result) {
+                        WithDrawExplain data = result.data;
+                        tv_balance.setText(data.text_money);
+                        tv_time.setText(data.text_fee);
+                    }
+                });
     }
 
     @Override
@@ -80,10 +121,12 @@ public class WithDrawActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_login})
+    @OnClick({R.id.tv_login,R.id.tv_explain})
     public void onClick(View v) {
         switch (v.getId()){
-
+            case R.id.tv_explain:
+                AgreementWebViewActivity.launch(mActivity,Constant.H17);
+                break;
             case R.id.tv_login:
                 String phone = etPhone.getText().toString().trim();
                 String money = etMoney.getText().toString().trim();
@@ -97,30 +140,60 @@ public class WithDrawActivity extends BaseActivity {
                     tsg("提现金额不得小于1元");
                     return;
                 }
-                TreeMap<String, String> hashMap = new TreeMap<>();
-                hashMap.put("account", phone+"");
-                hashMap.put("money", money+"");
 
-                new RxHttp<BaseResult>().send(ApiManager.getService().applyWithDraw(hashMap),
-                        new Response<BaseResult>(mActivity) {
-                            @Override
-                            public void onSuccess(BaseResult result) {
-                                EventBus.getDefault().post(new UpdateMinebalance());
-                                CenterDialogUtil.showCommitSuccess(mContext,()->{
-                                    finish();
-                                });
-                            }
-                        });
-
+                if(type == BALANCE){
+                    balanceWithDraw(phone,money);
+                }if(type == SCORE){
+                    scoreWithDraw(phone,money);
+                 }
                 break;
         }
     }
+    //余额提现
+    private void balanceWithDraw(String phone,String money){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("account", phone+"");
+        hashMap.put("money", money+"");
+        new RxHttp<BaseResult>().send(ApiManager.getService().applyWithDraw(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        EventBus.getDefault().post(new UpdateMinebalance());
+                        CenterDialogUtil.showCommitSuccess(mContext,"您的提现申请已提交",()->{
+                            finish();
+                        });
+                    }
+                });
 
+    }
+
+
+    private void scoreWithDraw(String phone,String money){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("account", phone+"");
+        hashMap.put("money", money+"");
+        new RxHttp<BaseResult>().send(ApiManager.getService().withDrawApply(hashMap),
+                new Response<BaseResult>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        EventBus.getDefault().post(new UpdateMineScore());
+                        CenterDialogUtil.showCommitSuccess(mContext,"您的提现申请已提交",()->{
+                            finish();
+                        });
+                    }
+                });
+
+    }
     @Override
     public void initListener() {
         super.initListener();
         tv_right.setOnClickListener(v -> {
-            AgreementWebViewActivity.launch(mActivity, Constant.H3);
+            if(type == BALANCE){
+                AgreementWebViewActivity.launch(mActivity, Constant.H3);
+            }if(type == SCORE){
+                WithDrawHistoryActivity.launch(mActivity,WithDrawHistoryActivity.SCORE);
+            }
+
         });
         etMoney.addTextChangedListener(new TextWatcher() {
             @Override

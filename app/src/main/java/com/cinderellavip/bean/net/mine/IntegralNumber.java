@@ -10,7 +10,7 @@ public class IntegralNumber extends ListResult<IntegralItem> {
     public String consumption;
     public String invite;
     public String month_best;
-    public String interest;
+    public String with_int;
 
 
 }

@@ -65,6 +65,7 @@ import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.bean.net.order.ReturnOrderInfoResult;
+import com.cinderellavip.bean.score.WithDrawExplain;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -344,6 +345,14 @@ public interface ApiService {
     Observable<BaseResult<MineBalanceResult>>
     mineBalance(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.score_withdraw_explain)
+    Observable<BaseResult<WithDrawExplain>>
+    withDrawExplain();
+
+    @GET(HttpUrl.score_withdraw_apply)
+    Observable<BaseResult>
+    withDrawApply(@QueryMap TreeMap<String, String> map);
+
     @GET(HttpUrl.collects)
     Observable<BaseResult<ListResult<FindItem>>>
     mineCollect(@QueryMap TreeMap<String, String> map);
@@ -355,6 +364,10 @@ public interface ApiService {
     @GET(HttpUrl.withdrawal)
     Observable<BaseResult<WithDrawHistoryResult>>
     withDrawHistory(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.score_withdraw_history)
+    Observable<BaseResult<WithDrawHistoryResult>>
+    scoreWithDrawHistory(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.ming_inviter)
     Observable<BaseResult<MineInviterResult>>

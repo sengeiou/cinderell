@@ -82,6 +82,9 @@ public interface HttpUrl {
     String password_reset = "api/store/password/reset";//修改登录密码
     String update_info = "api/store/my/info-update";//修改个人信息
     String mine_center = "api/store/my/center";//个人中心首页
+    String score_withdraw_explain = "api/store/my/integral/info";//积分提现手续费获取
+    String score_withdraw_history = "api/store/my/withdrawal/int";//我的提现记录
+    String score_withdraw_apply = "api/store/my/withdraw/apply/int";//积分提现申请
     //拼团
     String group_order_info = "api/store/group/order-info/";//我的团购订单详情
     String group_order_list = "api/store/group/my-orders";//我的团购订单列表

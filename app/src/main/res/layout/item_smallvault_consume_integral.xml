@@ -16,6 +16,36 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_rank"
+            android:layout_width="20dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginLeft="12dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_rank_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_rank_first"
+
+                />
+            <TextView
+                android:id="@+id/tv_rank_text"
+                style="@style/base_text_style"
+                android:maxLines="1"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textStyle="italic"
+                android:textSize="16sp"
+                android:text="1"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+
+
+
+
 
         <com.cinderellavip.weight.CircleImageView
             android:id="@+id/iv_image"

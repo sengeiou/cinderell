@@ -25,7 +25,8 @@
 
                     <TextView
                         style="@style/base_text_style"
-                        android:text="账户积分总数"
+                        android:text="可提现积分"
+                        android:textStyle="bold"
                         android:textColor="@color/white"
                         />
 
@@ -39,10 +40,42 @@
                         android:textColor="@color/white"
                         />
 
+                    <TextView
+                        style="@style/base_btn_style_large"
+                        android:background="@drawable/shape_white50"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="120dp"
+                        android:text="积分提现"
+                        android:id="@+id/tv_invite"
+                        android:textColor="@color/baseColor"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                style="@style/base_text_style"
+                                android:text="总积分"
+                                android:textSize="12sp"
+                                android:textColor="@color/white"
+                                />
+                            <TextView
+                                android:id="@+id/tv_score_interest"
+                                style="@style/base_text_style"
+                                tools:text="18236"
+                                android:textSize="16sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/white"
+                                />
+                        </LinearLayout>
+
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -110,40 +143,12 @@
                                 />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center">
-                            <TextView
-                                style="@style/base_text_style"
-                                android:text="利息积分"
-                                android:textSize="12sp"
-                                android:textColor="@color/white"
-                                />
-                            <TextView
-                                android:id="@+id/tv_score_interest"
-                                style="@style/base_text_style"
-                                tools:text="18236"
-                                android:textSize="16sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/white"
-                                />
-                        </LinearLayout>
+
 
 
                     </LinearLayout>
 
-                    <TextView
-                        style="@style/base_btn_style_large"
-                        android:background="@drawable/shape_white50"
-                        android:layout_marginTop="12dp"
-                        android:layout_width="120dp"
-                        android:padding="10dp"
-                        android:text="月冠排行"
-                        android:id="@+id/tv_invite"
-                        android:textColor="@color/baseColor"/>
+
 
 
 
@@ -158,8 +163,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     app:tabIndicatorColor="@color/baseColor"
-                    app:tabTextColor="@color/grayText"
-                    app:tabSelectedTextColor="@color/black_title_color"
+                    app:tabTextColor="@color/black_title_color"
+                    app:tabSelectedTextColor="@color/baseColor"
                     app:tabIndicatorFullWidth="false"
                     android:background="@color/white"
                     />

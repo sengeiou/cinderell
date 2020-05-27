@@ -121,7 +121,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        getLoveData();
+
     }
 
     private void getInfo(){
@@ -154,13 +154,12 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             tvLogin.setVisibility(View.GONE);
             ImageUtil.loadAvatar(mActivity,vi_image,mineInfo.user_avatar);
             tv_name.setText(mineInfo.username);
+            tv_roles.setText(mineInfo.type_txt);
             if (mineInfo.type == 0){
                 iv_role_tabel.setVisibility(View.GONE);
-                tv_roles.setText("普通用户");
                 tv_to_be_cinderell.setVisibility(View.VISIBLE);
             }else {
                 iv_role_tabel.setVisibility(View.VISIBLE);
-                tv_roles.setText("灰姑娘");
                 tv_to_be_cinderell.setVisibility(View.GONE);
             }
             if (mineInfo.store_create_num>0){
@@ -226,10 +225,24 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     @Override
     public void loadData() {
         if (GlobalParam.getUserLogin()){
+            MineInfo mineInfo = GlobalParam.getUserBean();
+            if (mineInfo != null){
+                ImageUtil.loadAvatar(mActivity,vi_image,mineInfo.user_avatar);
+                tv_name.setText(mineInfo.username);
+                tv_roles.setText(mineInfo.type_txt);
+                if (mineInfo.type == 0){
+                    iv_role_tabel.setVisibility(View.GONE);
+                    tv_to_be_cinderell.setVisibility(View.VISIBLE);
+                }else {
+                    iv_role_tabel.setVisibility(View.VISIBLE);
+                    tv_to_be_cinderell.setVisibility(View.GONE);
+                }
+            }
             getInfo();
         }else {
             setInfoData(null);
         }
+        getLoveData();
     }
 
 
@@ -262,7 +275,6 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 break;
             case R.id.tv_login:
                 LoginActivity.launch(mActivity,true);
-
                 break;
             case R.id.tv_to_be_cinderell:
                 if (GlobalParam.getUserLogin(mActivity))
