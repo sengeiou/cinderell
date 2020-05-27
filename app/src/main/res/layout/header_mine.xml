@@ -639,6 +639,46 @@
             android:layout_alignParentRight="true"
             android:layout_margin="5dp"/>
     </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_mine_potato"
+            android:layout_width="0dp"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/mine_potato"/>
+
+                <TextView
+                    style="@style/base_text_style"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:text="我的灰豆"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_oval_red"
+                android:text="3"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_mine_service3"
         android:layout_width="0dp"
@@ -677,44 +717,7 @@
             android:layout_alignParentRight="true"
             android:layout_margin="5dp"/>
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/rl_mine_service4"
-        android:layout_width="0dp"
-        android:background="@drawable/touch_bg"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:gravity="center">
 
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/mine_service4"/>
-
-            <TextView
-                style="@style/base_text_style"
-                android:text="我的钱包"
-                android:textSize="12sp"
-                android:layout_marginTop="5dp"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/shape_oval_red"
-            android:text="3"
-            android:visibility="gone"
-            android:gravity="center"
-            android:textSize="10sp"
-            android:textColor="@color/white"
-            android:layout_alignParentRight="true"
-            android:layout_margin="5dp"/>
-    </RelativeLayout>
 
 
 
@@ -724,6 +727,44 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_mine_service4"
+            android:layout_width="0dp"
+            android:background="@drawable/touch_bg"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/mine_service4"/>
+
+                <TextView
+                    style="@style/base_text_style"
+                    android:text="我的钱包"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/shape_oval_red"
+                android:text="3"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_mine_service5"
@@ -839,6 +880,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
         <RelativeLayout
             android:id="@+id/rl_mine_service8"
             android:layout_width="0dp"
@@ -877,15 +928,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/rl_mine_service9"
@@ -1001,45 +1043,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"/>
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:visibility="invisible"
-            android:background="@drawable/touch_bg"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:visibility="invisible"
-                android:gravity="center">
 
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/mine_service4"/>
-
-                <TextView
-                    style="@style/base_text_style"
-                    android:text="我的钱包"
-                    android:textSize="12sp"
-                    android:layout_marginTop="5dp"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/shape_oval_red"
-                android:text="3"
-                android:visibility="gone"
-                android:gravity="center"
-                android:textSize="10sp"
-                android:textColor="@color/white"
-                android:layout_alignParentRight="true"
-                android:layout_margin="5dp"/>
-        </RelativeLayout>
 
 
 

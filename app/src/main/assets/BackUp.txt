@@ -8,18 +8,6 @@
 商家端UI地址：https://lanhuapp.com/web/#/item/project/board?type=share_mark&pid=83f8ef0f-5d8f-41e2-8da6-4245eaeccf20&activeSectionId=&teamId=a4c70b0d-3824-4971-92c2-03e4164c4900&param=bdc4a6ef-84c8-4d7f-a0f2-8b9411b5bf2f
 
 
-1：选择优惠劵是商品价格还是应付价格
- （完成）
-
-//分类排序   （完成）
-//发现搜索 （完成）
-//首页热搜   （完成）
-//商城分类 （完成）
-
-//店铺页面修改 （完成）
-//虚拟商品     （完成）
-//拼团分享 （完成）
-
 待优化
 //优化商品详情 加载中
 //所有页面加载失败 （待优化）
@@ -30,3 +18,5 @@
 
 
 //ios长期服务订单下单失败
+
+

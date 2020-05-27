@@ -196,6 +196,22 @@ public class CenterDialogUtil {
         cityDialog = DialogUtils.getCenterDialog(context, messageView, false);
     }
 
+    public static void showSignSuccess(Context context,String title,
+                                         OnSureClickListener listener) {
+        View messageView = View.inflate(context, R.layout.pop_sign_success, null);
+        TextView tv_title = messageView.findViewById(R.id.tv_title);
+        tv_title.setText(title);
+        TextView tv_login = messageView.findViewById(R.id.tv_login);
+        tv_login.setOnClickListener(v -> {
+            if (listener != null){
+                listener.onSure();
+            }
+            cityDialog.dismiss();
+            cityDialog = null;
+        });
+        cityDialog = DialogUtils.getCenterDialog(context, messageView, false);
+    }
+
 
 
     public interface onSelectListener {

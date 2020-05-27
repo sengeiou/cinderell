@@ -15,6 +15,7 @@ import com.cinderellavip.bean.eventbus.UpdateMineInfo;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.mine.ApplyResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
@@ -36,11 +37,13 @@ import com.cinderellavip.ui.activity.mine.MineCollectActivity;
 import com.cinderellavip.ui.activity.mine.MineDataActivity;
 import com.cinderellavip.ui.activity.mine.MineGroupActivity;
 import com.cinderellavip.ui.activity.mine.MineOrderActivity;
+import com.cinderellavip.ui.activity.mine.MinePotatoActivity;
 import com.cinderellavip.ui.activity.mine.RecommentListActivity;
 import com.cinderellavip.ui.activity.mine.SettingActivity;
 import com.cinderellavip.ui.activity.mine.SmallVaultActivity;
 import com.cinderellavip.ui.activity.order.ReturnListActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.ColorUtil;
 import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.GirdSpace;
@@ -265,13 +268,17 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             , R.id.rl_xiaohui_recomment, R.id.rl_mine_service2, R.id.rl_mine_service3, R.id.rl_mine_service4
             , R.id.rl_mine_service5, R.id.rl_mine_service6, R.id.rl_mine_service7, R.id.rl_mine_service8
             , R.id.rl_mine_service9, R.id.rl_mine_service10, R.id.rl_mine_service11
-            , R.id.iv_message, R.id.iv_setting
+            , R.id.iv_message, R.id.iv_setting, R.id.rl_mine_potato
             })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.vi_image:
                 if (GlobalParam.getUserLogin(mActivity))
                 MineDataActivity.launch(mActivity);
+                break;
+            case R.id.rl_mine_potato:
+                if (GlobalParam.getUserLogin(mActivity))
+                MinePotatoActivity.launch(mActivity);
                 break;
             case R.id.tv_login:
                 LoginActivity.launch(mActivity,true);
@@ -394,6 +401,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             case R.id.rl_mine_service9:
                 //商家入驻
                 if (GlobalParam.getUserLogin(mActivity))
+                    AgreementWebViewActivity.launch(mActivity, Constant.H19+GlobalParam.getUserToken());
                 break;
             case R.id.rl_mine_service10:
                 if (GlobalParam.getUserLogin(mActivity))

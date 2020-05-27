@@ -61,6 +61,7 @@ public interface HttpUrl {
     String address_delete = "api/store/address/delete";//删除收货地址
     String address_edit = "api/store/address/edit";//编辑收货地址
     //个人中心
+    String mine_potato = "api/store/my/gray-bean";//我的灰豆
     String message_list = "api/store/my/message/list";//消息列表
     String message_center = "api/store/my/message/center";//消息中心
     String shield_users = "api/store/my/shield_users";//我拉黑的用户
@@ -71,6 +72,7 @@ public interface HttpUrl {
     String ranking = "api/store/team/ranking";//月冠排行
     String mine_integral = "api/store/my/integral";//我的小金库
     String sign = "api/store/my/sign";//签到
+    String ming_inviter_number = "api/store/my/inviter/num";//我邀请的好友
     String ming_inviter = "api/store/my/inviter";//我邀请的好友
     String apply_vip = "api/store/my/apply-vip";//申请成为灰姑娘
     String withdrawal = "api/store/my/withdrawal";//我的提现记录

@@ -38,9 +38,9 @@ public class CommonUtils {
 
 
 
-    public static void callKeFu(Context context) {
+    public static void callKeFu(Context context,String phone) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri data = Uri.parse("tel:" + "13641869403");
+        Uri data = Uri.parse("tel:" + phone);
         intent.setData(data);
         context.startActivity(intent);
     }

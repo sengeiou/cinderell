@@ -15,6 +15,7 @@ import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.global.ShareConstant;
 import com.cinderellavip.listener.ShareClickListener;
 import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.util.QRCodeUtil;
@@ -167,7 +168,8 @@ public class SecondDialogUtil {
         ImageView iv_image = view.findViewById(R.id.iv_image);
 
         String recommendCode = GlobalParam.getRecommendCode();
-        Bitmap qrCode = QRCodeUtil.createQRCode(recommendCode, DpUtil.dip2px(context,150));
+        String share = ShareConstant.REGISTER + recommendCode;
+        Bitmap qrCode = QRCodeUtil.createQRCode(share, DpUtil.dip2px(context,150));
         iv_image.setImageBitmap(qrCode);
         tv_code.setText(recommendCode);
 
@@ -200,12 +202,16 @@ public class SecondDialogUtil {
             tv_copy_code.setVisibility(View.VISIBLE);
         });
         view.findViewById(R.id.iv_weChat).setOnClickListener(v -> {
+            tv_copy_code.setVisibility(View.GONE);
             Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
             listener.onFinish("1",bitmap);
+            tv_copy_code.setVisibility(View.VISIBLE);
         });
         view.findViewById(R.id.iv_weChat_circle).setOnClickListener(v -> {
+            tv_copy_code.setVisibility(View.GONE);
             Bitmap bitmap = ll_poster.getDrawingCache(); // 获取图片
             listener.onFinish("2",bitmap);
+            tv_copy_code.setVisibility(View.VISIBLE);
         });
 
     }

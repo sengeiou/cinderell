@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cinderellavip.AppJs;
 import com.cinderellavip.R;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
@@ -68,6 +70,18 @@ public class AgreementWebViewActivity extends BaseActivity {
         mProgress.show();
         mProgress.setColor("#FF0000");
 
+        web_view.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        web_view.addJavascriptInterface(new AppJs(this), "toLogin");
+
+
+    }
+    public void toLogin(){
+        Intent intent = getPackageManager().getLaunchIntentForPackage("com.cinderellavip.store");
+        if (intent != null) {
+            startActivity(intent);
+        } else {
+//            tsg("");
+        }
 
     }
 

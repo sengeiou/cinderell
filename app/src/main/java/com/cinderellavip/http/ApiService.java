@@ -7,6 +7,7 @@ import com.cinderellavip.bean.ListData;
 import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.ServiceType;
+import com.cinderellavip.bean.SignResult;
 import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
@@ -55,6 +56,7 @@ import com.cinderellavip.bean.net.mine.IntegralResult;
 import com.cinderellavip.bean.net.mine.MessageItem;
 import com.cinderellavip.bean.net.mine.MineBalanceResult;
 import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.bean.net.mine.MineInviterNumber;
 import com.cinderellavip.bean.net.mine.MineInviterResult;
 import com.cinderellavip.bean.net.mine.RankMonthItem;
 import com.cinderellavip.bean.net.mine.RankResult;
@@ -65,6 +67,7 @@ import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.bean.net.order.ReturnOrderInfoResult;
+import com.cinderellavip.bean.potato.MinePotatoResult;
 import com.cinderellavip.bean.score.WithDrawExplain;
 
 import java.util.List;
@@ -369,6 +372,10 @@ public interface ApiService {
     Observable<BaseResult<WithDrawHistoryResult>>
     scoreWithDrawHistory(@QueryMap TreeMap<String, String> map);
 
+    @GET(HttpUrl.ming_inviter_number)
+    Observable<BaseResult<MineInviterNumber>>
+    mine_inviter_number();
+
     @GET(HttpUrl.ming_inviter)
     Observable<BaseResult<MineInviterResult>>
     mine_inviter(@QueryMap TreeMap<String, String> map);
@@ -376,6 +383,10 @@ public interface ApiService {
     @GET(HttpUrl.mine_integral)
     Observable<BaseResult<IntegralResult>>
     mine_integral(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.sign)
+    Observable<BaseResult<SignResult>>
+    sign();
 
     @GET(HttpUrl.ranking)
     Observable<BaseResult<RankResult>>
@@ -413,6 +424,10 @@ public interface ApiService {
     @GET(HttpUrl.message_list)
     Observable<BaseResult<ListResult<MessageItem>>>
     messageList(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.mine_potato)
+    Observable<BaseResult<MinePotatoResult>>
+    minePotato(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.refund_reason)
     Observable<BaseResult<ListResult<String>>>

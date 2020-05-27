@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cinderellavip.bean.SignResult;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.global.Constant;
@@ -22,6 +23,7 @@ import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.fragment.CartFragment;
@@ -119,7 +121,6 @@ public class MainActivity extends CheckPermissionActivity {
     public void loadData() {
         if (!isLoad)
         checkPermissions(needPermissions);
-
     }
 
     @Override
@@ -131,7 +132,16 @@ public class MainActivity extends CheckPermissionActivity {
                         GlobalParam.setPhoneBean(result.data);
                     }
                 });
-
+        new RxHttp<BaseResult<SignResult>>().send(ApiManager.getService().sign(),
+                new Response<BaseResult<SignResult>>(mActivity,Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseResult<SignResult> result) {
+                        String s = "灰豆+"+result.data.num;
+                        CenterDialogUtil.showSignSuccess(mContext,s,()->{
+                            finish();
+                        });
+                    }
+                });
     }
 
 

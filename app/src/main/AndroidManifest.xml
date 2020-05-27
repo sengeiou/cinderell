@@ -160,6 +160,8 @@
         <activity android:name=".ui.activity.home.ShopGoodsListActivity"/>
         <activity android:name=".ui.activity.home.ShopGoodsCategoryActivity"/>
         <activity android:name=".ui.activity.life.SearchLifeResultActivity"/>
+        <activity android:name=".ui.activity.mine.FriendListActivity"/>
+        <activity android:name=".ui.activity.mine.MinePotatoActivity"/>
 
         <activity
             android:name=".wxapi.WXEntryActivity"

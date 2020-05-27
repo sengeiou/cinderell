@@ -20,6 +20,7 @@ import com.cinderellavip.bean.ReturnReasonItem;
 import com.cinderellavip.bean.UploadImageResult;
 import com.cinderellavip.bean.eventbus.OrderRefund;
 import com.cinderellavip.bean.local.PublishImageBean;
+import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.bean.net.mine.MessageItem;
 import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.global.Constant;
@@ -79,6 +80,8 @@ public class ApplyReturnActivity extends CheckPermissionActivity  implements OnP
 
     @BindView(R.id.tv_reason)
     TextView tvReason;
+    @BindView(R.id.tv_phone)
+    TextView tv_phone;
     @BindView(R.id.tv_return_explain)
     TextView tv_return_explain;
     @BindView(R.id.tv_number)
@@ -116,6 +119,10 @@ public class ApplyReturnActivity extends CheckPermissionActivity  implements OnP
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        PhoneResult phoneBean = GlobalParam.getPhoneBean();
+        if(phoneBean != null)
+            tv_phone.setText(phoneBean.products_tel_phone);
+
         orderGoodsInfo = getIntent().getParcelableExtra("orderGoodsInfo");
         LogUtil.e("orderGoodsInfo+"+orderGoodsInfo.order_id);
         setBackTitle("申请退款");
@@ -198,7 +205,7 @@ public class ApplyReturnActivity extends CheckPermissionActivity  implements OnP
                         });
                 break;
             case R.id.tv_call:
-                CommonUtils.callKeFu(mContext);
+                CommonUtils.callKeFu(mContext,tv_phone.getText().toString());
                 break;
             case R.id.tv_login:
                 refund();
