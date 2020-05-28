@@ -4,27 +4,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.adapter.recycleview.RecommentGoodsAdapter;
+import com.cinderellavip.adapter.recycleview.SpikeHomeAdapter;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.home.Ad;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
+import com.cinderellavip.bean.net.home.HomeSpike;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.home.GoodsListActivity;
+import com.cinderellavip.ui.activity.home.SpikeListActivity;
+import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.banner.BannerUtil;
 import com.cinderellavip.util.banner.LinkUtil;
 import com.cinderellavip.weight.GirdSpace;
 import com.cinderellavip.weight.HomeTabLayout;
+import com.cinderellavip.weight.HorSpace;
+import com.cinderellavip.weight.LinearSpace;
 import com.google.android.material.appbar.AppBarLayout;
 import com.lishide.recyclerview.scroll.ScrollRecyclerView;
 import com.stx.xhb.xbanner.XBanner;
@@ -42,6 +51,7 @@ import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
@@ -73,6 +83,16 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     @BindView(R.id.appbar)
     AppBarLayout appbar;
 
+    @BindView(R.id.ll_spike)
+    LinearLayout ll_spike;
+    @BindView(R.id.tv_hour)
+    TextView tv_hour;
+    @BindView(R.id.tv_minute)
+    TextView tv_minute;
+    @BindView(R.id.rv_spike)
+    RecyclerView rv_spike;
+    private SpikeHomeAdapter spikeHomeAdapter;
+
 
     private HomeCategoryAdapter homeCategoryAdapter;
 
@@ -93,15 +113,13 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-
-
         //设置商品
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         GirdSpace girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10), 2);
         mRecyclerView.addItemDecoration(girdSpace);
         mAdapter = new HomeGoodsAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
+        //设置分类
         scrollRecyclerView.setItemAnimator(new DefaultItemAnimator());
         scrollRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.HORIZONTAL));
@@ -114,7 +132,14 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
 
         });
         scrollRecyclerView.setAdapter(homeCategoryAdapter);
+        //设置秒杀
+        rv_spike.setLayoutManager(new LinearLayoutManager(mActivity,RecyclerView.HORIZONTAL,false));
+        HorSpace spikeSpace = new HorSpace(DpUtil.dip2px(mActivity, 12));
+        rv_spike.addItemDecoration(spikeSpace);
+        spikeHomeAdapter = new SpikeHomeAdapter();
+        rv_spike.setAdapter(spikeHomeAdapter);
 
+        //设置tab
         List<String> data1 = new ArrayList<>();
         data1.add("精选");
         data1.add("拼团");
@@ -214,6 +239,16 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
                                 });
                             }
                         }
+                        HomeSpike spikes = homeResult.spikes;
+                        if (spikes != null && spikes.list != null && spikes.list.size()>0){
+                            ll_spike.setVisibility(View.VISIBLE);
+                            tv_hour.setText(spikes.time.split(":")[0]);
+                            tv_minute.setText(spikes.time.split(":")[1]);
+                            spikeHomeAdapter.setNewData(spikes.list);
+                        }else {
+                            ll_spike.setVisibility(View.GONE);
+                        }
+
 
                     }
                 });
@@ -233,10 +268,12 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     }
 
 
-    @OnClick({R.id.iv_top})
+    @OnClick({R.id.iv_top,R.id.tv_spike_more})
     public void onClick(View view) {
         switch (view.getId()) {
-
+            case R.id.tv_spike_more:
+                SpikeListActivity.launch(mActivity);
+                break;
             case R.id.iv_top:
                 mRecyclerView.scrollToPosition(0);
                 CoordinatorLayout.Behavior behavior =

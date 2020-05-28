@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
@@ -64,6 +65,8 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     VerticalViewPager viewpager;
     @BindView(R.id.tv_cart_number)
     TextView tv_cart_number;
+    @BindView(R.id.ll_buy_left_btn)
+    LinearLayout ll_buy_left_btn;
     @BindView(R.id.tv_left_price)
     TextView tvLeftPrice;
     @BindView(R.id.tv_right_price)
@@ -160,7 +163,12 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                             GroupInfo groupInfo = goodsResult.group_info;
                             tvLeftPrice.setText("￥"+groupInfo.getProduct_price()+"\n单独购买");
                             tvRightPrice.setText("￥"+groupInfo.getGroup_price()+"\n参团购买");
+                            ll_buy_left_btn.setVisibility(View.VISIBLE);
+                        }else if (productInfo.hasSpike){
+                            ll_buy_left_btn.setVisibility(View.GONE);
+                            tvRightPrice.setText("立即秒杀");
                         }else {
+                            ll_buy_left_btn.setVisibility(View.VISIBLE);
                             tvLeftPrice.setText("加入购物车");
                             tvRightPrice.setText("立即购买");
                         }

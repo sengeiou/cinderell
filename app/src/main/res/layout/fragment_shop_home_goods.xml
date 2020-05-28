@@ -80,16 +80,12 @@
                         android:layout_height="wrap_content"
                         android:src="@mipmap/demo_syxcc"/>
 
-
-
                     <com.lishide.recyclerview.scroll.ScrollRecyclerView
                         android:id="@+id/scroll_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"/>
-
-
 
                     <RelativeLayout
                         android:id="@+id/rl_indicator"
@@ -108,7 +104,6 @@
                         </View>
 
                     </RelativeLayout>
-
 
 
                     <LinearLayout
@@ -152,6 +147,90 @@
                     </LinearLayout>
 
 
+
+                    <LinearLayout
+                        android:id="@+id/ll_spike"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/gray_bg"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:paddingLeft="12dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                style="@style/base_text_style"
+                                android:textStyle="bold"
+                                android:text="今日秒杀"/>
+
+                            <LinearLayout
+                                android:layout_marginLeft="12dp"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/tv_hour"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="00"
+                                    android:paddingTop="2dp"
+                                    android:textSize="12sp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingLeft="4dp"
+                                    android:paddingRight="4dp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/shape_basecolor5"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="20sp"
+                                    android:gravity="center"
+                                    android:textColor="@color/baseColor"
+                                    android:layout_gravity="center_vertical"
+                                    android:textStyle="bold"/>
+                                <TextView
+                                    android:id="@+id/tv_minute"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="00"
+                                    android:textSize="12sp"
+                                    android:paddingTop="2dp"
+                                    android:paddingBottom="2dp"
+                                    android:paddingLeft="4dp"
+                                    android:paddingRight="4dp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/shape_basecolor5"/>
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tv_spike_more"
+                                style="@style/base_text_style_gray_small"
+                                android:textColor="@color/black_title_color_second"
+                                android:text="查看更多"
+                                android:drawableRight="@mipmap/right_black_icon"
+                                android:drawablePadding="4dp"
+                                android:padding="12dp"/>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_spike"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

@@ -81,7 +81,6 @@ public class DialogUtil {
         TextView tv_price = view.findViewById(R.id.tv_price);
         TextView tv_former_price = view.findViewById(R.id.tv_former_price);
         TextView tv_specification = view.findViewById(R.id.tv_specification);
-//        tv_former_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         //商品规格
         FlowLayout fl_special = view.findViewById(R.id.fl_flag);
         List<SpecialItem> list1 = goodsResult.product_norm;
@@ -94,6 +93,12 @@ public class DialogUtil {
                 specialItem2 = list1.get(0);
             tv_unit.setText("拼团价");
             tv_price.setText("￥"+specialItem2.getGroupPrice());
+            tv_former_price.setText("原价￥"+specialItem2.getOld_price());
+        }else if (product_info.hasSpike){
+              list1 = goodsResult.spike_info.spike_norms;
+                specialItem2 = list1.get(0);
+            tv_unit.setText("秒杀价");
+            tv_price.setText("￥"+specialItem2.getSpikePrice());
             tv_former_price.setText("原价￥"+specialItem2.getOld_price());
         }else {
             if (goodsResult.user_is_vip){
@@ -155,6 +160,11 @@ public class DialogUtil {
                             //如果是灰姑娘
                             tv_unit.setText("拼团价");
                             tv_price.setText("￥"+text.getGroupPrice());
+                            tv_former_price.setText("原价￥"+text.getOld_price());
+                        }else if (product_info.hasSpike){
+                            //如果是灰姑娘
+                            tv_unit.setText("秒杀价");
+                            tv_price.setText("￥"+text.getSpikePrice());
                             tv_former_price.setText("原价￥"+text.getOld_price());
                         }else {
                             if (goodsResult.user_is_vip){

@@ -23,6 +23,7 @@ public class GoodsInfo {
 
     public  boolean freight;
     public  boolean hasGroup;
+    public  boolean hasSpike;
 
     public double price;
     public double old_price;

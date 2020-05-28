@@ -17,6 +17,7 @@ import com.cinderellavip.bean.local.GoodsDetialBanner;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.goods.GroupInfo;
+import com.cinderellavip.bean.net.goods.SpikeInfo;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -177,8 +178,8 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
         tv_tax.setText("销量：" + productInfo.sale + "件");
         tv_intro.setText("发货：" + productInfo.send_area);
 
-        if (productInfo.hasGroup){
-            //是团购商品
+        if (productInfo.hasGroup ){
+            //是团购
             llGroup.setVisibility(View.VISIBLE);
             GroupInfo group_info = goodsResult.group_info;
                 if (goodsResult.user_is_vip){
@@ -194,12 +195,26 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
             tvGroupTip.setText(group_info.group_user+"人团，"+group_info.has_user+"人已参团");
 
             timeView.startTime(group_info.end_time - group_info.timestamp);
+        } else if (productInfo.hasSpike ){
+            //秒杀
+            llGroup.setVisibility(View.VISIBLE);
+            SpikeInfo group_info = goodsResult.spike_info;
+                if (goodsResult.user_is_vip){
+                    tv_group_return.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(goodsResult.integral_rate))
+                        tv_group_return.setText("返积分"+goodsResult.integral_rate);
+                }else {
+                    tv_group_return.setVisibility(View.GONE);
+                }
+            tvGroupPrice.setText(group_info.getSpikePrice());
+            tvGroupOldPrice.setText("￥"+group_info.getProductPrice());
+            tvGroupTip.setText("进行中  已抢"+group_info.spike_num+"件");
+            timeView.startTime(group_info.end_time - group_info.timestamp);
         }else {
             ll_normal_price.setVisibility(View.VISIBLE);
             if (goodsResult.user_is_vip){
                 view_space.setVisibility(View.VISIBLE);
                 tv_no_vip_tip.setVisibility(View.GONE);
-
                 tv_unit.setText("会员");
                 tvPrice.setText( productInfo.getPrice());
                 tvAdvancePrice.setText("非会员￥" + productInfo.getOld_price());

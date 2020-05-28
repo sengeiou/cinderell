@@ -89,6 +89,7 @@
         <activity android:name=".ui.activity.home.BrandDetailActivity"/>
         <activity android:name=".ui.activity.home.ShopDetailActivity"/>
         <activity android:name=".ui.activity.home.EnsureOrderActivity"/>
+        <activity android:name=".ui.activity.home.SpikeListActivity"/>
         <activity android:name=".ui.activity.mine.MineAddressActivity"/>
         <activity android:name=".ui.activity.mine.SelectCouponActivity"/>
         <activity android:name=".ui.activity.mine.EditAddressActivity"/>

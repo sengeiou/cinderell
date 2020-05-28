@@ -8,4 +8,5 @@ public class ShopHomeResult {
     public List<HomeCategoryItem> third_categories;
     public List<HomeBanner> banners;
     public List<Ad> advertisements;
+    public HomeSpike spikes;
 }

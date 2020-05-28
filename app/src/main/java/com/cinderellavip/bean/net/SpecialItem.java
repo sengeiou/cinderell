@@ -13,6 +13,7 @@ public class SpecialItem {
     public double price;
     public double old_price;
     public double group_price;
+    public double spike_price;
 
     public String getPrice() {
         return ArithmeticUtil.convert(price);
@@ -23,6 +24,9 @@ public class SpecialItem {
     }
     public String getGroupPrice() {
         return ArithmeticUtil.convert(group_price);
+    }
+    public String getSpikePrice() {
+        return ArithmeticUtil.convert(spike_price);
     }
 
 

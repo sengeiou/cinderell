@@ -26,5 +26,6 @@
 
     <color name="tran">#55000000</color>
     <color name="rule_color">#6f1200</color>
+    <color name="spike_tab">#FFC7C8</color>
 
 </resources>

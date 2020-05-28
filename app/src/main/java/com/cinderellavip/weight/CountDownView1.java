@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-
 import com.cinderellavip.R;
 
 import androidx.annotation.Nullable;
@@ -21,29 +20,29 @@ import androidx.annotation.RequiresApi;
  * 倒计时 组件
  */
 
-public class CountDownView extends FrameLayout {
+public class CountDownView1 extends FrameLayout {
 
     private TextView tvDay, tvHour, tvMinute, tvSecond, tvPoint0, tvPoint1, tvPoint2;
 
-    public CountDownView(Context context) {
+    public CountDownView1(Context context) {
         super(context);
         init();
     }
 
-    public CountDownView(Context context, @Nullable AttributeSet attrs) {
+    public CountDownView1(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
 
     }
 
-    public CountDownView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CountDownView1(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public CountDownView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CountDownView1(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
 
@@ -60,7 +59,6 @@ public class CountDownView extends FrameLayout {
         tvPoint0 = (TextView) view.findViewById(R.id.tv_point0);
         tvPoint1 = (TextView) view.findViewById(R.id.tv_point1);
         tvPoint2 = (TextView) view.findViewById(R.id.tv_point2);
-
         addView(view);
 
 
