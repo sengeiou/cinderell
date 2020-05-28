@@ -1,12 +1,16 @@
 package com.cinderellavip.adapter.recycleview;
 
+import android.widget.TextView;
+
+import com.amap.api.services.core.PoiItem;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.NetCityBean;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 
-public class SelectCityAddressAdapter extends BaseQuickAdapter<NetCityBean, BaseViewHolder> {
+public class SelectCityAddressAdapter extends BaseQuickAdapter<PoiItem, BaseViewHolder> {
 
 
     public SelectCityAddressAdapter() {
@@ -15,11 +19,30 @@ public class SelectCityAddressAdapter extends BaseQuickAdapter<NetCityBean, Base
 
 
     @Override
-    protected void convert(final BaseViewHolder helper, final NetCityBean item) {
+    protected void convert(final BaseViewHolder helper, final PoiItem item) {
         int position = helper.getAdapterPosition();
+//        if (position == 0){
+//            LogUtil.e(item.getAdName()+"\n"
+//            +item.getBusinessArea()+"\n"
+//            +item.getCityName()+"\n"
+//            +item.getDirection()+"\n"
+//            +item.getEmail()+"\n"
+//            +item.getWebsite()+"\n"
+//            +item.getSnippet()+"\n"
+//            +item.getShopID()+"\n"
+//            +item.getTel()+"\n"
+//            +item.getTitle()+"\n"
+//            +item.getTypeDes()+"\n"
+//            +item.getPoiExtension().getmRating()+"\n"
+//            +item.getParkingType()
+//            );
+//
+//        }
+        TextView tv_name = helper.getView(R.id.tv_name);
+        TextView tv_id_number = helper.getView(R.id.tv_id_number);
+        tv_name.setText(item.getTitle());
+        tv_id_number.setText(item.getProvinceName()+item.getCityName()+item.getAdName()+item.getSnippet());
 
-//        TextView tv_name = helper.getView(R.id.tv_name);
-//        TextView tv_phone = helper.getView(R.id.tv_phone);
 //        TextView tv_id_number = helper.getView(R.id.tv_id_number);
 //        TextView tv_default_status = helper.getView(R.id.tv_default_status);
 //        TextView tv_detail_address = helper.getView(R.id.tv_detail_address);

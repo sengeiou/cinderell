@@ -4,14 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.core.SuggestionCity;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.SelectCityAddressAdapter;
 import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.map.LocationUtil;
 import com.cinderellavip.ui.activity.life.SelectCityActivity;
 import com.cinderellavip.util.KeyboardUtils;
 import com.tozzais.baselibrary.ui.BaseListFragment;
@@ -24,7 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SelectLocationFragment extends BaseListFragment<NetCityBean> {
+public class SelectLocationFragment extends BaseListFragment<PoiItem> implements PoiSearch.OnPoiSearchListener {
 
 
     @BindView(R.id.et_search)
@@ -51,26 +60,42 @@ public class SelectLocationFragment extends BaseListFragment<NetCityBean> {
     @Override
     public void loadData() {
         super.loadData();
-        new Handler().postDelayed(() -> {
-            List<NetCityBean> list = new ArrayList<>();
-            list.add(new NetCityBean(true));
-            list.add(new NetCityBean(false));
-            list.add(new NetCityBean(false));
-            setData(list);
-        }, 500);
+        location();
 
-
+    }
+    private void location(){
+        LocationUtil.getInstance().start(mActivity,(aMapLocation, lat, lnt) -> {
+            if (aMapLocation.getErrorCode() == 0){
+                searchNearbyAddress(et_search.getText().toString(),
+                        lat,lnt,tvAddress.getText().toString());
+            }
+        });
+    }
+    private PoiSearch.Query query;// Poi查询条件类
+    private PoiSearch poiSearch;
+    private PoiResult poiResult; // poi返回的结果
+    private List<PoiItem> poiItems;// poi数据
+    private  void searchNearbyAddress(String search,double lat,double lng,String city){
+        query = new PoiSearch.Query(search, "", tvAddress.getText().toString());
+        query.setPageSize(20);// 设置每页最多返回多少条poiitem
+        query.setPageNum(0);//设置查询页码
+            poiSearch = new PoiSearch(mActivity, query);
+            poiSearch.setOnPoiSearchListener(this);
+            if (lat != 0 )
+            poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(lat, lng), 5000, true));//
+        poiSearch.searchPOIAsyn();// 异步搜索
     }
 
     //选中的item
-    private NetCityBean netCityBean;
+    private PoiItem netCityBean;
 
     @Override
     public void initListener() {
-        super.initListener();
+//        super.initListener();
+        swipeLayout.setEnabled(false);
         mAdapter.setOnItemClickListener(((baseQuickAdapter, view, position) -> {
 
-            List<NetCityBean> data = mAdapter.getData();
+            List<PoiItem> data = mAdapter.getData();
             netCityBean = data.get(position);
             Intent intent = new Intent();
             intent.putExtra("netCityBean", netCityBean);
@@ -83,6 +108,8 @@ public class SelectLocationFragment extends BaseListFragment<NetCityBean> {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 KeyboardUtils.hideKeyboard(et_search);
                 String keyword = et_search.getText().toString().trim();
+                searchNearbyAddress(et_search.getText().toString(),
+                        0,0,tvAddress.getText().toString());
             }
             return false;
         });
@@ -96,5 +123,34 @@ public class SelectLocationFragment extends BaseListFragment<NetCityBean> {
 
     public void setAddress(String address) {
         tvAddress.setText(address);
+        searchNearbyAddress(et_search.getText().toString(),
+                0,0,tvAddress.getText().toString());
+    }
+
+
+    @Override
+    public void onPoiSearched(PoiResult result, int rcode) {
+        if (poiItems != null){
+            poiItems.clear();
+        }
+        if (rcode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.getQuery() != null) {// 搜索poi的结果
+                if (result.getQuery().equals(query)) {// 是否是同一条
+                    poiResult = result;
+                    poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
+                    List<SuggestionCity> cities = poiResult
+                            .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
+                    if (poiItems != null && poiItems.size() > 0) {
+                        setData(true,poiItems);
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+
     }
 }

@@ -41,13 +41,15 @@
             android:id="@+id/et_search"
             android:background="@null"
             android:imeOptions="actionSearch"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="搜索服务位置"
             android:gravity="center_vertical"
             android:textSize="12sp"
             android:paddingLeft="12dp"
-            android:textColor="@color/grayText"
+            android:textColor="@color/black_title_color"
+            android:textColorHint="@color/grayText"
             android:layout_gravity="center_vertical"/>
 
 

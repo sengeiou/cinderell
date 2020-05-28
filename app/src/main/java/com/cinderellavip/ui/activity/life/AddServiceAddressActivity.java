@@ -17,9 +17,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.amap.api.services.core.PoiItem;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.UpdateLifeAddress;
 import com.cinderellavip.bean.net.LifeCityBean;
+import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -113,15 +115,14 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
     }
 
     private void location(){
+        if (type == ADD)
         LocationUtil.getInstance().start(mActivity,(aMapLocation, lat, lnt) -> {
             if (aMapLocation.getErrorCode() == 0){
                 tvAddress.setText(aMapLocation.getPoiName());
                 tvAddressDetail.setText(aMapLocation.getProvince()+
                         aMapLocation.getCity()+ aMapLocation.getDistrict()+
                         aMapLocation.getStreet()+aMapLocation.getStreetNum());
-            }else {
             }
-
         });
     }
 
@@ -251,6 +252,10 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
                 }
                 etPhone.setText(phoneNum);
             }
+        }else if (requestCode == RequestCode.request_nearby && resultCode == RESULT_OK){
+            PoiItem netCityBean = data.getParcelableExtra("netCityBean");
+            tvAddress.setText(netCityBean.getTitle());
+            tvAddressDetail.setText(netCityBean.getProvinceName()+netCityBean.getCityName()+netCityBean.getAdName()+netCityBean.getSnippet());
         }
     }
 }

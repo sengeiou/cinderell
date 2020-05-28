@@ -13,5 +13,6 @@ public class RequestCode {
 
     public static final int request_service_city = 3;
     public static final int request_service_address = 4;
+    public static final int request_nearby = 5;
 
 }

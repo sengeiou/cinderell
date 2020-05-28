@@ -20,9 +20,9 @@ public class SelectLocationActivity extends BaseActivity {
 
 
 
-    public static void launch(Context from) {
+    public static void launch(Activity from) {
         Intent intent = new Intent(from, SelectLocationActivity.class);
-        from.startActivity(intent);
+        from.startActivityForResult(intent,RequestCode.request_nearby);
     }
 
 
@@ -50,7 +50,7 @@ public class SelectLocationActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestCode.request_city && resultCode == Activity.RESULT_OK){
+        if (requestCode == RequestCode.request_service_city && resultCode == Activity.RESULT_OK){
             fragment.setAddress(data.getStringExtra("name"));
         }
     }
