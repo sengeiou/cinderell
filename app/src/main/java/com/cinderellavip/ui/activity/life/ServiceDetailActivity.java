@@ -1,5 +1,6 @@
 package com.cinderellavip.ui.activity.life;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +18,9 @@ import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.ui.BaseWebViewActivity;
 import com.tozzais.baselibrary.http.RxHttp;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.TreeMap;
 
@@ -51,6 +55,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
 
     }
 
+    ServiceProjectDetail serviceProjectDetail;
     @Override
     public void loadData() {
         if (id == -1){
@@ -64,7 +69,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
                 new Response<BaseResult<ServiceProjectDetail>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<ServiceProjectDetail> result) {
-                        ServiceProjectDetail serviceProjectDetail = result.data;
+                        serviceProjectDetail = result.data;
                         setBackTitle(serviceProjectDetail.title);
                         loadData(serviceProjectDetail.content);
                     }
@@ -87,19 +92,29 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
     public void initListener() {
         super.initListener();
         iv_right_icon.setOnClickListener(v -> {
-            SecondDialogUtil.shareDialog(mContext, new ShareClickListener() {
+            if (serviceProjectDetail != null)
+            SecondDialogUtil.shareDialog(mContext,serviceProjectDetail, new ShareClickListener() {
                 @Override
                 public void onWeChatClick(Bitmap bitmap) {
-
+                    shareImage(SHARE_MEDIA.WEIXIN, bitmap);
                 }
-
                 @Override
                 public void onWeChatCircleClick(Bitmap bitmap) {
-
+                    shareImage(SHARE_MEDIA.WEIXIN_CIRCLE, bitmap);
                 }
             });
         });
     }
+
+    public void shareImage(SHARE_MEDIA share_media, Bitmap bitmap) {
+        UMImage imagelocal = new UMImage(mContext, bitmap);
+        imagelocal.setThumb(new UMImage(mContext, bitmap));
+        new ShareAction((Activity) mContext).withMedia(imagelocal)
+                .setPlatform(share_media)
+                .setCallback(null).share();
+    }
+
+
 
     @OnClick({R.id.tv_service, R.id.tv_buy})
     public void onClick(View view) {

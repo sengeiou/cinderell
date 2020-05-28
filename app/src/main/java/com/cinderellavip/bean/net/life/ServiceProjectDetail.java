@@ -11,7 +11,7 @@ public class ServiceProjectDetail {
 
     public String id;
     public String title;
-    public String thumbnail;
+    public String thumb_nail;
     public String assort;
     public String content;
     public double price;

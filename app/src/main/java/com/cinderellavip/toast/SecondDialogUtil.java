@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.bean.net.life.ServiceProjectDetail;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.global.GlobalParam;
@@ -123,7 +124,7 @@ public class SecondDialogUtil {
 
     }
 
-    public static void shareDialog(Context context,  ShareClickListener listener) {
+    public static void shareDialog(Context context, ServiceProjectDetail serviceProjectDetail, ShareClickListener listener) {
         View view = View.inflate(context, R.layout.pop_bottom_share, null);
         dialog = DialogUtils.getCenterDialog(context, view);
         ImageView iv_avatar = view.findViewById(R.id.iv_avatar);
@@ -131,6 +132,21 @@ public class SecondDialogUtil {
         TextView tv_product_name = view.findViewById(R.id.tv_product_name);
         TextView tv_price = view.findViewById(R.id.tv_price);
         ImageView iv_image = view.findViewById(R.id.iv_image);
+        ImageView iv_code = view.findViewById(R.id.iv_code);
+
+        MineInfo userBean = GlobalParam.getUserBean();
+        ImageUtil.loadNet(context,iv_avatar,userBean.user_avatar);
+        tv_name.setText(userBean.username);
+
+        ImageUtil.loadNet(context,iv_image,serviceProjectDetail.thumb_nail);
+        tv_price.setText(serviceProjectDetail.title);
+
+        String recommendCode = GlobalParam.getRecommendCode();
+        String share = ShareConstant.REGISTER + recommendCode;
+        Bitmap qrCode = QRCodeUtil.createQRCode(share, DpUtil.dip2px(context, 60));
+        iv_code.setImageBitmap(qrCode);
+
+
         LinearLayout ll_poster = view.findViewById(R.id.ll_poster);
         ll_poster.setDrawingCacheEnabled(true);
         ll_poster.buildDrawingCache();
