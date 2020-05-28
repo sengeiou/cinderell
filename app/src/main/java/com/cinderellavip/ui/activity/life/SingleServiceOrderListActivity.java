@@ -49,6 +49,8 @@ public class SingleServiceOrderListActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setBackTitle("全部订单");
+        tablayout.setTabTextColors(getColor(R.color.black_title_color),getColor(R.color.yellow_deep));
+        tablayout.setSelectedTabIndicatorColor(getColor(R.color.yellow_deep));
     }
     @Override
     public void loadData() {
