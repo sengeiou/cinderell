@@ -59,6 +59,11 @@ public class MessageCenterFragment extends BaseListFragment<MessageItem> {
                 });
 
     }
+    @Override
+    public void onResume() {
+        loadData();
+        super.onResume();
+    }
 
 
 }

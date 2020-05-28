@@ -64,7 +64,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     public boolean mineInfoIsLoad = false;
 
     @BindView(R.id.dot_message)
-    View dot_message;
+    ImageView dot_message;
 
     @BindView(R.id.vi_image)
     CircleImageView vi_image;
@@ -99,6 +99,8 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     TextView tv_unpay_long;
     @BindView(R.id.tv_serviceing_long)
     TextView tv_serviceing_long;
+
+
 
     public void setDotVisible(boolean visible){
         if (dot_message !=null){
@@ -219,6 +221,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             }else {
                 tv_serviceing_long.setVisibility(View.GONE);
             }
+            setDotVisible(mineInfo.msg_num>0);
 
         }
 

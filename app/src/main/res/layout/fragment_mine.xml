@@ -238,14 +238,14 @@
                         android:src="@mipmap/my_msg_icon_white"
                         />
 
-                    <View
+                    <ImageView
                         android:id="@+id/dot_message"
                         android:visibility="gone"
                         android:layout_width="6dp"
                         android:layout_height="6dp"
-                        android:layout_marginRight="3dp"
+                        android:layout_marginRight="8dp"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/shape_red50"/>
+                        android:src="@mipmap/dot_message"/>
 
                 </RelativeLayout>
 

@@ -11,6 +11,7 @@ public class MineInfo {
     public int serve_long_pay;
     public int serve_long_serve;
     public int type;
+    public int msg_num;
     //
     public int sex;
     public boolean is_sign;
