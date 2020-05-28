@@ -6,11 +6,14 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
-import com.cinderellavip.bean.local.CommnetTabItem;
+import com.cinderellavip.bean.spike.SpikeTime;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.home.SpikeFragment;
-import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.weight.tab.SpikeTabLayout;
-import com.google.android.material.tabs.TabLayout;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.util.StatusBarUtil;
@@ -55,32 +58,41 @@ public class SpikeListActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (!isLoad)showProress();
+        new RxHttp<BaseResult<ListResult<SpikeTime>>>().send(ApiManager.getService().spikeTime(),
+                new Response<BaseResult<ListResult<SpikeTime>>>(isLoad,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ListResult<SpikeTime>> result) {
+                        showContent();
+                        List<SpikeTime> spikeTimes = result.data.list;
+                        List<String> list = new ArrayList<>();
+                        int position = 0;
+                        for (int i = 0 ; i<spikeTimes.size();i++){
+                            SpikeTime spikeTime = spikeTimes.get(i);
+                            fragmentList.add(SpikeFragment.newInstance(spikeTime.begin_time));
+                            list.add("");
+                            if (spikeTime.select){
+                                position = i;
+                            }
+                        }
+                        tablayout.setTitle(spikeTimes);
+                        adapter = new GoodsDetailPagerAdapter(getSupportFragmentManager(), fragmentList,list);
+                        viewpager.setAdapter(adapter);
+                        tablayout.setupWithViewPager(viewpager);
+                        viewpager.setCurrentItem(getIntent().getIntExtra("type",0));
+                        viewpager.setOffscreenPageLimit(4);
+                        viewpager.setCurrentItem(position);
 
-        fragmentList.add(SpikeFragment.newInstance(OrderFragment.ALL));
-        fragmentList.add(SpikeFragment.newInstance(OrderFragment.UNPAY));
-        fragmentList.add(SpikeFragment.newInstance(OrderFragment.UNSEND));
-        fragmentList.add(SpikeFragment.newInstance(OrderFragment.UNRECEIVE));
-        fragmentList.add(SpikeFragment.newInstance(OrderFragment.FINISH));
-        List<CommnetTabItem> tabList = new ArrayList<>();
-        tabList.add(new CommnetTabItem("09:00", "抢购中"));
-        tabList.add(new CommnetTabItem("12:00", "抢购中"));
-        tabList.add(new CommnetTabItem("15:00", "抢购中"));
-        tabList.add(new CommnetTabItem("18:00", "未开始"));
-        tabList.add(new CommnetTabItem("21:00", "未开始"));
-        tablayout.setTitle(tabList);
 
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        adapter = new GoodsDetailPagerAdapter(getSupportFragmentManager(), fragmentList,list);
-        viewpager.setAdapter(adapter);
-        tablayout.setupWithViewPager(viewpager);
+                    }
 
-        viewpager.setCurrentItem(getIntent().getIntExtra("type",0));
-        viewpager.setOffscreenPageLimit(4);
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
+
+
 
     }
 

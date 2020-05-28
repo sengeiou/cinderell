@@ -218,6 +218,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     }
 
     protected void tsg(String str) {  //封装弹出框提示
+
         ToastCommom.createToastConfig().ToastShow(mContext, str);
     }
 

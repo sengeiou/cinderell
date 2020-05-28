@@ -2,18 +2,14 @@ package com.cinderellavip.ui.fragment.home;
 
 import android.os.Bundle;
 
-import com.cinderellavip.adapter.recycleview.OrderAdapter;
 import com.cinderellavip.adapter.recycleview.SpikeListAdapter;
-import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.eventbus.OrderComment;
 import com.cinderellavip.bean.eventbus.ReceiveOrder;
-import com.cinderellavip.bean.local.OrderBean;
+import com.cinderellavip.bean.net.home.HomeSpikeItem;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
-import com.cinderellavip.util.DataUtil;
-import com.cinderellavip.weight.GirdSpace;
-import com.cinderellavip.weight.LinearSpace;
 import com.cinderellavip.weight.LinearSpace1;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
@@ -24,14 +20,14 @@ import java.util.TreeMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class SpikeFragment extends BaseListFragment<String> {
+public class SpikeFragment extends BaseListFragment<HomeSpikeItem> {
 
 
-    private int type;
-    public static SpikeFragment newInstance(int type){
+    private String time;
+    public static SpikeFragment newInstance(String time){
         SpikeFragment cartFragment = new SpikeFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type",type);
+        bundle.putString("time",time);
         cartFragment.setArguments(bundle);
         return cartFragment;
 
@@ -40,7 +36,7 @@ public class SpikeFragment extends BaseListFragment<String> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        type = getArguments().getInt("type");
+        time = getArguments().getString("time");
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         LinearSpace1 girdSpace = new LinearSpace1(DpUtil.dip2px(mActivity, 12));
@@ -62,22 +58,21 @@ public class SpikeFragment extends BaseListFragment<String> {
     @Override
     public void loadData() {
         super.loadData();
-//        getData();
-        setData(DataUtil.getData(type));
+        getData();
 
 
     }
 
     private void  getData(){
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("status", ""+type);
+        hashMap.put("time", ""+time);
         hashMap.put("limit", ""+PageSize);
         hashMap.put("page", ""+page);
-        new RxHttp<BaseResult<ListOrders<OrderBean>>>().send(ApiManager.getService().getOrderList(hashMap),
-                new Response<BaseResult<ListOrders<OrderBean>>>(isLoad,getContext()) {
+        new RxHttp<BaseResult<ListResult<HomeSpikeItem>>>().send(ApiManager.getService().spikeList(hashMap),
+                new Response<BaseResult<ListResult<HomeSpikeItem>>>(isLoad,getContext()) {
                     @Override
-                    public void onSuccess(BaseResult<ListOrders<OrderBean>> result) {
-//                        setData(result.data.orders);
+                    public void onSuccess(BaseResult<ListResult<HomeSpikeItem>> result) {
+                        setData(result.data.list);
                     }
                     @Override
                     public void onError(Throwable e) {

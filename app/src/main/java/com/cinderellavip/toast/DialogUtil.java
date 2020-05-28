@@ -99,7 +99,7 @@ public class DialogUtil {
                 specialItem2 = list1.get(0);
             tv_unit.setText("秒杀价");
             tv_price.setText("￥"+specialItem2.getSpikePrice());
-            tv_former_price.setText("原价￥"+specialItem2.getOld_price());
+            tv_former_price.setText("原价￥"+specialItem2.getPrice());
         }else {
             if (goodsResult.user_is_vip){
                 //如果是灰姑娘
@@ -165,7 +165,7 @@ public class DialogUtil {
                             //如果是灰姑娘
                             tv_unit.setText("秒杀价");
                             tv_price.setText("￥"+text.getSpikePrice());
-                            tv_former_price.setText("原价￥"+text.getOld_price());
+                            tv_former_price.setText("原价￥"+text.getPrice());
                         }else {
                             if (goodsResult.user_is_vip){
                                 //如果是灰姑娘

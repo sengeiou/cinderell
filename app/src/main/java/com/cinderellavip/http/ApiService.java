@@ -35,6 +35,7 @@ import com.cinderellavip.bean.net.goods.GoodsCommentResult;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.home.CateMoreList;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
+import com.cinderellavip.bean.net.home.HomeSpikeItem;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
 import com.cinderellavip.bean.net.life.CategoryResult;
 import com.cinderellavip.bean.net.life.DirectCategory;
@@ -69,6 +70,7 @@ import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.bean.net.order.ReturnOrderInfoResult;
 import com.cinderellavip.bean.potato.MinePotatoResult;
 import com.cinderellavip.bean.score.WithDrawExplain;
+import com.cinderellavip.bean.spike.SpikeTime;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -645,4 +647,17 @@ public interface ApiService {
     @POST(HttpUrl.life_direct_cate)
     Observable<BaseResult<List<DirectCategory>>>
     directCate();
+
+    @GET(HttpUrl.spike_time)
+    Observable<BaseResult<ListResult<SpikeTime>>>
+    spikeTime();
+
+    @GET(HttpUrl.spike_list)
+    Observable<BaseResult<ListResult<HomeSpikeItem>>>
+    spikeList(@QueryMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.spike_alert)
+    Observable<BaseResult>
+    spikeAlert(@QueryMap TreeMap<String, String> map);
+
 }

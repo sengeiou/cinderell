@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.CommnetTabItem;
+import com.cinderellavip.bean.spike.SpikeTime;
 import com.cinderellavip.util.ScreenUtil;
 import com.google.android.material.tabs.TabLayout;
 
@@ -61,28 +61,27 @@ public class SpikeTabLayout extends TabLayout {
 
 
 
-    public void setTitle(List<CommnetTabItem> titles) {
+    public void setTitle(List<SpikeTime> titles) {
         removeAllTabs();
         /**
          * 开始添加切换的Tab。
          */
         for (int i = 0; i < titles.size(); i++) {
-            CommnetTabItem title = titles.get(i);
+            SpikeTime title = titles.get(i);
             Tab tab = newTab();
             tab.setCustomView(R.layout.tab_comment);
             if (tab.getCustomView() != null) {
                 TextView tab_text = tab.getCustomView().findViewById(R.id.tab_text);
                 TextView tab_text_number = tab.getCustomView().findViewById(R.id.tab_text_number);
-                tab_text.setText(title.name);
-                tab_text_number.setText(title.number);
+                tab_text.setText(title.begin_time);
+                tab_text_number.setText(title.remark);
+                tab_text.setTextColor(getResources().getColor(R.color.spike_tab));
+                tab_text_number.setTextColor(getResources().getColor(R.color.spike_tab));
             }
             //设置点击事件
             View tabView = (View) tab.getCustomView().getParent();
             tabView.setTag(i);
             tabView.setOnClickListener(mTabOnClickListener);
-            if (i == 0) {
-                tab.select();
-            }
             this.addTab(tab);
         }
     }

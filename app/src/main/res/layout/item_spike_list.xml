@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,9 +28,11 @@
                 android:layout_height="95dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/demo_product_banner"/>
+                tools:src="@mipmap/demo_product_banner"/>
 
             <RelativeLayout
+                android:id="@+id/rl_robbed"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_tran5">
@@ -68,7 +71,7 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="1dp"
                 android:layout_height="wrap_content"
-                android:text="农家新语 马丹90红颜奶油草莓3斤 新鲜现摘水果"
+                tools:text="农家新语 马丹90红颜奶油草莓3斤 新鲜现摘水果"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/black_title_color"/>
@@ -152,6 +155,7 @@
                 android:textColor="@color/grayText"/>
 
             <TextView
+                android:id="@+id/tv_status"
                 style="@style/base_btn_style"
                 android:text="去抢购"/>
 

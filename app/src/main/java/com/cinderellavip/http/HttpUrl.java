@@ -159,6 +159,10 @@ public interface HttpUrl {
     String life_details = "api/service/service/details";//服务项目套餐详情
     String life_category = "api/service/service/category";//服务分类详情
     String life_checklist = "api/service/service/checklist";//服务清单
+    //秒杀
+    String spike_time = "api/store/spike/times";//秒杀场次获取
+    String spike_list = "api/store/spike/products";//获取秒杀商品列表
+    String spike_alert = "api/store/spike/alert";//设置秒杀提醒
 
 
 

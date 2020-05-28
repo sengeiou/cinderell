@@ -18,6 +18,7 @@ import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.bean.net.order.OrderSettleShopBean;
 import com.cinderellavip.bean.request.OrderRemark;
+import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -27,6 +28,7 @@ import com.cinderellavip.util.CouponsStringUtil;
 import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -287,6 +289,8 @@ public class EnsureOrderActivity extends BaseActivity {
                 new Response<BaseResult<CreateOrderBean>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<CreateOrderBean> result) {
+                        tsg(result.message);
+
                         CreateOrderBean settleResult = result.data;
                         SelectPayWayActivity.launch(mActivity, settleResult);
                          finish();
@@ -308,6 +312,7 @@ public class EnsureOrderActivity extends BaseActivity {
                 new Response<BaseResult<CreateOrderBean>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<CreateOrderBean> result) {
+                        tsg(result.message);
                         EventBus.getDefault().post(new UpdateCart());
                         CreateOrderBean settleResult = result.data;
                         settleResult.type = CreateOrderBean.CART;
@@ -334,6 +339,7 @@ public class EnsureOrderActivity extends BaseActivity {
                 new Response<BaseResult<CreateOrderBean>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<CreateOrderBean> result) {
+                        tsg(result.message);
                         CreateOrderBean settleResult = result.data;
                         settleResult.type = CreateOrderBean.GROUP;
                         SelectPayWayActivity.launch(mActivity, settleResult);
