@@ -9,6 +9,7 @@ import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.ServiceType;
 import com.cinderellavip.bean.SignResult;
 import com.cinderellavip.bean.UploadImageResult;
+import com.cinderellavip.bean.direct.DirectPerson;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.local.MineCouponsBean;
@@ -659,5 +660,10 @@ public interface ApiService {
     @GET(HttpUrl.spike_alert)
     Observable<BaseResult>
     spikeAlert(@QueryMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_direct_list)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<DirectPerson>>>
+    getDirectPerson(@FieldMap TreeMap<String, String> map);
 
 }

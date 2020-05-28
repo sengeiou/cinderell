@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.ViewPagerFragmentAdapter;
 import com.cinderellavip.bean.net.life.DirectCategory;
-import com.cinderellavip.bean.net.life.ShortDate;
-import com.cinderellavip.bean.net.life.ShortTimeResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -72,14 +70,6 @@ public class DirectAppointmentActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-
-
-        fragmentList.add(new DirectAppointMapFragment());
-        fragmentList.add(new DirectAppointListFragment());
-        adapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), fragmentList);
-        viewpager.setAdapter(adapter);
-
-
         new RxHttp<BaseResult<List<DirectCategory>>>().send(ApiManager.getService().directCate(),
                 new Response<BaseResult<List<DirectCategory>>>(mActivity) {
                     @Override
@@ -88,10 +78,46 @@ public class DirectAppointmentActivity extends BaseActivity {
                         for (DirectCategory s :categories) {
                             tablayout.addTab(tablayout.newTab().setText(s.name));
                         }
+                        directAppointMapFragment = new DirectAppointMapFragment();
+                        fragmentList.add(directAppointMapFragment);
+                        directAppointListFragment = DirectAppointListFragment.newInstance(categories.get(0).id);
+                        fragmentList.add(directAppointListFragment);
+                        adapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), fragmentList);
+                        viewpager.setAdapter(adapter);
                     }
                 });
 
     }
+    DirectAppointMapFragment directAppointMapFragment;
+    DirectAppointListFragment directAppointListFragment;
+
+    @Override
+    public void initListener() {
+        super.initListener();
+        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tablayout.getSelectedTabPosition();
+
+                DirectCategory category = categories.get(position);
+                if (directAppointListFragment != null)
+                directAppointListFragment.setId(category.id);
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
     List<DirectCategory> categories;
 
 

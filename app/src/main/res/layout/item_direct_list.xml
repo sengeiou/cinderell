@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +25,7 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_avatar"/>
+            tools:src="@mipmap/demo_avatar"/>
 
 
 
@@ -55,6 +56,7 @@
 
 
             <TextView
+                android:id="@+id/tv_status"
                 style="@style/base_text_style"
                 android:text="今日可约"
                 android:textSize="10sp"
@@ -91,6 +93,7 @@
 
 
             <TextView
+                android:id="@+id/tv_distance"
                 style="@style/base_text_style_gray_small"
                 android:text="1.6km"
                 android:drawableLeft="@mipmap/address_direct"
@@ -104,9 +107,7 @@
         <TextView
             android:id="@+id/tv_content"
             style="@style/base_text_style_gray_small"
-            android:lines="2"
             android:layout_marginTop="5dp"
-            android:ellipsize="end"
             android:lineSpacingExtra="3dp"
             android:text="正规绿色服务！从业八年，持有高级按摩技师证，手法柔软、舒适、熟练、擅长经络疏通和经络spa。"
             />

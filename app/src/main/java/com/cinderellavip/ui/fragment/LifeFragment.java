@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.LifeAdapter;
 import com.cinderellavip.adapter.recycleview.LifeCategoryAdapter;
-import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.life.LiftHomeAd;
 import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.bean.net.life.LiftHomeListItem;
@@ -139,6 +138,8 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
                 String city = aMapLocation.getCity();
                 String replaceAll = city.replaceAll("市", "");
                 tv_address.setText(TextUtils.isEmpty(replaceAll)?"南京": replaceAll);
+                CinderellApplication.latitude = lat+"";
+                CinderellApplication.longitude = lnt+"";
             }else {
                 tv_address.setText("南京");
             }

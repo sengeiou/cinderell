@@ -31,6 +31,8 @@ public class CinderellApplication extends Application {
     public static Context mContext;
     //城市名
     public static String name = "南京";
+    public static String longitude = "";
+    public static String latitude = "";
     @Override
     public void onCreate() {
         super.onCreate();
