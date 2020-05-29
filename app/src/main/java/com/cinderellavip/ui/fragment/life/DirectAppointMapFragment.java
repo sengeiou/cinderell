@@ -1,12 +1,11 @@
 package com.cinderellavip.ui.fragment.life;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.amap.api.maps.AMap;
@@ -20,16 +19,28 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.net.MapItem;
-import com.cinderellavip.ui.activity.life.DirectAppointmentTechnicianCommentActivity;
+import com.cinderellavip.bean.direct.DirectMapPersonItem;
+import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseListResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.life.DirectAppointmentTechnicianDetailActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -37,6 +48,22 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
         , AMap.OnMarkerClickListener, AMap.OnInfoWindowClickListener
         , AMap.CancelableCallback, AMap.OnCameraChangeListener {
 
+
+    private int service;
+    public static DirectAppointMapFragment newInstance(int service){
+        DirectAppointMapFragment cartFragment = new DirectAppointMapFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("service",service);
+        cartFragment.setArguments(bundle);
+        return cartFragment;
+
+    }
+    public void setId(int id) {
+        if (isLoad){
+            this.service = id;
+            getData();
+        }
+    }
 
     @BindView(R.id.map)
     MapView mMapView;
@@ -56,6 +83,7 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        service = getArguments().getInt("service");
         mMapView.onCreate(savedInstanceState);
         if (aMap == null) {
             aMap = mMapView.getMap();
@@ -74,36 +102,31 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
         aMap.setOnMyLocationChangeListener(this);
 
-
-        addMarker(new MapItem());
+        getData();
 
 
     }
+    private void  getData(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("service", ""+service);
+        hashMap.put("city", ""+ CinderellApplication.name);
+        hashMap.put("longitude", ""+ CinderellApplication.longitude);
+        hashMap.put("latitude", ""+ CinderellApplication.latitude);
+        new RxHttp<BaseListResult<DirectMapPersonItem>>().send(ApiManager.getService().getDirectMapPerson(hashMap),
+                new Response<BaseListResult<DirectMapPersonItem>>(getContext(),Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseListResult<DirectMapPersonItem> result) {
+                        addMarker(result.data);
+                    }
+                });
+    }
 
-//
-//    private void getData() {
-//        TreeMap<String, String> map = new TreeMap<>();
-//        map.put("user_id", GlobalParam.getUserId());
-//        map.put("sign", SignUtil.getMd5(map));
-//        new RxHttp<BaseListResult<MapItem>>().send(ApiManager.getService().getMap(map),
-//                new Response<BaseListResult<MapItem>>(isLoad, mActivity) {
-//                    @Override
-//                    public void onSuccess(BaseListResult<MapItem> result) {
-//                        mapItemList = result.data;
-//                        Log.e("mapItem",mapItemList.size()+"");
-//                        addMarker(result.data);
-//
-//                    }
-//                });
-//
-//    }
 
-    public Map<Marker, MapItem> map = new HashMap<>();
-    private List<MapItem> mapItemList;
+    public Map<Marker, DirectMapPersonItem> map = new HashMap<>();
 
-    private void addMarker(List<MapItem> data) {
-        for (MapItem mapItem : data) {
-            if (mapItem == null || TextUtils.isEmpty(mapItem.lat) || TextUtils.isEmpty(mapItem.lng)) {
+    private void addMarker(List<DirectMapPersonItem> data) {
+        for (DirectMapPersonItem mapItem : data) {
+            if (mapItem == null || TextUtils.isEmpty(mapItem.latitude) || TextUtils.isEmpty(mapItem.longitude)) {
                 continue;
             }
             addMarker(mapItem);
@@ -111,35 +134,33 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
 
     }
 
-    private void addMarker(MapItem mapItem) {
-
+    private void addMarker(DirectMapPersonItem mapItem) {
+        LogUtil.e(mapItem.toString());
         View view = View.inflate(mActivity.getApplicationContext(), R.layout.item_map, null);
         ImageView iv_image = view.findViewById(R.id.iv_image);
-//        LatLng latLng = new LatLng(Double.parseDouble(mapItem.lat), Double.parseDouble(mapItem.lng));
-        LatLng latLng = new LatLng(31.1995873500, 121.2669181800);
+        LatLng latLng = new LatLng(Double.parseDouble(mapItem.latitude), Double.parseDouble(mapItem.longitude));
         MarkerOptions markerOption = new MarkerOptions();
         markerOption.position(latLng).draggable(false);
+        Glide.with(mActivity.getApplicationContext())
+                .load(mapItem.avatar).override(100,100).addListener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                LogUtil.e("加载失败"+e.getMessage());
+                return false;
+            }
 
-
-//        Glide.with(mActivity).load(HttpUrl.image_url+mapItem.logo).addListener(new RequestListener<Drawable>() {
-//            @Override
-//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                iv_image.setImageDrawable(resource);
-        Bitmap bitmap = getViewBitmap(view);
-        markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-        Marker marker = aMap.addMarker(markerOption);
-        map.put(marker, mapItem);
-        marker.showInfoWindow();
-//                return false;
-//            }
-//        }).into(iv_image);
-
-
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                LogUtil.e("加载成功");
+                iv_image.setImageDrawable(resource);
+                Bitmap bitmap = getViewBitmap(view);
+                markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                Marker marker = aMap.addMarker(markerOption);
+                map.put(marker, mapItem);
+                marker.showInfoWindow();
+                return false;
+            }
+        }).into(iv_image);
     }
 
     public Bitmap getViewBitmap(View view) {
@@ -221,8 +242,8 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        DirectAppointmentTechnicianDetailActivity.launch(getContext(),
-                DirectAppointmentTechnicianCommentActivity.comment_technical);
+        DirectMapPersonItem directMapPersonItem = map.get(marker);
+        DirectAppointmentTechnicianDetailActivity.launch(getContext(), directMapPersonItem.id);
         return false;
     }
 
@@ -231,8 +252,8 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
     public void onMyLocationChange(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        Log.e("latitude", location.getLatitude() + "");
-        Log.e("longitude", location.getLongitude() + "");
+//        Log.e("latitude", location.getLatitude() + "");
+//        Log.e("longitude", location.getLongitude() + "");
     }
 
     @OnClick(R.id.iv_location)

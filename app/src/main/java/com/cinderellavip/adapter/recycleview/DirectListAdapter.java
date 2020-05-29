@@ -6,14 +6,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.direct.DirectPerson;
+import com.cinderellavip.bean.direct.DirectMapPersonItem;
 import com.cinderellavip.global.ImageUtil;
-import com.cinderellavip.ui.activity.life.DirectAppointmentTechnicianCommentActivity;
 import com.cinderellavip.ui.activity.life.DirectAppointmentTechnicianDetailActivity;
 import com.cinderellavip.weight.RatingBarView;
 
 
-public class DirectListAdapter extends BaseQuickAdapter<DirectPerson, BaseViewHolder> implements LoadMoreModule {
+public class DirectListAdapter extends BaseQuickAdapter<DirectMapPersonItem, BaseViewHolder> implements LoadMoreModule {
 
     public DirectListAdapter() {
         super(R.layout.item_direct_list, null);
@@ -21,12 +20,11 @@ public class DirectListAdapter extends BaseQuickAdapter<DirectPerson, BaseViewHo
 
 
     @Override
-    protected void convert( BaseViewHolder helper, DirectPerson item) {
+    protected void convert( BaseViewHolder helper, DirectMapPersonItem item) {
         int position = helper.getAdapterPosition();
 
         helper.getView(R.id.ll_root).setOnClickListener(v -> {
-            DirectAppointmentTechnicianDetailActivity.launch(getContext(),
-                    DirectAppointmentTechnicianCommentActivity.comment_technical);
+            DirectAppointmentTechnicianDetailActivity.launch(getContext(),item.id);
         });
         RatingBarView ratingBar = helper.getView(R.id.ratingBar);
         ImageView iv_product = helper.getView(R.id.iv_product);

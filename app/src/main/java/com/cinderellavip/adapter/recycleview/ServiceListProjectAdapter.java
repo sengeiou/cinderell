@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.life.LiftHomeServiceItem;
+import com.cinderellavip.bean.request.LifePreOrder;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.life.BuyServiceActivity;
 import com.cinderellavip.ui.activity.life.ServiceDetailActivity;
@@ -43,7 +44,11 @@ public class ServiceListProjectAdapter extends BaseQuickAdapter<LiftHomeServiceI
 //        view_space.setVisibility(View.VISIBLE);
 
         helper.getView(R.id.tv_buy).setOnClickListener(view -> {
-            BuyServiceActivity.launch(getContext(),item.id,item.city);
+            LifePreOrder lifePreOrder = new LifePreOrder();
+            lifePreOrder.type = LifePreOrder.SHORT;
+            lifePreOrder.project = item.id;
+            lifePreOrder.city = item.city;
+            BuyServiceActivity.launch(getContext(),lifePreOrder);
         });
         helper.getView(R.id.ll_root).setOnClickListener(view -> {
             ServiceDetailActivity.launch(getContext(),item.id,item.city);

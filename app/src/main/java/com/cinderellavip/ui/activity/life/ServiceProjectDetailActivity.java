@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,16 +20,28 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.DirectCommentAdapter;
 import com.cinderellavip.adapter.recycleview.ServiceDetailContentAdapter;
 import com.cinderellavip.adapter.viewpager.BannerViewPagerAdapter;
+import com.cinderellavip.bean.direct.DirectPersonComment;
+import com.cinderellavip.bean.direct.DirectProjectInfo;
+import com.cinderellavip.bean.net.life.ShortDate;
+import com.cinderellavip.bean.net.life.ShortTime;
+import com.cinderellavip.bean.request.LifePreOrder;
+import com.cinderellavip.bean.request.TechnicalComment;
+import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.global.RequestCode;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.util.ColorUtil;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyIndicator;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -45,10 +58,6 @@ import butterknife.OnClick;
  * 服务项目
  */
 public class ServiceProjectDetailActivity extends BaseActivity {
-    public static final int project_service = 0;
-    public static final int package_service = 1;
-    public int type;
-
 
     @BindView(R.id.title)
     LinearLayout title;
@@ -82,27 +91,45 @@ public class ServiceProjectDetailActivity extends BaseActivity {
     TextView tvSelectTimeTip;
     @BindView(R.id.tv_select_time)
     TextView tvSelectTime;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+    @BindView(R.id.tv_unit)
+    TextView tvUnit;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.ll_flag)
+    LinearLayout llFlag;
+    @BindView(R.id.ll_select_time)
+    LinearLayout llSelectTime;
+    @BindView(R.id.tv_comment_number)
+    TextView tvCommentNumber;
+    @BindView(R.id.ll_comment)
+    LinearLayout llComment;
 
 
     private BaseQuickAdapter commentAdapter;
     private BaseQuickAdapter serviceListAdapter;
 
-    public static void launch(Context from, int type) {
+
+    private TechnicalComment technicalComment;
+
+    public static void launch(Context from, TechnicalComment technicalComment) {
         Intent intent = new Intent(from, ServiceProjectDetailActivity.class);
-        intent.putExtra("type", type);
+        intent.putExtra("technicalComment", technicalComment);
         from.startActivity(intent);
     }
 
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        type = getIntent().getIntExtra("type",project_service);
-        if (type == project_service){
+        technicalComment = getIntent().getParcelableExtra("technicalComment");
+        if (technicalComment.type == TechnicalComment.comment_technical) {
             tv_technical_title.setText("服务项目详情");
-        }else {
+        } else {
             tv_technical_title.setText("服务套餐详情");
         }
-
         rv_comment.setLayoutManager(new LinearLayoutManager(mActivity));
         commentAdapter = new DirectCommentAdapter();
         rv_comment.setAdapter(commentAdapter);
@@ -116,15 +143,55 @@ public class ServiceProjectDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        List<Integer> bannerList = new ArrayList<>();
-        bannerList.add(R.mipmap.demo_technical);
-        bannerList.add(R.mipmap.demo_technical);
-        bannerList.add(R.mipmap.demo_technical);
-        xbanner.setAdapter(new BannerViewPagerAdapter(bannerList, mActivity));
-        indicator.bindViewPager(xbanner, bannerList.size());
+        getData();
+    }
 
-        commentAdapter.setNewData(DataUtil.getData(1));
-        serviceListAdapter.setNewData(DataUtil.getData(3));
+    private void getData() {
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("waiter", "" + technicalComment.waiter);
+        hashMap.put("project", "" + technicalComment.project);
+        hashMap.put("city", "" + CinderellApplication.name);
+        new RxHttp<BaseResult<DirectProjectInfo>>().send(ApiManager.getService().getDirectProjectInfo(hashMap),
+                new Response<BaseResult<DirectProjectInfo>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<DirectProjectInfo> result) {
+                        setData(result.data);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
+    }
+
+    DirectProjectInfo directProjectInfo;
+    private void setData(DirectProjectInfo data) {
+        directProjectInfo = data;
+        List<String> bannerList = new ArrayList<>();
+        bannerList.add(data.thumb_nail);
+        xbanner.setAdapter(new BannerViewPagerAdapter(bannerList, mActivity));
+        indicator.setVisibility(View.GONE);
+
+        tvTitle.setText(data.title);
+        tvPrice.setText(data.getPrice());
+        tvTime.setText(data.duration+"分钟");
+        tvSelectTime.setText(data.covenant);
+        tvServiceContent1.setText("服务时长："+data.duration+"分钟");
+        tvServiceContent2.setText("服务姿势："+data.attitude);
+        tvServiceContent3.setText("原理功效："+data.efficacy);
+        tvServiceContent4.setText("不宜人群："+data.unsuitable);
+        tvServiceContent5.setText("服务流程："+data.process);
+        tvServiceContent6.setText("服务用品："+data.supplies);
+
+        setForegroundColor(tvServiceContent1);
+        setForegroundColor(tvServiceContent2);
+        setForegroundColor(tvServiceContent3);
+        setForegroundColor(tvServiceContent4);
+        setForegroundColor(tvServiceContent5);
+        setForegroundColor(tvServiceContent6);
+
+        serviceListAdapter.setNewData(data.Charges);
     }
 
     @Override
@@ -146,12 +213,7 @@ public class ServiceProjectDetailActivity extends BaseActivity {
                 view_back.setImageResource(R.mipmap.back_technical);
         });
 
-        setForegroundColor(tvServiceContent1);
-        setForegroundColor(tvServiceContent2);
-        setForegroundColor(tvServiceContent3);
-        setForegroundColor(tvServiceContent4);
-        setForegroundColor(tvServiceContent5);
-        setForegroundColor(tvServiceContent6);
+
 
 
     }
@@ -184,20 +246,31 @@ public class ServiceProjectDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_comment:
-                DirectAppointmentTechnicianCommentActivity.launch(mActivity
-                        , DirectAppointmentTechnicianCommentActivity.comment_project);
+                TechnicalComment technicalComment1 = new TechnicalComment(
+                        technicalComment.waiter + "", technicalComment.project+""
+                        , TechnicalComment.comment_project);
+                DirectAppointmentTechnicianCommentActivity.launch(mActivity,technicalComment1);
                 break;
             case R.id.view_back:
                 finish();
                 break;
             case R.id.ll_select_time:
-                SelectServiceTimeActivity.launch(mActivity);
+                SelectServiceTimeActivity.launchDirect(mActivity,technicalComment.waiter);
                 break;
             case R.id.tv_service:
-                DialogUtil.showCallPhoneDialog(mActivity,3);
+                DialogUtil.showCallPhoneDialog(mActivity, 3);
                 break;
             case R.id.tv_buy:
-//                BuyServiceActivity.launch(mActivity);
+                if (directProjectInfo == null){
+                    return;
+                }
+                LifePreOrder lifePreOrder = new LifePreOrder();
+                lifePreOrder.type = LifePreOrder.DIRECT;
+                lifePreOrder.project = Integer.parseInt(technicalComment.project);
+                lifePreOrder.city = CinderellApplication.name;
+                lifePreOrder.servicetime =  directProjectInfo.covenant;
+                lifePreOrder.waiter =  technicalComment.waiter;
+                BuyServiceActivity.launch(mActivity,lifePreOrder);
                 break;
         }
     }
@@ -206,8 +279,11 @@ public class ServiceProjectDetailActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCode.request_service_time && resultCode == RESULT_OK) {
+            ShortTime time = data.getParcelableExtra("time");
+            ShortDate shortDate = data.getParcelableExtra("shortDate");
+            directProjectInfo.covenant = shortDate.nian+"-"+shortDate.yue+"-"+shortDate.ri+" "+time.start;
             tvSelectTimeTip.setVisibility(View.GONE);
-            tvSelectTime.setText("1月6号 今天 18:00");
+            tvSelectTime.setText(shortDate.yue+"月"+shortDate.ri+"号 ("+shortDate.tip+") "+time.start);
         }
 
     }

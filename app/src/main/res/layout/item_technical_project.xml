@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -22,13 +22,14 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         >
+
         <com.cinderellavip.weight.RoundImageView
             android:id="@+id/iv_product"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_life"/>
+            tools:src="@mipmap/demo_life" />
 
 
     </RelativeLayout>
@@ -52,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="物品整理"
+                tools:text="物品整理"
                 android:textSize="14sp"
                 android:textColor="@color/black_title_color"/>
 
@@ -73,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时"
+            tools:text="服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时服务时长：3小时"
             android:textSize="12sp"
             android:maxLines="2"
             android:lines="2"
@@ -94,7 +95,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="3dp"
                 android:layout_height="wrap_content"
-                android:text="170元/次"
+                tools:text="170元/次"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/yellowText"/>

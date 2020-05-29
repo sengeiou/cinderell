@@ -10,6 +10,10 @@ public class ShortDate implements Parcelable {
 
 
 
+
+    //用来表示今天 还是明天
+    public String tip;
+
     public String nian;
     public String yue;
     public String ri;
@@ -51,6 +55,7 @@ public class ShortDate implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.tip);
         dest.writeString(this.nian);
         dest.writeString(this.yue);
         dest.writeString(this.ri);
@@ -61,6 +66,7 @@ public class ShortDate implements Parcelable {
     }
 
     protected ShortDate(Parcel in) {
+        this.tip = in.readString();
         this.nian = in.readString();
         this.yue = in.readString();
         this.ri = in.readString();

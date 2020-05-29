@@ -25,7 +25,12 @@
 
 //生活服务直约模块
 
-////秒杀
+////秒杀M
 ////版本更新
 ////极光
+
+    //VPN账号 官网：https://ssrss.net/
+关联地址 https://github.com/junwen0301/FREE-shadowsock-VPN
+           账号 835683840@qq.com 密码 xmm111842287++--
+            托管连接 https://api.ssrss.de/sub?target=clashr&url=https%3A%2F%2Fssrss.de%2Fsubscribe%2FtjNnM&config=https%3A//ssrss.de/ssrss.ini&emoji=true&fdn=true
 

@@ -2,6 +2,7 @@ package com.cinderellavip.http;
 
 
 import com.cinderellavip.bean.AppletsCode;
+import com.cinderellavip.bean.ListBean;
 import com.cinderellavip.bean.ListCoupons;
 import com.cinderellavip.bean.ListData;
 import com.cinderellavip.bean.ListOrders;
@@ -9,7 +10,10 @@ import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.ServiceType;
 import com.cinderellavip.bean.SignResult;
 import com.cinderellavip.bean.UploadImageResult;
-import com.cinderellavip.bean.direct.DirectPerson;
+import com.cinderellavip.bean.direct.DirectMapPersonItem;
+import com.cinderellavip.bean.direct.DirectPersonComment;
+import com.cinderellavip.bean.direct.DirectPersonInfo;
+import com.cinderellavip.bean.direct.DirectProjectInfo;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.local.MineCouponsBean;
@@ -590,6 +594,11 @@ public interface ApiService {
     Observable<BaseResult<ListData<LifeCoupon>>>
     lifeCoupon(@FieldMap TreeMap<String, String> map);
 
+     @POST(HttpUrl.life_direct_order_coupins)
+    @FormUrlEncoded
+    Observable<BaseResult<ListData<LifeCoupon>>>
+    directCoupon(@FieldMap TreeMap<String, String> map);
+
     @POST(HttpUrl.life_coupons_receive_condition)
     @FormUrlEncoded
     Observable<BaseResult<ListData<LifeCoupon>>>
@@ -625,15 +634,31 @@ public interface ApiService {
     Observable<BaseResult<ShortPreOrderResult>>
     shortPreOrder(@FieldMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.life_direct_order_pre)
+    @FormUrlEncoded
+    Observable<BaseResult<ShortPreOrderResult>>
+    directPreOrder(@FieldMap TreeMap<String, String> map);
+
     @POST(HttpUrl.life_order_time)
     @FormUrlEncoded
     Observable<BaseResult<ShortTimeResult>>
     shortOrderTime(@FieldMap TreeMap<String, String> map);
 
+    @POST(HttpUrl.life_direct_time)
+    @FormUrlEncoded
+    Observable<BaseResult<ShortTimeResult>>
+    directPersonTime(@FieldMap TreeMap<String, String> map);
+
     @POST(HttpUrl.life_order_confirm_order)
     @FormUrlEncoded
     Observable<BaseResult<Integer>>
     createShortPreOrder(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_direct_order_confirm)
+    @FormUrlEncoded
+    Observable<BaseResult<Integer>>
+    createDirectOrder(@FieldMap TreeMap<String, String> map);
+
 
     @POST(HttpUrl.life_order_pay_info)
     @FormUrlEncoded
@@ -663,7 +688,27 @@ public interface ApiService {
 
     @POST(HttpUrl.life_direct_list)
     @FormUrlEncoded
-    Observable<BaseResult<ListData<DirectPerson>>>
+    Observable<BaseResult<ListData<DirectMapPersonItem>>>
     getDirectPerson(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_direct_list_map)
+    @FormUrlEncoded
+    Observable<BaseListResult<DirectMapPersonItem>>
+    getDirectMapPerson(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_service_person_detail)
+    @FormUrlEncoded
+    Observable<BaseResult<DirectPersonInfo>>
+    getPersonInfo(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_project_comment)
+    @FormUrlEncoded
+    Observable<BaseResult<ListBean<ListData<DirectPersonComment>>>>
+    getPersonComment(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_project_detail)
+    @FormUrlEncoded
+    Observable<BaseResult<DirectProjectInfo>>
+    getDirectProjectInfo(@FieldMap TreeMap<String, String> map);
 
 }

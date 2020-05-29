@@ -48,15 +48,16 @@
                     android:gravity="bottom"
                     android:paddingTop="8dp"
                     android:paddingLeft="12dp"
-
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/tv_price"
                         style="@style/base_text_style"
                         android:textSize="18sp"
                         android:textColor="@color/yellow_deep"
                         android:text="398"/>
 
                     <TextView
+                        android:id="@+id/tv_unit"
                         style="@style/base_text_style"
                         android:textColor="@color/yellow_deep"
                         android:textSize="12sp"
@@ -68,11 +69,12 @@
 
 
                     <TextView
+                        android:id="@+id/tv_time"
                         android:text="100分钟"
                         android:drawableLeft="@mipmap/project_detail_time"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="20dp"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         style="@style/base_text_style_gray_small"/>
 
 
@@ -89,36 +91,38 @@
                     android:paddingBottom="12dp"
                     android:orientation="horizontal">
                     <TextView
-                        style="@style/base_text_style"
-                        android:textColor="@color/grayText"
+                        style="@style/base_text_style_gray_small"
                         android:text="保障"/>
-
-
-
+                    <LinearLayout
+                        android:id="@+id/ll_flag"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                     <TextView
                         android:text="无额外收费"
                         android:drawableLeft="@mipmap/project_flag1"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="12dp"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         style="@style/base_text_style_gray_small"/>
 
                     <TextView
                         android:text="爽约包赔"
-                        android:drawableLeft="@mipmap/project_flag2"
+                        android:drawableLeft="@mipmap/project_flag1"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="12dp"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         style="@style/base_text_style_gray_small"/>
-
 
                     <TextView
                         android:text="不满意重服务"
-                        android:drawableLeft="@mipmap/project_flag3"
+                        android:drawableLeft="@mipmap/project_flag1"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="12dp"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         style="@style/base_text_style_gray_small"/>
+
+
 
                 </LinearLayout>
 
@@ -150,7 +154,7 @@
                     <TextView
                         android:id="@+id/tv_select_time_tip"
                         style="@style/base_text_style"
-                        android:text="最早可约"
+                        android:text="最近可约"
                         android:textSize="12sp"
                         />
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestView"
@@ -30,14 +29,15 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_title"
-                    android:text="王孟云"
+                    android:id="@+id/tv_tv_technical_name"
+                    tools:text="王孟云"
                     style="@style/base_text_style"/>
 
 
                 <TextView
+                    android:id="@+id/tv_status"
                     style="@style/base_text_style"
-                    android:text="今日可约"
+                    tools:text="今日可约"
                     android:layout_marginLeft="12dp"
                     android:textSize="10sp"
                     android:paddingTop="2dp"
@@ -51,38 +51,15 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_flag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingTop="8dp"
-                android:paddingLeft="12dp"
                 android:orientation="horizontal">
 
 
 
-                <TextView
-                    android:text="实名认证"
-                    android:drawableLeft="@mipmap/yirenzheng"
-                    android:drawablePadding="5dp"
-                    android:textSize="10sp"
-                    style="@style/base_text_style_gray_small"/>
-
-                <TextView
-                    android:text="健康认证"
-                    android:drawableLeft="@mipmap/yirenzheng"
-                    android:drawablePadding="5dp"
-                    android:layout_marginLeft="12dp"
-                    android:textSize="10sp"
-                    style="@style/base_text_style_gray_small"/>
-
-
-                <TextView
-                    android:text="资格认证"
-                    android:drawableLeft="@mipmap/yirenzheng"
-                    android:drawablePadding="5dp"
-                    android:layout_marginLeft="12dp"
-                    android:textSize="10sp"
-                    style="@style/base_text_style_gray_small"/>
 
 
 
@@ -91,7 +68,8 @@
 
 
             <TextView
-                android:text="正规绿色服务！从业八年，持有高级按摩技师证，手法柔软、舒适、熟练、擅长经络疏通和经络spa。"
+                android:id="@+id/tv_content"
+                tools:text="正规绿色服务！从业八年，持有高级按摩技师证，手法柔软、舒适、熟练、擅长经络疏通和经络spa。"
                 android:paddingLeft="12dp"
                 android:paddingTop="8dp"
                 android:lineSpacingExtra="3dp"
@@ -116,15 +94,17 @@
                     style="@style/base_text_style_gray_small"/>
 
                 <TextView
-                    android:text="闵行区西郊花园"
+                    android:id="@+id/tv_address"
+                    tools:text="闵行区西郊花园"
                     android:layout_weight="1"
                     style="@style/base_text_style_gray_small"/>
 
 
 
                 <TextView
+                    android:id="@+id/tv_distance"
                     style="@style/base_text_style_gray_small"
-                    android:text="1.6km"
+                    tools:text="1.6km"
                     android:drawableLeft="@mipmap/address_direct"
                     android:drawablePadding="2dp"
                     />
@@ -134,70 +114,94 @@
 
             </LinearLayout>
 
-            <View
-                style="@style/base_space"
-                />
-
             <LinearLayout
                 android:id="@+id/ll_comment"
-                android:background="@drawable/touch_bg"
-                style="@style/base_hor_style">
-                <TextView
-                    android:id="@+id/tv_comment_number"
-                    style="@style/base_text_style"
-                    android:text="对TA的评价"
-                    android:layout_weight="1"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    style="@style/base_space"
+                    />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/right_black_icon"
-                    android:layout_gravity="center_vertical"/>
+                <LinearLayout
+
+                    android:background="@drawable/touch_bg"
+                    style="@style/base_hor_style">
+                    <TextView
+                        android:id="@+id/tv_comment_number"
+                        style="@style/base_text_style"
+                        android:text="对TA的评价"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/right_black_icon"
+                        android:layout_gravity="center_vertical"/>
 
 
+                </LinearLayout>
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"/>
 
-            <View
-                style="@style/base_space"
-                />
-
             <LinearLayout
-                android:background="@drawable/touch_bg"
-                style="@style/base_hor_style">
-                <TextView
-                    style="@style/base_text_style"
-                    android:text="TA的服务项目"
-                    android:layout_weight="1"/>
-
-
-                <TextView
-                    style="@style/base_text_style"
-                    android:text="最早可约"
-                    android:textSize="12sp"
+                android:id="@+id/ll_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    style="@style/base_space"
                     />
 
-                <TextView
-                    style="@style/base_text_style"
-                    android:text="今日 16:30"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/yellow_deep"
-                    android:textSize="12sp"
-                    />
+                <LinearLayout
+
+                    android:background="@drawable/touch_bg"
+                    style="@style/base_hor_style">
+                    <TextView
+                        style="@style/base_text_style"
+                        android:text="TA的服务项目"
+                        android:layout_weight="1"/>
+
+
+                    <TextView
+                        style="@style/base_text_style"
+                        android:text="最近可约"
+                        android:textSize="12sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_time_project"
+                        style="@style/base_text_style"
+                        tools:text="今日 16:30"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/yellow_deep"
+                        android:textSize="12sp"
+                        />
 
 
 
+
+                </LinearLayout>
 
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_package"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <View
                 style="@style/base_space"
@@ -213,13 +217,14 @@
 
                 <TextView
                     style="@style/base_text_style"
-                    android:text="最早可约"
+                    android:text="最近可约"
                     android:textSize="12sp"
                     />
 
                 <TextView
+                    android:id="@+id/tv_time_package"
                     style="@style/base_text_style"
-                    android:text="今日 16:30"
+                    tools:text="今日 16:30"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/yellow_deep"
                     android:textSize="12sp"
@@ -227,11 +232,17 @@
 
 
             </LinearLayout>
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_package"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"/>
+
+
+            <View
+                style="@style/base_space"
+                />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

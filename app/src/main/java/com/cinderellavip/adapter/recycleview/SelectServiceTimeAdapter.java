@@ -27,20 +27,20 @@ public class SelectServiceTimeAdapter extends BaseQuickAdapter<ShortTime, BaseVi
         ImageView iv_select = helper.getView(R.id.iv_select);
 
         tv_title.setText(item.start);
-        if (item.id == 1){
+        if (item.no_time == 1){
             //不可点击
             ll_root.setEnabled(false);
             tv_title.setTextColor(getContext().getColor(R.color.grayText));
             ll_root.setBackgroundResource(R.drawable.shape_line_gray_graysolid);
             iv_select.setVisibility(View.GONE);
 
-        }else if (item.id == 0 && !item.isCheck){
+        }else if (item.no_time == 0 && !item.isCheck){
             //正常
             ll_root.setEnabled(true);
             tv_title.setTextColor(getContext().getColor(R.color.black_title_color));
             ll_root.setBackgroundResource(R.drawable.shape_line_gray_whitesolid);
             iv_select.setVisibility(View.GONE);
-        }else if (item.id == 0 && item.isCheck){
+        }else if (item.no_time == 0 && item.isCheck){
             //选中的
             ll_root.setEnabled(true);
             tv_title.setTextColor(getContext().getColor(R.color.yellow_deep));

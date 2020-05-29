@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.cinderellavip.adapter.recycleview.DirectListAdapter;
 import com.cinderellavip.bean.ListData;
-import com.cinderellavip.bean.direct.DirectPerson;
+import com.cinderellavip.bean.direct.DirectMapPersonItem;
 import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -16,7 +16,7 @@ import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class DirectAppointListFragment extends BaseListFragment<DirectPerson> {
+public class DirectAppointListFragment extends BaseListFragment<DirectMapPersonItem> {
 
 
     private int service;
@@ -62,10 +62,10 @@ public class DirectAppointListFragment extends BaseListFragment<DirectPerson> {
         hashMap.put("longitude", ""+ CinderellApplication.longitude);
         hashMap.put("latitude", ""+ CinderellApplication.latitude);
         hashMap.put("page", ""+page);
-        new RxHttp<BaseResult<ListData<DirectPerson>>>().send(ApiManager.getService().getDirectPerson(hashMap),
-                new Response<BaseResult<ListData<DirectPerson>>>(isLoad,getContext()) {
+        new RxHttp<BaseResult<ListData<DirectMapPersonItem>>>().send(ApiManager.getService().getDirectPerson(hashMap),
+                new Response<BaseResult<ListData<DirectMapPersonItem>>>(isLoad,getContext()) {
                     @Override
-                    public void onSuccess(BaseResult<ListData<DirectPerson>> result) {
+                    public void onSuccess(BaseResult<ListData<DirectMapPersonItem>> result) {
                         setData(result.data.data);
                     }
                     @Override
@@ -94,6 +94,5 @@ public class DirectAppointListFragment extends BaseListFragment<DirectPerson> {
             this.service = id;
             onRefresh();
         }
-
     }
 }

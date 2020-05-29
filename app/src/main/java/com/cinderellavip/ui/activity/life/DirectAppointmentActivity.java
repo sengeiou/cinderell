@@ -78,7 +78,7 @@ public class DirectAppointmentActivity extends BaseActivity {
                         for (DirectCategory s :categories) {
                             tablayout.addTab(tablayout.newTab().setText(s.name));
                         }
-                        directAppointMapFragment = new DirectAppointMapFragment();
+                        directAppointMapFragment =  DirectAppointMapFragment.newInstance(categories.get(0).id);
                         fragmentList.add(directAppointMapFragment);
                         directAppointListFragment = DirectAppointListFragment.newInstance(categories.get(0).id);
                         fragmentList.add(directAppointListFragment);
@@ -101,7 +101,9 @@ public class DirectAppointmentActivity extends BaseActivity {
 
                 DirectCategory category = categories.get(position);
                 if (directAppointListFragment != null)
-                directAppointListFragment.setId(category.id);
+                    directAppointListFragment.setId(category.id);
+                if (directAppointMapFragment != null)
+                    directAppointMapFragment.setId(category.id);
 
 
             }

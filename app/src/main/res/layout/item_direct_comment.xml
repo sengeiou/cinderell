@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:background="@drawable/touch_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,7 +24,7 @@
             android:layout_height="45dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_avatar"/>
+            tools:src="@mipmap/demo_avatar"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -39,7 +40,7 @@
             android:layout_weight="1"
             android:lines="1"
             android:ellipsize="end"
-            android:text="王孟云"
+            tools:text="王孟云"
             />
 
         <com.cinderellavip.weight.RatingBarView
@@ -64,7 +65,7 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:lineSpacingExtra="3dp"
-            android:text="芳香经典SPA"
+            tools:text="芳香经典SPA"
             />
 
 
@@ -74,6 +75,7 @@
     <com.cinderellavip.weight.FlowLayout
         android:id="@+id/fl_flag"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -84,7 +86,7 @@
         android:layout_weight="1"
         android:lines="1"
         android:ellipsize="end"
-        android:text="手法娴熟，按完身体很舒服，手法专业，按的挺棒的"
+        tools:text="手法娴熟，按完身体很舒服，手法专业，按的挺棒的"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         />
@@ -108,18 +110,19 @@
             android:id="@+id/tv_address"
             style="@style/base_text_style_gray_small"
             android:layout_weight="1"
-            android:text="上海-环林东路"
+            tools:text="上海-环林东路"
             />
 
         <TextView
             android:id="@+id/tv_time"
             style="@style/base_text_style_gray_small"
-            android:text="2020-04-25"
+            tools:text="2020-04-25"
             />
 
     </LinearLayout>
 
     <View
         style="@style/line_light"
+        android:layout_marginLeft="12dp"
         />
 </LinearLayout>

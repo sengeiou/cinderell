@@ -44,19 +44,30 @@ public class SelectServiceTimeActivity extends BaseActivity {
 
     public static void launch(Activity from) {
         Intent intent = new Intent(from, SelectServiceTimeActivity.class);
+        intent.putExtra("type",0);
+        from.startActivityForResult(intent, RequestCode.request_service_time);
+    }
+
+    private int type;
+    private String waiter;
+    public static void launchDirect(Activity from,String waiter) {
+        Intent intent = new Intent(from, SelectServiceTimeActivity.class);
+        intent.putExtra("type",1);
+        intent.putExtra("waiter",waiter);
         from.startActivityForResult(intent, RequestCode.request_service_time);
     }
 
 
+
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        type = getIntent().getIntExtra("type",0);
+        waiter = getIntent().getStringExtra("waiter");
         setBackTitle("选择服务时间");
 
 
         fragment = new SelectServiceTimeFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.viewpager, fragment).commit();
-
 
     }
 
@@ -66,6 +77,17 @@ public class SelectServiceTimeActivity extends BaseActivity {
     @Override
     public void loadData() {
         if (!isLoad)showProress();
+        if (type == 0){
+            getShortTime();
+        }else if (type == 1){
+            getDirectPersonTime();
+        }
+
+
+    }
+
+    //获取短期项目时间
+    private void getShortTime(){
         TreeMap<String,String> map = new TreeMap<>();
         if (!TextUtils.isEmpty(day)){
             map.put("day",day);
@@ -74,30 +96,49 @@ public class SelectServiceTimeActivity extends BaseActivity {
                 new Response<BaseResult<ShortTimeResult>>(mActivity) {
                     @Override
                     public void onSuccess(BaseResult<ShortTimeResult> result) {
-                        ShortTimeResult shortTimeResult = result.data;
-                        if (!isLoad){
-                            showContent();
-                            shortDates = shortTimeResult.date;
-                            shortDate = shortDates.get(0);
-                            for (int i = 0; i< shortDates.size(); i++ ){
-                                ShortDate shortDate = shortDates.get(i);
-                                TabLayout.Tab tab = tablayout.newTab();
-                                if (i == 0){
-                                    tab.setText("今天\n"+shortDate.yue+"月"+shortDate.ri+"号");
-                                }else if (i == 1){
-                                    tab.setText("明天\n"+shortDate.yue+"月"+shortDate.ri+"号");
-                                }else {
-                                    tab.setText(shortDate.getWeek()+"\n"+shortDate.yue+"月"+shortDate.ri+"号");
-                                }
-                                tablayout.addTab(tab);
-                            }
-                            isLoad = true;
-                        }
-                        fragment.setDate(shortTimeResult.time);
-
+                        setData(result.data);
                     }
                 });
+    }
 
+    private void getDirectPersonTime(){
+        TreeMap<String,String> map = new TreeMap<>();
+        map.put("waiter",waiter+"");
+        if (!TextUtils.isEmpty(day)){
+            map.put("day",day);
+        }
+        new RxHttp<BaseResult<ShortTimeResult>>().send(ApiManager.getService().directPersonTime(map),
+                new Response<BaseResult<ShortTimeResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ShortTimeResult> result) {
+                        setData(result.data);
+                    }
+                });
+    }
+
+    private void setData(ShortTimeResult shortTimeResult){
+        if (!isLoad){
+            showContent();
+            shortDates = shortTimeResult.date;
+            shortDate = shortDates.get(0);
+            for (int i = 0; i< shortDates.size(); i++ ){
+                ShortDate shortDate = shortDates.get(i);
+                TabLayout.Tab tab = tablayout.newTab();
+                if (i == 0){
+                    shortDate.tip = "今天";
+                    tab.setText("今天\n"+shortDate.yue+"月"+shortDate.ri+"号");
+                }else if (i == 1){
+                    shortDate.tip = "明天";
+                    tab.setText("明天\n"+shortDate.yue+"月"+shortDate.ri+"号");
+                }else {
+                    shortDate.tip = shortDate.getWeek();
+                    tab.setText(shortDate.getWeek()+"\n"+shortDate.yue+"月"+shortDate.ri+"号");
+                }
+                tablayout.addTab(tab);
+            }
+            isLoad = true;
+        }
+        fragment.setDate(shortTimeResult.time);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,6 +12,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
+import com.cinderellavip.bean.direct.DirectPersonComment;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.weight.FlowLayout;
@@ -24,7 +27,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class DirectCommentAdapter extends BaseQuickAdapter<String, BaseViewHolder> implements LoadMoreModule {
+public class DirectCommentAdapter extends BaseQuickAdapter<DirectPersonComment, BaseViewHolder> implements LoadMoreModule {
 
     public DirectCommentAdapter() {
         super(R.layout.item_direct_comment, null);
@@ -32,29 +35,30 @@ public class DirectCommentAdapter extends BaseQuickAdapter<String, BaseViewHolde
 
 
     @Override
-    protected void convert( BaseViewHolder helper, String item) {
+    protected void convert( BaseViewHolder helper, DirectPersonComment item) {
         int position = helper.getAdapterPosition();
 
         helper.getView(R.id.ll_root).setOnClickListener(v -> {
         });
+        ImageView iv_product = helper.getView(R.id.iv_product);
+        ImageUtil.loadNet(getContext(),iv_product,item.user_avatar);
+        helper.setText(R.id.tv_title,item.user_name)
+                .setText(R.id.tv_category,item.project_title)
+                .setText(R.id.tv_content,item.content)
+                .setText(R.id.tv_address,item.address)
+                .setText(R.id.tv_time,item.create_at);
         RatingBarView ratingBar = helper.getView(R.id.ratingBar);
-        ratingBar.setStar(4,false);
+        ratingBar.setStar(item.score,false);
         ratingBar.setClickable(false);
 
         FlowLayout fl_flag = helper.getView(R.id.fl_flag);
-        List<String> list = new ArrayList<>();
-        list.add("服务态度好");
-        list.add("形象气质佳");
-        list.add("个人卫生好");
-        list.add("说话轻柔");
-        addFlag(fl_flag,list);
-
+        addFlag(fl_flag,item.label);
 
         RecyclerView rv_image = helper.getView(R.id.rv_image);
         rv_image.setLayoutManager(new GridLayoutManager(getContext(),4));
         CommentImageAdapter adapter = new CommentImageAdapter();
         rv_image.setAdapter(adapter);
-        adapter.setNewData(DataUtil.getData(4));
+        adapter.setNewData(item.image);
 
 
     }

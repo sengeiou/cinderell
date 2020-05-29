@@ -9,6 +9,7 @@ import com.cinderellavip.adapter.recycleview.SelectServiceCouponAdapter;
 import com.cinderellavip.bean.ListData;
 import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -67,6 +68,8 @@ public class SelectServiceCouponFragment extends BaseListFragment<LifeCoupon> {
             getLongCoupons();
         }else if (type == ServiceSelectCouponActivity.PROJECT){
             getProjectCoupons();
+        }else if (type == ServiceSelectCouponActivity.DIRECT){
+            getDirectCoupons();
         }
 
 
@@ -98,6 +101,29 @@ public class SelectServiceCouponFragment extends BaseListFragment<LifeCoupon> {
         hashMap.put("project", ""+contracts_id);
         hashMap.put("city", ""+ CinderellApplication.name);
         new RxHttp<BaseResult<ListData<LifeCoupon>>>().send(ApiManager.getService().lifeCoupon(hashMap),
+                new Response<BaseResult<ListData<LifeCoupon>>>(isLoad,getContext()) {
+                    @Override
+                    public void onSuccess(BaseResult<ListData<LifeCoupon>> result) {
+                        setData(result.data.data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
+
+    }
+
+    private void getDirectCoupons(){
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("user_id", ""+ GlobalParam.getUserId());
+        hashMap.put("project", ""+contracts_id);
+        hashMap.put("city", ""+ CinderellApplication.name);
+        new RxHttp<BaseResult<ListData<LifeCoupon>>>().send(ApiManager.getService().directCoupon(hashMap),
                 new Response<BaseResult<ListData<LifeCoupon>>>(isLoad,getContext()) {
                     @Override
                     public void onSuccess(BaseResult<ListData<LifeCoupon>> result) {

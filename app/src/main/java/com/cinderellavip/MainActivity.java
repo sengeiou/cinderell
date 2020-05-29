@@ -138,7 +138,6 @@ public class MainActivity extends CheckPermissionActivity {
                     public void onSuccess(BaseResult<SignResult> result) {
                         String s = "灰豆+"+result.data.num;
                         CenterDialogUtil.showSignSuccess(mContext,s,()->{
-                            finish();
                         });
                     }
                 });

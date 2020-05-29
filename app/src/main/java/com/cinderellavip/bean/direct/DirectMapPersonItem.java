@@ -1,6 +1,6 @@
 package com.cinderellavip.bean.direct;
 
-public class DirectPerson {
+public class DirectMapPersonItem {
     public int id;
     public int score;
     public double distance;
@@ -17,5 +17,15 @@ public class DirectPerson {
 
         }
         return "今日可约";
+    }
+
+    @Override
+    public String toString() {
+        return "DirectPerson{" +
+                "id=" + id +
+                ", avatar='" + avatar + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                '}';
     }
 }

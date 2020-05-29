@@ -17,14 +17,7 @@ public class ServiceSelectCouponActivity extends BaseActivity {
 
     public static final int LONG = 0;
     public static final int PROJECT = 1;
-
-
-    //后期删除
-    public static void launch(Activity from) {
-        Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
-        from.startActivityForResult(intent, RequestCode.request_service_coupon);
-    }
-
+    public static final int DIRECT = 2;
 
     //合同id
     public static void launch(Activity from,String contracts_id,int type) {
@@ -41,12 +34,20 @@ public class ServiceSelectCouponActivity extends BaseActivity {
         from.startActivityForResult(intent, RequestCode.request_service_coupon);
     }
 
+    //直约选择优惠券
+    public static void launchDirect(Activity from,String contracts_id) {
+        Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
+        intent.putExtra("contracts_id",contracts_id);
+        intent.putExtra("type",DIRECT);
+        from.startActivityForResult(intent, RequestCode.request_service_coupon);
+    }
+
+
 
     @Override
     public void initView(Bundle savedInstanceState) {
 
         setBackTitle("选择优惠券");
-
 
 
     }

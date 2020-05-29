@@ -15,7 +15,7 @@ public class ShortTime implements Parcelable {
     public String end;
     public String day;
     //0:可选 1：不可选择
-    public int id;
+    public int no_time;
 
     @Override
     public int describeContents() {
@@ -28,7 +28,7 @@ public class ShortTime implements Parcelable {
         dest.writeString(this.start);
         dest.writeString(this.end);
         dest.writeString(this.day);
-        dest.writeInt(this.id);
+        dest.writeInt(this.no_time);
     }
 
     public ShortTime() {
@@ -39,7 +39,7 @@ public class ShortTime implements Parcelable {
         this.start = in.readString();
         this.end = in.readString();
         this.day = in.readString();
-        this.id = in.readInt();
+        this.no_time = in.readInt();
     }
 
     public static final Parcelable.Creator<ShortTime> CREATOR = new Parcelable.Creator<ShortTime>() {

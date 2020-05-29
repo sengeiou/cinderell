@@ -16,6 +16,7 @@ import com.cinderellavip.bean.net.life.LifeCoupon;
 import com.cinderellavip.bean.net.life.ShortDate;
 import com.cinderellavip.bean.net.life.ShortPreOrderResult;
 import com.cinderellavip.bean.net.life.ShortTime;
+import com.cinderellavip.bean.request.LifePreOrder;
 import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.RequestCode;
@@ -78,13 +79,12 @@ public class BuyServiceActivity extends BaseActivity {
     @BindView(R.id.tv_buy)
     TextView tvBuy;
 
-    //项目id
-    private int project;
-    private String city;
-    public static void launch(Context from,int project,String city) {
+
+
+    private  LifePreOrder lifePreOrder;
+    public static void launch(Context from, LifePreOrder lifePreOrder) {
         Intent intent = new Intent(from, BuyServiceActivity.class);
-        intent.putExtra("project",project);
-        intent.putExtra("city",city);
+        intent.putExtra("lifePreOrder",lifePreOrder);
         from.startActivity(intent);
     }
 
@@ -93,9 +93,12 @@ public class BuyServiceActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         setLineVisibility();
         setBackTitle("购买服务");
-        project = getIntent().getIntExtra("project",-1);
-        city = getIntent().getStringExtra("city");
-        prePayLongOrder = new PrePayLongOrder(""+project,city);
+        lifePreOrder = getIntent().getParcelableExtra("lifePreOrder");
+        prePayLongOrder = new PrePayLongOrder(lifePreOrder.project+"",lifePreOrder.city);
+            if (lifePreOrder.type == LifePreOrder.DIRECT){
+                prePayLongOrder.starttime = lifePreOrder.servicetime;
+                tvServiceTime.setText(prePayLongOrder.starttime);
+            }
 
     }
     //请求参数封装
@@ -103,9 +106,18 @@ public class BuyServiceActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (lifePreOrder.type == LifePreOrder.SHORT){
+            getShortPreOrder();
+        }else if (lifePreOrder.type == LifePreOrder.DIRECT){
+            getDirectPreOrder();
+        }
+
+    }
+
+    private void  getShortPreOrder(){
         TreeMap<String,String> map = new TreeMap<>();
-        map.put("city", city +"");
-        map.put("project",project+"");
+        map.put("city", lifePreOrder.city +"");
+        map.put("project",lifePreOrder.project+"");
         map.put("address",""+prePayLongOrder.address);
         map.put("coupon",""+prePayLongOrder.coupon);
         map.put("starttime",""+prePayLongOrder.starttime);
@@ -124,6 +136,26 @@ public class BuyServiceActivity extends BaseActivity {
                 });
     }
 
+    private void  getDirectPreOrder(){
+        TreeMap<String,String> map = new TreeMap<>();
+        map.put("city", lifePreOrder.city +"");
+        map.put("project",lifePreOrder.project+"");
+        map.put("address",""+prePayLongOrder.address);
+        map.put("coupon",""+prePayLongOrder.coupon);
+        map.put("prePayLongOrder",""+prePayLongOrder.starttime);
+        new RxHttp<BaseResult<ShortPreOrderResult>>().send(ApiManager.getService().directPreOrder(map),
+                new Response<BaseResult<ShortPreOrderResult>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<ShortPreOrderResult> result) {
+                        ShortPreOrderResult shortPreOrderResult = result.data;
+                        tvOrderMoney.setText(shortPreOrderResult.getPrice()+"元");
+                        tvCouponMoney.setText("-"+shortPreOrderResult.getDiscount()+"元");
+                        tvPayMoney.setText(shortPreOrderResult.getActual()+"元");
+                        tv_money.setText(shortPreOrderResult.getActual()+"元");
+                    }
+                });
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_buy_one_service;
@@ -138,14 +170,19 @@ public class BuyServiceActivity extends BaseActivity {
                 SelectServiceAddressActivity.launch(mActivity, SelectServiceAddressActivity.SELECT);
                 break;
             case R.id.ll_service_time:
-//                TimeUtil3s.getInstance().showSelectDialog(mContext,(year, month, day) -> {
-//                    tvServiceTime.setText("1月6号 今天 18:00");
-//                });
-                SelectServiceTimeActivity.launch(mActivity);
+                if (lifePreOrder.type == LifePreOrder.SHORT){
+                    SelectServiceTimeActivity.launch(mActivity);
+                }else if (lifePreOrder.type == LifePreOrder.DIRECT){
+                    SelectServiceTimeActivity.launchDirect(mActivity,lifePreOrder.waiter);
+                }
+
                 break;
             case R.id.ll_service_coupon:
-                ServiceSelectCouponActivity.launch(mActivity,""+project,ServiceSelectCouponActivity.PROJECT);
-//                ServiceSelectCouponActivity.launch(mActivity);
+                if (lifePreOrder.type == LifePreOrder.SHORT){
+                    ServiceSelectCouponActivity.launch(mActivity,lifePreOrder.project+"",ServiceSelectCouponActivity.PROJECT);
+                }else if (lifePreOrder.type == LifePreOrder.DIRECT){
+                    ServiceSelectCouponActivity.launchDirect(mActivity,lifePreOrder.project+"");
+                }
                 break;
             case R.id.iv_agreement:
                 isSelect = !isSelect;
@@ -173,22 +210,20 @@ public class BuyServiceActivity extends BaseActivity {
             return;
         }
         prePayLongOrder.type = PrePayLongOrder.PROJECT;
-        prePayLongOrder.project = project+"";
+        prePayLongOrder.project = lifePreOrder.project+"";
         prePayLongOrder.address = netCityBean.id+"";
-        prePayLongOrder.coupon = prePayLongOrder.coupon+"";
-        prePayLongOrder.starttime = prePayLongOrder.starttime+"";
-        prePayLongOrder.endtime = prePayLongOrder.endtime+"";
-        prePayLongOrder.city = prePayLongOrder.city+"";
-        createOrder();
-
-
+        if (lifePreOrder.type == LifePreOrder.SHORT){
+            createOrder();
+        }else if (lifePreOrder.type == LifePreOrder.DIRECT){
+            createDirectOrder();
+        }
 
     }
 
     private void createOrder(){
         TreeMap<String,String> map = new TreeMap<>();
         map.put("city", prePayLongOrder.city +"");
-        map.put("project",project+"");
+        map.put("project",lifePreOrder.project+"");
         map.put("address",""+prePayLongOrder.address);
         map.put("coupon",""+prePayLongOrder.coupon);
         map.put("starttime",""+prePayLongOrder.starttime);
@@ -205,6 +240,26 @@ public class BuyServiceActivity extends BaseActivity {
                 });
 
     }
+    private void createDirectOrder(){
+        TreeMap<String,String> map = new TreeMap<>();
+        map.put("project",lifePreOrder.project+"");
+        map.put("address",""+prePayLongOrder.address);
+        map.put("servicetime",""+prePayLongOrder.starttime);
+        map.put("coupon",""+prePayLongOrder.coupon);
+        map.put("city", CinderellApplication.name +"");
+        map.put("waiter",""+lifePreOrder.waiter);
+        new RxHttp<BaseResult<Integer>>().send(ApiManager.getService().createDirectOrder(map),
+                new Response<BaseResult<Integer>>(mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<Integer> result) {
+                        prePayLongOrder.project = result.data+"";
+                        PayCheckoutCounterActivity.launch(mActivity,prePayLongOrder);
+                        finish();
+                    }
+                });
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
