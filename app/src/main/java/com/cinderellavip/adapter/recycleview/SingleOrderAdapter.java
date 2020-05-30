@@ -1,7 +1,6 @@
 package com.cinderellavip.adapter.recycleview;
 
 
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,7 +12,6 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.PrePayLongOrder;
 import com.cinderellavip.bean.eventbus.UpdateShortServiceOrder;
-import com.cinderellavip.bean.net.life.LongOrderItem;
 import com.cinderellavip.bean.net.life.ShortOrderItem;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
@@ -23,7 +21,6 @@ import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.activity.life.PayCheckoutCounterActivity;
 import com.cinderellavip.ui.activity.life.ServiceOrderCommentActivity;
 import com.cinderellavip.ui.activity.life.SingleServiceOrderDetailActivity;
-import com.cinderellavip.ui.activity.life.SingleServiceOrderListActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
@@ -95,7 +92,7 @@ public class SingleOrderAdapter extends BaseQuickAdapter<ShortOrderItem, BaseVie
                 prePayLongOrder.type = PrePayLongOrder.PROJECT;
                 PayCheckoutCounterActivity.launch(getContext(),prePayLongOrder);
             }else  if (item.status == 2){
-                ServiceOrderCommentActivity.launch(getContext());
+                ServiceOrderCommentActivity.launch(getContext(),item.id+"");
             }
         });
         LinearLayout ll_root = helper.getView(R.id.ll_root);

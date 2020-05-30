@@ -165,7 +165,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="170元"
+            android:hint="0元"
             android:textSize="12sp"
             android:textColor="@color/black_title_color"
             android:gravity="right"
@@ -216,7 +216,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="170元"
+            android:hint="0元"
             android:textSize="12sp"
             android:textColor="@color/yellow_deep"
             android:gravity="right"
@@ -295,7 +295,7 @@
         <TextView
             android:id="@+id/tv_money"
             style="@style/base_text_style"
-            tools:text="170元"
+            tools:text="0元"
             android:layout_marginLeft="12dp"
             android:textColor="@color/yellow_deep"
             />

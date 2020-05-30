@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
+import com.tozzais.baselibrary.weight.ProgressLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ public class DirectAppointmentActivity extends BaseActivity {
     TextView tvRight;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.progress)
+    ProgressLayout progress;
 
         @BindView(R.id.viewpager)
         IndexViewPager viewpager;
@@ -70,10 +73,13 @@ public class DirectAppointmentActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (!isLoad)progress.showLoading();
         new RxHttp<BaseResult<List<DirectCategory>>>().send(ApiManager.getService().directCate(),
-                new Response<BaseResult<List<DirectCategory>>>(mActivity) {
+                new Response<BaseResult<List<DirectCategory>>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<List<DirectCategory>> result) {
+                        isLoad = true;
+                        progress.showContent();
                         categories = result.data;
                         for (DirectCategory s :categories) {
                             tablayout.addTab(tablayout.newTab().setText(s.name));
@@ -84,6 +90,11 @@ public class DirectAppointmentActivity extends BaseActivity {
                         fragmentList.add(directAppointListFragment);
                         adapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), fragmentList);
                         viewpager.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        progress.showError(s,view -> loadData());
                     }
                 });
 

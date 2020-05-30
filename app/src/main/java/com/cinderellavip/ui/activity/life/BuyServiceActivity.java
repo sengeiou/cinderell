@@ -23,7 +23,6 @@ import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
-import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -123,15 +122,21 @@ public class BuyServiceActivity extends BaseActivity {
         map.put("starttime",""+prePayLongOrder.starttime);
         map.put("endtime",""+prePayLongOrder.endtime);
         new RxHttp<BaseResult<ShortPreOrderResult>>().send(ApiManager.getService().shortPreOrder(map),
-                new Response<BaseResult<ShortPreOrderResult>>(mActivity) {
+                new Response<BaseResult<ShortPreOrderResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<ShortPreOrderResult> result) {
+                        showContent();
                         ShortPreOrderResult shortPreOrderResult = result.data;
                         tvOrderMoney.setText(shortPreOrderResult.getPrice()+"元");
                         tvCouponMoney.setText("-"+shortPreOrderResult.getDiscount()+"元");
                         tvPayMoney.setText(shortPreOrderResult.getActual()+"元");
                         tv_money.setText(shortPreOrderResult.getActual()+"元");
 
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
     }
@@ -144,7 +149,7 @@ public class BuyServiceActivity extends BaseActivity {
         map.put("coupon",""+prePayLongOrder.coupon);
         map.put("prePayLongOrder",""+prePayLongOrder.starttime);
         new RxHttp<BaseResult<ShortPreOrderResult>>().send(ApiManager.getService().directPreOrder(map),
-                new Response<BaseResult<ShortPreOrderResult>>(mActivity) {
+                new Response<BaseResult<ShortPreOrderResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<ShortPreOrderResult> result) {
                         ShortPreOrderResult shortPreOrderResult = result.data;
@@ -153,6 +158,11 @@ public class BuyServiceActivity extends BaseActivity {
                         tvPayMoney.setText(shortPreOrderResult.getActual()+"元");
                         tv_money.setText(shortPreOrderResult.getActual()+"元");
                     }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+
                 });
     }
 

@@ -2,10 +2,7 @@ package com.cinderellavip.ui.fragment.mine;
 
 import android.os.Bundle;
 
-import com.cinderellavip.adapter.recycleview.BlackListAdapter;
 import com.cinderellavip.adapter.recycleview.MessageCenterAdapter;
-import com.cinderellavip.bean.net.mine.BlacklistItem;
-import com.cinderellavip.bean.net.mine.BlacklistResult;
 import com.cinderellavip.bean.net.mine.MessageItem;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -16,7 +13,6 @@ import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.log.LogUtil;
 
 import java.util.List;
-import java.util.TreeMap;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -61,7 +57,7 @@ public class MessageCenterFragment extends BaseListFragment<MessageItem> {
     }
     @Override
     public void onResume() {
-        loadData();
+        onRefresh();
         super.onResume();
     }
 

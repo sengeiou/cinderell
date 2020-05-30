@@ -159,7 +159,7 @@ public class SingleServiceOrderDetailActivity extends BaseActivity {
                     PayCheckoutCounterActivity.launch(mActivity,prePayLongOrder);
                 } else if (shortOrderItem.status == 2) {
                     //去评价
-                    ServiceOrderCommentActivity.launch(mActivity);
+                    ServiceOrderCommentActivity.launch(mActivity,type+"");
                 }
                 break;
         }

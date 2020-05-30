@@ -17,7 +17,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
-import com.cinderellavip.ui.activity.WebViewActivity;
+import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
@@ -147,11 +147,15 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_cost_explain:
-                CenterDialogUtil.showCostExplain(mActivity, s -> {
-                });
+//                ServiceOrderCommentActivity.launch(mActivity,type+"");
+//                CenterDialogUtil.showCostExplain(mActivity, s -> {
+//                });
                 break;
             case R.id.tv_look:
-                WebViewActivity.launch(mActivity, "服务签约电子合同", "https://www.baidu.com");
+                if (longOrderDetailResult != null){
+                    AgreementWebViewActivity.launch(mActivity,longOrderDetailResult.url);
+                }
+//                WebViewActivity.launch(mActivity, "服务签约电子合同", "https://www.baidu.com");
                 break;
             case R.id.tv_btn1:
                 if (longOrderDetailResult.type == 1) {
@@ -176,7 +180,7 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
                     PayCheckoutCounterActivity.launch(mActivity,prePayLongOrder);
                 } else if (longOrderDetailResult.type == 5) {
                     //评价
-                    ServiceOrderCommentActivity.launch(mActivity);
+                    ServiceOrderCommentActivity.launch(mActivity,type+"");
                 }
                 break;
         }
@@ -283,6 +287,8 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
             view5.setBackgroundColor(getColor(R.color.gray_progress));
             view6.setBackgroundColor(getColor(R.color.gray_progress));
             ivProgress4.setImageResource(R.mipmap.progress_right);
+            tvProgress1.setTextColor(getResources().getColor(R.color.yellow_progress));
+
         }else if (type == 2 || type == 3){
             ivProgress1.setImageResource(R.mipmap.progress_left_select);
             view1.setBackgroundColor(getColor(R.color.yellow_progress));
@@ -294,6 +300,8 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
             view5.setBackgroundColor(getColor(R.color.gray_progress));
             view6.setBackgroundColor(getColor(R.color.gray_progress));
             ivProgress4.setImageResource(R.mipmap.progress_right);
+            tvProgress1.setTextColor(getResources().getColor(R.color.yellow_progress));
+            tvProgress2.setTextColor(getResources().getColor(R.color.yellow_progress));
         }else if (type == 4){
             ivProgress1.setImageResource(R.mipmap.progress_left_select);
             view1.setBackgroundColor(getColor(R.color.yellow_progress));
@@ -305,6 +313,9 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
             view5.setBackgroundColor(getColor(R.color.yellow_progress));
             view6.setBackgroundColor(getColor(R.color.gray_progress));
             ivProgress4.setImageResource(R.mipmap.progress_right);
+            tvProgress1.setTextColor(getResources().getColor(R.color.yellow_progress));
+            tvProgress2.setTextColor(getResources().getColor(R.color.yellow_progress));
+            tvProgress3.setTextColor(getResources().getColor(R.color.yellow_progress));
         }else if (type == 5 || type == 6){
             ivProgress1.setImageResource(R.mipmap.progress_left_select);
             view1.setBackgroundColor(getColor(R.color.yellow_progress));
@@ -316,6 +327,10 @@ public class LongServiceOrderDetailActivity extends BaseActivity {
             view5.setBackgroundColor(getColor(R.color.yellow_progress));
             view6.setBackgroundColor(getColor(R.color.yellow_progress));
             ivProgress4.setImageResource(R.mipmap.progress_right_select);
+            tvProgress1.setTextColor(getResources().getColor(R.color.yellow_progress));
+            tvProgress2.setTextColor(getResources().getColor(R.color.yellow_progress));
+            tvProgress3.setTextColor(getResources().getColor(R.color.yellow_progress));
+            tvProgress4.setTextColor(getResources().getColor(R.color.yellow_progress));
         }else {
             ll_progress.setVisibility(View.GONE);
         }

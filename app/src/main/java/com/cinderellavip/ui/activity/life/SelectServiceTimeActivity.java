@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.life.ShortDate;
@@ -16,7 +14,6 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.life.SelectServiceTimeFragment;
-import com.cinderellavip.util.TabLayoutAddOnClickHelper;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -93,10 +90,15 @@ public class SelectServiceTimeActivity extends BaseActivity {
             map.put("day",day);
         }
         new RxHttp<BaseResult<ShortTimeResult>>().send(ApiManager.getService().shortOrderTime(map),
-                new Response<BaseResult<ShortTimeResult>>(mActivity) {
+                new Response<BaseResult<ShortTimeResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<ShortTimeResult> result) {
                         setData(result.data);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
     }
@@ -108,10 +110,15 @@ public class SelectServiceTimeActivity extends BaseActivity {
             map.put("day",day);
         }
         new RxHttp<BaseResult<ShortTimeResult>>().send(ApiManager.getService().directPersonTime(map),
-                new Response<BaseResult<ShortTimeResult>>(mActivity) {
+                new Response<BaseResult<ShortTimeResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<ShortTimeResult> result) {
                         setData(result.data);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
     }

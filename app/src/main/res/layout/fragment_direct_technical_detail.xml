@@ -6,6 +6,12 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <com.tozzais.baselibrary.weight.ProgressLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestView"
         android:layout_width="match_parent"
@@ -247,6 +253,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    </com.tozzais.baselibrary.weight.ProgressLayout>
 
     <LinearLayout
         android:id="@+id/title"

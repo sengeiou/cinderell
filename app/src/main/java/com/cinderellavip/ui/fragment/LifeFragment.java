@@ -74,7 +74,7 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
 
         initHeadView();
 
-        location();
+
 
 
     }
@@ -129,9 +129,16 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
     @Override
     public void loadData() {
         super.loadData();
+        if (!isLoad){
+            location();
+        }
         getData(CinderellApplication.name);
 
+
+
     }
+
+
     private void location(){
         LocationUtil.getInstance().start(mActivity,(aMapLocation, lat, lnt) -> {
             if (aMapLocation.getErrorCode() == 0){
@@ -161,6 +168,11 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
                        liftHomeResult = result.data;
                        setData();
                        setData(true,liftHomeResult.list);
+                    }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
     }

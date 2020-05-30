@@ -46,6 +46,7 @@ import com.cinderellavip.bean.net.life.CategoryResult;
 import com.cinderellavip.bean.net.life.DirectCategory;
 import com.cinderellavip.bean.net.life.HotSearchItem;
 import com.cinderellavip.bean.net.life.LifeCoupon;
+import com.cinderellavip.bean.net.life.LifeOrderCommentLabel;
 import com.cinderellavip.bean.net.life.LiftCategoryItem;
 import com.cinderellavip.bean.net.life.LiftHomeResult;
 import com.cinderellavip.bean.net.life.LiftHomeServiceItem;
@@ -710,5 +711,13 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult<DirectProjectInfo>>
     getDirectProjectInfo(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.life_order_comment_label)
+    Observable<BaseListResult<LifeOrderCommentLabel>>
+    getCommentLabel();
+    @POST(HttpUrl.life_order_comment)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    getComment(@FieldMap TreeMap<String, String> map);
 
 }

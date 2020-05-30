@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
@@ -10,6 +11,12 @@
         android:layout_weight="1"
         android:background="@color/white"
         >
+        <com.tozzais.baselibrary.weight.ProgressLayout
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestView"
@@ -35,7 +42,7 @@
 
                     <TextView
                         android:id="@+id/tv_title"
-                        android:text="芳香经典SPA"
+                        tools:text="芳香经典SPA"
                         android:textColor="@color/black"
                         style="@style/base_text_style"/>
 
@@ -54,7 +61,7 @@
                         style="@style/base_text_style"
                         android:textSize="18sp"
                         android:textColor="@color/yellow_deep"
-                        android:text="398"/>
+                        tools:text="398"/>
 
                     <TextView
                         android:id="@+id/tv_unit"
@@ -70,7 +77,7 @@
 
                     <TextView
                         android:id="@+id/tv_time"
-                        android:text="100分钟"
+                        tools:text="100分钟"
                         android:drawableLeft="@mipmap/project_detail_time"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="20dp"
@@ -161,7 +168,7 @@
                     <TextView
                         android:id="@+id/tv_select_time"
                         style="@style/base_text_style"
-                        android:text="今日 16:30"
+                        tools:text="今日 16:30"
                         android:layout_marginLeft="10dp"
                         android:textColor="@color/yellow_deep"
                         android:textSize="12sp"
@@ -199,14 +206,14 @@
                     <TextView
                         android:id="@+id/tv_service_content1"
                         style="@style/base_text_style_gray_small"
-                        android:text="服务时长：100分钟"
+                        tools:text="服务时长：100分钟"
                         android:lineSpacingExtra="5dp"
                         android:textColor="@color/black_title_color_second"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/tv_service_content2"
                         style="@style/base_text_style_gray_small"
-                        android:text="服务姿势：卧姿"
+                        tools:text="服务姿势：卧姿"
                         android:lineSpacingExtra="5dp"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black_title_color_second"
@@ -215,7 +222,7 @@
                     <TextView
                         android:id="@+id/tv_service_content3"
                         style="@style/base_text_style_gray_small"
-                        android:text="原理功效：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
+                        tools:text="原理功效：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
                         android:lineSpacingExtra="5dp"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black_title_color_second"
@@ -223,7 +230,7 @@
                     <TextView
                         android:id="@+id/tv_service_content4"
                         style="@style/base_text_style_gray_small"
-                        android:text="不宜人群：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
+                        tools:text="不宜人群：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
                         android:lineSpacingExtra="5dp"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black_title_color_second"
@@ -231,7 +238,7 @@
                     <TextView
                         android:id="@+id/tv_service_content5"
                         style="@style/base_text_style_gray_small"
-                        android:text="服务流程：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
+                        tools:text="服务流程：运用特殊的手法，舒缓压力，改善头痛和失眠，久做腰疼悲酸。促进细胞再生，让自己保持弹性"
                         android:lineSpacingExtra="5dp"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black_title_color_second"
@@ -341,7 +348,7 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
+        </com.tozzais.baselibrary.weight.ProgressLayout>
 
         <LinearLayout
             android:id="@+id/title"

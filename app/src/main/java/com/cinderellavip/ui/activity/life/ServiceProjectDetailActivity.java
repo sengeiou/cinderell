@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.DirectCommentAdapter;
 import com.cinderellavip.adapter.recycleview.ServiceDetailContentAdapter;
 import com.cinderellavip.adapter.viewpager.BannerViewPagerAdapter;
-import com.cinderellavip.bean.direct.DirectPersonComment;
 import com.cinderellavip.bean.direct.DirectProjectInfo;
 import com.cinderellavip.bean.net.life.ShortDate;
 import com.cinderellavip.bean.net.life.ShortTime;
@@ -33,11 +31,11 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.util.ColorUtil;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyIndicator;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
+import com.tozzais.baselibrary.weight.ProgressLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +107,10 @@ public class ServiceProjectDetailActivity extends BaseActivity {
     LinearLayout llComment;
 
 
+    @BindView(R.id.progress)
+    ProgressLayout progress;
+
+
     private BaseQuickAdapter commentAdapter;
     private BaseQuickAdapter serviceListAdapter;
 
@@ -143,6 +145,7 @@ public class ServiceProjectDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (!isLoad)progress.showLoading();
         getData();
     }
 
@@ -155,12 +158,14 @@ public class ServiceProjectDetailActivity extends BaseActivity {
                 new Response<BaseResult<DirectProjectInfo>>(isLoad, mActivity) {
                     @Override
                     public void onSuccess(BaseResult<DirectProjectInfo> result) {
+                        isLoad = true;
+                        progress.showContent();
                         setData(result.data);
                     }
 
                     @Override
                     public void onErrorShow(String s) {
-                        showError(s);
+                        progress.showError(s,view -> loadData());
                     }
                 });
     }

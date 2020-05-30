@@ -26,11 +26,11 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.util.ColorUtil;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.weight.MyIndicator;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
+import com.tozzais.baselibrary.weight.ProgressLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +94,8 @@ public class DirectAppointmentTechnicianDetailActivity extends BaseActivity {
     TextView tvTimePackage;
     @BindView(R.id.ll_package)
     LinearLayout llPackage;
+    @BindView(R.id.progress)
+    ProgressLayout progress;
 
 
     private BaseQuickAdapter commentAdapter;
@@ -131,6 +133,7 @@ public class DirectAppointmentTechnicianDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
+        if (!isLoad)progress.showLoading();
         getData();
     }
 
@@ -145,11 +148,12 @@ public class DirectAppointmentTechnicianDetailActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseResult<DirectPersonInfo> result) {
                         isLoad = true;
+                        progress.showContent();
                         setData(result.data);
                     }
                     @Override
                     public void onErrorShow(String s) {
-                        showError(s);
+                        progress.showError(s,view -> loadData());
                     }
                 });
     }

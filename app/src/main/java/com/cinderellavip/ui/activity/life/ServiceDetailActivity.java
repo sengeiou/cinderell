@@ -10,7 +10,6 @@ import android.view.View;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.life.ServiceProjectDetail;
 import com.cinderellavip.bean.request.LifePreOrder;
-import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -70,6 +69,7 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
                 new Response<BaseResult<ServiceProjectDetail>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<ServiceProjectDetail> result) {
+                        showContent();
                         serviceProjectDetail = result.data;
                         setBackTitle(serviceProjectDetail.title);
                         loadData(serviceProjectDetail.content);

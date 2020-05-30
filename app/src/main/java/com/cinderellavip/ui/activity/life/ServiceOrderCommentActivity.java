@@ -10,30 +10,48 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
-import com.cinderellavip.adapter.recycleview.MineOrderCommentImageAdpter;
 import com.cinderellavip.adapter.recycleview.MineServiceCommentImageAdapter;
 import com.cinderellavip.bean.OrderCommentImageItemBean;
-import com.cinderellavip.bean.local.PublishImageBean;
+import com.cinderellavip.bean.UploadImageResult;
+import com.cinderellavip.bean.eventbus.UpdateLongServiceOrder;
+import com.cinderellavip.bean.eventbus.UpdateShortServiceOrder;
+import com.cinderellavip.bean.net.life.LifeOrderCommentLabel;
+import com.cinderellavip.global.Constant;
+import com.cinderellavip.http.ApiManager;
+import com.cinderellavip.http.BaseListResult;
+import com.cinderellavip.http.BaseResult;
+import com.cinderellavip.http.Response;
 import com.cinderellavip.imagepick.CustomImgPickerPresenter;
 import com.cinderellavip.listener.OnPublishImageListener;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.weight.RatingBarView;
 import com.nex3z.flowlayout.FlowLayout;
-import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.log.LogUtil;
+import com.tozzais.baselibrary.util.progress.LoadingUtils;
 import com.ypx.imagepicker.ImagePicker;
 import com.ypx.imagepicker.bean.ImageItem;
 import com.ypx.imagepicker.bean.MimeType;
 import com.ypx.imagepicker.bean.SelectMode;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 
 /**
@@ -56,8 +74,10 @@ public class ServiceOrderCommentActivity  extends CheckPermissionActivity  imple
 
     List<String> selectFlag = new ArrayList<>();
 
-    public static void launch(Context from) {
+    private String order;
+    public static void launch(Context from,String order) {
         Intent intent = new Intent(from, ServiceOrderCommentActivity.class);
+        intent.putExtra("order",order);
         from.startActivity(intent);
     }
 
@@ -70,7 +90,7 @@ public class ServiceOrderCommentActivity  extends CheckPermissionActivity  imple
 
         setBackTitle("订单评价");
 
-
+        order = getIntent().getStringExtra("order");
         rvImage.setLayoutManager(new GridLayoutManager(mActivity, 4));
         mAdapter = new MineServiceCommentImageAdapter(this);
         rvImage.setAdapter(mAdapter);
@@ -82,23 +102,25 @@ public class ServiceOrderCommentActivity  extends CheckPermissionActivity  imple
 
     @Override
     public void loadData() {
-       addData();
 
+        new RxHttp<BaseListResult<LifeOrderCommentLabel>>().send(ApiManager.getService().getCommentLabel(),
+                new Response<BaseListResult<LifeOrderCommentLabel>>(isLoad, mActivity) {
+                    @Override
+                    public void onSuccess(BaseListResult<LifeOrderCommentLabel> result) {
+                        addData(result.data);
+                    }
 
-
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
+                });
 
     }
 
-    private void addData(){
-        List<String> list=new ArrayList<>();
-        list.add("服务态度好");
-        list.add("做饭好吃");
-        list.add("相处愉快");
-        list.add("说话轻柔");
-        list.add("不打鼾");
-        list.add("形象气质好");
-        list.add("个人卫生好");
-        for (String text : list) {
+    private void addData(List<LifeOrderCommentLabel> list){
+        for (LifeOrderCommentLabel label : list) {
+            String text = label.content;
             View view = View.inflate(mActivity,R.layout.item_service_order_comment_flag,null);
             TextView tv = view.findViewById(R.id.tv_title);
             tv.setOnClickListener(v -> {
@@ -126,6 +148,7 @@ public class ServiceOrderCommentActivity  extends CheckPermissionActivity  imple
             TextView tv = view.findViewById(R.id.tv_title);
             ImageView iv_delete = view.findViewById(R.id.iv_delete);
             iv_delete.setOnClickListener(v -> {
+                selectFlag.remove(text);
                 flSelectFlag.removeView(view);
             });
             tv.setText(text);
@@ -149,10 +172,114 @@ public class ServiceOrderCommentActivity  extends CheckPermissionActivity  imple
             tsg("请输入评价感受");
             return;
         }
-        tsg("评价成功");
-        finish();
+        if (picList.size() == 0){
+            tsg("请选择图片");
+            return;
+        }
+
+
+
+        LogUtil.e("score = "+rbLogisticsScore.getStarCount());
+
+//        tsg("评价成功");
+//        finish();
+
+        fileList.clear();
+        List<String> list = new ArrayList<>();
+        for (ImageItem publishImageBean:picList){
+            list.add(publishImageBean.path);
+        }
+        compress(list);
     }
 
+    //上传的文件
+    private List<File> fileList = new ArrayList<>();
+    private void compress(List<String> list){
+        LoadingUtils.show(mContext,"压缩图片中...");
+        Luban.with(this)
+                .load(list)
+                .ignoreBy(100)
+                .setTargetDir(Constant.ROOT_PATH)
+                .filter(new CompressionPredicate() {
+                    @Override
+                    public boolean apply(String path) {
+                        return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                    }
+                })
+                .setCompressListener(new OnCompressListener() {
+                    @Override
+                    public void onStart() {
+                    }
+                    @Override
+                    public void onSuccess(File file) {
+                        fileList.add(file);
+                        if (fileList.size()==picList.size()){
+                            upload();
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        LoadingUtils.dismiss();
+                    }
+                }).launch();
+
+    }
+    private void upload(){
+        LoadingUtils.show(mContext,"图片上传中...");
+        List<MultipartBody.Part> parts = new ArrayList<>();
+        for (int i=0;i<fileList.size();i++){
+            File file = fileList.get(i);
+            String name = "file["+i+"]";
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData(name, file.getName(), requestFile);
+            parts.add(part);
+        }
+        new RxHttp<BaseResult<UploadImageResult>>().send(ApiManager.getService().getUploadImgs(parts),
+                new Response<BaseResult<UploadImageResult>>(false,mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult<UploadImageResult> result) {
+                        String pics = "";
+                        for (String s:result.data.list){
+                            pics += s+";";
+                        }
+                        if (pics.endsWith(";")){
+                            pics = pics.substring(0,pics.length()-1);
+                        }
+                        commit(pics);
+                    }
+                });
+    }
+
+    private void commit(String image){
+        LoadingUtils.show(mContext,"加载中...");
+        String comment = et_comment.getText().toString().trim();
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("order", order);
+        hashMap.put("content", comment);
+        hashMap.put("image", ""+image);
+        String label = "";
+        for (int i=0;i<selectFlag.size();i++){
+            String s = selectFlag.get(i);
+            if (i == selectFlag.size()-1){
+                label += s;
+            }else {
+                label += s+";";
+            }
+        }
+        hashMap.put("label", "" + label);
+        hashMap.put("score", "" + rbLogisticsScore.getStarCount());
+        new RxHttp<BaseResult>().send(ApiManager.getService().getComment(hashMap),
+                new Response<BaseResult>( mActivity) {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        tsg("评价成功");
+                        EventBus.getDefault().post(new UpdateShortServiceOrder());
+                        EventBus.getDefault().post(new UpdateLongServiceOrder());
+                        finish();
+                    }
+                });
+
+    }
     @Override
     public void permissionGranted() {
         ImagePicker.withMulti( new CustomImgPickerPresenter())//指定presenter
