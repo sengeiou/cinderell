@@ -26,6 +26,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 public class CinderellApplication extends Application {
     public static Context mContext;
@@ -57,6 +59,9 @@ public class CinderellApplication extends Application {
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
         PlatformConfig.setWeixin(Constant.WX_APPID, Constant.WX_APP_SECRET);
         PlatformConfig.setAlipay("2021001152637888");
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
 
 
 

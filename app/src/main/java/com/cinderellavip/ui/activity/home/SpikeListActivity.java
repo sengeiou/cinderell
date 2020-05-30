@@ -1,6 +1,6 @@
 package com.cinderellavip.ui.activity.home;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -34,8 +34,9 @@ public class SpikeListActivity extends BaseActivity {
     private GoodsDetailPagerAdapter adapter;
     private List<BaseFragment> fragmentList = new ArrayList<>();
 
-    public static void launch(Activity activity) {
+    public static void launch(Context activity) {
         Intent intent = new Intent(activity, SpikeListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
         activity.startActivity(intent);
     }
 

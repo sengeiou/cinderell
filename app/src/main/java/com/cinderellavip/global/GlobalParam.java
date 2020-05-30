@@ -11,6 +11,9 @@ import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.google.gson.Gson;
 import com.tozzais.baselibrary.util.SharedPreferencesUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -19,6 +22,22 @@ import com.tozzais.baselibrary.util.SharedPreferencesUtil;
 public class GlobalParam {
 
 
+    private static void setAlias( String alias) {
+
+        // 调用 JPush 接口来设置别名。
+        JPushInterface.setAliasAndTags(CinderellApplication.mContext,
+                alias,
+                null, (i, s, set) -> {
+                    if (i == 0){
+                        LogUtil.e("设置成功");
+                    }else if (i==6002){
+                        LogUtil.e("设置失败"+i);
+                    }
+                });
+
+
+
+    }
 
 
 
@@ -58,6 +77,11 @@ public class GlobalParam {
 
     //存 用户的token
     public static void setUserId(String userid) {
+        if (TextUtils.isEmpty(userid)){
+            setAlias("");
+        }else {
+            setAlias("huiguniang_"+userid);
+        }
         SharedPreferencesUtil.saveStringData(CinderellApplication.mContext, Constant.user_id, userid);
     }
     //取 用户的用户的token

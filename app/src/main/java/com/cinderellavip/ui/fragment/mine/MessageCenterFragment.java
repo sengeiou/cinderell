@@ -57,6 +57,7 @@ public class MessageCenterFragment extends BaseListFragment<MessageItem> {
     }
     @Override
     public void onResume() {
+        if (isLoad)
         onRefresh();
         super.onResume();
     }

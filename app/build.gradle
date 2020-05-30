@@ -17,6 +17,13 @@ android {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
         }
+
+        //
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "c55e179f9a40616ba991c646", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
 
     signingConfigs {
@@ -94,4 +101,8 @@ dependencies {
     //    implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:3.2.6'
     implementation project(':dkplayer-ui')
     implementation 'com.orhanobut:logger:2.2.0'
+
+    //极光 第一步
+    implementation 'cn.jiguang.sdk:jpush:3.6.0'  // 此处以JPush 3.5.4 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.3.4'  // 此处以JCore 2.2.4 版本为例。
 }

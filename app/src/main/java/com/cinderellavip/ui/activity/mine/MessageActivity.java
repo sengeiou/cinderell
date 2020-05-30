@@ -3,23 +3,10 @@ package com.cinderellavip.ui.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.cinderellavip.R;
-import com.cinderellavip.bean.net.mine.MessageItem;
-import com.cinderellavip.http.ApiManager;
-import com.cinderellavip.http.BaseResult;
-import com.cinderellavip.http.ListResult;
-import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.mine.MessageCenterFragment;
-import com.cinderellavip.ui.fragment.mine.MineAddressFragment;
-import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
-import com.tozzais.baselibrary.util.toast.ToastCommom;
-
-import java.util.List;
-
-import butterknife.OnClick;
 
 
 /**
@@ -30,6 +17,7 @@ public class MessageActivity extends BaseActivity {
 
     public static void launch(Context from) {
         Intent intent = new Intent(from, MessageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
         from.startActivity(intent);
     }
 
