@@ -350,7 +350,9 @@ public class ShareActivity extends BaseActivity {
         runOnUiThread(() -> {
             LoadingUtils.dismiss();
             if (clickType == 1) {
-                ClipBoardUtil.copy(mActivity, goodsResult.product_info.name,"文案信息已复制成功");
+                GoodsInfo info = goodsResult.product_info;
+                String name = info.name+"\n原件：￥" + info.getOld_price() + "\n灰姑娘会员价：￥" + info.getPrice();
+                ClipBoardUtil.copy(mActivity, name,"文案信息已复制成功");
                 sendMoreImage();
             }else {
                 CenterDialogUtil.showShare(mActivity, () -> {

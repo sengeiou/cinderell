@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,173 +12,18 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.appbar.AppBarLayout
-                    android:id="@+id/appbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:elevation="0dp"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_scrollFlags="scroll"
-                        android:orientation="vertical">
-
-                        <com.cinderellavip.weight.MyRecycleView
-                            android:id="@+id/rv_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginBottom="12dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:padding="12dp">
-
-                            <com.cinderellavip.weight.CircleImageView
-                                android:id="@+id/iv_avatar"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                tools:src="@mipmap/avater"/>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/tv_name"
-                                    style="@style/base_text_style"
-                                    tools:text="南殊陵"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/tv_time"
-                                    style="@style/base_text_style_gray_small"
-                                    tools:text="12-22 08:31:01"
-                                    />
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_attention"
-                                android:layout_width="70dp"
-                                style="@style/base_btn_style"
-                                android:text="关注"
-                                />
-
-                            <ImageView
-                                android:id="@+id/iv_more"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/icon_post_more"
-                                android:layout_marginLeft="10dp"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_post_name"
-                            style="@style/base_text_style"
-                            tools:text="#贵也值得买的必购单品#"
-                            android:textColor="@color/baseColor"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_post_content"
-                            style="@style/base_text_style"
-                            tools:text="送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，送自己的polo红系列，"
-                            android:layout_marginTop="5dp"
-                            android:lineSpacingExtra="5dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginBottom="12dp"
-                            android:textSize="12sp"
-                            />
-
-                        <LinearLayout
-                            android:id="@+id/ll_goods"
-                            android:visibility="gone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <View
-                                style="@style/base_space"
-                                />
-
-                            <TextView
-                                style="@style/base_text_style"
-                                android:text="提到的宝贝"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:layout_marginBottom="12dp"
-                                />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_baby"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-
-
-                        <View
-                            style="@style/base_space"
-                            />
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/icon_reply"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_comment_number"
-                            style="@style/base_text_style"
-                            android:textStyle="bold"
-                            android:text="评论"
-                            android:layout_marginLeft="5dp"/>
-
-                    </LinearLayout>
 
 
 
-                </com.google.android.material.appbar.AppBarLayout>
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_list"
                     android:layout_width="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:layout_height="match_parent">
                 </androidx.recyclerview.widget.RecyclerView>
 
 
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -252,5 +93,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
 

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.bean.SignResult;
+import com.cinderellavip.bean.VersionBean;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.global.Constant;
@@ -40,6 +42,7 @@ import com.tozzais.baselibrary.util.log.LogUtil;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
@@ -139,6 +142,17 @@ public class MainActivity extends CheckPermissionActivity {
                         String s = "灰豆+"+result.data.num;
                         CenterDialogUtil.showSignSuccess(mContext,s,()->{
                         });
+                    }
+                });
+
+        //https://github.com/xuexiangjys/XUpdate/wiki/%E6%BC%94%E7%A4%BADemo%E4%BB%8B%E7%BB%8D
+        TreeMap<String, String> hashMap = new TreeMap<>();
+        hashMap.put("type", 1 + "");
+        new RxHttp<BaseResult<VersionBean>>().send(ApiManager.getService().getVersion(hashMap),
+                new Response<BaseResult<VersionBean>>(mActivity,Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseResult<VersionBean> result) {
+
                     }
                 });
     }
@@ -248,6 +262,7 @@ public class MainActivity extends CheckPermissionActivity {
         tvLifeService.setTextColor(pos == LIFE ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.main_tab_gray_text_color));
         ivFind.setImageResource(pos == FIND ? R.mipmap.find_select : R.mipmap.find);
         tvFind.setTextColor(pos == FIND ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.main_tab_gray_text_color));
+        tvFind.setText(pos == FIND ? "发布" : "发现");
         ivCart.setImageResource(pos == CART ? R.mipmap.cart_select : R.mipmap.cart);
         tvCart.setTextColor(pos == CART ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.main_tab_gray_text_color));
         ivMine.setImageResource(pos == MINE ? R.mipmap.mine_select : R.mipmap.mine);

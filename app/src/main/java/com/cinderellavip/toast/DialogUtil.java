@@ -114,11 +114,10 @@ public class DialogUtil {
         }
         ImageUtil.loadNet(context,iv_image,specialItem2.thumb);
         tv_specification.setText("已选：“"+specialItem2.name+"”");
-        iv_image.setTag(specialItem2.thumb);
-        iv_image.setOnClickListener(v -> {
-            String[] s = new String[]{((String)iv_image.getTag())};
-            BigImageActivity.launch(context,s,0);
-        });
+
+//        iv_image.setTag(specialItem2.thumb);
+
+
 
         final SpecialItem specialItem = specialItem2;
         final  List<SpecialItem> list = list1;
@@ -128,6 +127,11 @@ public class DialogUtil {
         }
 
         specialItem.isCheck = true;
+
+        iv_image.setOnClickListener(v -> {
+            String[] s = new String[]{(specialItem.thumb)};
+            BigImageActivity.launch(context,s,0);
+        });
 
         for (int i=0;i<list.size();i++) {
             SpecialItem text = list.get(i);
@@ -149,13 +153,14 @@ public class DialogUtil {
                     if (specialItem1 == text){
                         //只是为了做传递给后台用。只能去id。其他参数不能取
                         specialItem.id = text.id;
+                        //为了显示大图
+                        specialItem.thumb = text.thumb;
                         specialItem1.isCheck = true;
                     }else {
                         specialItem1.isCheck = false;
                     }
                     if (specialItem1.isCheck){
                         ImageUtil.loadNet(context,iv_image,text.thumb);
-                        iv_image.setTag(text.thumb);
                         if (product_info.hasGroup && !isLeft){
                             //如果是灰姑娘
                             tv_unit.setText("拼团价");

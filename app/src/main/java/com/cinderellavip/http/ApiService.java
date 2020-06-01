@@ -10,6 +10,7 @@ import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.ServiceType;
 import com.cinderellavip.bean.SignResult;
 import com.cinderellavip.bean.UploadImageResult;
+import com.cinderellavip.bean.VersionBean;
 import com.cinderellavip.bean.direct.DirectMapPersonItem;
 import com.cinderellavip.bean.direct.DirectPersonComment;
 import com.cinderellavip.bean.direct.DirectPersonInfo;
@@ -98,6 +99,10 @@ import rx.Observable;
  * Created by jumpbox on 16/5/2.
  */
 public interface ApiService {
+
+    @GET(HttpUrl.version)
+    Observable<BaseResult<VersionBean>>
+    getVersion(@QueryMap TreeMap<String, String> map);
 
     @Multipart
     @POST(HttpUrl.upload)

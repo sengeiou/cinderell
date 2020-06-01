@@ -98,6 +98,7 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
     LinearLayout llPromotion;
     @BindView(R.id.ll_normal_price)
     LinearLayout ll_normal_price;
+
     @BindView(R.id.tv_unit)
     TextView tv_unit;
     @BindView(R.id.tv_return_integral)
@@ -110,6 +111,12 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
     TextView tv_group_return;
 
 
+    @BindView(R.id.ll_address)
+    LinearLayout ll_address;
+    @BindView(R.id.space_address)
+    View space_address;
+    @BindView(R.id.tv_address)
+    TextView tv_address;
 
 
     @Override
@@ -243,6 +250,15 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
             tv_promotion_text.setTextColor(getResources().getColor(R.color.grayText));
         } else {
 
+        }
+
+        if (TextUtils.isEmpty(goodsResult.address)){
+            ll_address.setVisibility(View.GONE);
+            space_address.setVisibility(View.GONE);
+        }else {
+            ll_address.setVisibility(View.VISIBLE);
+            space_address.setVisibility(View.VISIBLE);
+            tv_address.setText(goodsResult.address);
         }
         if (productInfo.brand_id == 0){
             ll_merchant.setVisibility(View.GONE);

@@ -28,6 +28,7 @@ import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.TreeMap;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -38,8 +39,11 @@ import butterknife.OnClick;
 public class TopicDetailFragment extends BaseListFragment<FindItem> {
 
 
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
+//    @BindView(R.id.appbar)
+//    AppBarLayout appbar;
+
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
 
     @BindView(R.id.rv_image)
     RecyclerView rvImage;
@@ -155,12 +159,15 @@ public class TopicDetailFragment extends BaseListFragment<FindItem> {
         if (swipeLayout != null)
             swipeLayout.setOnRefreshListener(this::onRefresh);
 
-        appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
-            if (i >= 0) {
-                swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
-            } else {
-                swipeLayout.setEnabled(false); //否则关闭
-            }
+//        appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
+//            if (i >= 0) {
+//                swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
+//            } else {
+//                swipeLayout.setEnabled(false); //否则关闭
+//            }
+//        });
+        scrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            swipeLayout.setEnabled(scrollY<=0); //当滑动到顶部的时候开启
         });
 
     }

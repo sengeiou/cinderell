@@ -71,6 +71,9 @@ public class SpikeListAdapter extends BaseQuickAdapter<HomeSpikeItem, BaseViewHo
                 alert(item);
             }
         });
+        helper.getView(R.id.ll_root).setOnClickListener(v -> {
+            GoodsDetailActivity.launch((Activity) getContext(),item.id+"");
+        });
 //        RelativeLayout ll_root = helper.getView(R.id.ll_root);
 
 

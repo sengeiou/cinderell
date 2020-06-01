@@ -32,6 +32,8 @@ public class HomeGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
     public static final int INLET = 2;
     //实惠
     public static final int AFFORDABLE = 3;
+    //推荐
+    public static final int RECOMMEND = 4;
 
     private int type;
 
@@ -59,7 +61,7 @@ public class HomeGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewHolder
         ImageUtil.loadNet2(getContext(),iv_image,homeGoods.thumb);
 
 
-       if (type == FEATURED){
+       if (type == FEATURED || type == RECOMMEND ){
            //精选
            tv_name.setMaxLines(2);
            tv_name.setLines(2);
