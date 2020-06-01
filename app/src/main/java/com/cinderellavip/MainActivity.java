@@ -3,9 +3,10 @@ package com.cinderellavip;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +39,11 @@ import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 import com.tozzais.baselibrary.util.log.LogUtil;
+import com.xuexiang.xupdate.XUpdate;
+import com.xuexiang.xupdate._XUpdate;
+import com.xuexiang.xupdate.service.OnFileDownloadListener;
+import com.xuexiang.xutil.app.PathUtils;
+import com.xuexiang.xutil.display.HProgressDialogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,6 +51,7 @@ import java.io.File;
 import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
@@ -135,15 +142,7 @@ public class MainActivity extends CheckPermissionActivity {
                         GlobalParam.setPhoneBean(result.data);
                     }
                 });
-        new RxHttp<BaseResult<SignResult>>().send(ApiManager.getService().sign(),
-                new Response<BaseResult<SignResult>>(mActivity,Response.BOTH) {
-                    @Override
-                    public void onSuccess(BaseResult<SignResult> result) {
-                        String s = "灰豆+"+result.data.num;
-                        CenterDialogUtil.showSignSuccess(mContext,s,()->{
-                        });
-                    }
-                });
+
 
         //https://github.com/xuexiangjys/XUpdate/wiki/%E6%BC%94%E7%A4%BADemo%E4%BB%8B%E7%BB%8D
         TreeMap<String, String> hashMap = new TreeMap<>();
@@ -152,7 +151,78 @@ public class MainActivity extends CheckPermissionActivity {
                 new Response<BaseResult<VersionBean>>(mActivity,Response.BOTH) {
                     @Override
                     public void onSuccess(BaseResult<VersionBean> result) {
+//                        LogUtil.e(result.data.toString());
+                        String versionName=null;
+                        try {
+                            PackageManager pm = mContext.getPackageManager();
+                            PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(), 0);
+                            versionName = pi.versionName;
+                        } catch (Exception e) {
+                        }
 
+                        if ( !versionName.equals(result.data.version)) {
+                            showDialog(result.data);
+                        }else {
+                            sign();
+                        }
+
+                    }
+                });
+    }
+
+    private void  showDialog(VersionBean versionBean){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setTitle("版本更新提示");
+        builder.setMessage(versionBean.commit);
+        builder.setPositiveButton("立即更新", (dialogInterface, i) -> {
+                downFile(versionBean);
+        });
+        builder.setNegativeButton("暂不更新", null);
+        builder.create().show(); //构建AlertDialog并显示
+
+    }
+
+    private void downFile(VersionBean versionBean){
+        XUpdate.newBuild(mActivity)
+                .apkCacheDir(PathUtils.getExtDownloadsPath())
+                .build()
+                .download(versionBean.url, new OnFileDownloadListener() {
+                    @Override
+                    public void onStart() {
+                        HProgressDialogUtils.showHorizontalProgressDialog(mActivity, "下载进度", false);
+                    }
+
+                    @Override
+                    public void onProgress(float progress, long total) {
+                        HProgressDialogUtils.setProgress(Math.round(progress * 100));
+                    }
+
+                    @Override
+                    public boolean onCompleted(File file) {
+                        HProgressDialogUtils.cancel();
+                        _XUpdate.startInstallApk(mActivity, file);
+                        return false;
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        HProgressDialogUtils.cancel();
+                    }
+                });
+    }
+
+
+    private void sign(){
+        if (!GlobalParam.getUserLogin()){
+            return;
+        }
+        new RxHttp<BaseResult<SignResult>>().send(ApiManager.getService().sign(),
+                new Response<BaseResult<SignResult>>(mActivity,Response.BOTH) {
+                    @Override
+                    public void onSuccess(BaseResult<SignResult> result) {
+                        String s = "灰豆+"+result.data.num;
+                        CenterDialogUtil.showSignSuccess(mContext,s,()->{
+                        });
                     }
                 });
     }

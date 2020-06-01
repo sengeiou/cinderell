@@ -1,2 +1,2 @@
 rootProject.name='灰姑凉'
-include ':app', ':baselibrary', ':dkplayer-ui'
+include ':app', ':baselibrary', ':dkplayer-ui', ':xupdate-lib'
