@@ -144,9 +144,8 @@ public class OrderDetailActivity extends BaseActivity {
         List<OrderGoodsInfo> goods = orderInfo.goods;
         //为了退款用的
         for (OrderGoodsInfo orderGoodsInfo:goods){
-
             orderGoodsInfo.order_id = order_id;
-            LogUtil.e("orderGoodsInfo  order_id== "+orderGoodsInfo.order_id +"=="+order_id );
+//            LogUtil.e("orderGoodsInfo  order_id== "+orderGoodsInfo.order_id +"=="+order_id );
         }
         tvName.setText(address.name+"  "+address.mobile);
         tvAddress.setText(address.province+address.city+address.area+address.address);

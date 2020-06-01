@@ -45,6 +45,7 @@
             style="@style/base_text_style"/>
         <TextView
             android:id="@+id/tv_explain"
+            android:visibility="gone"
             android:text="提现说明 >"
             android:textColor="@color/baseColor"
             android:drawablePadding="5dp"

@@ -1,14 +1,17 @@
 package com.cinderellavip.adapter.listview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.base.BaseAdapter;
 import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.ui.activity.order.ApplyReturnActivity;
 import com.cinderellavip.weight.RoundImageView;
 
@@ -56,6 +59,9 @@ public class OrderDetailAdapter extends BaseAdapter<OrderGoodsInfo> {
         hodler.tvBtn1.setOnClickListener(v -> {
             ApplyReturnActivity.launch(context, orderGoodsInfo);
         });
+        hodler.ll_goods.setOnClickListener(v -> {
+            GoodsDetailActivity.launch((Activity) context,orderGoodsInfo.product_id+"");
+        });
 
 
         return convertView;
@@ -74,6 +80,8 @@ public class OrderDetailAdapter extends BaseAdapter<OrderGoodsInfo> {
         TextView tvPrice;
         @BindView(R.id.tv_number)
         TextView tvNumber;
+        @BindView(R.id.ll_goods)
+        LinearLayout ll_goods;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

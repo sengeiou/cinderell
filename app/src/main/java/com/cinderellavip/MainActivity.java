@@ -248,6 +248,7 @@ public class MainActivity extends CheckPermissionActivity {
         tvLifeService.setTextColor(pos == LIFE ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.main_tab_gray_text_color));
         ivFind.setImageResource(pos == FIND ? R.mipmap.find_select : R.mipmap.find);
         tvFind.setTextColor(pos == FIND ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.main_tab_gray_text_color));
+        tvFind.setText(pos == FIND ? "发布" : "发现");
         ivCart.setImageResource(pos == CART ? R.mipmap.cart_select : R.mipmap.cart);
         tvCart.setTextColor(pos == CART ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.main_tab_gray_text_color));
         ivMine.setImageResource(pos == MINE ? R.mipmap.mine_select : R.mipmap.mine);

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
-import com.cinderellavip.adapter.recycleview.RecommentGoodsAdapter;
 import com.cinderellavip.adapter.recycleview.SpikeHomeAdapter;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.local.HomeGoods;
@@ -26,14 +25,12 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.home.GoodsListActivity;
 import com.cinderellavip.ui.activity.home.SpikeListActivity;
-import com.cinderellavip.util.DataUtil;
 import com.cinderellavip.util.ScreenUtil;
 import com.cinderellavip.util.banner.BannerUtil;
 import com.cinderellavip.util.banner.LinkUtil;
 import com.cinderellavip.weight.GirdSpace;
 import com.cinderellavip.weight.HomeTabLayout;
 import com.cinderellavip.weight.HorSpace;
-import com.cinderellavip.weight.LinearSpace;
 import com.google.android.material.appbar.AppBarLayout;
 import com.lishide.recyclerview.scroll.ScrollRecyclerView;
 import com.stx.xhb.xbanner.XBanner;
@@ -141,15 +138,15 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
 
         //设置tab
         List<String> data1 = new ArrayList<>();
+        data1.add("推荐");
         data1.add("精选");
         data1.add("拼团");
         data1.add("进口");
-        data1.add("实惠");
         tabLabel.setTitle(data1);
     }
 
 
-    private String type = "1";
+    private String goods_type = "5";
     @Override
     public void loadData1() {
         super.loadData();
@@ -161,7 +158,7 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
 
     private void getGoods(){
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("type", type);
+        hashMap.put("type", goods_type);
         hashMap.put("first_category_id", "0");
         hashMap.put("limit", PageSize+"");
         hashMap.put("page", page+"");
@@ -332,10 +329,17 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
         });
 
         tabLabel.setOnTabPositionClickLister(position -> {
-            if (mAdapter != null){
-                ((HomeGoodsAdapter)mAdapter).setType(position);
+            if (position == 0){
+                goods_type = "5";
+                if (mAdapter != null){
+                    ((HomeGoodsAdapter)mAdapter).setType(HomeGoodsAdapter.RECOMMEND);
+                }
+            }else {
+                if (mAdapter != null){
+                    ((HomeGoodsAdapter)mAdapter).setType(position-1);
+                }
+                goods_type = position+"";
             }
-            type = position+1+"";
             page = DEFAULT_PAGE;
             getGoods();
         });

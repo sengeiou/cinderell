@@ -58,36 +58,29 @@ import butterknife.OnClick;
 
 public class PostDetailFragment extends BaseListFragment<DiscussComment> implements OnCommentReplyClickListener {
 
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
 
-    @BindView(R.id.rv_image)
+
     MyRecycleView rvImage;
-    @BindView(R.id.rv_baby)
-    RecyclerView rvBaby;
-    @BindView(R.id.tv_attention)
+    CircleImageView ivAvatar;
+    TextView tvName;
+    TextView tvTime;
     TextView tvAttention;
+    TextView tvPostName;
+    TextView tvPostContent;
+
+    LinearLayout ll_goods;
+    RecyclerView rvBaby;
+    TextView tvCommentNumber;
+
     @BindView(R.id.iv_collect)
     ImageView ivCollect;
-    @BindView(R.id.iv_avatar)
-    CircleImageView ivAvatar;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_time)
-    TextView tvTime;
-    @BindView(R.id.tv_post_name)
-    TextView tvPostName;
-    @BindView(R.id.tv_post_content)
-    TextView tvPostContent;
-    @BindView(R.id.tv_comment_number)
-    TextView tvCommentNumber;
-    @BindView(R.id.ll_goods)
-    LinearLayout ll_goods;
-
     @BindView(R.id.ll_bottom)//评价的布局
     LinearLayout ll_bottom;
 
     private String id;
+
+
+
 
     public static PostDetailFragment newInstance(String id) {
         PostDetailFragment cartFragment = new PostDetailFragment();
@@ -112,6 +105,9 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new PostCommentAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+
+        addHead();
+
         //图片
         rvImage.setLayoutManager(new GridLayoutManager(getContext(), 3));
         TopSpace girdSpace = new TopSpace(DpUtil.dip2px(mActivity, 10));
@@ -124,6 +120,28 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
         rvBaby.setAdapter(cardSaleGoodsAdapter);
 
     }
+
+
+    private void addHead(){
+        View view = View.inflate(mActivity,R.layout.head_fragment_find_post_detail,null);
+        rvImage = view.findViewById(R.id.rv_image);
+        ivAvatar = view.findViewById(R.id.iv_avatar);
+        tvName = view.findViewById(R.id.tv_name);
+        tvTime = view.findViewById(R.id.tv_time);
+        tvAttention = view.findViewById(R.id.tv_attention);
+        tvPostName = view.findViewById(R.id.tv_post_name);
+        tvPostContent = view.findViewById(R.id.tv_post_content);
+        ll_goods = view.findViewById(R.id.ll_goods);
+        rvBaby = view.findViewById(R.id.rv_baby);
+        tvCommentNumber = view.findViewById(R.id.tv_comment_number);
+
+        ImageView iv_more = view.findViewById(R.id.iv_more);
+        iv_more.setOnClickListener(this::onClick);
+        tvPostName.setOnClickListener(this::onClick);
+        tvAttention.setOnClickListener(this::onClick);
+        mAdapter.addHeaderView(view);
+    }
+
 
     //图片的适配器
     private ImagePostAdapter imagePostAdapter;
@@ -199,24 +217,9 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
     }
 
 
-    @Override
-    public void initListener() {
-        super.initListener();
-        swipeLayout.setEnabled(false);
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
-
-        appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
-            if (i >= 0) {
-                swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
-            } else {
-                swipeLayout.setEnabled(false); //否则关闭
-            }
-        });
-
-    }
 
 
-    @OnClick({R.id.tv_post_name, R.id.tv_attention, R.id.iv_more, R.id.iv_collect, R.id.tv_comment})
+    @OnClick({  R.id.iv_collect, R.id.tv_comment})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_post_name:
@@ -241,9 +244,6 @@ public class PostDetailFragment extends BaseListFragment<DiscussComment> impleme
                 if (data !=null)
                 collect(id+"","3");
                 break;
-//            case R.id.tv_send:
-//
-//                break;
             case R.id.tv_comment:
                 onSure("","","说点什么吧");
                 break;

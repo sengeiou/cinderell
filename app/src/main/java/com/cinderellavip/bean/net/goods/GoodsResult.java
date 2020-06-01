@@ -18,5 +18,6 @@ public class GoodsResult {
     public  SpikeInfo spike_info; //秒杀商品
 
     public String integral_rate;
+    public String address;
     public  boolean user_is_vip;
 }
