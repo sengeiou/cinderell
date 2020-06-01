@@ -145,6 +145,7 @@ public class MainActivity extends CheckPermissionActivity {
                     }
                 });
 
+        //https://github.com/xuexiangjys/XUpdate/wiki/%E6%BC%94%E7%A4%BADemo%E4%BB%8B%E7%BB%8D
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("type", 1 + "");
         new RxHttp<BaseResult<VersionBean>>().send(ApiManager.getService().getVersion(hashMap),
