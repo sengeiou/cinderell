@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.mine.IntegralItem;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.activity.order.OrderDetailActivity;
 import com.cinderellavip.weight.CircleImageView;
 
 
@@ -75,6 +76,11 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
         }else if (type == 4){
 
         }
+        helper.getView(R.id.ll_root).setOnClickListener(v -> {
+            if (type == 1){
+                OrderDetailActivity.launch(getContext(),Integer.parseInt(item.order_id));
+            }
+        });
     }
 
 

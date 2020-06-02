@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.bean.net.goods.GroupInfo;
+import com.cinderellavip.bean.net.goods.SpikeInfo;
 import com.cinderellavip.bean.net.life.ServiceProjectDetail;
 import com.cinderellavip.bean.net.mine.MineInfo;
 import com.cinderellavip.bean.net.order.OrderGoodsInfo;
@@ -48,7 +50,18 @@ public class SecondDialogUtil {
         ImageUtil.loadNet(context, iv_image, product_info.images.get(0));
         iv_code.setImageBitmap(appletsCode);
         tv_product_name.setText(product_info.name);
-        tv_price.setText("￥"+product_info.getPrice());
+        if (product_info.hasGroup ){
+            //团购
+            GroupInfo group_info = goodsResult.group_info;
+            tv_price.setText("￥"+group_info.getGroup_price());
+        }else if (product_info.hasSpike){
+            //秒杀
+            SpikeInfo group_info = goodsResult.spike_info;
+            tv_price.setText("￥"+group_info.getSpikePrice());
+        }else {
+            tv_price.setText("￥"+product_info.getPrice());
+        }
+
 
         LinearLayout ll_poster = view.findViewById(R.id.ll_poster);
         ll_poster.setDrawingCacheEnabled(true);

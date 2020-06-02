@@ -93,7 +93,7 @@ public class DialogUtil {
                 specialItem2 = list1.get(0);
             tv_unit.setText("拼团价");
             tv_price.setText("￥"+specialItem2.getGroupPrice());
-            tv_former_price.setText("原价￥"+specialItem2.getOld_price());
+            tv_former_price.setText("原价￥"+specialItem2.getPrice());
         }else if (product_info.hasSpike){
               list1 = goodsResult.spike_info.spike_norms;
                 specialItem2 = list1.get(0);
@@ -165,7 +165,7 @@ public class DialogUtil {
                             //如果是灰姑娘
                             tv_unit.setText("拼团价");
                             tv_price.setText("￥"+text.getGroupPrice());
-                            tv_former_price.setText("原价￥"+text.getOld_price());
+                            tv_former_price.setText("原价￥"+text.getPrice());
                         }else if (product_info.hasSpike){
                             //如果是灰姑娘
                             tv_unit.setText("秒杀价");

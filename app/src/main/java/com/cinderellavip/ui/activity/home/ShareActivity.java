@@ -123,13 +123,13 @@ public class ShareActivity extends BaseActivity {
                         if (productInfo.hasGroup ){
                             GroupInfo group_info = goodsResult.group_info;
                             //团购
-                            tvPrice.setText("原件：￥" + group_info.getProduct_price() + "    灰姑娘拼团价：￥" + group_info.getGroup_price());
+                            tvPrice.setText("原价：￥" + group_info.getProduct_price() + "    灰姑娘拼团价：￥" + group_info.getGroup_price());
                         }else if (productInfo.hasSpike ){
                             //秒杀
                             SpikeInfo group_info = goodsResult.spike_info;
-                            tvPrice.setText("原件：￥" + group_info.getProductPrice() + "    灰姑娘秒杀价：￥" + group_info.getSpikePrice());
+                            tvPrice.setText("原价：￥" + group_info.getProductPrice() + "    灰姑娘秒杀价：￥" + group_info.getSpikePrice());
                         }else {
-                            tvPrice.setText("原件：￥" + productInfo.getOld_price() + "    灰姑娘会员价：￥" + productInfo.getPrice());
+                            tvPrice.setText("原价：￥" + productInfo.getOld_price() + "    灰姑娘会员价：￥" + productInfo.getPrice());
                         }
 
                         for (String s : productInfo.images) {
@@ -373,13 +373,13 @@ public class ShareActivity extends BaseActivity {
                 if (productInfo.hasGroup ){
                     GroupInfo group_info = goodsResult.group_info;
                     //团购
-                    priceText = "\n原件：￥" + group_info.getProduct_price() + "\n灰姑娘拼团价：￥" + group_info.getGroup_price();
+                    priceText = "\n原价：￥" + group_info.getProduct_price() + "\n灰姑娘拼团价：￥" + group_info.getGroup_price();
                 }else if (productInfo.hasSpike ){
                     //秒杀
                     SpikeInfo group_info = goodsResult.spike_info;
-                    priceText = "\n原件：￥" + group_info.getProductPrice() + "\n灰姑娘秒杀价：￥" + group_info.getSpikePrice();
+                    priceText = "\n原价：￥" + group_info.getProductPrice() + "\n灰姑娘秒杀价：￥" + group_info.getSpikePrice();
                 }else {
-                    priceText = "\n原件：￥" + productInfo.getOld_price() + "\n灰姑娘会员价：￥" + productInfo.getPrice();
+                    priceText = "\n原价：￥" + productInfo.getOld_price() + "\n灰姑娘会员价：￥" + productInfo.getPrice();
                 }
                 String name = productInfo.name+priceText;
                 ClipBoardUtil.copy(mActivity, name,"文案信息已复制成功");

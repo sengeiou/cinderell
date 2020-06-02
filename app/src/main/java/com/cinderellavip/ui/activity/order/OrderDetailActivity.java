@@ -136,6 +136,11 @@ public class OrderDetailActivity extends BaseActivity {
                     public void onSuccess(BaseResult<OrderInfoResult<OrderInfo>> result) {
                         setData(result.data.order);
                     }
+
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }
