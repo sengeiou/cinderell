@@ -7,6 +7,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.bean.SignResult;
 import com.cinderellavip.bean.VersionBean;
+import com.cinderellavip.bean.eventbus.UpdateHomeMainData;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.global.Constant;
@@ -48,6 +51,7 @@ import com.xuexiang.xutil.display.HProgressDialogUtils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.TreeMap;
 
 import androidx.annotation.Nullable;
@@ -129,13 +133,18 @@ public class MainActivity extends CheckPermissionActivity {
 
     @Override
     public void loadData() {
-        if (!isLoad)
-        checkPermissions(needPermissions);
+        if (!isLoad){
+            checkPermissions(needPermissions);
+            startTime();
+        }
+
     }
 
     @Override
     public void initListener() {
-        new RxHttp<BaseResult<PhoneResult>>().send(ApiManager.getService().getPhone(),
+
+
+       new RxHttp<BaseResult<PhoneResult>>().send(ApiManager.getService().getPhone(),
                 new Response<BaseResult<PhoneResult>>(isLoad, mActivity) {
                     @Override
                     public void onSuccess(BaseResult<PhoneResult> result) {
@@ -159,7 +168,6 @@ public class MainActivity extends CheckPermissionActivity {
                             versionName = pi.versionName;
                         } catch (Exception e) {
                         }
-
                         if ( !versionName.equals(result.data.version)) {
                             showDialog(result.data);
                         }else {
@@ -513,5 +521,35 @@ public class MainActivity extends CheckPermissionActivity {
         if (requestCode == RequestCode.request_service_city && resultCode == Activity.RESULT_OK){
             lifeFragment.setAddress(data.getStringExtra("name"));
         }
+    }
+
+    private void startTime(){
+        Calendar calendar = Calendar.getInstance();
+        //分钟
+        int minute = calendar.get(Calendar.MINUTE);
+        LogUtil.e(minute+"");
+        if (!mHandler.hasMessages(2))
+        mHandler.sendEmptyMessageDelayed(2, 1000*60*(60-minute+2));
+
+    }
+
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.what == 2){
+                LogUtil.e("刷新了");
+                EventBus.getDefault().post(new UpdateHomeMainData());
+                mHandler.sendEmptyMessageDelayed(2, 1000*60*60);
+            }
+            return false;
+        }
+    });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandler != null) {
+            mHandler.removeMessages(2);
+        }
+        mHandler = null;
     }
 }

@@ -12,6 +12,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeCategoryAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.adapter.recycleview.SpikeHomeAdapter;
+import com.cinderellavip.bean.eventbus.UpdateHomeMainData;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.HomeCategoryItem;
@@ -357,5 +358,11 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
 
     }
 
-
+    @Override
+    public void onEvent(Object o) {
+        super.onEvent(o);
+        if (o instanceof UpdateHomeMainData){
+            onRefresh();
+        }
+    }
 }

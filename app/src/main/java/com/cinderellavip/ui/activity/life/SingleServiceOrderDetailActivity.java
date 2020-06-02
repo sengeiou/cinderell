@@ -16,6 +16,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -63,6 +64,9 @@ public class SingleServiceOrderDetailActivity extends BaseActivity {
     private int type;
 
     public static void launch(Context from, int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SingleServiceOrderDetailActivity.class);
         intent.putExtra("type", type);
         from.startActivity(intent);

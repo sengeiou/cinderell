@@ -37,6 +37,7 @@ import com.cinderellavip.toast.ReturnUtil;
 import com.cinderellavip.ui.BigImageActivity;
 import com.cinderellavip.util.PartMapUtils;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.GirdSpaceRight;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -98,6 +99,9 @@ public class ApplyReturnActivity extends CheckPermissionActivity  implements OnP
 
 
     public static void launch(Context activity, OrderGoodsInfo orderGoodsInfo) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, ApplyReturnActivity.class);
         intent.putExtra("orderGoodsInfo", orderGoodsInfo);
         activity.startActivity(intent);

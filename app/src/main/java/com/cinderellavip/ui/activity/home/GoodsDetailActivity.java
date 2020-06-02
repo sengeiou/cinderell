@@ -31,6 +31,7 @@ import com.cinderellavip.ui.activity.order.CartActivity;
 import com.cinderellavip.ui.fragment.goods.CommentFragment;
 import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
 import com.cinderellavip.ui.fragment.goods.GraphicFragment;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.VerticalViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -85,6 +86,9 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     }
 
     public static void launch(Activity activity, String id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, GoodsDetailActivity.class);
         intent.putExtra("id", id);
         activity.startActivity(intent);

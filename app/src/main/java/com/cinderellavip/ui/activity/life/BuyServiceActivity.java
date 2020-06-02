@@ -24,6 +24,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.log.LogUtil;
@@ -82,6 +83,9 @@ public class BuyServiceActivity extends BaseActivity {
 
     private  LifePreOrder lifePreOrder;
     public static void launch(Context from, LifePreOrder lifePreOrder) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, BuyServiceActivity.class);
         intent.putExtra("lifePreOrder",lifePreOrder);
         from.startActivity(intent);

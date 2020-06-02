@@ -14,6 +14,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.life.DirectAppointListFragment;
 import com.cinderellavip.ui.fragment.life.DirectAppointMapFragment;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.IndexViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -57,6 +58,9 @@ public class DirectAppointmentActivity extends BaseActivity {
     private List<BaseFragment> fragmentList = new ArrayList<>();
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, DirectAppointmentActivity.class);
         from.startActivity(intent);
     }

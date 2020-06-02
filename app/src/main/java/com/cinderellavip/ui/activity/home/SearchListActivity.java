@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.home.BrandSearchResultFragment;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -32,6 +33,9 @@ public class SearchListActivity extends BaseActivity {
     private String id;
 
     public static void launch(Context from, String id,int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchListActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("type", type);
@@ -39,6 +43,9 @@ public class SearchListActivity extends BaseActivity {
     }
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchListActivity.class);
         from.startActivity(intent);
     }

@@ -12,6 +12,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.UpdateSearchLife;
 import com.cinderellavip.ui.fragment.life.SearchLifeResultFragment;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +32,9 @@ public class SearchLifeResultActivity extends BaseActivity {
 
 
     public static void launch(Context from, String keyword) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchLifeResultActivity.class);
         intent.putExtra("keyword", keyword);
         from.startActivity(intent);

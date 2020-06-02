@@ -22,6 +22,7 @@ import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.OperatingProductsUtil3s;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.address.LocalCityUtil3s;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
@@ -90,6 +91,9 @@ public class ApplyProductSupplierActivity extends CheckPermissionActivity {
     private String id_card_front;
     private String id_card_back;
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ApplyProductSupplierActivity.class);
         from.startActivity(intent);
     }

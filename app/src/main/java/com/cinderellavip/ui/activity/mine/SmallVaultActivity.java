@@ -10,6 +10,7 @@ import com.cinderellavip.ui.activity.WebViewActivity;
 import com.cinderellavip.ui.fragment.mine.SmallVaultFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -21,6 +22,9 @@ public class SmallVaultActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SmallVaultActivity.class);
         from.startActivity(intent);
     }

@@ -18,6 +18,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.util.QRCodeUtil;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -55,6 +56,9 @@ public class RecommentListActivity extends BaseActivity {
     SwipeRefreshLayout swipeLayout;
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, RecommentListActivity.class);
         from.startActivity(intent);
     }

@@ -34,7 +34,7 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
 
         CircleImageView iv_image = helper.getView(R.id.iv_image);
         TextView tv_id = helper.getView(R.id.tv_id);
-        TextView tv_time = helper.getView(R.id.tv_id);
+        TextView tv_time = helper.getView(R.id.tv_time);
         helper.setText(R.id.tv_title,item.title)
                 .setText(R.id.tv_number,item.integral);
         if (type == 1){
@@ -47,7 +47,11 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
             ImageUtil.loadNet(getContext(),iv_image,item.avatar);
             tv_time.setVisibility(View.VISIBLE);
             tv_time.setText(item.create_at);
+            tv_id.setVisibility(View.VISIBLE);
+            tv_id.setText(item.desc);
         }else if (type == 3){
+            iv_image.setVisibility(View.VISIBLE);
+            ImageUtil.loadNet(getContext(),iv_image,item.avatar);
             rl_rank.setVisibility(View.VISIBLE);
             tv_time.setVisibility(View.VISIBLE);
             tv_time.setText(item.create_at);

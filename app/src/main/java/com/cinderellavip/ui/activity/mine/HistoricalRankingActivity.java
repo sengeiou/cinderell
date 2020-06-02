@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.mine.SmallVaultHistoryRankFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -18,6 +19,9 @@ public class HistoricalRankingActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, HistoricalRankingActivity.class);
         from.startActivity(intent);
     }

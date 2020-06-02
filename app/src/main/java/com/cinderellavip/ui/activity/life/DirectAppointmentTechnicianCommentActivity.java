@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.request.TechnicalComment;
 import com.cinderellavip.ui.fragment.life.DirectAppointmentCommentFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -22,6 +23,9 @@ public class DirectAppointmentTechnicianCommentActivity extends BaseActivity {
     private TechnicalComment technicalComment;
 
     public static void launch(Context from, TechnicalComment technicalComment) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, DirectAppointmentTechnicianCommentActivity.class);
         intent.putExtra("technicalComment",technicalComment);
         from.startActivity(intent);

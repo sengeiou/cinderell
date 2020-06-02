@@ -24,6 +24,8 @@ import com.cinderellavip.bean.AppletsCode;
 import com.cinderellavip.bean.local.ShareImageItem;
 import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
+import com.cinderellavip.bean.net.goods.GroupInfo;
+import com.cinderellavip.bean.net.goods.SpikeInfo;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
@@ -32,6 +34,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.util.ClipBoardUtil;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.progress.LoadingUtils;
@@ -55,6 +58,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.WorkerThread;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -80,6 +84,9 @@ public class ShareActivity extends BaseActivity {
     private int clickType = 0;
 
     public static void launch(Activity activity, String id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, ShareActivity.class);
         intent.putExtra("id", id);
         activity.startActivity(intent);
@@ -113,7 +120,18 @@ public class ShareActivity extends BaseActivity {
                         goodsResult = result.data;
                         GoodsInfo productInfo = goodsResult.product_info;
                         tv_goods_title.setText(productInfo.name);
-                        tvPrice.setText("原件：￥" + productInfo.getOld_price() + "    灰姑娘会员价：￥" + productInfo.getPrice());
+                        if (productInfo.hasGroup ){
+                            GroupInfo group_info = goodsResult.group_info;
+                            //团购
+                            tvPrice.setText("原件：￥" + group_info.getProduct_price() + "    灰姑娘拼团价：￥" + group_info.getGroup_price());
+                        }else if (productInfo.hasSpike ){
+                            //秒杀
+                            SpikeInfo group_info = goodsResult.spike_info;
+                            tvPrice.setText("原件：￥" + group_info.getProductPrice() + "    灰姑娘秒杀价：￥" + group_info.getSpikePrice());
+                        }else {
+                            tvPrice.setText("原件：￥" + productInfo.getOld_price() + "    灰姑娘会员价：￥" + productInfo.getPrice());
+                        }
+
                         for (String s : productInfo.images) {
                             list.add(new ShareImageItem(true, s));
                         }
@@ -350,8 +368,20 @@ public class ShareActivity extends BaseActivity {
         runOnUiThread(() -> {
             LoadingUtils.dismiss();
             if (clickType == 1) {
-                GoodsInfo info = goodsResult.product_info;
-                String name = info.name+"\n原件：￥" + info.getOld_price() + "\n灰姑娘会员价：￥" + info.getPrice();
+                GoodsInfo productInfo = goodsResult.product_info;
+                String priceText = "";
+                if (productInfo.hasGroup ){
+                    GroupInfo group_info = goodsResult.group_info;
+                    //团购
+                    priceText = "\n原件：￥" + group_info.getProduct_price() + "\n灰姑娘拼团价：￥" + group_info.getGroup_price();
+                }else if (productInfo.hasSpike ){
+                    //秒杀
+                    SpikeInfo group_info = goodsResult.spike_info;
+                    priceText = "\n原件：￥" + group_info.getProductPrice() + "\n灰姑娘秒杀价：￥" + group_info.getSpikePrice();
+                }else {
+                    priceText = "\n原件：￥" + productInfo.getOld_price() + "\n灰姑娘会员价：￥" + productInfo.getPrice();
+                }
+                String name = productInfo.name+priceText;
                 ClipBoardUtil.copy(mActivity, name,"文案信息已复制成功");
                 sendMoreImage();
             }else {

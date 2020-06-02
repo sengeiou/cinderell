@@ -24,6 +24,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.imagepick.CustomImgPickerPresenter;
 import com.cinderellavip.listener.OnPublishImageListener;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.RatingBarView;
 import com.nex3z.flowlayout.FlowLayout;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -76,6 +77,9 @@ public class ServiceOrderCommentActivity  extends CheckPermissionActivity  imple
 
     private String order;
     public static void launch(Context from,String order) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ServiceOrderCommentActivity.class);
         intent.putExtra("order",order);
         from.startActivity(intent);

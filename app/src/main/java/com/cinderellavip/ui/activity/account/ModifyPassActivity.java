@@ -11,6 +11,7 @@ import com.cinderellavip.bean.eventbus.UpdateMineInfo;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
@@ -36,6 +37,9 @@ public class ModifyPassActivity extends BaseActivity {
     EditText etPassNewAgain;
 
     public static void launch(Activity activity) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, ModifyPassActivity.class);
         activity.startActivityForResult(intent, 100);
     }

@@ -18,6 +18,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.mine.XiaoHuiRecommentFragment;
 import com.cinderellavip.util.QRCodeUtil;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -35,6 +36,9 @@ public class FriendListActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, FriendListActivity.class);
         from.startActivity(intent);
     }

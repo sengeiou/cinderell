@@ -177,7 +177,6 @@ public class RegisterActivity extends BaseActivity {
             mHandler.removeMessages(1);
         }
         mHandler = null;
-
     }
 
 

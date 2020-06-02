@@ -19,6 +19,7 @@ import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.pay.PayUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -66,6 +67,9 @@ public class PayCheckoutCounterActivity extends BaseActivity {
     //结果
     private PayCheckResult payCheckResult;
     public static void launch(Context from, PrePayLongOrder prePayLongOrder) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, PayCheckoutCounterActivity.class);
         intent.putExtra("prePayLongOrder", prePayLongOrder);
         from.startActivity(intent);

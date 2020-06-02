@@ -13,6 +13,7 @@ import com.cinderellavip.bean.eventbus.UpdateSearch;
 import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.ui.fragment.home.SearchResultFragment;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -36,6 +37,9 @@ public class SearchResultActivity extends BaseActivity implements OnSureClickLis
     FilterView filter_view;
 
     public static void launch(Context from, String keyword) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchResultActivity.class);
         intent.putExtra("keyword", keyword);
         from.startActivity(intent);

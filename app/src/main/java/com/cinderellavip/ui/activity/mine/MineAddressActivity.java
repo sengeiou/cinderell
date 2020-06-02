@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.mine.MineAddressFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -14,11 +15,17 @@ public class MineAddressActivity extends BaseActivity {
     public static final int REQUESTCODE = 101;
 
     public static void launch(Activity activity, int type){
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, MineAddressActivity.class);
         intent.putExtra("type",type);
         activity.startActivityForResult(intent,REQUESTCODE);
     }
     public static void launch(Activity activity, int type, String addressID){
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, MineAddressActivity.class);
         intent.putExtra("type",type);
         intent.putExtra("addressID",addressID);

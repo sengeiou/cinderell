@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.cinderellavip.AppJs;
 import com.cinderellavip.R;
+import com.cinderellavip.util.Utils;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
@@ -41,6 +42,9 @@ public class AgreementWebViewActivity extends BaseActivity {
 
 
     public static void launch(Context from,  String  type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
 
         Intent intent = new Intent(from, AgreementWebViewActivity.class);
         intent.putExtra("type", type);

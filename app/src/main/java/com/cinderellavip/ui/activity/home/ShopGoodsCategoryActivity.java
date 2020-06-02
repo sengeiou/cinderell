@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.home.MerchantGoodsCategoryFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -17,6 +18,9 @@ public class ShopGoodsCategoryActivity extends BaseActivity {
 
     int merchant_id;
     public static void launch(Activity activity, int merchant_id){
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, ShopGoodsCategoryActivity.class);
         intent.putExtra("merchant_id",merchant_id);
         activity.startActivity(intent);

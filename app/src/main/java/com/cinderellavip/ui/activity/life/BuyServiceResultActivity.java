@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -22,6 +23,9 @@ public class BuyServiceResultActivity extends BaseActivity {
     TextView tvContent;
 
     public static void launch(Context from, String result) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, BuyServiceResultActivity.class);
         intent.putExtra("result",result);
         from.startActivity(intent);

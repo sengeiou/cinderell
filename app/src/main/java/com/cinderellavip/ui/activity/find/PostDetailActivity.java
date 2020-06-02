@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.find.PostDetailFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 /**
@@ -18,6 +19,9 @@ public class PostDetailActivity extends BaseActivity {
 
     private String id;
     public static void launch(Activity activity,String id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, PostDetailActivity.class);
         intent.putExtra("id",id);
         activity.startActivityForResult(intent,11);

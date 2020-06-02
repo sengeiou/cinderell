@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.BrandDetailFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
 
@@ -17,6 +18,9 @@ public class BrandDetailActivity extends BaseActivity{
 
 
     public static void launch(Context from,String id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, BrandDetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("id",id);

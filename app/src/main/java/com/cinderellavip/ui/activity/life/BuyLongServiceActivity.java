@@ -22,6 +22,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.ServicePeriodDialogUtil;
 import com.cinderellavip.toast.ServiceTypeDialogUtil;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -66,6 +67,9 @@ public class BuyLongServiceActivity extends BaseActivity {
     private String service_project;
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, BuyLongServiceActivity.class);
         from.startActivity(intent);
     }

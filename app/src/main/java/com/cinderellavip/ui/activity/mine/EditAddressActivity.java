@@ -17,6 +17,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.address.LocalCityUtil3s;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
@@ -52,12 +53,18 @@ public class EditAddressActivity extends CheckPermissionActivity {
 
 
     public static void launch(Activity activity, int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, EditAddressActivity.class);
         intent.putExtra("type", type);
         activity.startActivityForResult(intent, REQUESTCODE);
     }
 
     public static void launch(Activity activity, int type, NetCityBean item) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, EditAddressActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("item", item);

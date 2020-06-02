@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 
 
 import com.cinderellavip.R;
+import com.cinderellavip.util.Utils;
 import com.itheima.view.BridgeWebView;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.NetworkUtil;
@@ -37,6 +38,9 @@ public class WebViewActivity extends BaseActivity {
 
 
     public static void launch(Context from, String title, String url) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, WebViewActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("url", url);
@@ -45,6 +49,9 @@ public class WebViewActivity extends BaseActivity {
 
 
     public static void launch(Context from,  String url, int status) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, WebViewActivity.class);
         intent.putExtra("url", url);
         intent.putExtra("status", status);

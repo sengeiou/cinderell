@@ -19,6 +19,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.CircleImageView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
@@ -51,6 +52,9 @@ public class MineDataActivity extends CheckPermissionActivity {
     TextView tv_phone;
 
     public static void launch(Context activity) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, MineDataActivity.class);
         activity.startActivity(intent);
     }

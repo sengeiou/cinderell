@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.ui.fragment.mine.MineGroupUpFragment;
+import com.cinderellavip.util.Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
@@ -33,6 +34,9 @@ public class MineGroupActivity extends BaseActivity {
     private List<BaseFragment> fragmentList = new ArrayList<>();
 
     public static void launch(Activity activity) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, MineGroupActivity.class);
         activity.startActivity(intent);
     }

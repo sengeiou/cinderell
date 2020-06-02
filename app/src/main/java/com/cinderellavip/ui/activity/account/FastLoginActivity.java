@@ -22,6 +22,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
@@ -69,6 +70,9 @@ public class FastLoginActivity extends BaseActivity {
     private int type;
 
     public static void launch(Activity activity, int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, FastLoginActivity.class);
         intent.putExtra("type", type);
         activity.startActivityForResult(intent, 100);
@@ -76,6 +80,9 @@ public class FastLoginActivity extends BaseActivity {
 
     private  BindLogin bindLogin;
     public static void launch(Activity activity, BindLogin bindLogin) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, FastLoginActivity.class);
         intent.putExtra("type", BIND_PHONE);
         intent.putExtra("bindLogin",bindLogin);

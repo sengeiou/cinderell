@@ -8,6 +8,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.ui.fragment.mine.MineCouponFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.util.Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
@@ -34,6 +35,9 @@ public class MineCouponActivity extends BaseActivity {
     private List<BaseFragment> fragmentList = new ArrayList<>();
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, MineCouponActivity.class);
         from.startActivity(intent);
     }

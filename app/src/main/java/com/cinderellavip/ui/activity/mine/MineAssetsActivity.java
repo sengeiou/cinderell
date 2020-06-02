@@ -9,6 +9,7 @@ import com.cinderellavip.ui.fragment.mine.MessageFindFragment;
 import com.cinderellavip.ui.fragment.mine.MessageMineAssetFragment;
 import com.cinderellavip.ui.fragment.mine.MessageOrderFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
@@ -25,6 +26,9 @@ public class MineAssetsActivity extends BaseActivity {
     private int type;
 
     public static void launch(Context from,int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, MineAssetsActivity.class);
         intent.putExtra("type",type);
         from.startActivity(intent);

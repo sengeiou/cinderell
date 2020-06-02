@@ -10,6 +10,7 @@ import com.cinderellavip.adapter.recycleview.CardSaleAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.ui.fragment.home.CardSaleFragment;
 import com.cinderellavip.util.DataUtil;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.GirdSpace;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseListActivity;
@@ -31,6 +32,9 @@ public class CardSaleActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, CardSaleActivity.class);
         from.startActivity(intent);
     }

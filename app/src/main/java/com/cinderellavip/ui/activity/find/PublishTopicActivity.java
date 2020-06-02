@@ -19,6 +19,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.imagepick.CustomImgPickerPresenter;
 import com.cinderellavip.listener.OnPublishImageListener;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.GirdSpaceRight;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
@@ -70,6 +71,9 @@ public class PublishTopicActivity extends CheckPermissionActivity  implements On
 
 
     public static void launch(Context activity) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, PublishTopicActivity.class);
         activity.startActivity(intent);
     }

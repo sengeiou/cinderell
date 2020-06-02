@@ -25,6 +25,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.MineAddressActivity;
 import com.cinderellavip.ui.activity.order.SelectPayWayActivity;
 import com.cinderellavip.util.CouponsStringUtil;
+import com.cinderellavip.util.Utils;
 import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -80,6 +81,9 @@ public class EnsureOrderActivity extends BaseActivity {
     private RequestSettlePara requestSettlePara;
 
     public static void launch(Context activity, RequestSettlePara requestSettlePara) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, EnsureOrderActivity.class);
         intent.putExtra("requestSettlePara", requestSettlePara);
         activity.startActivity(intent);

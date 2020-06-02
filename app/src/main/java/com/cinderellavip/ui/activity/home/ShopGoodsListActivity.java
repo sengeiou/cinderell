@@ -11,6 +11,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.ui.fragment.ShopDetailFragment;
 import com.cinderellavip.ui.fragment.home.GoodsListFragment;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -44,6 +45,9 @@ public class ShopGoodsListActivity extends BaseActivity implements OnSureClickLi
     private String category_id;
     private String store_id;
     public static void launch(Context from, String name,  String category_id,  String store_id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ShopGoodsListActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("category_id",category_id);

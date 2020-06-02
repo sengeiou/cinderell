@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.find.SearchTopicForPublishPostFragment;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.DpUtil;
 
@@ -37,6 +38,9 @@ public class SearchTopicForPublishPostActivity extends BaseActivity {
     TextView tvCancel;
 
     public static void launch(Activity from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchTopicForPublishPostActivity.class);
         from.startActivityForResult(intent,1002);
     }

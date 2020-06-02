@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.cinderellavip.R;
 import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.ui.fragment.home.GoodsListFragment;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -39,6 +40,9 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
      */
     private int third_category_id;
     public static void launch(Context from, String name,  int third_category_id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, GoodsListActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("third_category_id",third_category_id);

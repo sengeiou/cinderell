@@ -8,6 +8,7 @@ import android.view.View;
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.mine.WithDrawHistoryFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -21,11 +22,17 @@ public class WithDrawHistoryActivity extends BaseActivity {
     private int type;
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, WithDrawHistoryActivity.class);
         from.startActivity(intent);
     }
 
     public static void launch(Context from,int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, WithDrawHistoryActivity.class);
         intent.putExtra("type",type);
         from.startActivity(intent);

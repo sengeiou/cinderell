@@ -9,6 +9,7 @@ import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
 import com.cinderellavip.ui.fragment.order.SingleOrderFragment;
+import com.cinderellavip.util.Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
@@ -42,6 +43,9 @@ public class SingleServiceOrderListActivity extends BaseActivity {
     private List<BaseFragment> fragmentList = new ArrayList<>();
 
     public static void launch(Activity activity, int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, SingleServiceOrderListActivity.class);
         intent.putExtra("type",type);
         activity.startActivity(intent);

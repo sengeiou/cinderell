@@ -14,6 +14,7 @@ import com.cinderellavip.bean.eventbus.UpdateSearchTopic;
 import com.cinderellavip.ui.fragment.find.SearchPostResultFragment;
 import com.cinderellavip.ui.fragment.find.SearchTopicResultFragment;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
 
@@ -36,6 +37,9 @@ public class SearchFindResultActivity extends BaseActivity {
     public static final int TOPIC = 1;
 
     public static void launch(Context from, String keyword,int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchFindResultActivity.class);
         intent.putExtra("keyword", keyword);
         intent.putExtra("type", type);

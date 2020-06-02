@@ -28,6 +28,7 @@ import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.ui.activity.mine.LogisticsActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.ClipBoardUtil;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.MyListView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -102,6 +103,9 @@ public class OrderDetailActivity extends BaseActivity {
      * @param order_id 订单ID
      */
     public static void launch(Context activity, int order_id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, OrderDetailActivity.class);
         intent.putExtra("order_id", order_id);
         activity.startActivity(intent);
@@ -195,6 +199,7 @@ public class OrderDetailActivity extends BaseActivity {
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 llBottom.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setText("取消订单");
+                tv_pay_way.setVisibility(View.VISIBLE);
                 break;
             case 3:
                 tvStatus.setText("待收货");

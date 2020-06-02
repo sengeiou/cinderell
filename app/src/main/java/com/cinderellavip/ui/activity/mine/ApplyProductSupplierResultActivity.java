@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -16,6 +17,9 @@ public class ApplyProductSupplierResultActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ApplyProductSupplierResultActivity.class);
         from.startActivity(intent);
     }

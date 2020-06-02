@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.LifeAddressFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -23,6 +24,9 @@ public class SelectServiceAddressActivity extends BaseActivity {
     private int type;
 
     public static void launch(Activity activity, int type){
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, SelectServiceAddressActivity.class);
         intent.putExtra("type",type);
         activity.startActivityForResult(intent, RequestCode.request_service_address);

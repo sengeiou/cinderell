@@ -8,6 +8,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.SelectServiceCouponFragment;
 import com.cinderellavip.ui.fragment.life.ServiceCheckListFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -20,6 +21,9 @@ public class ServiceCheckListActivity extends BaseActivity {
 
 
     public static void launch(Activity from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ServiceCheckListActivity.class);
         from.startActivityForResult(intent, RequestCode.request_service_coupon);
     }

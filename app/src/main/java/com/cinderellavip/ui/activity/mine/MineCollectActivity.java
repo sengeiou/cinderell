@@ -9,6 +9,7 @@ import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.ui.fragment.mine.CollectBrandFragment;
 import com.cinderellavip.ui.fragment.mine.CollectFindFragment;
 import com.cinderellavip.ui.fragment.mine.CollectShopFragment;
+import com.cinderellavip.util.Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
@@ -35,6 +36,9 @@ public class MineCollectActivity extends BaseActivity {
     ViewPager viewpager;
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, MineCollectActivity.class);
         from.startActivity(intent);
     }

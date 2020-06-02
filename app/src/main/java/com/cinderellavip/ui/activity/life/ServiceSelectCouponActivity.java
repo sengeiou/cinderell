@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.SelectServiceCouponFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -21,6 +22,9 @@ public class ServiceSelectCouponActivity extends BaseActivity {
 
     //合同id
     public static void launch(Activity from,String contracts_id,int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
         intent.putExtra("contracts_id",contracts_id);
         intent.putExtra("type",type);
@@ -28,6 +32,9 @@ public class ServiceSelectCouponActivity extends BaseActivity {
     }
 
     public static void launch(Activity from,String contracts_id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ServiceSelectCouponActivity.class);
         intent.putExtra("contracts_id",contracts_id);
         intent.putExtra("type",LONG);

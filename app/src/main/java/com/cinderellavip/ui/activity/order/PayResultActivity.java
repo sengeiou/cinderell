@@ -19,6 +19,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.MineGroupActivity;
 import com.cinderellavip.ui.activity.mine.MineOrderActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.GirdSpace;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListActivity;
@@ -44,6 +45,9 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     private boolean success;
 
     public static void launch(Activity activity, CreateOrderBean createOrderBean, boolean success) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, PayResultActivity.class);
         intent.putExtra("createOrderBean", createOrderBean);
         intent.putExtra("success", success);

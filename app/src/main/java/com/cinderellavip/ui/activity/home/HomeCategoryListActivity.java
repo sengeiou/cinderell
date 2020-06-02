@@ -13,6 +13,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.home.CategoryFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -31,6 +32,9 @@ public class HomeCategoryListActivity extends BaseActivity {
     TextView tv_hint;
 
     public static void launch(Activity from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, HomeCategoryListActivity.class);
         from.startActivityForResult(intent, RequestCode.request_service_coupon);
     }

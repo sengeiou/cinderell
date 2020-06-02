@@ -11,6 +11,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.map.LocationUtil;
 import com.cinderellavip.ui.fragment.life.SelectCityFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import butterknife.BindView;
@@ -27,6 +28,9 @@ public class SelectCityActivity extends BaseActivity {
     TextView tvAddress;
 
     public static void launch(Activity from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SelectCityActivity.class);
         from.startActivityForResult(intent, RequestCode.request_service_city);
     }

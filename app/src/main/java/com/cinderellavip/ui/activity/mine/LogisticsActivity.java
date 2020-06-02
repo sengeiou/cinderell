@@ -6,12 +6,16 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.mine.LogisticsFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
 public class LogisticsActivity extends BaseActivity {
 
     public static void launch(Activity activity, String tag){
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, LogisticsActivity.class);
         intent.putExtra("post_no",tag);
         activity.startActivity(intent);

@@ -8,6 +8,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.ui.activity.home.SearchActivity;
 import com.cinderellavip.ui.fragment.find.ReportFragment;
 import com.cinderellavip.ui.fragment.home.CardSaleFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -25,6 +26,9 @@ public class ReportActivity extends BaseActivity {
      * @param type 1:帖子、话题， 2:用户
      */
     public static void launch(Context from,String id,String type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ReportActivity.class);
         intent.putExtra("id",id);
         intent.putExtra("type",type);

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.SelectLocationFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import androidx.annotation.Nullable;
@@ -21,6 +22,9 @@ public class SelectLocationActivity extends BaseActivity {
 
 
     public static void launch(Activity from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SelectLocationActivity.class);
         from.startActivityForResult(intent,RequestCode.request_nearby);
     }

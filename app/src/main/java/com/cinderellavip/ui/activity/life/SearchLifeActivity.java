@@ -21,6 +21,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.util.ScreenUtil;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.FlowLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -59,11 +60,17 @@ public class SearchLifeActivity extends BaseActivity {
 //    ArrayList<String> searchHistory = new ArrayList<>();
 
     public static void launch(Context from, int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchLifeActivity.class);
         from.startActivity(intent);
     }
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchLifeActivity.class);
         from.startActivity(intent);
     }

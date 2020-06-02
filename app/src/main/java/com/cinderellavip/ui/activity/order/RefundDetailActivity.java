@@ -17,6 +17,7 @@ import com.cinderellavip.bean.net.order.ReturnOrderInfoResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -75,6 +76,9 @@ public class RefundDetailActivity extends BaseActivity {
 
 
     public static void launch(Context activity, int refund_id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, RefundDetailActivity.class);
         intent.putExtra("refund_id", refund_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );

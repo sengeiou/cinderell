@@ -26,6 +26,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.map.LocationUtil;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 
@@ -67,6 +68,9 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
 
 
     public static void launch(Activity activity, int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, AddServiceAddressActivity.class);
         intent.putExtra("type", type);
         activity.startActivityForResult(intent, REQUESTCODE);
@@ -74,6 +78,9 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
 
     private LifeCityBean item;
     public static void launch(Activity activity, int type, LifeCityBean item) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, AddServiceAddressActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("item", item);

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.mine.LeaderBoardFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -19,10 +20,16 @@ public class LeaderBoardActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, LeaderBoardActivity.class);
         from.startActivity(intent);
     }
     public static void launch(Context from,String month) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, LeaderBoardActivity.class);
         intent.putExtra("month",month);
         from.startActivity(intent);

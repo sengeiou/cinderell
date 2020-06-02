@@ -19,6 +19,7 @@ import com.cinderellavip.ui.activity.account.LoginActivity;
 import com.cinderellavip.ui.activity.account.ModifyPassActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.CacheClear;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,6 +54,9 @@ public class SettingActivity extends BaseActivity {
     TextView tvExit;
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SettingActivity.class);
         from.startActivity(intent);
     }

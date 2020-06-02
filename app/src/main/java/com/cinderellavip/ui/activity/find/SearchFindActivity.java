@@ -14,6 +14,7 @@ import com.cinderellavip.bean.eventbus.UpdateSearchTopic;
 import com.cinderellavip.ui.fragment.find.SearchPostFragment;
 import com.cinderellavip.ui.fragment.find.SearchTopicFragment;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.BaseFragment;
@@ -46,6 +47,9 @@ public class SearchFindActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SearchFindActivity.class);
         from.startActivity(intent);
     }

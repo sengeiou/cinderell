@@ -45,6 +45,7 @@ import com.cinderellavip.ui.activity.order.ReturnListActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.ColorUtil;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.GirdSpace;
 import com.google.android.material.appbar.AppBarLayout;
@@ -295,6 +296,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MineOrderActivity.launch(mActivity, OrderFragment.ALL);
                 break;
             case R.id.rl_unpay:
+                if (Utils.isFastClick())
                 if (GlobalParam.getUserLogin(mActivity))
                 MineOrderActivity.launch(mActivity, OrderFragment.UNPAY);
                 break;
@@ -375,6 +377,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MineAddressActivity.launch(mActivity,MineAddressActivity.LOOK);
                 break;
             case R.id.rl_mine_service7:
+                if (Utils.isFastClick())
                 if (GlobalParam.getUserLogin(mActivity)){
                     new RxHttp<BaseResult<ApplyResult>>().send(ApiManager.getService().applyResult(),
                             new Response<BaseResult<ApplyResult>>( mActivity) {
@@ -396,6 +399,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 break;
             case R.id.rl_mine_service8:
                 //申请成为劳务用户
+                if (Utils.isFastClick())
                 if (GlobalParam.getUserLogin(mActivity))
                 CenterDialogUtil.showApplyService(mActivity,()->{
 
@@ -481,4 +485,6 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
 
         });
     }
+
+
 }

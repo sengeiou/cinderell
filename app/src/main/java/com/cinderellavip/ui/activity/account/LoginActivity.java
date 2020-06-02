@@ -20,6 +20,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.util.KeyboardUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.alilogin.AliUtil;
 import com.cinderellavip.util.alilogin.OrderInfoUtil2_0;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -48,11 +49,17 @@ public class LoginActivity extends BaseActivity implements UMAuthListener {
     TextView tvSeletePhone;
 
     public static void launch(Activity activity) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
 
     public static void launch(Activity activity,boolean isFinishLogin) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         GlobalParam.setLoginFinish(isFinishLogin);
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);

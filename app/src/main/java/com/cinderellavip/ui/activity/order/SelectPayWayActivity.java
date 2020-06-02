@@ -14,6 +14,7 @@ import com.cinderellavip.bean.net.order.GetPayResult;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.pay.PayResultEvent;
 import com.cinderellavip.util.pay.PayUtil;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -51,6 +52,9 @@ public class SelectPayWayActivity extends BaseActivity {
 
     private CreateOrderBean createOrderBean;
     public static void launch(Context activity, CreateOrderBean createOrderBean) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, SelectPayWayActivity.class);
         intent.putExtra("createOrderBean", createOrderBean);
         activity.startActivity(intent);

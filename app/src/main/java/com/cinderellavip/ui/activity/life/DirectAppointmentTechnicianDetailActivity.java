@@ -26,6 +26,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.util.ColorUtil;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.MyIndicator;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -106,6 +107,9 @@ public class DirectAppointmentTechnicianDetailActivity extends BaseActivity {
     private int waiter;
 
     public static void launch(Context from, int waiter) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, DirectAppointmentTechnicianDetailActivity.class);
         intent.putExtra("waiter", waiter);
         from.startActivity(intent);

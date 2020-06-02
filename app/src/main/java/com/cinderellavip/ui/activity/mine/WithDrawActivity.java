@@ -21,6 +21,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -53,12 +54,18 @@ public class WithDrawActivity extends BaseActivity {
     TextView tv_explain;
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, WithDrawActivity.class);
         from.startActivity(intent);
     }
 
 
     public static void launch(Context from,int type) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, WithDrawActivity.class);
         intent.putExtra("type",type);
         from.startActivity(intent);

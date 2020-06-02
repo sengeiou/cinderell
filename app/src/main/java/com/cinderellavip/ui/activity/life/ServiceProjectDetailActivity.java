@@ -31,6 +31,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.util.ColorUtil;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.MyIndicator;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -118,6 +119,9 @@ public class ServiceProjectDetailActivity extends BaseActivity {
     private TechnicalComment technicalComment;
 
     public static void launch(Context from, TechnicalComment technicalComment) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ServiceProjectDetailActivity.class);
         intent.putExtra("technicalComment", technicalComment);
         from.startActivity(intent);

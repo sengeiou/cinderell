@@ -11,6 +11,7 @@ import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.ServiceListFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.DpUtil;
 
@@ -25,6 +26,9 @@ public class ServiceListActivity extends BaseActivity {
 
     LiftHomeCategory item;
     public static void launch(Context from, LiftHomeCategory item) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ServiceListActivity.class);
         intent.putExtra("item",item);
         from.startActivity(intent);

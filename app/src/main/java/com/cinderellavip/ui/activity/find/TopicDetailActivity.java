@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.ui.fragment.find.TopicDetailFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 /**
@@ -17,6 +18,9 @@ public class TopicDetailActivity extends BaseActivity {
 
     private String id;
     public static void launch(Activity activity,String id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, TopicDetailActivity.class);
         intent.putExtra("id",id);
         activity.startActivityForResult(intent,11);

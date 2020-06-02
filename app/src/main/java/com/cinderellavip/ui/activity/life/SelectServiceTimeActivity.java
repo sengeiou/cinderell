@@ -14,6 +14,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.fragment.life.SelectServiceTimeFragment;
+import com.cinderellavip.util.Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -40,6 +41,9 @@ public class SelectServiceTimeActivity extends BaseActivity {
 //    private List<BaseFragment> fragmentList = new ArrayList<>();
 
     public static void launch(Activity from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, SelectServiceTimeActivity.class);
         intent.putExtra("type",0);
         from.startActivityForResult(intent, RequestCode.request_service_time);

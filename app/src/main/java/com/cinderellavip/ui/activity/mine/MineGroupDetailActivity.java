@@ -27,6 +27,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
 import com.cinderellavip.util.ClipBoardUtil;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.CountDownView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -101,6 +102,9 @@ public class MineGroupDetailActivity extends BaseActivity {
     private String order_id;
 
     public static void launch(Context from, String order_id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, MineGroupDetailActivity.class);
         intent.putExtra("order_id", order_id);
         from.startActivity(intent);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.order.RequestSelectCoupons;
 import com.cinderellavip.ui.fragment.mine.SelectCouponFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -14,6 +15,9 @@ public class SelectCouponActivity extends BaseActivity {
 
 
     public static void launch(Activity activity, RequestSelectCoupons requestSelectCoupons) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, SelectCouponActivity.class);
         intent.putExtra("requestSelectCoupons",requestSelectCoupons);
         activity.startActivityForResult(intent,11);

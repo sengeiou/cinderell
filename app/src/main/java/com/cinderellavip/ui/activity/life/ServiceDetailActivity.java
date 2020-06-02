@@ -17,6 +17,7 @@ import com.cinderellavip.listener.ShareClickListener;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.toast.SecondDialogUtil;
 import com.cinderellavip.ui.BaseWebViewActivity;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -37,6 +38,9 @@ public class ServiceDetailActivity extends BaseWebViewActivity {
     private int id;
     private String city;
     public static void launch(Context from,int id,String city) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ServiceDetailActivity.class);
         intent.putExtra("id",id);
         intent.putExtra("city",city);

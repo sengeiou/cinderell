@@ -9,6 +9,7 @@ import com.cinderellavip.global.Constant;
 import com.cinderellavip.ui.fragment.mine.MinePotatoFragment;
 import com.cinderellavip.ui.fragment.mine.SmallVaultFragment;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -20,6 +21,9 @@ public class MinePotatoActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, MinePotatoActivity.class);
         from.startActivity(intent);
     }

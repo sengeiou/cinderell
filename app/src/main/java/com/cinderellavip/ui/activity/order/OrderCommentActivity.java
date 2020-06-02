@@ -21,6 +21,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnDoublePositionClickListener;
 import com.cinderellavip.ui.BigImageActivity;
 import com.cinderellavip.util.PhotoUtils;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.MyListView;
 import com.cinderellavip.weight.RatingBarView;
 import com.google.gson.Gson;
@@ -63,6 +64,9 @@ public class OrderCommentActivity extends CheckPermissionActivity implements OnD
 
     public int order_id;
     public static void launch(Context activity, int order_id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, OrderCommentActivity.class);
         intent.putExtra("order_id", order_id);
         activity.startActivity(intent);

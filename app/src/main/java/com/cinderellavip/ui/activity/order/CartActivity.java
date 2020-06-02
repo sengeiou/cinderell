@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.cinderellavip.R;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.ui.fragment.CartFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -22,6 +23,9 @@ public class CartActivity extends BaseActivity {
 //            SelectLoginWayActivity.launch(activity,true);
 //            return;
 //        }
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(activity, CartActivity.class);
         activity.startActivity(intent);
     }

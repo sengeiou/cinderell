@@ -8,6 +8,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.ui.activity.home.SearchActivity;
 import com.cinderellavip.ui.fragment.home.CardSaleFragment;
 import com.cinderellavip.ui.fragment.order.RefundFragment;
+import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -19,6 +20,9 @@ public class ReturnListActivity extends BaseActivity {
 
 
     public static void launch(Context from) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ReturnListActivity.class);
         from.startActivity(intent);
     }

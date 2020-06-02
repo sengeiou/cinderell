@@ -19,6 +19,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnSureClickListener;
 import com.cinderellavip.ui.fragment.ShopDetailFragment;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
@@ -54,6 +55,9 @@ public class ShopDetailActivity extends BaseActivity implements OnSureClickListe
     }
 
     public static void launchShop(Context from, String id) {
+        if (!Utils.isFastClick()){
+            return;
+        }
         Intent intent = new Intent(from, ShopDetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("id",id);
