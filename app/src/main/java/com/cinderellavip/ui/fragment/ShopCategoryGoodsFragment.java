@@ -95,16 +95,16 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
         scrollRecyclerView.setAdapter(homeCategoryAdapter);
 
         List<String> data1 = new ArrayList<>();
+        data1.add("推荐");
         data1.add("精选");
         data1.add("拼团");
         data1.add("进口");
-        data1.add("实惠");
         tabLabel.setTitle(data1);
 
     }
 
 
-    private String type = "1";
+    private String goods_type = "5";
     @Override
     public void loadData1() {
         super.loadData();
@@ -116,7 +116,7 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
 
     private void getGoods(){
         TreeMap<String, String> hashMap = new TreeMap<>();
-        hashMap.put("type", type);
+        hashMap.put("type", goods_type);
         hashMap.put("first_category_id", ""+homeCategoryItem.id);
         hashMap.put("limit", PageSize+"");
         hashMap.put("page", page+"");
@@ -236,10 +236,18 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
         });
 
         tabLabel.setOnTabPositionClickLister(position -> {
-            if (mAdapter != null){
-                ((HomeGoodsAdapter)mAdapter).setType(position);
+            if (position == 0){
+                goods_type = "5";
+                if (mAdapter != null){
+                    ((HomeGoodsAdapter)mAdapter).setType(HomeGoodsAdapter.RECOMMEND);
+                }
+            }else {
+                if (mAdapter != null){
+                    ((HomeGoodsAdapter)mAdapter).setType(position-1);
+                }
+                goods_type = position+"";
             }
-            type = position+1+"";
+
             page = DEFAULT_PAGE;
             getGoods();
         });

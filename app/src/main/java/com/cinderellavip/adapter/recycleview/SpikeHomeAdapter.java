@@ -40,7 +40,7 @@ public class SpikeHomeAdapter extends BaseQuickAdapter<HomeSpikeItem, BaseViewHo
 
         ImageView iv_image = helper.getView(R.id.iv_image);
         ImageUtil.loadNet(getContext(),iv_image,item.thumb);
-        iv_image.setImageResource(R.mipmap.demo_recommet);
+
         helper.setText(R.id.tv_name,item.name)
                 .setText(R.id.tv_price,"￥"+item.getSpikePrice())
                 .setText(R.id.tv_former_price,item.getBuyPrice());
