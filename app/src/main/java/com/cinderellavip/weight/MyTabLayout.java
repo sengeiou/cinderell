@@ -2,7 +2,6 @@ package com.cinderellavip.weight;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -14,7 +13,6 @@ import com.cinderellavip.R;
 import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.util.ScreenUtil;
 import com.google.android.material.tabs.TabLayout;
-import com.tozzais.baselibrary.util.DpUtil;
 
 import java.util.List;
 
@@ -27,6 +25,10 @@ public class MyTabLayout extends TabLayout {
 
 
     private int DEAULT_POSITION = 0;
+
+    public void setDEAULT_POSITION(int DEAULT_POSITION) {
+        this.DEAULT_POSITION = DEAULT_POSITION;
+    }
 
     private int magin = 0;
 
@@ -100,9 +102,9 @@ public class MyTabLayout extends TabLayout {
             View tabView = (View) tab.getCustomView().getParent();
             tabView.setTag(i);
             tabView.setOnClickListener(mTabOnClickListener);
-            if (i == DEAULT_POSITION) {
-                tab.select();
-            }
+//            if (i == DEAULT_POSITION) {
+//                tab.select();
+//            }
             this.addTab(tab);
         }
     }
@@ -165,6 +167,7 @@ public class MyTabLayout extends TabLayout {
             @Override
             public void onPageSelected(int i) {
                 getTabAt(i).select();
+
             }
 
             @Override

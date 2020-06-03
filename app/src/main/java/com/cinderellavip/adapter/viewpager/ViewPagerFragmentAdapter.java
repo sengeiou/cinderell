@@ -33,5 +33,11 @@ public class ViewPagerFragmentAdapter extends FragmentPagerAdapter {
     }
 
 
+    public void setData(List<BaseFragment> fragmentList){
+        this.fragmentList = fragmentList;
+        notifyDataSetChanged();
+    }
+
+
 
 }
