@@ -357,6 +357,7 @@ public class MainActivity extends CheckPermissionActivity {
                     shopFragment = new ShopFragment();
                     transaction.add(R.id.fl_container, shopFragment, TAG_SHOP);
                 } else {
+                    shopFragment.getCategory();
                     transaction.show(shopFragment);
                 }
                 break;

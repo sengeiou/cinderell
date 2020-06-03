@@ -293,7 +293,6 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
     public void initListener() {
         super.initListener();
         swipeLayout.setEnabled(true);
-        mAdapter.getLoadMoreModule().setEnableLoadMore(false);
         scrollRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
             @Override

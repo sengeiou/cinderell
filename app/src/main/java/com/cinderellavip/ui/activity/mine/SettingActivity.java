@@ -66,8 +66,11 @@ public class SettingActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
 
         setBackTitle("设置");
-
-
+        if (GlobalParam.getUserLogin()){
+            tvExit.setVisibility(View.VISIBLE);
+        }else {
+            tvExit.setVisibility(View.GONE);
+        }
     }
 
 
@@ -88,12 +91,14 @@ public class SettingActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_modify_password:
+                if (GlobalParam.getUserLogin(mActivity))
                 ModifyPassActivity.launch(mActivity);
                 break;
             case R.id.ll_about_us:
                 AgreementWebViewActivity.launch(mActivity, Constant.H5_ABOUT_US);
                 break;
             case R.id.ll_black_list:
+                if (GlobalParam.getUserLogin(mActivity))
                 BlackListActivity.launch(mActivity);
                 break;
             case R.id.ll_user_agreement:
@@ -114,7 +119,7 @@ public class SettingActivity extends BaseActivity {
         CenterDialogUtil.showTwo(mContext,"提示","确定要退出当前账号？","取消","确定", s->{
             if (s.equals("1")){
                 GlobalParam.exitLogin();
-                LoginActivity.launch(mActivity);
+//                LoginActivity.launch(mActivity);
                 EventBus.getDefault().post(new AccountExit());
                 finish();
             }

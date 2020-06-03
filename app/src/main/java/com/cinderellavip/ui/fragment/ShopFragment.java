@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.adapter.viewpager.ViewPagerFragmentAdapter;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.HomeCategoryResult;
@@ -86,9 +87,9 @@ public class ShopFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        LogUtil.e("onResume");
         super.onResume();
         getSearchHint();
+
     }
 
     private void getSearchHint(){
@@ -117,13 +118,13 @@ public class ShopFragment extends BaseFragment {
     /**
      * 获取一级分类
      */
-    private void getCategory(){
+    public void getCategory(){
+        LogUtil.e("请求了");
         new RxHttp<BaseResult<HomeCategoryResult>>().send(ApiManager.getService().getHomeCategory(),
                 new Response<BaseResult<HomeCategoryResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<HomeCategoryResult> result) {
                         showContent();
-                        isLoad = true;
                         setTabCategory(result.data.list);
                     }
                     @Override
@@ -135,38 +136,44 @@ public class ShopFragment extends BaseFragment {
     }
 
     List<HomeCategoryItem> categoryItemList;
+    private ViewPagerFragmentAdapter adapter;
     private void  setTabCategory(List<HomeCategoryItem> category){
-        categoryItemList = category;
-        myFragment = new ArrayList<>();
-        HomeCategoryItem homeCategoryItem = new HomeCategoryItem();
-        homeCategoryItem.name = "首页";
-        myFragment.add(ShopMainGoodsFragment.newInstance(null));
-        for (HomeCategoryItem category1:category){
-            myFragment.add(ShopCategoryGoodsFragment.newInstance(category1));
+        //加载了 分类的数量发生改变的时候 或者没加载的时候
+//        if (!isLoad || (categoryItemList != null && categoryItemList.size() != category.size()+1)){
+        if (true){
+
+            int position = 0;
+            if (viewPager.getAdapter() != null){
+                position = viewPager.getCurrentItem();
+            }
+            categoryItemList = category;
+            if (myFragment == null)
+            myFragment = new ArrayList<>();
+            else myFragment.clear();
+            HomeCategoryItem homeCategoryItem = new HomeCategoryItem();
+            homeCategoryItem.name = "首页";
+            myFragment.add(ShopMainGoodsFragment.newInstance(null));
+            for (HomeCategoryItem category1:category){
+                myFragment.add(ShopCategoryGoodsFragment.newInstance(category1));
+            }
+            categoryItemList.add(0,homeCategoryItem);
+            tabCategory.setTitle(categoryItemList);
+            //预加载
+            viewPager.setOffscreenPageLimit(myFragment.size());
+            //适配器（容器都需要适配器）
+            if (adapter == null){
+                adapter = new ViewPagerFragmentAdapter(getChildFragmentManager(),myFragment);
+                viewPager.setAdapter(adapter);
+            }else {
+                adapter.notifyDataSetChanged();
+            }
+            tabCategory.setupWithViewPager(viewPager);
+            if (position>0 && position<categoryItemList.size()-1){
+                viewPager.setCurrentItem(position-1);
+            }
+            isLoad = true;
         }
-        categoryItemList.add(0,homeCategoryItem);
-        tabCategory.setTitle(categoryItemList);
-        //预加载
-        viewPager.setOffscreenPageLimit(myFragment.size());
-        //适配器（容器都需要适配器）
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            //选中的item
-            @Override
-            public Fragment getItem(int position) {
-                return myFragment.get(position);
-            }
 
-            @Override
-            public int getCount() {
-                return myFragment.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return categoryItemList.get(position).name;
-            }
-        });
-        tabCategory.setupWithViewPager(viewPager);
     }
 
     @Override

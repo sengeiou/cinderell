@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.bean.eventbus.AccountExit;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.mine.ApplyResult;
@@ -54,6 +55,7 @@ import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -100,6 +102,8 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     TextView tv_unpay_long;
     @BindView(R.id.tv_serviceing_long)
     TextView tv_serviceing_long;
+    @BindView(R.id.tv_like)
+    TextView tv_like;
 
 
 
@@ -143,6 +147,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     }
     private void setInfoData(MineInfo mineInfo){
         if (mineInfo == null){
+            tv_like.setVisibility(View.GONE);
             vi_image.setImageResource(R.mipmap.avatar_default);
             llLoginedInfo.setVisibility(View.GONE);
             tvLogin.setVisibility(View.VISIBLE);
@@ -156,6 +161,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
              tv_unpay_long.setVisibility(View.GONE);
              tv_serviceing_long.setVisibility(View.GONE);
         }else {
+            tv_like.setVisibility(View.VISIBLE);
             llLoginedInfo.setVisibility(View.VISIBLE);
             tvLogin.setVisibility(View.GONE);
             ImageUtil.loadAvatar(mActivity,vi_image,mineInfo.user_avatar);
@@ -231,6 +237,10 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
 
     @Override
     public void loadData() {
+        setInfoData(null);
+    }
+
+    private void getData(){
         if (GlobalParam.getUserLogin()){
             MineInfo mineInfo = GlobalParam.getUserBean();
             if (mineInfo != null){
@@ -246,11 +256,14 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 }
             }
             getInfo();
+            getLoveData();
         }else {
             setInfoData(null);
         }
-        getLoveData();
+
     }
+
+
 
 
     //得到猜你喜欢的数据
@@ -424,9 +437,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MessageActivity.launch(mActivity);
                 break;
             case R.id.iv_setting:
-                if (GlobalParam.getUserLogin(mActivity))
                 SettingActivity.launch(mActivity);
-
                 break;
         }
     }
@@ -435,17 +446,20 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);
-        if (o instanceof UpdateMineInfo){
-            loadData();
+        if (o instanceof UpdateMineInfo || o instanceof AccountExit){
+            getData();
         }
     }
 
     @Override
     public void onResume() {
-        loadData();
+        if (GlobalParam.getUserLogin())
+            getData();
         super.onResume();
     }
 
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
     @BindView(R.id.app_bar)
     AppBarLayout appbar;
     @BindView(R.id.title)
@@ -462,28 +476,36 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
         //SwipeRefreshLayout和CoordinatorLayout滑动冲突
         appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
 //            LogUtil.e("totalDy" + i);
-            float percent = Math.abs(i) * 1.0f / 200 % 100;
-            percent = percent > 1 ? 1 : percent;
-            String bgColor = ColorUtil.caculateColor("#00000000", "#FFFFFFFF", percent);
-            title.setBackgroundColor(Color.parseColor(bgColor));
-            String textColor = ColorUtil.caculateColor("#00000000", "#FF111111", percent);
-            tv_title_name.setTextColor(Color.parseColor(textColor));
-
-            String backColor = ColorUtil.caculateColor("#FF000000", "#FF333333", percent);
-            Drawable wrap = DrawableCompat.wrap(mActivity.getDrawable(R.mipmap.my_set_icon));
-            DrawableCompat.setTintList(wrap, ColorStateList.valueOf(Color.parseColor(backColor)));
-
-            Drawable wrap1 = DrawableCompat.wrap(mActivity.getDrawable(R.mipmap.my_msg_icon));
-            DrawableCompat.setTintList(wrap1, ColorStateList.valueOf(Color.parseColor(backColor)));
-
-            iv_setting.setImageDrawable(wrap);
-            iv_message.setImageDrawable(wrap1);
-            if (i == 0){
-                iv_setting.setImageResource(R.mipmap.my_set_icon_white);
-                iv_message.setImageResource(R.mipmap.my_msg_icon_white);
-            }
 
         });
+
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                float percent = Math.abs(scrollY) * 1.0f / 200 % 100;
+                percent = percent > 1 ? 1 : percent;
+                String bgColor = ColorUtil.caculateColor("#00000000", "#FFFFFFFF", percent);
+                title.setBackgroundColor(Color.parseColor(bgColor));
+                String textColor = ColorUtil.caculateColor("#00000000", "#FF111111", percent);
+                tv_title_name.setTextColor(Color.parseColor(textColor));
+
+                String backColor = ColorUtil.caculateColor("#FF000000", "#FF333333", percent);
+                Drawable wrap = DrawableCompat.wrap(mActivity.getDrawable(R.mipmap.my_set_icon));
+                DrawableCompat.setTintList(wrap, ColorStateList.valueOf(Color.parseColor(backColor)));
+
+                Drawable wrap1 = DrawableCompat.wrap(mActivity.getDrawable(R.mipmap.my_msg_icon));
+                DrawableCompat.setTintList(wrap1, ColorStateList.valueOf(Color.parseColor(backColor)));
+
+                iv_setting.setImageDrawable(wrap);
+                iv_message.setImageDrawable(wrap1);
+                if (scrollY == 0){
+                    iv_setting.setImageResource(R.mipmap.my_set_icon_white);
+                    iv_message.setImageResource(R.mipmap.my_msg_icon_white);
+                }
+            }
+        });
+
+
     }
 
 
