@@ -2,6 +2,7 @@ package com.cinderellavip;
 
 import com.cinderellavip.http.SignUtil;
 import com.cinderellavip.util.CouponsStringUtil;
+import com.cinderellavip.util.VersionUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -78,16 +79,18 @@ public class ExampleUnitTest {
 
     @Test
     public void textJson() {
-        String url = "[\n" +
-                "    \"Marcus\",\n" +
-                "    \"Christian\",\n" +
-                "    \"Norman\"\n" +
-                "]";
-        Gson gson = new Gson();
-        Type founderSetType = new TypeToken<HashSet<String>>(){}.getType();
-        HashSet<String> set = gson.fromJson(url, founderSetType);
-        System.out.println(set.size());
+//        String url = "[\n" +
+//                "    \"Marcus\",\n" +
+//                "    \"Christian\",\n" +
+//                "    \"Norman\"\n" +
+//                "]";
+//        Gson gson = new Gson();
+//        Type founderSetType = new TypeToken<HashSet<String>>(){}.getType();
+//        HashSet<String> set = gson.fromJson(url, founderSetType);
+        System.out.println(VersionUtil.isModify("1.0.1","1.0.2"));
 
+        String[] split1 = "1.0.3".split("\\.");
+        System.out.println(split1.length);
 
     }
 

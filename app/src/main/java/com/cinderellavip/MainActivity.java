@@ -37,6 +37,7 @@ import com.cinderellavip.ui.fragment.FindFragment;
 import com.cinderellavip.ui.fragment.LifeFragment;
 import com.cinderellavip.ui.fragment.MineFragment;
 import com.cinderellavip.ui.fragment.ShopFragment;
+import com.cinderellavip.util.VersionUtil;
 import com.flyco.roundview.RoundTextView;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
@@ -168,7 +169,7 @@ public class MainActivity extends CheckPermissionActivity {
                             versionName = pi.versionName;
                         } catch (Exception e) {
                         }
-                        if ( !versionName.equals(result.data.version)) {
+                        if ( VersionUtil.isModify(versionName,result.data.version)) {
                             showDialog(result.data);
                         }else {
                             sign();

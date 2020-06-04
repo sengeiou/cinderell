@@ -186,6 +186,8 @@
 -keep class com.cinderellavip.bean.request.* {*;}
 -keep class com.cinderellavip.bean.score.* {*;}
 -keep class com.cinderellavip.bean.spike.* {*;}
+-keep class com.cinderellavip.http.* {*;}
+-keep class com.cinderellavip.util.lifeaddress.* {*;}
 -keep class com.stx.xhb.xbanner.* {*;}
 
 
