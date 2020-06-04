@@ -148,6 +148,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     private void setInfoData(MineInfo mineInfo){
         if (mineInfo == null){
             tv_like.setVisibility(View.GONE);
+            setData(true,null);
             vi_image.setImageResource(R.mipmap.avatar_default);
             llLoginedInfo.setVisibility(View.GONE);
             tvLogin.setVisibility(View.VISIBLE);

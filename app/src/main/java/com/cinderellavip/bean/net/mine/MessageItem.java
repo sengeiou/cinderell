@@ -14,6 +14,11 @@ public class MessageItem {
     public String status;
     public String image;
 
+    //发现有
+    public String obj_id;
+    public int sub_type;
+
+
     public String getType() {
         if (type == 1){
             return "我的资产";

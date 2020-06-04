@@ -6,8 +6,6 @@ import com.amap.api.services.core.PoiItem;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.net.NetCityBean;
-import com.tozzais.baselibrary.util.log.LogUtil;
 
 
 public class SelectCityAddressAdapter extends BaseQuickAdapter<PoiItem, BaseViewHolder> {

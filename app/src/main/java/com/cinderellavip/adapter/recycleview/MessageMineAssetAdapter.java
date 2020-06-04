@@ -1,6 +1,7 @@
 package com.cinderellavip.adapter.recycleview;
 
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,8 @@ import com.cinderellavip.R;
 import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.bean.net.mine.MessageItem;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.activity.find.PostDetailActivity;
+import com.cinderellavip.ui.activity.find.TopicDetailActivity;
 import com.cinderellavip.ui.activity.mine.MineAssetsActivity;
 
 public class MessageMineAssetAdapter extends BaseQuickAdapter<MessageItem, BaseViewHolder> implements LoadMoreModule {
@@ -42,10 +45,19 @@ public class MessageMineAssetAdapter extends BaseQuickAdapter<MessageItem, BaseV
 
 
 
-//        LinearLayout ll_root = helper.getView(R.id.ll_root);
-//         ll_root.setOnClickListener(v -> {
-//
-//        });
+        LinearLayout ll_root = helper.getView(R.id.ll_root);
+         ll_root.setOnClickListener(v -> {
+             if (type == MineAssetsActivity.FIND){
+                if (item.sub_type == 6){
+                    //话题
+                    TopicDetailActivity.launch((Activity) getContext(),item.obj_id);
+                }else if(item.sub_type == 7){
+                    //帖子
+                    PostDetailActivity.launch((Activity) getContext(),item.obj_id);
+
+                }
+             }
+        });
 
 
 

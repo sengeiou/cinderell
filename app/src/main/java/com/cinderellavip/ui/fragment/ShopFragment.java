@@ -2,11 +2,14 @@ package com.cinderellavip.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cinderellavip.R;
+import com.cinderellavip.adapter.viewpager.BaseFragmentPagerAdapter;
 import com.cinderellavip.adapter.viewpager.GoodsDetailPagerAdapter;
 import com.cinderellavip.bean.eventbus.UpdateShopPage;
 import com.cinderellavip.bean.net.HomeCategoryItem;
@@ -26,6 +29,9 @@ import com.tozzais.baselibrary.util.log.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -117,7 +123,6 @@ public class ShopFragment extends BaseFragment {
      * 获取一级分类
      */
     public void getCategory(){
-        LogUtil.e("请求了");
         new RxHttp<BaseResult<HomeCategoryResult>>().send(ApiManager.getService().getHomeCategory(),
                 new Response<BaseResult<HomeCategoryResult>>(isLoad,mActivity) {
                     @Override
@@ -135,65 +140,73 @@ public class ShopFragment extends BaseFragment {
 
     List<HomeCategoryItem> categoryItemList;
     List<String> list;
-    private GoodsDetailPagerAdapter adapter;
+    private BaseFragmentPagerAdapter  adapter;
 
 
-
+    /**M
+     * 代码待优化，勿动
+     * @param category
+     */
     private void  setTabCategory(List<HomeCategoryItem> category){
         //加载了 分类的数量发生改变的时候 或者没加载的时候
-//        if (!isLoad || (categoryItemList != null && categoryItemList.size() != category.size()+1)){
-        if (true){
-
-
-            List<String> list = new ArrayList<>();
-            int position = 0;
-            if (viewPager.getAdapter() != null){
-                position = viewPager.getCurrentItem();
-//                if (position>0 && position<categoryItemList.size()-1 ){
-//                    tabCategory.setDEAULT_POSITION(position -1);
-//                }
-
-            }
+        if (!isLoad || (categoryItemList != null && categoryItemList.size() != category.size()+1)){
+            list = new ArrayList<>();
             if (categoryItemList == null){
                 categoryItemList = new ArrayList<>();
             }else {
                 categoryItemList.clear();
             }
             categoryItemList.addAll(category);
-            if (myFragment == null)
-            myFragment = new ArrayList<>();
-            else myFragment.clear();
-
-            HomeCategoryItem homeCategoryItem = new HomeCategoryItem();
-            homeCategoryItem.name = "首页";
-            myFragment.add(ShopMainGoodsFragment.newInstance(null));
-            list.add("");
-            for (HomeCategoryItem category1:category){
-                myFragment.add(ShopCategoryGoodsFragment.newInstance(category1));
-                list.add("");
+            if (myFragment == null){
+                myFragment = new ArrayList<>();
+            }else {
+                myFragment.clear();
             }
-            categoryItemList.add(0,homeCategoryItem);
-            tabCategory.setTitle(categoryItemList);
-            //预加载
-            viewPager.setOffscreenPageLimit(myFragment.size());
-            //适配器（容器都需要适配器）
+            FragmentManager fm = getChildFragmentManager();
             if (adapter == null){
-                adapter = new GoodsDetailPagerAdapter(getChildFragmentManager(), myFragment,list);
+                HomeCategoryItem homeCategoryItem = new HomeCategoryItem();
+                homeCategoryItem.name = "首页";
+                myFragment.add(ShopMainGoodsFragment.newInstance(null));
+                for (HomeCategoryItem category1:category){
+                    myFragment.add(ShopCategoryGoodsFragment.newInstance(category1));
+                    list.add(""+category1.name+category1.id);
+                }
+                list.add(0,"0");
+                categoryItemList.add(0,homeCategoryItem);
+                tabCategory.setTitle(categoryItemList);
+                adapter = new BaseFragmentPagerAdapter (fm, myFragment);
                 viewPager.setAdapter(adapter);
             }else {
-                adapter.notifyDataSetChanged();
+                if(this.myFragment != null){
+                    FragmentTransaction ft = fm.beginTransaction();
+                    for(Fragment f:this.myFragment){
+                        ft.remove(f);
+                    }
+                    ft.commit();
+                    ft=null;
+                    fm.executePendingTransactions();
+                }
+                HomeCategoryItem homeCategoryItem = new HomeCategoryItem();
+                homeCategoryItem.name = "首页";
+                myFragment.add(ShopMainGoodsFragment.newInstance(null));
+                for (HomeCategoryItem category1:category){
+                    myFragment.add(ShopCategoryGoodsFragment.newInstance(category1));
+                    list.add(""+category1.name+category1.id);
+                }
+                list.add(0,"0");
+                categoryItemList.add(0,homeCategoryItem);
+                tabCategory.setTitle(categoryItemList);
+                adapter.setFragmentList(myFragment);
+
             }
-
-
+            //预加载
+            viewPager.setOffscreenPageLimit(myFragment.size());
             tabCategory.setupWithViewPager(viewPager);
-            if (position>0 && position<categoryItemList.size()-1){
-//                tabCategory.setCurrent(position-1);
-                viewPager.setCurrentItem(position-1);
-            }
+            new Handler().postDelayed(() -> viewPager.setCurrentItem(0),500);
             isLoad = true;
         }
-
     }
+
 
     @Override
     public void onEvent(Object o) {

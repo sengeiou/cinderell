@@ -46,8 +46,6 @@ public class MessageMineAssetFragment extends BaseListFragment<MessageItem> {
 
 
 
-
-
     }
 
     private int type;
