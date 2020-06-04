@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.home.HomeSpikeItem;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
@@ -43,7 +42,7 @@ public class SpikeHomeAdapter extends BaseQuickAdapter<HomeSpikeItem, BaseViewHo
 
         helper.setText(R.id.tv_name,item.name)
                 .setText(R.id.tv_price,"￥"+item.getSpikePrice())
-                .setText(R.id.tv_former_price,item.getBuyPrice());
+                .setText(R.id.tv_former_price,"￥"+item.getBuyPrice());
 
 
         ll_root.setOnClickListener(v -> {

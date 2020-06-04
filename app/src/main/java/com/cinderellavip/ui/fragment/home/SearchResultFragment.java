@@ -85,7 +85,7 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
                         int total = result.data.total;
                         if (total>0){
                             iv_top.setVisibility(View.VISIBLE);
-                            tvTotalPage.setText(""+(total/20+(total%2 == 0?0:1) ));
+                            tvTotalPage.setText(""+(total/20+(total%20 == 0?0:1) ));
                             tvCurrentPage.setText(""+page);
                         }else {
                             iv_top.setVisibility(View.GONE);

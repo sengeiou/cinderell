@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginRight="8dp"
         android:gravity="bottom"
         android:orientation="horizontal">
@@ -44,19 +44,20 @@
 
         <TextView
             android:id="@+id/tv_price"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="11sp"
+            android:maxWidth="60dp"
             android:lines="1"
             android:singleLine="true"
             android:ellipsize="end"
             android:textColor="@color/baseColor"
-            tools:text="￥238"/>
+            tools:text="￥238￥238￥238￥238￥238￥238￥238"/>
 
         <TextView
             android:id="@+id/tv_former_price"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:lines="1"
