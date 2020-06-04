@@ -58,7 +58,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.WorkerThread;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -150,25 +149,22 @@ public class ShareActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseResult<AppletsCode> result) {
                         String path = result.data.url;
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    if (!TextUtils.isEmpty(path)) { //网络图片
-                                        // 对资源链接
-                                        URL url = new URL(path);
-                                        //打开输入流
-                                        InputStream inputStream = url.openStream();
-                                        //对网上资源进行下载转换位图图片
-                                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                        codeBitmap = scaleBitmap(bitmap, 0.4f);
-                                        inputStream.close();
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                        new Thread(() -> {
+                            try {
+                                if (!TextUtils.isEmpty(path)) { //网络图片
+                                    // 对资源链接
+                                    URL url = new URL(path);
+                                    //打开输入流
+                                    InputStream inputStream = url.openStream();
+                                    //对网上资源进行下载转换位图图片
+                                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                    codeBitmap = scaleBitmap(bitmap, 0.4f);
+                                    inputStream.close();
                                 }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }).start();
                     }
