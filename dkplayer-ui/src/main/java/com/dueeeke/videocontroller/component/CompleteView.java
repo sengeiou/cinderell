@@ -1,5 +1,6 @@
 package com.dueeeke.videocontroller.component;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -54,6 +55,7 @@ public class CompleteView extends FrameLayout implements IControlComponent {
         });
         mStopFullscreen = findViewById(R.id.stop_fullscreen);
         mStopFullscreen.setOnClickListener(new OnClickListener() {
+            @SuppressLint("SourceLockedOrientationActivity")
             @Override
             public void onClick(View v) {
                 if (mControlWrapper.isFullScreen()) {

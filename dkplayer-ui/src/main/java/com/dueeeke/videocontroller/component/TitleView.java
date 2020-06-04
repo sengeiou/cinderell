@@ -1,5 +1,6 @@
 package com.dueeeke.videocontroller.component;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -57,6 +58,7 @@ public class TitleView extends FrameLayout implements IControlComponent {
         mTitleContainer = findViewById(R.id.title_container);
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(new OnClickListener() {
+            @SuppressLint("SourceLockedOrientationActivity")
             @Override
             public void onClick(View v) {
                 Activity activity = PlayerUtils.scanForActivity(getContext());

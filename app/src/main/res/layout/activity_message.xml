@@ -6,8 +6,6 @@
     android:background="@color/gray_bg">
 
 
-
-
     <LinearLayout
         android:id="@+id/ll_mine_assets"
         android:background="@drawable/touch_bg"

@@ -1,6 +1,5 @@
-<resources>
-    <string name="app_name">灰姑娘会员</string>
-
-    <string name="behavior_sample_title">com.cinderellavip.weight.behavior.SampleTitleBehavior</string>
-    <string name="technical_detail_title">com.cinderellavip.weight.behavior.TechnicalDetailTitleBehavior</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">灰姑娘会员</string>
+    <string name="behavior_sample_title" tools:ignore="MissingTranslation">com.cinderellavip.weight.behavior.SampleTitleBehavior</string>
+    <string name="technical_detail_title" tools:ignore="MissingTranslation">com.cinderellavip.weight.behavior.TechnicalDetailTitleBehavior</string>
 </resources>

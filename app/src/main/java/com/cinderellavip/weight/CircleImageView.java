@@ -1,6 +1,7 @@
 package com.cinderellavip.weight;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 
 
+@SuppressLint("AppCompatCustomView")
 public class CircleImageView extends ImageView {
     private float width;
     private float height;
