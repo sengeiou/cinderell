@@ -115,7 +115,7 @@
 
                     <TextView
                         android:text="爽约包赔"
-                        android:drawableLeft="@mipmap/project_flag1"
+                        android:drawableLeft="@mipmap/project_flag2"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="12dp"
                         android:textSize="10sp"
@@ -123,7 +123,7 @@
 
                     <TextView
                         android:text="不满意重服务"
-                        android:drawableLeft="@mipmap/project_flag1"
+                        android:drawableLeft="@mipmap/project_flag3"
                         android:drawablePadding="5dp"
                         android:layout_marginLeft="12dp"
                         android:textSize="10sp"

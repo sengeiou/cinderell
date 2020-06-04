@@ -130,19 +130,21 @@ public class SelectLocationFragment extends BaseListFragment<PoiItem> implements
 
     @Override
     public void onPoiSearched(PoiResult result, int rcode) {
-        if (poiItems != null){
-            poiItems.clear();
-        }
+
         if (rcode == AMapException.CODE_AMAP_SUCCESS) {
             if (result != null && result.getQuery() != null) {// 搜索poi的结果
                 if (result.getQuery().equals(query)) {// 是否是同一条
                     poiResult = result;
+                    if (poiItems != null){
+                        poiItems.clear();
+                    }
                     poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
                     List<SuggestionCity> cities = poiResult
                             .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
                     if (poiItems != null && poiItems.size() > 0) {
                         setData(true,poiItems);
-
+                    }else {
+                        setData(true,poiItems);
                     }
                 }
             }

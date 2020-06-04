@@ -391,7 +391,6 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MineAddressActivity.launch(mActivity,MineAddressActivity.LOOK);
                 break;
             case R.id.rl_mine_service7:
-                if (Utils.isFastClick())
                 if (GlobalParam.getUserLogin(mActivity)){
                     new RxHttp<BaseResult<ApplyResult>>().send(ApiManager.getService().applyResult(),
                             new Response<BaseResult<ApplyResult>>( mActivity) {
