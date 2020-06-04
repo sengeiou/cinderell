@@ -1,6 +1,5 @@
 package com.cinderellavip.ui.activity.order;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -171,7 +170,7 @@ public class OrderDetailActivity extends BaseActivity {
         tvOrderId.setText("订单编号："+orderInfo.order_no);
         tvTimePay.setText("下单时间："+orderInfo.create_at);
         tv_pay_way.setText("付款时间："+orderInfo.pay_at);
-        tv_send_time.setText("发货时间："+orderInfo.pay_at);
+        tv_send_time.setText("发货时间："+orderInfo.send_at);
         tv_receive_time.setText("收货时间："+orderInfo.receipt_at);
 
 

@@ -310,7 +310,6 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 MineOrderActivity.launch(mActivity, OrderFragment.ALL);
                 break;
             case R.id.rl_unpay:
-                if (Utils.isFastClick())
                 if (GlobalParam.getUserLogin(mActivity))
                 MineOrderActivity.launch(mActivity, OrderFragment.UNPAY);
                 break;
