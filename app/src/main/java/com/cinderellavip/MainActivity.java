@@ -529,7 +529,7 @@ public class MainActivity extends CheckPermissionActivity {
         Calendar calendar = Calendar.getInstance();
         //分钟
         int minute = calendar.get(Calendar.MINUTE);
-        LogUtil.e(minute+"");
+//        LogUtil.e(minute+"");
         if (!mHandler.hasMessages(2))
         mHandler.sendEmptyMessageDelayed(2, 1000*60*(60-minute+2));
 

@@ -37,6 +37,7 @@ import com.cinderellavip.util.ClipBoardUtil;
 import com.cinderellavip.util.Utils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.log.LogUtil;
 import com.tozzais.baselibrary.util.progress.LoadingUtils;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -49,6 +50,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -265,21 +267,32 @@ public class ShareActivity extends BaseActivity {
                     inputStream.close();
                 }
                 if (mBitmap != null) {
-                    saveFile(mergeBitmap(mBitmap, codeBitmap));
+                    Bitmap bitmap = mergeBitmap(mBitmap, codeBitmap);
+                    saveFile(bitmap);
                 }
-            } catch (Exception e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (loadNumber == number) {
-                            LoadingUtils.dismiss();
-                            tsg("图片下载失败");
-                            number = 0;
-                            loadNumber = 0;
-                            saveList.clear();
-                        }
+            } catch (MalformedURLException e) {
+                runOnUiThread(() -> {
+                    if (loadNumber == number) {
+                        LoadingUtils.dismiss();
+                        tsg("图片下载失败");
+                        number = 0;
+                        loadNumber = 0;
+                        saveList.clear();
                     }
                 });
+                LogUtil.e("MalformedURLException"+e.getLocalizedMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                runOnUiThread(() -> {
+                    if (loadNumber == number) {
+                        LoadingUtils.dismiss();
+                        tsg("图片下载失败");
+                        number = 0;
+                        loadNumber = 0;
+                        saveList.clear();
+                    }
+                });
+                LogUtil.e("MalformedURLException"+e.getLocalizedMessage());
                 e.printStackTrace();
             }
 
@@ -304,9 +317,11 @@ public class ShareActivity extends BaseActivity {
 
 
     public void saveFile(Bitmap bm) throws IOException {
-        File dirFile = new File(Environment.getExternalStorageDirectory().getPath());
-        if (!dirFile.exists()) {
-            dirFile.mkdir();
+
+        File RootPath = new File(Constant.PATH);
+        if (!RootPath.exists()) {
+            boolean b = RootPath.mkdir();
+            LogUtil.e("创建"+b);
         }
         String fileName = System.currentTimeMillis() + ".jpg";
 

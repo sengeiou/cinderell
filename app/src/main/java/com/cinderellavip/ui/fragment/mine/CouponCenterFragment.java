@@ -69,6 +69,14 @@ public class CouponCenterFragment extends BaseListFragment<CouponsBean> {
                     public void onSuccess(BaseResult<ListCoupons<CouponsBean>> result) {
                         setData(result.data.coupons);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }

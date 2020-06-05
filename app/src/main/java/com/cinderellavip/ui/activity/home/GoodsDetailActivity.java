@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -150,32 +151,14 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     @Override
     public void loadData() {
-        LogUtil.e("loadData");
+        if (!isLoad) goods_layout.showLoading();
         new RxHttp<BaseResult<GoodsResult>>().send(ApiManager.getService().getGoodsDetail(id),
-                new Response<BaseResult<GoodsResult>>(mActivity) {
+                new Response<BaseResult<GoodsResult>>(isLoad,mActivity) {
                     @Override
                     public void onSuccess(BaseResult<GoodsResult> result) {
                         goods_layout.showContent();
-                        goodsResult = result.data;
-                        GoodsInfo productInfo = goodsResult.product_info;
-                        if (goodsDetailGoodsFragment != null)
-                            goodsDetailGoodsFragment.setData(goodsResult);
-                        if (graphicFragment != null) {
-                            graphicFragment.setData(productInfo.detail);
-                        }
-                        if (productInfo.hasGroup){
-                            GroupInfo groupInfo = goodsResult.group_info;
-                            tvLeftPrice.setText("￥"+groupInfo.getProduct_price()+"\n单独购买");
-                            tvRightPrice.setText("￥"+groupInfo.getGroup_price()+"\n参团购买");
-                            ll_buy_left_btn.setVisibility(View.VISIBLE);
-                        }else if (productInfo.hasSpike){
-                            ll_buy_left_btn.setVisibility(View.GONE);
-                            tvRightPrice.setText("立即秒杀");
-                        }else {
-                            ll_buy_left_btn.setVisibility(View.VISIBLE);
-                            tvLeftPrice.setText("加入购物车");
-                            tvRightPrice.setText("立即购买");
-                        }
+                        //延时加载不会回报错
+                        new Handler().postDelayed(()->{setData(result.data);},200);
 
                     }
 
@@ -188,11 +171,36 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 });
     }
 
+    private void setData( GoodsResult goodsResult){
+        this.goodsResult = goodsResult;
+        GoodsInfo productInfo = goodsResult.product_info;
+        if (goodsDetailGoodsFragment != null)
+            goodsDetailGoodsFragment.setData(goodsResult);
+        if (graphicFragment != null) {
+            graphicFragment.setData(productInfo.detail);
+        }
+        if (productInfo.hasGroup){
+            GroupInfo groupInfo = goodsResult.group_info;
+            tvLeftPrice.setText("￥"+groupInfo.getProduct_price()+"\n单独购买");
+            tvRightPrice.setText("￥"+groupInfo.getGroup_price()+"\n参团购买");
+            ll_buy_left_btn.setVisibility(View.VISIBLE);
+        }else if (productInfo.hasSpike){
+            ll_buy_left_btn.setVisibility(View.GONE);
+            tvRightPrice.setText("立即秒杀");
+        }else {
+            ll_buy_left_btn.setVisibility(View.VISIBLE);
+            tvLeftPrice.setText("加入购物车");
+            tvRightPrice.setText("立即购买");
+        }
+        isLoad = true;
+
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        LogUtil.e("onSaveInstanceState");
+//        super.onSaveInstanceState(outState);
+//        LogUtil.e("onSaveInstanceState");
     }
 
     GoodsResult goodsResult;

@@ -403,7 +403,6 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                                         ApplyProductSupplierActivity.launch(mActivity);
                                     }
 
-
                                 }
                             });
                 }

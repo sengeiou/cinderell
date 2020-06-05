@@ -52,6 +52,14 @@ public class MessageCenterFragment extends BaseListFragment<MessageItem> {
                         LogUtil.e("list"+list.size());
                         setData(list);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }

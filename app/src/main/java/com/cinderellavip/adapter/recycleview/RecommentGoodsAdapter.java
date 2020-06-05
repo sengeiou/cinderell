@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.global.ImageUtil;
+import com.cinderellavip.ui.activity.home.GoodsDetailActivity;
 import com.cinderellavip.util.ScreenUtil;
 
 
@@ -36,6 +37,9 @@ public class RecommentGoodsAdapter extends BaseQuickAdapter<HomeGoods, BaseViewH
         ImageUtil.loadNet(getContext(),iv_image,item.thumb);
         helper.setText(R.id.tv_name,item.name)
                 .setText(R.id.tv_price,"￥"+item.getPrice());
+        helper.getView(R.id.ll_root).setOnClickListener(v -> {
+            GoodsDetailActivity.launch((Activity) getContext(),item.id+"");
+        });
 
 
 

@@ -73,6 +73,14 @@ public class MineAddressFragment extends BaseListFragment<NetCityBean> {
                     public void onSuccess(BaseResult<ListResult<NetCityBean>> result) {
                         setData(result.data.list);
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorResult(e);
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
+                    }
                 });
 
     }
