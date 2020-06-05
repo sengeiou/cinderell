@@ -3,6 +3,7 @@ package com.cinderellavip.bean.net.mine;
 public class MineInfo {
     public int store_create_num;
     public int store_payed_num;
+    public int store_comm_num;
     public int store_send_num;
     public int serve_un_pay;
     public int serve_un_serve;

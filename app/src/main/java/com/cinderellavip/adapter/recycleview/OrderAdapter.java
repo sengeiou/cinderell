@@ -59,7 +59,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> im
         adapter.setNewData(item.goods);
 
         helper.setText(R.id.tv_shop,item.store_name)
-                .setText(R.id.tv_status,item.getStatus())
+                .setText(R.id.tv_status,item.status_txt)
                 .setText(R.id.tv_goods_number,"共"+item.goods.size()+"件 应付金额：")
                 .setText(R.id.tv_money,"￥"+item.goods_amount);
         switch (item.status){

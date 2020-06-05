@@ -143,9 +143,6 @@ public class WithDrawActivity extends BaseActivity {
                 }if (TextUtils.isEmpty(money)){
                     tsg("请输入提现金额");
                     return;
-                }else if (Double.parseDouble(money)<1){
-                    tsg("提现金额不得小于1元");
-                    return;
                 }
 
                 if(type == BALANCE){
@@ -215,18 +212,18 @@ public class WithDrawActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String trim = editable.toString().trim();
-                try {
-                    if (Integer.parseInt(trim)>99990){
-                        tsg("单次最多提现9999元");
-                    }
-                    if (trim.length()>4){
-                        etMoney.setText("9999");
-                        etMoney.setSelection(4);
-                    }
-                }catch (Exception e){
-
-                }
+//                String trim = editable.toString().trim();
+//                try {
+//                    if (Integer.parseInt(trim)>99990){
+//                        tsg("单次最多提现9999元");
+//                    }
+//                    if (trim.length()>4){
+//                        etMoney.setText("9999");
+//                        etMoney.setSelection(4);
+//                    }
+//                }catch (Exception e){
+//
+//                }
 
 
             }

@@ -104,6 +104,8 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     TextView tv_serviceing_long;
     @BindView(R.id.tv_like)
     TextView tv_like;
+    @BindView(R.id.tv_finish)
+    TextView tv_finish;
 
 
 
@@ -161,6 +163,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
              tv_to_be_confirm_long.setVisibility(View.GONE);
              tv_unpay_long.setVisibility(View.GONE);
              tv_serviceing_long.setVisibility(View.GONE);
+                tv_finish.setVisibility(View.GONE);
         }else {
             tv_like.setVisibility(View.VISIBLE);
             llLoginedInfo.setVisibility(View.VISIBLE);
@@ -180,6 +183,13 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 tv_unpay.setText(mineInfo.store_create_num+"");
             }else {
                 tv_unpay.setVisibility(View.GONE);
+            }
+            //已完成数量
+            if (mineInfo.store_comm_num>0){
+                tv_finish.setVisibility(View.VISIBLE);
+                tv_finish.setText(mineInfo.store_comm_num+"");
+            }else {
+                tv_finish.setVisibility(View.GONE);
             }
             if (mineInfo.store_payed_num>0){
                 tv_unsend.setVisibility(View.VISIBLE);

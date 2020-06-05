@@ -148,6 +148,7 @@ public class OrderDetailActivity extends BaseActivity {
     private void setData(OrderInfo orderInfo) {
         this.orderInfo = orderInfo;
         setStatus(orderInfo.status);
+        tvStatus.setText(orderInfo.status_txt);
         NetCityBean address = orderInfo.address;
         List<OrderGoodsInfo> goods = orderInfo.goods;
         //为了退款用的
@@ -181,13 +182,12 @@ public class OrderDetailActivity extends BaseActivity {
     private void setStatus(int status) {
         switch (status) {
             case 0:
-                tvStatus.setText("已取消");
+
                 tvStatus1.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 llBottom.setVisibility(View.GONE);
                 break;
             case 1:
-                tvStatus.setText("待付款");
                 tvStatus1.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 llBottom.setVisibility(View.VISIBLE);
@@ -197,7 +197,6 @@ public class OrderDetailActivity extends BaseActivity {
                 tvBtnBottom2.setText("立即付款");
                 break;
             case 2:
-                tvStatus.setText("待发货");
                 tvStatus1.setVisibility(View.GONE);
                 tvBtnBottom2.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
@@ -206,7 +205,6 @@ public class OrderDetailActivity extends BaseActivity {
                 tv_pay_way.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                tvStatus.setText("待收货");
                 tvStatus1.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 tv_pay_way.setVisibility(View.VISIBLE);
@@ -218,7 +216,6 @@ public class OrderDetailActivity extends BaseActivity {
                 tvBtnBottom2.setText("确认收货");
                 break;
             case 5:
-                tvStatus.setText("交易完成");
                 tvStatus1.setVisibility(View.GONE);
                 llBottom.setVisibility(View.VISIBLE);
                 tv_receive_time.setVisibility(View.VISIBLE);
@@ -231,7 +228,6 @@ public class OrderDetailActivity extends BaseActivity {
                 tvBtnBottom1.setText("查看物流");
                 break;
             case 4:
-                tvStatus.setText("待评价");
                 tvStatus1.setVisibility(View.GONE);
                 tv_receive_time.setVisibility(View.VISIBLE);
                 tv_send_time.setVisibility(View.VISIBLE);
