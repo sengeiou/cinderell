@@ -4,6 +4,7 @@ package com.cinderellavip.util;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
@@ -17,6 +18,7 @@ public class ClipBoardUtil {
         ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("simple text", text);
         clipboard.setPrimaryClip(clip);
+        if (!TextUtils.isEmpty(tip))
         ToastCommom.createToastConfig().ToastShow(context,tip);
 
     }

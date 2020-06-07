@@ -12,7 +12,6 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -375,27 +374,36 @@ public class ShareActivity extends BaseActivity {
         return uri;
     }
 
+    private void copyText(String tip){
+        if (goodsResult != null){
+            GoodsInfo productInfo = goodsResult.product_info;
+            String priceText = "";
+            if (productInfo.hasGroup ){
+                GroupInfo group_info = goodsResult.group_info;
+                //团购
+                priceText = "\n原价：￥" + group_info.getProduct_price() + "\n灰姑娘拼团价：￥" + group_info.getGroup_price();
+            }else if (productInfo.hasSpike ){
+                //秒杀
+                SpikeInfo group_info = goodsResult.spike_info;
+                priceText = "\n原价：￥" + group_info.getProductPrice() + "\n灰姑娘秒杀价：￥" + group_info.getSpikePrice();
+            }else {
+                priceText = "\n原价：￥" + productInfo.getOld_price() + "\n灰姑娘会员价：￥" + productInfo.getPrice();
+            }
+            String name = productInfo.name+priceText;
+            ClipBoardUtil.copy(mActivity, name,tip);
+        }
+
+
+    }
+
     private void saveShare(){
         runOnUiThread(() -> {
             LoadingUtils.dismiss();
             if (clickType == 1) {
-                GoodsInfo productInfo = goodsResult.product_info;
-                String priceText = "";
-                if (productInfo.hasGroup ){
-                    GroupInfo group_info = goodsResult.group_info;
-                    //团购
-                    priceText = "\n原价：￥" + group_info.getProduct_price() + "\n灰姑娘拼团价：￥" + group_info.getGroup_price();
-                }else if (productInfo.hasSpike ){
-                    //秒杀
-                    SpikeInfo group_info = goodsResult.spike_info;
-                    priceText = "\n原价：￥" + group_info.getProductPrice() + "\n灰姑娘秒杀价：￥" + group_info.getSpikePrice();
-                }else {
-                    priceText = "\n原价：￥" + productInfo.getOld_price() + "\n灰姑娘会员价：￥" + productInfo.getPrice();
-                }
-                String name = productInfo.name+priceText;
-                ClipBoardUtil.copy(mActivity, name,"文案信息已复制成功");
+                copyText("文案信息已复制成功");
                 sendMoreImage();
             }else {
+                copyText(null);
                 CenterDialogUtil.showShare(mActivity, () -> {
                     Intent lan = getPackageManager().getLaunchIntentForPackage("com.tencent.mm");
                     Intent intent1 = new Intent(Intent.ACTION_MAIN);
@@ -423,6 +431,7 @@ public class ShareActivity extends BaseActivity {
     }
 
     private void share() {
+        copyText(null);
         SecondDialogUtil.showPosterDialog(mContext, goodsResult, codeBitmap, (payString1, bitmap) -> {
             switch (payString1) {
                 case "1":
