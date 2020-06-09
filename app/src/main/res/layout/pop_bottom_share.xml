@@ -85,7 +85,9 @@
                     <TextView
                         android:id="@+id/tv_price"
                         style="@style/base_text_style"
-                        tools:text="物品整理"
+                        tools:text="物品整理物品整理物品整理物品整理物品整理物品整理"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="12sp"
                         android:textColor="@color/red"
                         />
@@ -96,6 +98,8 @@
                         android:textColor="@color/baseColor"
                         android:text="免费加入灰姑凉 省钱 赚钱"
                         android:layout_marginLeft="10dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="10sp"
                         />
 

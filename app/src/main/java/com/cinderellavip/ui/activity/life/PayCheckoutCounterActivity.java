@@ -169,6 +169,10 @@ public class PayCheckoutCounterActivity extends BaseActivity {
                 setPayWay(0);
                 break;
             case R.id.tv_buy:
+                if (payway.equals("-1")){
+                    tsg("请选择支付方式");
+                    return;
+                }
                 if (prePayLongOrder.type == PrePayLongOrder.LONG) {
                     pay();
                 }else if (prePayLongOrder.type == PrePayLongOrder.PROJECT) {
@@ -179,7 +183,7 @@ public class PayCheckoutCounterActivity extends BaseActivity {
         }
     }
 
-    private String payway = "1";
+    private String payway = "-1";
     private void setPayWay(int way) {
         payway = way + "";
         ivPayWechat.setImageResource(way == 2 ? R.mipmap.service_agreement_select : R.mipmap.service_agreement_default);

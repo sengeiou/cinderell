@@ -5,28 +5,7 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
-        android:id="@+id/ll_pay_ali"
-        style="@style/base_hor_style">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_alipay" />
-
-        <TextView
-            style="@style/base_text_style"
-            android:layout_marginLeft="12dp"
-            android:layout_weight="1"
-            android:text="使用支付宝支付" />
-
-        <ImageView
-            android:id="@+id/iv_pay_ali"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/gwcxz" />
-
-    </LinearLayout>
 
 
 
@@ -47,6 +26,29 @@
 
         <ImageView
             android:id="@+id/iv_pay_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/gwcmx" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pay_ali"
+        style="@style/base_hor_style">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_alipay" />
+
+        <TextView
+            style="@style/base_text_style"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:text="使用支付宝支付" />
+
+        <ImageView
+            android:id="@+id/iv_pay_ali"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/gwcmx" />

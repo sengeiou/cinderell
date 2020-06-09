@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.cinderellavip.adapter.recycleview.OrderAdapter;
 import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.eventbus.OrderComment;
+import com.cinderellavip.bean.eventbus.OrderPaySuccess;
 import com.cinderellavip.bean.eventbus.ReceiveOrder;
 import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.http.ApiManager;
@@ -92,7 +93,7 @@ public class OrderFragment extends BaseListFragment<OrderBean> {
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);
-        if (o instanceof ReceiveOrder||o instanceof OrderComment){
+        if (o instanceof ReceiveOrder||o instanceof OrderComment||o instanceof OrderPaySuccess){
             onRefresh();
         }
     }

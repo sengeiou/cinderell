@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.cinderellavip.MainActivity;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
+import com.cinderellavip.bean.eventbus.OrderPaySuccess;
+import com.cinderellavip.bean.eventbus.ReceiveOrder;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.http.ApiManager;
@@ -24,6 +26,8 @@ import com.cinderellavip.weight.GirdSpace;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListActivity;
 import com.tozzais.baselibrary.util.DpUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -48,6 +52,7 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
         if (!Utils.isFastClick()){
             return;
         }
+        EventBus.getDefault().post(new OrderPaySuccess());
         Intent intent = new Intent(activity, PayResultActivity.class);
         intent.putExtra("createOrderBean", createOrderBean);
         intent.putExtra("success", success);

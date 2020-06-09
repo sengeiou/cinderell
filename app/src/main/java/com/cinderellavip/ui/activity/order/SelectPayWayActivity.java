@@ -108,18 +108,20 @@ public class SelectPayWayActivity extends BaseActivity {
                 setPayWay(3);
                 break;
             case R.id.tv_add:
+                if (payway.equals("-1")){
+                    tsg("请选择支付方式");
+                    return;
+                }
                 if (createOrderBean.type == CreateOrderBean.PRODUCT ||createOrderBean.type == CreateOrderBean.CART){
                     pay();
                 }else if (createOrderBean.type == CreateOrderBean.GROUP ){
                     groupPay();
                 }
-
-
                 break;
         }
     }
 
-    private String payway = "1";
+    private String payway = "-1";
 
     private void setPayWay(int way) {
         payway = way + "";

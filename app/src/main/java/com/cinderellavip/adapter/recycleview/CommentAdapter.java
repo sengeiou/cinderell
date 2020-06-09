@@ -1,11 +1,13 @@
 package com.cinderellavip.adapter.recycleview;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.goods.GoodsCommentItem;
+import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.weight.RatingBarView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,6 +31,7 @@ public class CommentAdapter extends BaseQuickAdapter<GoodsCommentItem, BaseViewH
     protected void convert(BaseViewHolder helper,GoodsCommentItem item) {
         int position = helper.getAdapterPosition();
         View space = helper.getView(R.id.space);
+        ImageView iv_avater = helper.getView(R.id.iv_avater);
         RatingBarView ratingbar = helper.getView(R.id.ratingbar);
 
         if (havaTopSpace && position == 0){
@@ -36,6 +39,7 @@ public class CommentAdapter extends BaseQuickAdapter<GoodsCommentItem, BaseViewH
         }else {
             space.setVisibility(View.GONE);
         }
+        ImageUtil.loadNet(getContext(),iv_avater,item.avatar);
 
         helper.setText(R.id.tv_name,item.username)
                 .setText(R.id.tv_time,item.create_at)
