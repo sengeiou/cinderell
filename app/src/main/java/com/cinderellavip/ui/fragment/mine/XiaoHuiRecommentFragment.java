@@ -24,6 +24,8 @@ public class XiaoHuiRecommentFragment extends BaseListFragment<MineInviteItem> {
 
     @Override
     public void loadData() {
+        super.loadData();
+        PageSize = 20;
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("page", page+"");
         hashMap.put("limit", PageSize+"");
