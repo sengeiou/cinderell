@@ -122,15 +122,20 @@ public class AddServiceAddressActivity extends CheckPermissionActivity {
     }
 
     private void location(){
-        if (type == ADD)
-        LocationUtil.getInstance().start(mActivity,(aMapLocation, lat, lnt) -> {
-            if (aMapLocation.getErrorCode() == 0){
-                tvAddress.setText(aMapLocation.getPoiName());
-                tvAddressDetail.setText(aMapLocation.getProvince()+
-                        aMapLocation.getCity()+ aMapLocation.getDistrict()+
-                        aMapLocation.getStreet()+aMapLocation.getStreetNum());
-            }
-        });
+        if (type == ADD){
+            LocationUtil util = new LocationUtil();
+            util.start(mActivity,(aMapLocation, lat, lnt) -> {
+                if (aMapLocation.getErrorCode() == 0){
+                    tvAddress.setText(aMapLocation.getPoiName());
+                    tvAddressDetail.setText(aMapLocation.getProvince()+
+                            aMapLocation.getCity()+ aMapLocation.getDistrict()+
+                            aMapLocation.getStreet()+aMapLocation.getStreetNum());
+                }
+                util.stop();
+            });
+        }
+
+
     }
 
     @Override

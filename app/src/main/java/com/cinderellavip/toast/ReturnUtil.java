@@ -19,7 +19,6 @@ public class ReturnUtil {
 
 
 
-
 	private static Dialog cityDialog;
 
 	public static  void showSelectDialog(Context context,String title, List<String> data, final onSelectListener listener) {
@@ -45,6 +44,9 @@ public class ReturnUtil {
 		ProviceWheelAdapter provinceAdapter = new ProviceWheelAdapter(context, data);
 		mViewProvince.setViewAdapter(provinceAdapter);
 		mViewProvince.setVisibleItems(7);
+		cityDialog.setOnDismissListener(dialog -> {
+			cityDialog = null;
+		});
 
 
 	}

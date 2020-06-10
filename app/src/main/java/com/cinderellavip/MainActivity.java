@@ -389,13 +389,13 @@ public class MainActivity extends CheckPermissionActivity {
                 }
                 break;
             case MINE:
+//                tsg("hahaha");
                 if (mineFragment == null) {
                     mineFragment = new MineFragment();
                     transaction.add(R.id.fl_container, mineFragment, TAG_MINE);
                 } else {
                     transaction.show(mineFragment);
                 }
-
                 break;
         }
         // 提交

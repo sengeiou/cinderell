@@ -17,7 +17,7 @@ import com.cinderellavip.bean.net.life.ShortDate;
 import com.cinderellavip.bean.net.life.ShortPreOrderResult;
 import com.cinderellavip.bean.net.life.ShortTime;
 import com.cinderellavip.bean.request.LifePreOrder;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
@@ -260,7 +260,7 @@ public class BuyServiceActivity extends BaseActivity {
         map.put("address",""+prePayLongOrder.address);
         map.put("servicetime",""+prePayLongOrder.starttime);
         map.put("coupon",""+prePayLongOrder.coupon);
-        map.put("city", CinderellApplication.name +"");
+        map.put("city", CinderellaApplication.name +"");
         map.put("waiter",""+lifePreOrder.waiter);
         new RxHttp<BaseResult<Integer>>().send(ApiManager.getService().createDirectOrder(map),
                 new Response<BaseResult<Integer>>(mActivity) {

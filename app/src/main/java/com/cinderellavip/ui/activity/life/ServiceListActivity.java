@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.life.LiftHomeCategory;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.ui.fragment.life.ServiceListFragment;
 import com.cinderellavip.util.Utils;
@@ -45,7 +45,7 @@ public class ServiceListActivity extends BaseActivity {
         item = getIntent().getParcelableExtra("item");
         setBackTitle(item.name);
 
-        setRightText(CinderellApplication.name);
+        setRightText(CinderellaApplication.name);
 
         Drawable nav_up =getResources().getDrawable(R.mipmap.icon_arrow_down);
         nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());

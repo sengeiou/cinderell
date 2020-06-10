@@ -48,6 +48,8 @@ public class MineOrderActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setBackTitle("我的订单");
+        tablayout.setTabTextColors(getColor(R.color.black_title_color),getColor(R.color.baseColor));
+        tablayout.setSelectedTabIndicatorColor(getColor(R.color.baseColor));
     }
 
     @Override

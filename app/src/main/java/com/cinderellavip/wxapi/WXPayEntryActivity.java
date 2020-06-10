@@ -28,7 +28,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.e("支付","打开了onNewIntent" );
+//        Log.e("支付","打开了onNewIntent" );
         setIntent(intent);
         api.handleIntent(intent, this);
     }
@@ -39,7 +39,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 
     @Override
     public void onResp(BaseResp resp) {
-        Log.e("支付",resp.getType()+"打22开了"+resp.errCode );
+//        Log.e("支付",resp.getType()+"打22开了"+resp.errCode );
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             LogUtil.e(resp.errCode + "," + resp.errStr);
             finish();
@@ -72,7 +72,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("支付","打开了onCreate" );
+//        Log.e("支付","打开了onCreate" );
 
         api = WXAPIFactory.createWXAPI(this, Constant.WX_APPID);
         api.handleIntent(getIntent(), this);

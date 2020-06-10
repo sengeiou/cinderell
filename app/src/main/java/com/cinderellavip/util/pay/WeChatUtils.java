@@ -3,7 +3,7 @@ package com.cinderellavip.util.pay;
 import android.content.Context;
 
 import com.cinderellavip.bean.net.order.PayInfo;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.global.Constant;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -30,7 +30,7 @@ public class WeChatUtils {
 
     public void wechatPay(PayInfo info) {
         if (!api.isWXAppInstalled()) {
-            ToastCommom.createToastConfig().ToastShow(CinderellApplication.mContext, "您还没有安装微信");
+            ToastCommom.createToastConfig().ToastShow(CinderellaApplication.mContext, "您还没有安装微信");
             return;
         }
         PayReq req = new PayReq();

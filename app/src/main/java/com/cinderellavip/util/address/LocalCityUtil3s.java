@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 
 import com.cinderellavip.R;
+import com.cinderellavip.toast.DialogUtils;
 import com.cinderellavip.weight.wheel.OnWheelChangedListener;
 import com.cinderellavip.weight.wheel.WheelView;
 import com.cinderellavip.weight.wheel.adapters.AbstractWheelTextAdapter;
@@ -50,7 +51,6 @@ public class LocalCityUtil3s implements OnWheelChangedListener {
 	}
 
 	public void showSelectDialog(Context context, int number , final onSelectCityFinishListener listener) {
-//		cityDao = new CityDao(context);
 		localCities = CityUtil.convertStream(context);
 		this.context = context;
 		View view = View.inflate(context, R.layout.base_city_choose_dialog, null);
@@ -80,27 +80,30 @@ public class LocalCityUtil3s implements OnWheelChangedListener {
 			cityDialog.dismiss();
 		});
 
+
+
 		setUpListener();
 		setUpData();
 
-		cityDialog = new Dialog(context,R.style.transparentFrameWindowStyle);
-		cityDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		cityDialog.setContentView(view);
-		Window window = cityDialog.getWindow();
-		window.setWindowAnimations(R.style.PopupAnimation);
+		cityDialog = DialogUtils.getBottomDialog(context,view);
 
-		WindowManager.LayoutParams wl = window.getAttributes();
-		wl.x = 0;
-		wl.y = ((Activity) context).getWindowManager().getDefaultDisplay().getHeight();
-		wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-		wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-		cityDialog.getWindow().setAttributes(wl);
-//		cityDialog.onWindowAttributesChanged(wl);
-
-		cityDialog.setCanceledOnTouchOutside(true);
-		cityDialog.show();
+		cityDialog.setOnDismissListener(dialog -> {
+			dismiss();
+		});
 	}
+
+	private void dismiss(){
+		mViewProvince = null;
+		mViewCity = null;
+		mViewCounty = null;
+		mBtnConfirm = null;
+		context = null;
+		localCities = null;
+		provinceAdapter = null;
+		cityAdapter = null;
+		cityDialog = null;
+	}
+
 
 	private void setUpData() {
 		List<LocalCity> province = localCities;
@@ -158,9 +161,6 @@ public class LocalCityUtil3s implements OnWheelChangedListener {
 			return list == null ? 0 : list.size();
 		}
 
-		public String getCityId(int position) {
-			return list.get(position).id;
-		}
 
 		@Override
 		protected CharSequence getItemText(int index) {
@@ -182,9 +182,6 @@ public class LocalCityUtil3s implements OnWheelChangedListener {
 			return list == null ? 0 : list.size();
 		}
 
-		public String getCityId(int position) {
-			return list.get(position).id;
-		}
 
 		@Override
 		protected CharSequence getItemText(int index) {
@@ -205,9 +202,6 @@ public class LocalCityUtil3s implements OnWheelChangedListener {
 			return list == null ? 0 : list.size();
 		}
 
-		public String getCityId(int position) {
-			return list.get(position).id;
-		}
 
 		@Override
 		protected CharSequence getItemText(int index) {

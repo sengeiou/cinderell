@@ -58,7 +58,8 @@ public class SelectCityActivity extends BaseActivity {
 
 
     private void location() {
-        LocationUtil.getInstance().start(mActivity, (aMapLocation, lat, lnt) -> {
+        LocationUtil locationUtil = new LocationUtil();
+        locationUtil.start(mActivity, (aMapLocation, lat, lnt) -> {
             if (aMapLocation.getErrorCode() == 0) {
                 String city = aMapLocation.getCity();
                 String replaceAll = city.replaceAll("市", "");
@@ -66,6 +67,7 @@ public class SelectCityActivity extends BaseActivity {
             } else {
                 tvAddress.setText("未知");
             }
+            locationUtil.stop();
 
         });
     }

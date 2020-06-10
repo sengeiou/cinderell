@@ -17,6 +17,7 @@ import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
 
+import java.util.List;
 import java.util.TreeMap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -72,25 +73,30 @@ public class SearchResultFragment extends BaseListFragment<HomeGoods> {
 
     @Override
     public void loadData() {
+        //解决搜索面膜数据总数为70 一共显示5页的bug  PageSize必须设置为20
+        PageSize = 20;
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("keyword", "" + keyword);
         hashMap.put("sort", sort);
         hashMap.put("sort_type", sort_type);
-        hashMap.put("limit", "" + 20);
+        hashMap.put("limit", "" + PageSize);
         hashMap.put("page", "" + page);
         new RxHttp<BaseResult<SearchListResult<HomeGoods>>>().send(ApiManager.getService().getSearchGoods(hashMap),
                 new Response<BaseResult<SearchListResult<HomeGoods>>>(isLoad, getContext()) {
                     @Override
                     public void onSuccess(BaseResult<SearchListResult<HomeGoods>> result) {
-                        int total = result.data.total;
+                        SearchListResult<HomeGoods> data = result.data;
+                        int total = data.total;
+                        List<HomeGoods> list = data.list;
                         if (total>0){
                             iv_top.setVisibility(View.VISIBLE);
-                            tvTotalPage.setText(""+(total/20+(total%20 == 0?0:1) ));
+                            tvTotalPage.setText(""+(total/PageSize+(total%PageSize == 0?0:1) ));
+                            if (list != null && list.size()>0)
                             tvCurrentPage.setText(""+page);
                         }else {
                             iv_top.setVisibility(View.GONE);
                         }
-                        setData(result.data.list);
+                        setData(list);
 
                     }
 

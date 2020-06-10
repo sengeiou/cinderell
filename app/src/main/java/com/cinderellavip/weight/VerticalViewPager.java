@@ -483,7 +483,6 @@ public class VerticalViewPager extends ViewGroup {
 	/**
 	 * Set a listener that will be invoked whenever the page changes or is
 	 * incrementally scrolled. See
-	 * {@link android.support.v4.view.ViewPager.OnPageChangeListener}.
 	 *
 	 * @param listener
 	 *            Listener to set
@@ -493,7 +492,6 @@ public class VerticalViewPager extends ViewGroup {
 	}
 
 	/**
-	 * Set a {@link android.support.v4.view.ViewPager.PageTransformer} that will
 	 * be called for each attached page whenever the scroll position is changed.
 	 * This allows the application to apply custom property transformations to
 	 * each page, overriding the default sliding look and feel.
@@ -1671,6 +1669,7 @@ public class VerticalViewPager extends ViewGroup {
 		return (y < mGutterSize && dy > 0) || (y > getHeight() - mGutterSize && dy < 0);
 	}
 
+	@SuppressLint("WrongConstant")
 	private void enableLayers(boolean enable) {
 		final int childCount = getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -2438,7 +2437,7 @@ public class VerticalViewPager extends ViewGroup {
 				for (ViewParent parent = currentFocused.getParent(); parent instanceof ViewGroup; parent = parent.getParent()) {
 					sb.append(" => ").append(parent.getClass().getSimpleName());
 				}
-				Log.e(TAG, "arrowScroll tried to find focus based on non-child " + "current focused view " + sb.toString());
+//				Log.e(TAG, "arrowScroll tried to find focus based on non-child " + "current focused view " + sb.toString());
 				currentFocused = null;
 			}
 		}

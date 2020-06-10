@@ -26,7 +26,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.direct.DirectMapPersonItem;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseListResult;
 import com.cinderellavip.http.Response;
@@ -109,9 +109,9 @@ public class DirectAppointMapFragment extends BaseFragment implements AMap.OnMyL
     private void  getData(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("service", ""+service);
-        hashMap.put("city", ""+ CinderellApplication.name);
-        hashMap.put("longitude", ""+ CinderellApplication.longitude);
-        hashMap.put("latitude", ""+ CinderellApplication.latitude);
+        hashMap.put("city", ""+ CinderellaApplication.name);
+        hashMap.put("longitude", ""+ CinderellaApplication.longitude);
+        hashMap.put("latitude", ""+ CinderellaApplication.latitude);
         new RxHttp<BaseListResult<DirectMapPersonItem>>().send(ApiManager.getService().getDirectMapPerson(hashMap),
                 new Response<BaseListResult<DirectMapPersonItem>>(getContext(),Response.BOTH) {
                     @Override

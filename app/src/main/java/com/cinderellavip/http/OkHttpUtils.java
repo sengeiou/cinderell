@@ -15,6 +15,8 @@ public class OkHttpUtils {
     private final static long HTTP_CONNECT_TIMEOUT = 10;
     private final static long HTTP_READ_TIMEOUT = 30;
 
+    private OkHttpUtils(){}
+
     private static OkHttpClient singleton;
 
     public static OkHttpClient getInstance() {

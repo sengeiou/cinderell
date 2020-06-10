@@ -8,7 +8,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.SelectServiceCouponAdapter;
 import com.cinderellavip.bean.ListData;
 import com.cinderellavip.bean.net.life.LifeCoupon;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -99,7 +99,7 @@ public class SelectServiceCouponFragment extends BaseListFragment<LifeCoupon> {
     private void getProjectCoupons(){
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("project", ""+contracts_id);
-        hashMap.put("city", ""+ CinderellApplication.name);
+        hashMap.put("city", ""+ CinderellaApplication.name);
         new RxHttp<BaseResult<ListData<LifeCoupon>>>().send(ApiManager.getService().lifeCoupon(hashMap),
                 new Response<BaseResult<ListData<LifeCoupon>>>(isLoad,getContext()) {
                     @Override
@@ -122,7 +122,7 @@ public class SelectServiceCouponFragment extends BaseListFragment<LifeCoupon> {
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("user_id", ""+ GlobalParam.getUserId());
         hashMap.put("project", ""+contracts_id);
-        hashMap.put("city", ""+ CinderellApplication.name);
+        hashMap.put("city", ""+ CinderellaApplication.name);
         new RxHttp<BaseResult<ListData<LifeCoupon>>>().send(ApiManager.getService().directCoupon(hashMap),
                 new Response<BaseResult<ListData<LifeCoupon>>>(isLoad,getContext()) {
                     @Override

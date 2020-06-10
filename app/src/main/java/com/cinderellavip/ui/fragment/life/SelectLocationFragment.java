@@ -3,8 +3,6 @@ package com.cinderellavip.ui.fragment.life;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,18 +15,13 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.SelectCityAddressAdapter;
-import com.cinderellavip.bean.net.NetCityBean;
-import com.cinderellavip.global.CinderellApplication;
-import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.map.LocationUtil;
 import com.cinderellavip.ui.activity.life.SelectCityActivity;
 import com.cinderellavip.util.KeyboardUtils;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -64,11 +57,13 @@ public class SelectLocationFragment extends BaseListFragment<PoiItem> implements
 
     }
     private void location(){
-        LocationUtil.getInstance().start(mActivity,(aMapLocation, lat, lnt) -> {
+        LocationUtil util = new LocationUtil();
+        util.start(mActivity,(aMapLocation, lat, lnt) -> {
             if (aMapLocation.getErrorCode() == 0){
                 searchNearbyAddress(et_search.getText().toString(),
                         lat,lnt,tvAddress.getText().toString());
             }
+            util.stop();
         });
     }
     private PoiSearch.Query query;// Poi查询条件类

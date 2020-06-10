@@ -21,7 +21,7 @@ import com.cinderellavip.bean.direct.DirectPersonComment;
 import com.cinderellavip.bean.direct.DirectPersonInfo;
 import com.cinderellavip.bean.direct.DirectProjectItem;
 import com.cinderellavip.bean.request.TechnicalComment;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -144,9 +144,9 @@ public class DirectAppointmentTechnicianDetailActivity extends BaseActivity {
     private void getData() {
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("waiter", "" + waiter);
-        hashMap.put("city", "" + CinderellApplication.name);
-        hashMap.put("longitude", "" + CinderellApplication.longitude);
-        hashMap.put("latitude", "" + CinderellApplication.latitude);
+        hashMap.put("city", "" + CinderellaApplication.name);
+        hashMap.put("longitude", "" + CinderellaApplication.longitude);
+        hashMap.put("latitude", "" + CinderellaApplication.latitude);
         new RxHttp<BaseResult<DirectPersonInfo>>().send(ApiManager.getService().getPersonInfo(hashMap),
                 new Response<BaseResult<DirectPersonInfo>>(isLoad,mActivity) {
                     @Override

@@ -1,21 +1,16 @@
 package com.cinderellavip.ui.fragment.life;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.cinderellavip.adapter.recycleview.DirectCommentAdapter;
 import com.cinderellavip.bean.ListBean;
 import com.cinderellavip.bean.ListData;
-import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.direct.DirectPersonComment;
-import com.cinderellavip.bean.local.OrderBean;
 import com.cinderellavip.bean.request.TechnicalComment;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
-import com.cinderellavip.ui.fragment.mine.OrderFragment;
-import com.cinderellavip.util.DataUtil;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
@@ -59,8 +54,8 @@ public class DirectAppointmentCommentFragment extends BaseListFragment<DirectPer
         hashMap.put("waiter", technicalComment.waiter);
         hashMap.put("project", technicalComment.project);
         hashMap.put("page", ""+page);
-        hashMap.put("longitude", "" + CinderellApplication.longitude);
-        hashMap.put("latitude", "" + CinderellApplication.latitude);
+        hashMap.put("longitude", "" + CinderellaApplication.longitude);
+        hashMap.put("latitude", "" + CinderellaApplication.latitude);
         new RxHttp<BaseResult<ListBean<ListData<DirectPersonComment>>>>().send(ApiManager.getService().getPersonComment(hashMap),
                 new Response<BaseResult<ListBean<ListData<DirectPersonComment>>>>(isLoad,getContext()) {
                     @Override

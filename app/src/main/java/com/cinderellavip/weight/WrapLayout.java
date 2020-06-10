@@ -50,7 +50,7 @@ public class WrapLayout extends LinearLayout {
             child1.setLayoutParams(lp1);
         }
 
-        Log.e("TAG",specWidthSize+"=="+width1+"=="+width2);
+//        Log.e("TAG",specWidthSize+"=="+width1+"=="+width2);
         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
 
     }

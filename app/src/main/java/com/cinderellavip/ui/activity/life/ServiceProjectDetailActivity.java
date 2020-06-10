@@ -24,7 +24,7 @@ import com.cinderellavip.bean.net.life.ShortDate;
 import com.cinderellavip.bean.net.life.ShortTime;
 import com.cinderellavip.bean.request.LifePreOrder;
 import com.cinderellavip.bean.request.TechnicalComment;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -157,7 +157,7 @@ public class ServiceProjectDetailActivity extends BaseActivity {
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("waiter", "" + technicalComment.waiter);
         hashMap.put("project", "" + technicalComment.project);
-        hashMap.put("city", "" + CinderellApplication.name);
+        hashMap.put("city", "" + CinderellaApplication.name);
         new RxHttp<BaseResult<DirectProjectInfo>>().send(ApiManager.getService().getDirectProjectInfo(hashMap),
                 new Response<BaseResult<DirectProjectInfo>>(isLoad, mActivity) {
                     @Override
@@ -276,7 +276,7 @@ public class ServiceProjectDetailActivity extends BaseActivity {
                 LifePreOrder lifePreOrder = new LifePreOrder();
                 lifePreOrder.type = LifePreOrder.DIRECT;
                 lifePreOrder.project = Integer.parseInt(technicalComment.project);
-                lifePreOrder.city = CinderellApplication.name;
+                lifePreOrder.city = CinderellaApplication.name;
                 lifePreOrder.servicetime =  directProjectInfo.covenant;
                 lifePreOrder.waiter =  technicalComment.waiter;
                 BuyServiceActivity.launch(mActivity,lifePreOrder);

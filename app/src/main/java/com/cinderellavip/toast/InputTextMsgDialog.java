@@ -145,7 +145,7 @@ public class InputTextMsgDialog extends AppCompatDialog {
         messageTextView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                Log.d("My test", "onKey " + keyEvent.getCharacters());
+//                Log.d("My test", "onKey " + keyEvent.getCharacters());
                 return false;
             }
         });

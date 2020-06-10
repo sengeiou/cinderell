@@ -168,7 +168,7 @@ public class FlowLayout extends ViewGroup {
             left = 0;
             top += lineHeight;
         }
-        Log.v("onLayout", "onLayout   mAllViews.size() -- > " + mAllViews.size() + "   mLineHeight.size() -- > "+ mLineHeight.size());
+//        Log.v("onLayout", "onLayout   mAllViews.size() -- > " + mAllViews.size() + "   mLineHeight.size() -- > "+ mLineHeight.size());
     }
 
 

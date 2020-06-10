@@ -2,8 +2,6 @@ package com.cinderellavip.global;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
@@ -28,8 +26,6 @@ import com.ycbjie.webviewlib.X5WebUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import cn.jpush.android.api.JPushInterface;
@@ -37,7 +33,7 @@ import cn.jpush.android.api.JPushInterface;
 import static com.xuexiang.xupdate.entity.UpdateError.ERROR.CHECK_NO_NEW_VERSION;
 
 
-public class CinderellApplication extends Application {
+public class CinderellaApplication extends Application {
     public static Context mContext;
     //城市名
     public static String name = "南京";
@@ -71,8 +67,6 @@ public class CinderellApplication extends Application {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 
-
-
         initUpdate();
 
 
@@ -100,45 +94,6 @@ public class CinderellApplication extends Application {
 
     }
 
-    public  static int getStatusBarByReflex() {
-        int statusBarHeight = 0;
-        try {
-            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
-            Object object = clazz.newInstance();
-            int height = Integer.parseInt(clazz.getField("status_bar_height")
-                    .get(object).toString());
-            statusBarHeight = mContext.getResources().getDimensionPixelSize(height);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return statusBarHeight;
-    }
-
-    public static String sHA1(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(
-                    context.getPackageName(), PackageManager.GET_SIGNATURES);
-            byte[] cert = info.signatures[0].toByteArray();
-            MessageDigest md = MessageDigest.getInstance("SHA1");
-            byte[] publicKey = md.digest(cert);
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < publicKey.length; i++) {
-                String appendString = Integer.toHexString(0xFF & publicKey[i])
-                        .toUpperCase(Locale.US);
-                if (appendString.length() == 1)
-                    hexString.append("0");
-                hexString.append(appendString);
-                hexString.append(":");
-            }
-            String result = hexString.toString();
-            return result.substring(0, result.length()-1);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
@@ -151,8 +106,6 @@ public class CinderellApplication extends Application {
         });
 
     }
-
-
 
     private void closeAndroidPDialog(){
         try {

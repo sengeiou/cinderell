@@ -18,7 +18,7 @@ import com.cinderellavip.bean.net.life.LiftHomeAd;
 import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.bean.net.life.LiftHomeListItem;
 import com.cinderellavip.bean.net.life.LiftHomeResult;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -132,7 +132,7 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
         if (!isLoad){
             location();
         }
-        getData(CinderellApplication.name);
+        getData(CinderellaApplication.name);
 
 
 
@@ -140,18 +140,20 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
 
 
     private void location(){
-        LocationUtil.getInstance().start(mActivity,(aMapLocation, lat, lnt) -> {
+        LocationUtil locationUtil = new LocationUtil();
+        locationUtil.start(mActivity,(aMapLocation, lat, lnt) -> {
             if (aMapLocation.getErrorCode() == 0){
                 String city = aMapLocation.getCity();
                 String replaceAll = city.replaceAll("市", "");
                 tv_address.setText(TextUtils.isEmpty(replaceAll)?"南京": replaceAll);
-                CinderellApplication.latitude = lat+"";
-                CinderellApplication.longitude = lnt+"";
+                CinderellaApplication.latitude = lat+"";
+                CinderellaApplication.longitude = lnt+"";
             }else {
                 tv_address.setText("南京");
             }
-            CinderellApplication.name = tv_address.getText().toString().trim();
-            getData(CinderellApplication.name);
+            CinderellaApplication.name = tv_address.getText().toString().trim();
+            getData(CinderellaApplication.name);
+            locationUtil.stop();
 
         });
     }
@@ -289,7 +291,7 @@ public class LifeFragment extends BaseListFragment<LiftHomeListItem> {
     }
 
     public void setAddress(String name) {
-        CinderellApplication.name = name;
+        CinderellaApplication.name = name;
         tv_address.setText(name);
         getData(name);
     }

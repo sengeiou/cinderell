@@ -57,12 +57,17 @@ public class LogisticsFragment extends BaseListFragment<IntegralExchangeLogistic
     @Override
     public void loadData() {
         super.loadData();
-        new RxHttp<BaseResult<IntegralExchangeLogistics>>().send(ApiManager.getService().getLogistics(getArguments().getString("post_no")),
+        new RxHttp<BaseResult<IntegralExchangeLogistics>>().send(ApiManager.getService()
+                        .getLogistics(getArguments().getString("post_no")),
                 new Response<BaseResult<IntegralExchangeLogistics>>(isLoad,getContext()) {
                     @Override
                     public void onSuccess(BaseResult<IntegralExchangeLogistics> result) {
+                        showContent();
                         setData(result.data);
-
+                    }
+                    @Override
+                    public void onErrorShow(String s) {
+                        showError(s);
                     }
                 });
 

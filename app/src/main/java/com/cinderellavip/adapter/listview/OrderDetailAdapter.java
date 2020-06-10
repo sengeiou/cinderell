@@ -47,7 +47,6 @@ public class OrderDetailAdapter extends BaseAdapter<OrderGoodsInfo> {
             hodler.tvBtn1.setVisibility(View.VISIBLE);
         } else {
             hodler.tvBtn1.setVisibility(View.GONE);
-
         }
         ImageUtil.loadNet(context,hodler.ivProduct,orderGoodsInfo.product_thumb);
         hodler.tvTitle.setText(orderGoodsInfo.product_name);

@@ -17,7 +17,7 @@ import com.cinderellavip.bean.net.life.LiftHomeCategory;
 import com.cinderellavip.bean.net.life.LiftHomeServiceItem;
 import com.cinderellavip.bean.net.life.ListServiceLocalItem;
 import com.cinderellavip.bean.net.life.NewPersonCoupon;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -65,7 +65,7 @@ public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> 
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         //第一次用带过来的数据
-        city = CinderellApplication.name;
+        city = CinderellaApplication.name;
 
         service = getArguments().getParcelable("service");
 
@@ -106,7 +106,7 @@ public class ServiceListFragment extends BaseListFragment<ListServiceLocalItem> 
                     public void onSuccess(BaseResult<CategoryResult> result) {
                         CategoryResult data = result.data;
                         CategoryService service = data.service;
-                        if (service == null && TextUtils.isEmpty(service.topimg)){
+                        if (service == null || TextUtils.isEmpty(service.topimg)){
                             iv_banner.setVisibility(View.GONE);
                         }else {
                             iv_banner.setVisibility(View.VISIBLE);

@@ -18,7 +18,6 @@ import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
 import com.cinderellavip.bean.net.order.OrderSettleShopBean;
 import com.cinderellavip.bean.request.OrderRemark;
-import com.cinderellavip.global.CinderellApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -29,7 +28,6 @@ import com.cinderellavip.util.Utils;
 import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
-import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 import org.greenrobot.eventbus.EventBus;
 

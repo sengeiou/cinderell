@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.cinderellavip.adapter.recycleview.ServiceListProjectAdapter;
 import com.cinderellavip.bean.ListData;
 import com.cinderellavip.bean.net.life.LiftHomeServiceItem;
-import com.cinderellavip.global.CinderellApplication;
+import com.cinderellavip.global.CinderellaApplication;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
@@ -62,7 +62,7 @@ public class SearchLifeResultFragment extends BaseListFragment<LiftHomeServiceIt
         super.loadData();
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("keyWord", ""+keyword);
-        hashMap.put("city", CinderellApplication.name);
+        hashMap.put("city", CinderellaApplication.name);
         hashMap.put("page", ""+page);
         new RxHttp<BaseResult<ListData<LiftHomeServiceItem>>>().send(ApiManager.getService().getLifeSearchResult(hashMap),
                 new Response<BaseResult<ListData<LiftHomeServiceItem>>>(isLoad,getContext()) {

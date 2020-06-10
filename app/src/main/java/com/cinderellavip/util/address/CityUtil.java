@@ -41,7 +41,7 @@ public class CityUtil {
         InputStream inputStream = null;
         ArrayList<LocalCity> beans = new ArrayList<>();
         try {
-           inputStream = context.getAssets().open("city.json");
+            inputStream = context.getAssets().open("city.json");
             String str = convertStreamToString(inputStream);
             Gson gson = new Gson();
 
@@ -54,6 +54,14 @@ public class CityUtil {
 
         }catch (IOException e){
             e.printStackTrace();
+        }finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return beans;
     }

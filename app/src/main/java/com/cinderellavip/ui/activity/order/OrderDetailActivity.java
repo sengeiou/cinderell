@@ -124,7 +124,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-//
+        if (!isLoad)showProress();
         getDetailInfo();
     }
 
@@ -133,6 +133,7 @@ public class OrderDetailActivity extends BaseActivity {
                 new Response<BaseResult<OrderInfoResult<OrderInfo>>>(isLoad, mActivity) {
                     @Override
                     public void onSuccess(BaseResult<OrderInfoResult<OrderInfo>> result) {
+                        showContent();
                         setData(result.data.order);
                     }
 

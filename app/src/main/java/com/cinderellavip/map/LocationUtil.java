@@ -11,17 +11,7 @@ import com.tozzais.baselibrary.util.log.LogUtil;
 public class LocationUtil implements AMapLocationListener{
 
 
-    private static LocationUtil instance;
-
-    public static LocationUtil getInstance() {
-        if (instance == null) {
-            synchronized (LocationUtil.class) {
-                if (instance == null) {
-                    instance = new LocationUtil();
-                }
-            }
-        }
-        return instance;
+    public LocationUtil() {
     }
 
     //声明mlocationClient对象
@@ -58,20 +48,16 @@ public class LocationUtil implements AMapLocationListener{
 
     }
 
-    public  void reStart(Context context, OnLocationListener listener){
-        stop();
-        this.listener = listener;
-        mlocationClient = null;
-        start(context,listener);
-
-    }
 
 
     public  void stop(){
+        if (mlocationClient != null){
+            mlocationClient = null;
+        }
         if (listener != null)
             listener = null;
         if (mlocationClient.isStarted())
-        mlocationClient.stopLocation();
+            mlocationClient.stopLocation();
     }
 
 
@@ -86,19 +72,11 @@ public class LocationUtil implements AMapLocationListener{
                 amapLocation.getAccuracy();//获取精度信息
                 if (listener != null){
                     listener.onSuccess(amapLocation,amapLocation.getLatitude(),amapLocation.getLongitude());
-//                    BaseApplication.amapLocation = amapLocation;
                 }
-//                LogUtil.e("amapLocation.getErrorCode()="+amapLocation.getErrorCode()+"=="+
-//                        amapLocation.getLatitude()+"=="+amapLocation.getLongitude());
             } else {
                 if (listener != null){
                     listener.onSuccess(amapLocation,-1,-1);
-//                    BaseApplication.amapLocation = amapLocation;
                 }
-                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                LogUtil.e("location Error, ErrCode:"
-                        + amapLocation.getErrorCode() + ", errInfo:"
-                        + amapLocation.getErrorInfo());
             }
         }else {
             LogUtil.e("null");
