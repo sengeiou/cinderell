@@ -95,7 +95,7 @@
         tools:text="服务地址：上海市青浦区明珠路32号" />
 
     <LinearLayout
-        style="@style/base_hor_style"
+        style="@style/base_hor_style_no_click"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
         android:paddingLeft="12dp"

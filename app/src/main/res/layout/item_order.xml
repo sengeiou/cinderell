@@ -58,7 +58,7 @@
 
 
     <LinearLayout
-        style="@style/base_hor_style"
+        style="@style/base_hor_style_no_click"
         android:gravity="right"
         android:paddingBottom="10dp"
         android:paddingTop="12dp"
@@ -78,7 +78,7 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/base_hor_style"
+        style="@style/base_hor_style_no_click"
         android:gravity="right"
         android:paddingTop="0dp"
         android:paddingBottom="12dp"

@@ -2,22 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/shape_white_top10"
     android:layout_marginTop="-10dp"
     android:orientation="vertical">
 
-
+    <View
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_white_top10"
+        android:layout_height="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
@@ -28,22 +25,22 @@
             android:layout_marginLeft="12dp"
             />
 
-            <TextView
-                android:id="@+id/tv_all_order"
-                style="@style/base_text_style"
-                android:text="查看全部"
-                android:textSize="12sp"
-                android:padding="12dp"
-                android:textColor="@color/grayText"
-                />
+        <TextView
+            android:id="@+id/tv_all_order"
+            style="@style/base_text_style"
+            android:text="查看全部"
+            android:textSize="12sp"
+            android:padding="12dp"
+            android:textColor="@color/grayText"
+            />
 
-        </LinearLayout>
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -229,6 +226,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <TextView
@@ -254,6 +252,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -374,6 +373,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <TextView
@@ -399,6 +399,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -547,18 +548,16 @@
         />
 
 
-
-
-
-
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_width="match_parent"
+        android:padding="12dp"
+        android:background="@color/white"
         android:layout_height="wrap_content"
         style="@style/base_text_style"
         android:text="我的服务"
         />
     <LinearLayout
+        android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="horizontal">
@@ -566,7 +565,6 @@
     <RelativeLayout
         android:id="@+id/rl_xiaohui_recomment"
         android:layout_width="0dp"
-        android:background="@drawable/touch_bg"
         android:layout_height="match_parent"
         android:layout_weight="1">
         <LinearLayout
@@ -604,7 +602,6 @@
     <RelativeLayout
         android:id="@+id/rl_mine_service2"
         android:layout_width="0dp"
-        android:background="@drawable/touch_bg"
         android:layout_height="match_parent"
         android:layout_weight="1">
         <LinearLayout
@@ -643,7 +640,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_potato"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -682,7 +678,6 @@
     <RelativeLayout
         android:id="@+id/rl_mine_service3"
         android:layout_width="0dp"
-        android:background="@drawable/touch_bg"
         android:layout_height="match_parent"
         android:layout_weight="1">
         <LinearLayout
@@ -724,13 +719,13 @@
 </LinearLayout>
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal">
         <RelativeLayout
             android:id="@+id/rl_mine_service4"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -769,7 +764,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_service5"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -807,7 +801,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_service6"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -846,7 +839,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_service9"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -891,6 +883,7 @@
 
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal">
@@ -898,7 +891,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_service10"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -937,7 +929,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_service7"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -975,7 +966,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_service8"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -1016,7 +1006,6 @@
         <RelativeLayout
             android:id="@+id/rl_mine_service11"
             android:layout_width="0dp"
-            android:background="@drawable/touch_bg"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
