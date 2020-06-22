@@ -78,6 +78,21 @@ public class CenterDialogUtil {
 
     }
 
+    public static void showApplySuccess1(Context context,OnSureClickListener listener) {
+        View messageView = View.inflate(context, R.layout.pop_apply_success, null);
+        cityDialog = DialogUtils.getCenterDialog(context, messageView, false);
+        TextView tv_commit = messageView.findViewById(R.id.tv_login);
+
+        tv_commit.setOnClickListener(v -> {
+            if (listener != null){
+                listener.onSure();
+            }
+            cityDialog.dismiss();
+            cityDialog = null;
+        });
+
+    }
+
     public static void showShare(Context context, OnSureClickListener listener) {
         View messageView = View.inflate(context, R.layout.pop_center_share, null);
         cityDialog = DialogUtils.getCenterDialog(context, messageView, false);

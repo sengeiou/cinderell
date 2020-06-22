@@ -418,11 +418,21 @@
         android:background="@color/white"
         android:orientation="horizontal"
         android:paddingTop="10dp"
-        android:gravity="right"
         android:id="@+id/ll_bottom"
         android:paddingBottom="10dp">
 
+        <TextView
+            android:id="@+id/tv_btn_bottom"
+            style="@style/base_btn_style"
+            android:layout_marginLeft="12dp"
+            tools:text="申请开票"
+            android:textColor="@color/black_title_color"
+            android:background="@drawable/shape_line_gray50"/>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
 
 
 

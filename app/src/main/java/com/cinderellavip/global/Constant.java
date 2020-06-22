@@ -71,6 +71,7 @@ public class Constant {
     public static String H17 = HttpUrl.server_url+"api/user/agreements/17";
     public static String H18 = HttpUrl.server_url+"api/user/agreements/18";
     public static String H19 = "http://h5.huiguniangvip.com/#/apply/0/";
+    public static String H20 = HttpUrl.server_url+"api/user/agreements/19";
 
     public static final int ALL = 0;
     public static final int CANCEL = 1;

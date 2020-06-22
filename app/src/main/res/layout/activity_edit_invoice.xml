@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+
+    <LinearLayout
+        android:id="@+id/ll_type"
+        style="@style/base_hor_style_input"
+        >
+        <TextView
+            style="@style/base_text_style"
+            android:text="发票类型："
+            android:layout_width="100dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请选择"
+            android:textSize="14sp"
+            android:textColor="@color/black_title_color"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="电子普通发票"/>
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_black_icon"
+            android:layout_gravity="center_vertical"/>
+
+
+
+    </LinearLayout>
+
+        <View
+            style="@style/base_space"
+            />
+
+        <LinearLayout
+            style="@style/base_hor_style_input"
+            android:gravity="center_vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            >
+
+            <TextView
+                style="@style/base_text_style"
+                android:text="发票对象："
+                android:layout_width="100dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_type_person"
+                style="@style/base_btn_style"
+                android:text="个人"
+                android:background="@drawable/shape_line_basecolor50_1px"
+                android:textColor="@color/baseColor"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_type_company"
+                style="@style/base_btn_style"
+                android:text="企业"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape_line_gray50"
+                android:textColor="@color/grayText"
+                />
+
+
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_light"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            />
+        <LinearLayout
+            android:id="@+id/ll_company_invoice"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                style="@style/base_hor_style_input"
+                >
+                <TextView
+                    style="@style/base_text_style"
+                    android:text="*"
+                    android:textColor="@color/baseColor"
+                    />
+                <TextView
+                    style="@style/base_text_style"
+                    android:text="企业名称："
+                    android:layout_width="100dp"
+                    />
+
+                <EditText
+                    android:id="@+id/et_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="输入企业名称"
+                    android:textSize="14sp"
+                    android:textColor="@color/black_title_color"
+                    android:gravity="top"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    />
+
+            </LinearLayout>
+
+
+            <View
+                style="@style/line_light"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                />
+
+            <LinearLayout
+                style="@style/base_hor_style_input"
+                >
+                <TextView
+                    style="@style/base_text_style"
+                    android:text="*"
+                    android:textColor="@color/baseColor"
+                    />
+                <TextView
+                    style="@style/base_text_style"
+                    android:layout_width="100dp"
+                    android:text="纳税人识别号："
+                    />
+
+                <EditText
+                    android:id="@+id/et_company_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="或输入统一信用代码"
+                    android:textSize="14sp"
+                    android:textColor="@color/black_title_color"
+                    android:gravity="top"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    />
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_light"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                />
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            style="@style/base_hor_style_input"
+            >
+            <TextView
+                style="@style/base_text_style"
+                android:text="发票内容："
+                android:layout_width="100dp"
+                />
+            <TextView
+                style="@style/base_text_style"
+                android:text="*"
+                android:textColor="@color/baseColor"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请选择"
+                android:textSize="14sp"
+                android:textColor="@color/black_title_color"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="明细"/>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <View
+            style="@style/base_space"
+            />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_email"
+        style="@style/base_hor_style_input"
+        >
+        <TextView
+            style="@style/base_text_style"
+            android:text="*"
+            android:textColor="@color/baseColor"
+            />
+        <TextView
+            style="@style/base_text_style"
+            android:layout_width="100dp"
+            android:text="电子邮箱："
+            />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="输入邮箱地址，接受电子发票"
+            android:textSize="14sp"
+            android:textColor="@color/black_title_color"
+            android:gravity="top"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            />
+
+    </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:background="@color/gray_bg"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_explain"
+                style="@style/base_text_style"
+                android:padding="12dp"
+                android:textSize="12sp"
+                android:lineSpacingExtra="5dp"
+                android:text="注意：发票信息提交后，便不可修改，请谨慎填写\n填写开票信息前，请仔细阅读《开票说明》"
+                />
+
+            <TextView
+                android:id="@+id/tv_commit"
+                android:layout_width="match_parent"
+                android:layout_margin="12dp"
+                style="@style/base_btn_style_large"
+                android:text="提交"
+                android:layout_alignParentBottom="true"
+                android:padding="12dp"
+                android:layout_centerInParent="true"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+

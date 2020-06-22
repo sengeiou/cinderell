@@ -24,6 +24,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.ReturnUtil;
 import com.cinderellavip.ui.activity.home.ShopDetailActivity;
+import com.cinderellavip.ui.activity.mine.EditInvoiceActivity;
 import com.cinderellavip.ui.activity.mine.LogisticsActivity;
 import com.cinderellavip.ui.web.AgreementWebViewActivity;
 import com.cinderellavip.util.ClipBoardUtil;
@@ -57,6 +58,8 @@ public class OrderDetailActivity extends BaseActivity {
     LinearLayout llSeleteAddress;
     @BindView(R.id.lv_goods)
     MyListView lvGoods;
+    @BindView(R.id.tv_btn_bottom)
+    TextView tv_btn_bottom;
     @BindView(R.id.tv_btn_bottom1)
     TextView tvBtnBottom1;
     @BindView(R.id.tv_btn_bottom2)
@@ -148,7 +151,7 @@ public class OrderDetailActivity extends BaseActivity {
     private OrderInfo orderInfo;
     private void setData(OrderInfo orderInfo) {
         this.orderInfo = orderInfo;
-        setStatus(orderInfo.status);
+        setStatus(orderInfo);
         tvStatus.setText(orderInfo.status_txt);
         NetCityBean address = orderInfo.address;
         List<OrderGoodsInfo> goods = orderInfo.goods;
@@ -180,8 +183,8 @@ public class OrderDetailActivity extends BaseActivity {
 
     }
 
-    private void setStatus(int status) {
-        switch (status) {
+    private void setStatus(OrderInfo orderInfo) {
+        switch (orderInfo.status) {
             case 0:
 
                 tvStatus1.setVisibility(View.GONE);
@@ -194,6 +197,7 @@ public class OrderDetailActivity extends BaseActivity {
                 llBottom.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setVisibility(View.VISIBLE);
                 tvBtnBottom2.setVisibility(View.VISIBLE);
+                tv_btn_bottom.setVisibility(View.GONE);
                 tvBtnBottom1.setText("取消订单");
                 tvBtnBottom2.setText("立即付款");
                 break;
@@ -204,6 +208,9 @@ public class OrderDetailActivity extends BaseActivity {
                 llBottom.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setText("取消订单");
                 tv_pay_way.setVisibility(View.VISIBLE);
+
+                tv_btn_bottom.setVisibility(orderInfo.isInvoiceVisible());
+                tv_btn_bottom.setText(orderInfo.invoiceString());
                 break;
             case 3:
                 tvStatus1.setVisibility(View.GONE);
@@ -215,6 +222,9 @@ public class OrderDetailActivity extends BaseActivity {
                 tvBtnBottom2.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setText("查看物流");
                 tvBtnBottom2.setText("确认收货");
+
+                tv_btn_bottom.setVisibility(orderInfo.isInvoiceVisible());
+                tv_btn_bottom.setText(orderInfo.invoiceString());
                 break;
             case 5:
                 tvStatus1.setVisibility(View.GONE);
@@ -227,6 +237,9 @@ public class OrderDetailActivity extends BaseActivity {
                 tvBtnBottom2.setVisibility(View.GONE);
                 tvBtnBottom1.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setText("查看物流");
+
+                tv_btn_bottom.setVisibility(orderInfo.isInvoiceVisible());
+                tv_btn_bottom.setText(orderInfo.invoiceString());
                 break;
             case 4:
                 tvStatus1.setVisibility(View.GONE);
@@ -239,13 +252,16 @@ public class OrderDetailActivity extends BaseActivity {
                 tvBtnBottom2.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setText("查看物流");
                 tvBtnBottom2.setText("立即评价");
+
+                tv_btn_bottom.setVisibility(orderInfo.isInvoiceVisible());
+                tv_btn_bottom.setText(orderInfo.invoiceString());
                 break;
         }
 
     }
 
 
-    @OnClick({R.id.tv_btn_bottom1, R.id.tv_btn_bottom2, R.id.tv_shop, R.id.tv_copy})
+    @OnClick({R.id.tv_btn_bottom,R.id.tv_btn_bottom1, R.id.tv_btn_bottom2, R.id.tv_shop, R.id.tv_copy})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_copy:
@@ -256,6 +272,11 @@ public class OrderDetailActivity extends BaseActivity {
             case R.id.tv_shop:
                 if(orderInfo != null)
                 ShopDetailActivity.launchShop(mActivity,orderInfo.store_id+"");
+                break;
+            case R.id.tv_btn_bottom:
+                if(orderInfo != null)
+                    EditInvoiceActivity.launch(mActivity,orderInfo.invoice_status,orderInfo.invoice_state
+                    ,orderInfo.order_no);
                 break;
             case R.id.tv_btn_bottom1:
                 if(orderInfo != null)

@@ -164,6 +164,9 @@ public interface HttpUrl {
     String spike_list = "api/store/spike/products";//获取秒杀商品列表
     String spike_alert = "api/store/spike/alert";//设置秒杀提醒
 
+    String apply_invoice = "api/store/order/invoice";//申请开票
+    String invoice_info = "api/store/get/invoice";//发票信息
+
 
 
 }

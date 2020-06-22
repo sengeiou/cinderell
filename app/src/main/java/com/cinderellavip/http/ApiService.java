@@ -72,6 +72,7 @@ import com.cinderellavip.bean.net.mine.RankResult;
 import com.cinderellavip.bean.net.mine.WithDrawHistoryResult;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.bean.net.order.GetPayResult;
+import com.cinderellavip.bean.net.order.InvoiceBean;
 import com.cinderellavip.bean.net.order.OrderInfo;
 import com.cinderellavip.bean.net.order.OrderInfoResult;
 import com.cinderellavip.bean.net.order.OrderSettleResult;
@@ -725,5 +726,14 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResult>
     getComment(@FieldMap TreeMap<String, String> map);
+
+    @POST(HttpUrl.apply_invoice)
+    @FormUrlEncoded
+    Observable<BaseResult>
+    apply_invoice(@FieldMap TreeMap<String, String> map);
+
+    @GET(HttpUrl.invoice_info)
+    Observable<BaseResult<InvoiceBean>>
+    invoice_info(@QueryMap TreeMap<String, String> map);
 
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/shape_white5"
+        android:orientation="vertical">
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
+
+          <TextView
+              style="@style/base_text_style"
+              android:text="发票信息已提交"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:padding="12dp"
+              android:layout_centerHorizontal="true"
+              android:layout_marginLeft="12dp"/>
+
+
+
+
+
+      </RelativeLayout>
+
+
+        <TextView
+            style="@style/base_text_style_gray_small"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"
+            android:text="商家将在订单签收完成后，\n
+开具该订单的发票"
+            />
+
+
+
+
+
+        <TextView
+            android:id="@+id/tv_login"
+            style="@style/login_btn_style"
+            android:layout_marginTop="30dp"
+            android:layout_width="120dp"
+            android:padding="8dp"
+            android:text="我知道了"/>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

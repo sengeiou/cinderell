@@ -101,6 +101,8 @@
             android:launchMode="singleTop"/>
         <activity android:name=".ui.activity.mine.EditAddressActivity"
             android:launchMode="singleTop"/>
+        <activity android:name=".ui.activity.mine.EditInvoiceActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".ui.activity.order.SelectPayWayActivity"/>
         <activity android:name=".ui.activity.order.PayResultActivity"/>
         <activity android:name=".ui.activity.find.PostDetailActivity"/>
