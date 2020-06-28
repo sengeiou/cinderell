@@ -335,6 +335,7 @@ public class MainActivity extends CheckPermissionActivity {
      * @param pos
      */
     private void setTabChecked(int pos) {
+
         ivShop.setImageResource(pos == SHOP ? R.mipmap.shop_select : R.mipmap.shop);
         tvShop.setTextColor(pos == SHOP ? getResources().getColor(R.color.baseColor) : getResources().getColor(R.color.main_tab_gray_text_color));
         ivLifeService.setImageResource(pos == LIFE ? R.mipmap.life_service_select : R.mipmap.life_service);
