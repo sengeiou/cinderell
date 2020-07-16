@@ -125,4 +125,8 @@ dependencies {
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
 
+    //客服
+    // 普通版 androidX：
+    implementation  'com.sobot.chat:sobotsdk_x:2.8.5.5'
+
 }

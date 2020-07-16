@@ -44,27 +44,7 @@
                 style="@style/click_toolbar_style"
                 />
 
-            <RelativeLayout
-                style="@style/click_toolbar_style"
-                android:layout_width="50dp"
-                android:layout_height="40dp">
-                <ImageView
-                    android:id="@+id/tv_service"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_height="match_parent"
-                    style="@style/HomeTabImageStyle"
-                    android:src="@mipmap/icon_kefu" />
-                <com.flyco.roundview.RoundTextView
-                    android:id="@+id/tv_cart_number"
-                    app:rv_backgroundPressColor="@color/red"
-                    app:rv_backgroundColor="@color/red"
-                    app:rv_isRadiusHalfHeight="true"
-                    style="@style/cart_number_style"
-                    android:text="3"
-                    android:visibility="gone"
-                    />
-            </RelativeLayout>
+
 
 
         </LinearLayout>
@@ -127,6 +107,23 @@
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:text="店铺"/>
+
+            <TextView
+                android:id="@+id/tv_service"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_width="50dp"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/touch_bg"
+                android:textColor="@color/grayText"
+                android:drawableTop="@mipmap/icon_kefu"
+                android:drawablePadding="2dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:text="客服"/>
+
+
 
 
         </LinearLayout>

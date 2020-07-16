@@ -88,5 +88,9 @@ public class Constant {
     public static final int MENTION = 0; //自提
     public static final int LOGISTICS = 1; //物流
 
+    public static final String KEY_SERVICE = "f100241716204bfa86c916e94a4e737e"; //客服appkey
+
+
+
 
 }

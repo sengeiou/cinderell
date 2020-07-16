@@ -13,6 +13,9 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.sobot.chat.SobotApi;
+import com.sobot.chat.ZCSobotApi;
+import com.sobot.chat.api.apiUtils.SobotBaseUrl;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 import com.tozzais.baselibrary.weight.loadmore.CustomLoadMoreView;
 import com.umeng.commonsdk.UMConfigure;
@@ -42,6 +45,11 @@ public class CinderellaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+
+        SobotBaseUrl.setApi_Host("");
+        ZCSobotApi.initSobotSDK(this,Constant.KEY_SERVICE,"");
 
         X5WebUtils.init(this);
         // 在 Application 中配置全局自定义的 LoadMoreView

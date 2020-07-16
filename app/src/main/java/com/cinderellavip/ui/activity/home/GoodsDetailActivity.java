@@ -22,6 +22,7 @@ import com.cinderellavip.bean.net.goods.GoodsInfo;
 import com.cinderellavip.bean.net.goods.GoodsResult;
 import com.cinderellavip.bean.net.goods.GroupInfo;
 import com.cinderellavip.bean.net.mine.MineInfo;
+import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -35,6 +36,9 @@ import com.cinderellavip.ui.fragment.goods.GraphicFragment;
 import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.VerticalViewPager;
 import com.google.android.material.tabs.TabLayout;
+import com.sobot.chat.SobotApi;
+import com.sobot.chat.ZCSobotApi;
+import com.sobot.chat.api.model.Information;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseFragment;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
@@ -65,8 +69,6 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     Toolbar toolbar;
     @BindView(R.id.viewpager)
     VerticalViewPager viewpager;
-    @BindView(R.id.tv_cart_number)
-    TextView tv_cart_number;
     @BindView(R.id.ll_buy_left_btn)
     LinearLayout ll_buy_left_btn;
     @BindView(R.id.tv_left_price)
@@ -287,7 +289,13 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
                 break;
             case R.id.tv_service:
-                DialogUtil.showCallPhoneDialog(mActivity,1);
+                    if (GlobalParam.getUserLogin(mActivity)){
+                        Information info = new Information();
+                        info.setApp_key(Constant.KEY_SERVICE);
+                        info.setPartnerid(GlobalParam.getUserId());
+                        ZCSobotApi.openZCChat(mActivity, info);
+                    }
+
                 break;
             case R.id.tv_shop:
                 if (goodsResult != null){
