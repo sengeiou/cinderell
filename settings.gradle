@@ -1,2 +1,4 @@
+include ':sobotsdk'
+include ':sobotsdk'
 rootProject.name='灰姑凉'
 include ':app', ':baselibrary', ':dkplayer-ui'

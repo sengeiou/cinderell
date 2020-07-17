@@ -3,6 +3,7 @@ package com.cinderellavip;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
@@ -29,6 +30,8 @@ import com.cinderellavip.global.RequestCode;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.service.SobotNotificationClickReceiver;
+import com.cinderellavip.service.SobotUnReadMsgReceiver;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.account.LoginActivity;
@@ -39,6 +42,8 @@ import com.cinderellavip.ui.fragment.MineFragment;
 import com.cinderellavip.ui.fragment.ShopFragment;
 import com.cinderellavip.util.VersionUtil;
 import com.flyco.roundview.RoundTextView;
+import com.sobot.chat.ZCSobotApi;
+import com.sobot.chat.utils.ZhiChiConstant;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.StatusBarUtil;
@@ -121,6 +126,7 @@ public class MainActivity extends CheckPermissionActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        ZCSobotApi.checkIMConnected(getApplicationContext(), GlobalParam.getUserId());
 
         if (fragmentManager == null)
             fragmentManager = getSupportFragmentManager();
@@ -177,6 +183,26 @@ public class MainActivity extends CheckPermissionActivity {
 
                     }
                 });
+
+        regReceiver();
+    }
+
+
+    private SobotNotificationClickReceiver nClickReceiver;//点击通知以后发出的广播接收者
+    private SobotUnReadMsgReceiver unReadMsgReceiver;//获取未读消息数的广播接收者
+    private void regReceiver(){
+        IntentFilter filter = new IntentFilter();
+        if (nClickReceiver == null){
+            nClickReceiver = new SobotNotificationClickReceiver();
+        }
+        filter.addAction(ZhiChiConstant.SOBOT_NOTIFICATION_CLICK);
+        registerReceiver(nClickReceiver, filter);
+
+        if (unReadMsgReceiver == null){
+            unReadMsgReceiver = new SobotUnReadMsgReceiver();
+        }
+        filter.addAction(ZhiChiConstant.sobot_unreadCountBrocast);
+        registerReceiver(unReadMsgReceiver, filter);
     }
 
     private void  showDialog(VersionBean versionBean){

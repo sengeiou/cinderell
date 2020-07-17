@@ -6,7 +6,10 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.chad.library.adapter.base.module.LoadMoreModuleConfig;
+import com.cinderellavip.R;
 import com.cinderellavip.update.OKHttpUpdateHttpService;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -46,10 +49,16 @@ public class CinderellaApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+//        LocalBroadcastManager
+
+
+
+
 
 
         SobotBaseUrl.setApi_Host("");
         ZCSobotApi.initSobotSDK(this,Constant.KEY_SERVICE,"");
+        ZCSobotApi.setNotificationFlag(getApplicationContext(), true, R.mipmap.logo1,  R.mipmap.logo1);
 
         X5WebUtils.init(this);
         // 在 Application 中配置全局自定义的 LoadMoreView

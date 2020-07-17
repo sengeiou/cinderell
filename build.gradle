@@ -10,6 +10,9 @@ buildscript {
         mavenCentral()
         maven { url 'https://dl.bintray.com/umsdk/release' }
 
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+
 
     }
     dependencies {
@@ -35,6 +38,9 @@ allprojects {
         //通用适配器 （https://github.com/CymChad/BaseRecyclerViewAdapterHelper/blob/master/readme/0-BaseRecyclerViewAdapterHelper.md）
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
+
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
 
 
     }

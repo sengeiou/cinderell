@@ -23,6 +23,7 @@ import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.service.ServiceMsg;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.account.LoginActivity;
@@ -50,9 +51,11 @@ import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.CircleImageView;
 import com.cinderellavip.weight.GirdSpace;
 import com.google.android.material.appbar.AppBarLayout;
+import com.sobot.chat.ZCSobotApi;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.DpUtil;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.widget.NestedScrollView;
@@ -109,9 +112,13 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
 
 
 
-    public void setDotVisible(boolean visible){
+    public int appMsgNumber = 0;
+    public int serviceMsgNumber = 0;
+    public void setDotVisible(){
+        serviceMsgNumber = ZCSobotApi.getUnReadMessage(mActivity,GlobalParam.getUserId());
+        LogUtil.e("serviceMsgNumber="+serviceMsgNumber);
         if (dot_message !=null){
-            dot_message.setVisibility(visible? View.VISIBLE: View.GONE);
+            dot_message.setVisibility((appMsgNumber > 0 || serviceMsgNumber>0)? View.VISIBLE: View.GONE);
         }
 
     }
@@ -239,11 +246,13 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
             }else {
                 tv_serviceing_long.setVisibility(View.GONE);
             }
-            setDotVisible(mineInfo.msg_num>0);
+            appMsgNumber = mineInfo.msg_num;
+            setDotVisible();
 
         }
 
     }
+
 
 
     @Override
@@ -456,6 +465,9 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
         super.onEvent(o);
         if (o instanceof UpdateMineInfo || o instanceof AccountExit){
             getData();
+        }else if (o instanceof ServiceMsg){
+            serviceMsgNumber = ((ServiceMsg)o).number;
+            setDotVisible();
         }
     }
 

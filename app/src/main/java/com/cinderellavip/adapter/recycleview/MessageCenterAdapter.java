@@ -11,11 +11,15 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
 import com.cinderellavip.bean.net.mine.BlacklistItem;
 import com.cinderellavip.bean.net.mine.MessageItem;
+import com.cinderellavip.global.Constant;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.ui.activity.mine.MineAssetsActivity;
+import com.sobot.chat.ZCSobotApi;
+import com.sobot.chat.api.model.Information;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
@@ -47,10 +51,12 @@ public class MessageCenterAdapter extends BaseQuickAdapter<MessageItem, BaseView
         ImageView iv_image = helper.getView(R.id.iv_image);
         if (item.type == 1){
             iv_image.setImageResource(R.mipmap.icon_message1);
-        }if (item.type == 2){
+        }else if (item.type == 2){
             iv_image.setImageResource(R.mipmap.icon_message2);
-        }if (item.type == 3){
+        }else if (item.type == 3){
             iv_image.setImageResource(R.mipmap.icon_message3);
+        }else if (item.type == 4){
+            iv_image.setImageResource(R.mipmap.icon_message4);
         }
         helper.setText(R.id.tv_title,item.getType())
                 .setText(R.id.tv_time,item.time)
@@ -68,6 +74,12 @@ public class MessageCenterAdapter extends BaseQuickAdapter<MessageItem, BaseView
                 break;
             case 3:
                 MineAssetsActivity.launch(getContext(),MineAssetsActivity.FIND);
+                break;
+            case 4:
+                Information info = new Information();
+                info.setApp_key(Constant.KEY_SERVICE);
+                info.setPartnerid(GlobalParam.getUserId());
+                ZCSobotApi.openZCChat(getContext(), info);
                 break;
         }
         });

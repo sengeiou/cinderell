@@ -27,6 +27,7 @@ import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.service.SobotUtils;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.order.CartActivity;
@@ -290,10 +291,11 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 break;
             case R.id.tv_service:
                     if (GlobalParam.getUserLogin(mActivity)){
+//                        SobotUtils.startSobot(this);
                         Information info = new Information();
                         info.setApp_key(Constant.KEY_SERVICE);
                         info.setPartnerid(GlobalParam.getUserId());
-                        ZCSobotApi.openZCChat(mActivity, info);
+                        ZCSobotApi.openZCChat(GoodsDetailActivity.this, info);
                     }
 
                 break;

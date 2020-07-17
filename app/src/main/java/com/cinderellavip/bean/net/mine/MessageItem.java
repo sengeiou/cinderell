@@ -22,10 +22,12 @@ public class MessageItem {
     public String getType() {
         if (type == 1){
             return "我的资产";
-        }if (type == 2){
+        }else if (type == 2){
             return "订单交易";
-        }if (type == 3){
+        }else if (type == 3){
             return "发现";
+        }else if (type == 4){
+            return "客服消息";
         }
         return "";
     }

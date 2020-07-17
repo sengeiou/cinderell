@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import com.cinderellavip.adapter.recycleview.MessageCenterAdapter;
 import com.cinderellavip.bean.net.mine.MessageItem;
+import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
+import com.sobot.chat.ZCSobotApi;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 import com.tozzais.baselibrary.util.log.LogUtil;
@@ -49,6 +51,13 @@ public class MessageCenterFragment extends BaseListFragment<MessageItem> {
                     @Override
                     public void onSuccess(BaseResult<ListResult<MessageItem>> result) {
                         List<MessageItem> list = result.data.list;
+                        MessageItem messageItem = new MessageItem();
+                        messageItem.type = 4;
+                        messageItem.time = "";
+                        messageItem.message = "点击查看客服消息";
+                        messageItem.num = ZCSobotApi.getUnReadMessage(mActivity, GlobalParam.getUserId());
+
+                        list.add(messageItem);
                         LogUtil.e("list"+list.size());
                         setData(list);
                     }
