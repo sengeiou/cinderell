@@ -291,11 +291,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
                 break;
             case R.id.tv_service:
                     if (GlobalParam.getUserLogin(mActivity)){
-//                        SobotUtils.startSobot(this);
-                        Information info = new Information();
-                        info.setApp_key(Constant.KEY_SERVICE);
-                        info.setPartnerid(GlobalParam.getUserId());
-                        ZCSobotApi.openZCChat(GoodsDetailActivity.this, info);
+                        SobotUtils.start(GoodsDetailActivity.this);
                     }
 
                 break;

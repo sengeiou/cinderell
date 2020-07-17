@@ -21,10 +21,8 @@ public class SobotNotificationClickReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (ZhiChiConstant.SOBOT_NOTIFICATION_CLICK.equals(intent.getAction())){
-            Information info = new Information();
-            info.setApp_key(Constant.KEY_SERVICE);
-            info.setPartnerid(GlobalParam.getUserId());
-            ZCSobotApi.openZCChat(context, info);
+            SobotUtils.start(context);
+
         }
     }
 }

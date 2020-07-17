@@ -15,6 +15,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnGetStringListener;
 import com.cinderellavip.listener.OnSureClickListener;
+import com.cinderellavip.service.SobotUtils;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
@@ -58,7 +59,8 @@ public class CenterDialogUtil {
 
         });
         tv_add.setOnClickListener(v -> {
-            DialogUtil.showCallPhoneDialog(context,2);
+            SobotUtils.start(context);
+//            DialogUtil.showCallPhoneDialog(context,2);
         });
 
     }

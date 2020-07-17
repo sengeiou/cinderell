@@ -24,6 +24,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.service.ServiceMsg;
+import com.cinderellavip.service.SobotUtils;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.account.LoginActivity;
@@ -446,8 +447,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 break;
             case R.id.rl_mine_service11:
                 if (GlobalParam.getUserLogin(mActivity))
-                DialogUtil.showCallPhoneDialog(mActivity,2);
-
+                    SobotUtils.start(mActivity);
                 break;
             case R.id.iv_message:
                 if (GlobalParam.getUserLogin(mActivity))

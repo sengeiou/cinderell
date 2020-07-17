@@ -17,6 +17,7 @@ import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.cinderellavip.service.SobotUtils;
 import com.cinderellavip.ui.activity.mine.MineAssetsActivity;
 import com.sobot.chat.ZCSobotApi;
 import com.sobot.chat.api.model.Information;
@@ -76,10 +77,7 @@ public class MessageCenterAdapter extends BaseQuickAdapter<MessageItem, BaseView
                 MineAssetsActivity.launch(getContext(),MineAssetsActivity.FIND);
                 break;
             case 4:
-                Information info = new Information();
-                info.setApp_key(Constant.KEY_SERVICE);
-                info.setPartnerid(GlobalParam.getUserId());
-                ZCSobotApi.openZCChat(getContext(), info);
+                SobotUtils.start(getContext());
                 break;
         }
         });
