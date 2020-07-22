@@ -45,6 +45,7 @@
 
         <LinearLayout
             android:id="@+id/ll_life_service"
+            android:visibility="gone"
             style="@style/HomeTab">
 
             <ImageView
