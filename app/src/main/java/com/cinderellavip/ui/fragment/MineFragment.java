@@ -117,7 +117,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
     public int serviceMsgNumber = 0;
     public void setDotVisible(){
         serviceMsgNumber = ZCSobotApi.getUnReadMessage(mActivity,GlobalParam.getUserId());
-        LogUtil.e("serviceMsgNumber="+serviceMsgNumber);
+//        LogUtil.e("serviceMsgNumber="+serviceMsgNumber);
         if (dot_message !=null){
             dot_message.setVisibility((appMsgNumber > 0 || serviceMsgNumber>0)? View.VISIBLE: View.GONE);
         }

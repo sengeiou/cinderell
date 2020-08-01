@@ -69,7 +69,9 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.tv_receive_time)
     TextView tv_receive_time; //发货时间
     @BindView(R.id.tv_pay_way)
-    TextView tv_pay_way; //支付方式
+    TextView tv_pay_way;
+    @BindView(R.id.tv_pay)
+    TextView tv_pay; //支付方式
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
     @BindView(R.id.tv_name)
@@ -96,6 +98,8 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvCopy;
     @BindView(R.id.tv_time_pay)
     TextView tvTimePay;
+    @BindView(R.id.tv_score_money)
+    TextView tv_score_money;
 
     private int order_id;
 
@@ -169,6 +173,7 @@ public class OrderDetailActivity extends BaseActivity {
 
         tvGoodsMoney.setText("￥"+orderInfo.goods_amount);
         tvCouponMoney.setText("￥"+orderInfo.dis_amount);
+        tv_score_money.setText("￥"+orderInfo.score_amount);
         tvTax.setText("￥"+orderInfo.ship_amount);
         tvPayMoney.setText("￥"+orderInfo.total_amount);
 
@@ -177,6 +182,7 @@ public class OrderDetailActivity extends BaseActivity {
         tv_pay_way.setText("付款时间："+orderInfo.pay_at);
         tv_send_time.setText("发货时间："+orderInfo.send_at);
         tv_receive_time.setText("收货时间："+orderInfo.receipt_at);
+        tv_pay.setText("支付方式："+orderInfo.payment+"支付");
 
 
 
@@ -208,6 +214,7 @@ public class OrderDetailActivity extends BaseActivity {
                 llBottom.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setText("取消订单");
                 tv_pay_way.setVisibility(View.VISIBLE);
+                tv_pay.setVisibility(View.VISIBLE);
 
                 tv_btn_bottom.setVisibility(orderInfo.isInvoiceVisible());
                 tv_btn_bottom.setText(orderInfo.invoiceString());
@@ -216,6 +223,7 @@ public class OrderDetailActivity extends BaseActivity {
                 tvStatus1.setVisibility(View.GONE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 tv_pay_way.setVisibility(View.VISIBLE);
+                tv_pay.setVisibility(View.VISIBLE);
                 tv_send_time.setVisibility(View.VISIBLE);
                 llBottom.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setVisibility(View.VISIBLE);
@@ -232,6 +240,7 @@ public class OrderDetailActivity extends BaseActivity {
                 tv_receive_time.setVisibility(View.VISIBLE);
                 tv_send_time.setVisibility(View.VISIBLE);
                 tv_pay_way.setVisibility(View.VISIBLE);
+                tv_pay.setVisibility(View.VISIBLE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 llBottom.setVisibility(View.VISIBLE);
                 tvBtnBottom2.setVisibility(View.GONE);
@@ -246,6 +255,7 @@ public class OrderDetailActivity extends BaseActivity {
                 tv_receive_time.setVisibility(View.VISIBLE);
                 tv_send_time.setVisibility(View.VISIBLE);
                 tv_pay_way.setVisibility(View.VISIBLE);
+                tv_pay.setVisibility(View.VISIBLE);
                 ivStatus.setImageResource(R.mipmap.order_status_1);
                 llBottom.setVisibility(View.VISIBLE);
                 tvBtnBottom1.setVisibility(View.VISIBLE);

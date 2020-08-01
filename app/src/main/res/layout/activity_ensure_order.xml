@@ -129,6 +129,52 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingLeft="12dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        style="@style/base_text_style"
+                        android:text="使用198积分抵扣198元"/>
+
+                    <TextView
+                        android:id="@+id/tv_tip"
+                        style="@style/base_text_style_gray_small"
+                        android:layout_marginTop="5dp"
+                        android:text="注意：使用积分后，该订单发生退款，积分不予退回"/>
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/iv_agreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:src="@mipmap/agreement_selete_no"/>
+            </LinearLayout>
+
+
+            <View
+                style="@style/base_space"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:paddingBottom="10dp"
                 android:orientation="vertical">
@@ -215,6 +261,8 @@
                         tools:text="￥488" />
                 </LinearLayout>
             </LinearLayout>
+
+
 
 
             <View

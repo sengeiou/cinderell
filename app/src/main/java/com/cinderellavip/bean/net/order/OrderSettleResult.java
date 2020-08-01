@@ -1,6 +1,7 @@
 package com.cinderellavip.bean.net.order;
 
 import com.cinderellavip.bean.net.NetCityBean;
+import com.cinderellavip.bean.net.goods.GoodsStore;
 import com.cinderellavip.util.ArithmeticUtil;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class OrderSettleResult {
     public String total_ship;
     public String total_dis;
     public String total_goods;
+    public GoodsStore score;
 
 
 }

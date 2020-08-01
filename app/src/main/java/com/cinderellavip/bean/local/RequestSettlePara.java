@@ -26,11 +26,16 @@ public class RequestSettlePara implements Parcelable {
     public String address_id = "0";
     public String coupon_ids = "0";
 
+    public String use = "0";
+
+
+
     public RequestSettlePara(int type, String cart_ids) {
         this.type = type;
         this.cart_ids = cart_ids;
     }
 
+    //立即购买
     public RequestSettlePara(int type, String product_id, String norm_id, String number) {
         this.type = type;
         this.product_id = product_id;

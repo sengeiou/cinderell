@@ -34,7 +34,7 @@
             android:drawablePadding="8dp"
             android:gravity="center"
             android:padding="15dp"
-            android:text="支付成功"
+            android:text="支付成功 订单正在处理中"
             android:layout_marginTop="10dp"
             android:textSize="18sp" />
 

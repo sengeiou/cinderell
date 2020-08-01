@@ -24,6 +24,7 @@ public class OrderInfo {
     public String goods_amount;
     public String ship_amount;
     public String dis_amount;
+    public String score_amount;
     public String total_amount;
     public String payment;
     public int status;
