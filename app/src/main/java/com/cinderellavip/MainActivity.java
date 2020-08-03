@@ -188,6 +188,12 @@ public class MainActivity extends CheckPermissionActivity {
     }
 
 
+
+
+
+
+
+
     private SobotNotificationClickReceiver nClickReceiver;//点击通知以后发出的广播接收者
     private SobotUnReadMsgReceiver unReadMsgReceiver;//获取未读消息数的广播接收者
     private void regReceiver(){
@@ -575,10 +581,24 @@ public class MainActivity extends CheckPermissionActivity {
     });
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
+        try {
+            if (nClickReceiver != null){
+                unregisterReceiver(nClickReceiver);
+            }
+
+            if (unReadMsgReceiver != null){
+                unregisterReceiver(unReadMsgReceiver);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         if (mHandler != null) {
             mHandler.removeMessages(2);
         }
         mHandler = null;
+
+        super.onDestroy();
     }
 }

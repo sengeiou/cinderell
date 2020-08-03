@@ -56,6 +56,9 @@ public class GuideActivity extends BaseActivity {
     @Override
     public void loadData() {
         if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
+            //解决测试
+            // Duplicate finish request for ActivityRecord{d46542c u0 com.cinderellavip/.ui.activity.account.GuideActivity t51 f}
+            if (!isFinishing())
             finish();
             return;
         }
@@ -69,6 +72,7 @@ public class GuideActivity extends BaseActivity {
                 }
                 @Override
                 public void onCancel() {
+                    if (!isFinishing())
                     finish();
                 }
             });

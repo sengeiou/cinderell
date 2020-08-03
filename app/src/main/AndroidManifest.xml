@@ -57,7 +57,9 @@
         android:roundIcon="@mipmap/logo1"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="UnusedAttribute">
+        tools:ignore="UnusedAttribute"
+        android:largeHeap="true"
+        >
         <activity android:name=".ui.activity.account.GuideActivity"
             android:launchMode="singleTask"
             android:theme="@style/WelComeTheme"
@@ -207,6 +209,11 @@
             android:launchMode="singleTop"/>
         <activity android:name=".ui.activity.mine.MinePotatoActivity"
             android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".ui.activity.VideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".wxapi.WXEntryActivity"

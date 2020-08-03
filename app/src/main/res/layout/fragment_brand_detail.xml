@@ -69,11 +69,13 @@
                            android:layout_marginRight="12dp"
                            android:layout_height="180dp">
                            <ImageView
+                               android:id="@+id/iv_video_image"
                                android:layout_width="match_parent"
                                android:layout_height="match_parent"
                                android:scaleType="centerCrop"
-                               android:src="@mipmap/demo_brand_vedio"/>
+                               tools:src="@mipmap/demo_brand_vedio"/>
                            <ImageView
+                               android:id="@+id/iv_video_play"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:layout_centerInParent="true"

@@ -1,5 +1,6 @@
 package com.cinderellavip.ui.fragment;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.listener.OnSureClickListener;
+import com.cinderellavip.ui.activity.VideoActivity;
 import com.cinderellavip.ui.activity.home.SearchListActivity;
 import com.cinderellavip.util.ColorUtil;
 import com.cinderellavip.weight.FilterView;
@@ -52,6 +54,8 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements 
     ImageView ivImage;
     @BindView(R.id.iv_collect)
     ImageView iv_collect;
+    @BindView(R.id.iv_video_image)
+    ImageView iv_video_image;
     @BindView(R.id.ll_video)
     LinearLayout llVideo;
     @BindView(R.id.title)
@@ -152,6 +156,7 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements 
                             llVideo.setVisibility(View.GONE);
                         }else {
                             llVideo.setVisibility(View.VISIBLE);
+                            ImageUtil.load(mActivity,iv_video_image,storeInfo.video_img);
                         }
 
                     }
@@ -182,7 +187,7 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements 
         });
         //SwipeRefreshLayout和CoordinatorLayout滑动冲突
         appbar.addOnOffsetChangedListener((AppBarLayout.BaseOnOffsetChangedListener) (appBarLayout, i) -> {
-            LogUtil.e("totalDy" + i);
+//            LogUtil.e("totalDy" + i);
             if (i >= 0) {
                 swipeLayout.setEnabled(true); //当滑动到顶部的时候开启
             } else {
@@ -200,9 +205,12 @@ public class BrandDetailFragment extends BaseListFragment<HomeGoods> implements 
     }
 
 
-    @OnClick({R.id.ll_back, R.id.ll_search, R.id.rl_collect,R.id.iv_top})
+    @OnClick({R.id.ll_back, R.id.ll_search, R.id.rl_collect,R.id.iv_top,R.id.iv_video_play})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_video_play:
+                VideoActivity.launch( mActivity,storeInfo.video);
+                break;
             case R.id.ll_back:
                 mActivity.finish();
                 break;

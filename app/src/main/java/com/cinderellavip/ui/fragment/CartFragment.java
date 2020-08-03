@@ -11,6 +11,7 @@ import com.cinderellavip.R;
 import com.cinderellavip.adapter.recycleview.CartAdapter;
 import com.cinderellavip.adapter.recycleview.HomeGoodsAdapter;
 import com.cinderellavip.bean.eventbus.AddCart;
+import com.cinderellavip.bean.eventbus.LoginSuccess;
 import com.cinderellavip.bean.eventbus.UpdateCart;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.local.RequestSettlePara;
@@ -256,7 +257,7 @@ public class CartFragment extends BaseListFragment<HomeGoods> implements CartGoo
     @Override
     public void onEvent(Object o) {
         super.onEvent(o);
-        if (o instanceof AddCart || o instanceof UpdateCart){
+        if (o instanceof AddCart || o instanceof UpdateCart|| o instanceof LoginSuccess){
             onRefresh();
         }
     }
