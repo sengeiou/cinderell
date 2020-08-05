@@ -3,6 +3,7 @@ package com.cinderellavip.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -102,7 +103,9 @@ public class ShopFragment extends BaseFragment {
                     @Override
                     public void onSuccess(BaseResult<HotList<String>> result) {
                         HotList<String> data = result.data;
-                        tv_hint.setText(data.keyword);
+                        if (data != null && TextUtils.isEmpty(data.keyword)){
+                            tv_hint.setText(data.keyword);
+                        }
                     }
                 });
     }
@@ -202,6 +205,7 @@ public class ShopFragment extends BaseFragment {
             //预加载
             viewPager.setOffscreenPageLimit(myFragment.size());
             tabCategory.setupWithViewPager(viewPager);
+            //有问题 可能空指针
             new Handler().postDelayed(() -> viewPager.setCurrentItem(0),500);
             isLoad = true;
         }
