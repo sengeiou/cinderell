@@ -40,6 +40,7 @@ import com.cinderellavip.ui.fragment.FindFragment;
 import com.cinderellavip.ui.fragment.LifeFragment;
 import com.cinderellavip.ui.fragment.MineFragment;
 import com.cinderellavip.ui.fragment.ShopFragment;
+import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.VersionUtil;
 import com.flyco.roundview.RoundTextView;
 import com.sobot.chat.ZCSobotApi;
@@ -305,6 +306,9 @@ public class MainActivity extends CheckPermissionActivity {
                 break;
             case R.id.ll_find:
                 if (mPosition == FIND){
+                    if (!Utils.isFastClick()){
+                        return;
+                    }
                     DialogUtil.showPublishDialog(mContext);
                 }else {
                     selectFragment(FIND);

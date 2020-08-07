@@ -1,6 +1,7 @@
 package com.cinderellavip.ui.fragment.goods;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -13,8 +14,8 @@ import com.tozzais.baselibrary.ui.BaseFragment;
 import butterknife.BindView;
 
 public class GraphicFragment extends BaseFragment {
-    @BindView(R.id.web_view)
-    WebView web_view;
+
+    private WebView web_view;
 
 
     @Override
@@ -24,7 +25,7 @@ public class GraphicFragment extends BaseFragment {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        web_view = mRootView.findViewById(R.id.web_view);
     }
 
     @Override
@@ -62,10 +63,18 @@ public class GraphicFragment extends BaseFragment {
     }
 
     public void setData(String content){
+        if (!isAdded()){
+            new Handler().postDelayed(()->{setData(content);},500);
+            return;
+        }
         String varjs = "<style>p{margin:0;}</style> <script type='text/javascript'> \nwindow.onload = function()\n{var $img = document.getElementsByTagName('img');for(var p in  $img){$img[p].style.width = '100%'; $img[p].style.height ='auto'}}</script>";
         web_view.loadDataWithBaseURL("", varjs + content, "text/html", "UTF-8", null);
     }
     public void setData(){
+        if (!isAdded()){
+            new Handler().postDelayed(()->{setData();},500);
+            return;
+        }
         web_view.loadUrl("https://www.baidu.com");
     }
 

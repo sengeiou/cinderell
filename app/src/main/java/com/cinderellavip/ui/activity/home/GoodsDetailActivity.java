@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.cinderellavip.service.SobotUtils;
 import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.toast.DialogUtil;
 import com.cinderellavip.ui.activity.order.CartActivity;
+import com.cinderellavip.ui.fragment.ShopFragment;
 import com.cinderellavip.ui.fragment.goods.CommentFragment;
 import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
 import com.cinderellavip.ui.fragment.goods.GraphicFragment;
@@ -57,8 +59,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -116,7 +120,9 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        LogUtil.e("initView");
+        LogUtil.e("Detail == initView"+(savedInstanceState != null));
+        if (fragmentManager == null)
+            fragmentManager = getSupportFragmentManager();
         toolbar.setNavigationIcon(R.mipmap.back);
         toolbar.setNavigationOnClickListener(view -> back());
         id = getIntent().getStringExtra("id");
@@ -148,8 +154,11 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
         viewpager.setOffscreenPageLimit(3);
     }
 
-    GoodsDetailFragment goodsDetailGoodsFragment;
-    GraphicFragment graphicFragment;
+    private static final String TAG_DETAIL = "tag_detail";
+    private static final String TAG_GRAPHIC = "tag_graphic";
+    private FragmentManager fragmentManager;
+    private GoodsDetailFragment goodsDetailGoodsFragment;
+    private GraphicFragment graphicFragment;
 
 
     @Override
@@ -199,14 +208,31 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     }
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        LogUtil.e("onRestoreInstanceState"+(savedInstanceState != null));
+        if (savedInstanceState != null){
+            goodsDetailGoodsFragment = (GoodsDetailFragment) fragmentManager.getFragment(savedInstanceState,TAG_DETAIL);
+            graphicFragment = (GraphicFragment) fragmentManager.getFragment(savedInstanceState,TAG_GRAPHIC);
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 //        super.onSaveInstanceState(outState);
-//        LogUtil.e("onSaveInstanceState");
+        LogUtil.e("onSaveInstanceState"+(goodsDetailGoodsFragment != null )+(goodsDetailGoodsFragment.isAdded()));
+//        if (goodsDetailGoodsFragment != null && goodsDetailGoodsFragment.isAdded()){
+//            fragmentManager.putFragment(outState,TAG_DETAIL,goodsDetailGoodsFragment);
+//        }
+//        if (graphicFragment != null && goodsDetailGoodsFragment.isAdded()){
+//            fragmentManager.putFragment(outState,TAG_GRAPHIC,graphicFragment);
+//        }
+
+
     }
 
-    GoodsResult goodsResult;
+    private GoodsResult goodsResult;
 
     @Override
     public void initListener() {

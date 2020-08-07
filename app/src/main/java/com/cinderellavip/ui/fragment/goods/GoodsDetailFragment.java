@@ -2,6 +2,7 @@ package com.cinderellavip.ui.fragment.goods;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,79 +44,38 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
-    @BindView(R.id.xbanner)
     ViewPager xbanner;
-    @BindView(R.id.indicator)
     MyIndicator indicator;
-
-    @BindView(R.id.tv_goods_name)
     TextView tvGoodsName; //名称
-    @BindView(R.id.tv_price)
     TextView tvPrice; //价格
-    @BindView(R.id.tv_advance_price)
     TextView tvAdvancePrice;//原价
-    @BindView(R.id.tv_ship)
     TextView tv_ship;//快递 包邮
-    @BindView(R.id.tv_tax)
     TextView tv_tax;//快递 包邮
-    @BindView(R.id.tv_intro)
     TextView tv_intro;//销量
-    @BindView(R.id.tv_coupon_text)
     TextView tvCouponText;//满500减100
-    @BindView(R.id.tv_promotion_text)
     TextView tv_promotion_text;//满500减100
-    @BindView(R.id.merchant_icon)
     ImageView merchantIcon; //商家图标
-    @BindView(R.id.merchant_name)
     TextView merchantName;//商家名称
-    @BindView(R.id.tv_comment_number)
     TextView tvCommentNumber; //商品评价（4396）
-
-    @BindView(R.id.ll_recommet_cookbook_space)
     View llRecommetCookbookSpace;//间隔
-    @BindView(R.id.ll_merchant)
     LinearLayout ll_merchant;//品牌布局
-    @BindView(R.id.rl_comment)
     RecyclerView rlComment; //评价
-    @BindView(R.id.rl_recommend)
     RecyclerView rlRecommend;//推荐
-
-    @BindView(R.id.tv_group_old_price)
     TextView tvGroupOldPrice;
-
-
-    @BindView(R.id.time_view)
     CountDownView timeView;
-    @BindView(R.id.tv_group_price)
     TextView tvGroupPrice;
-    @BindView(R.id.tv_group_tip)
     TextView tvGroupTip;
-    @BindView(R.id.ll_group)
     LinearLayout llGroup;
-    @BindView(R.id.ll_coupon)
     LinearLayout llCoupon;
-    @BindView(R.id.ll_promotion)
     LinearLayout llPromotion;
-    @BindView(R.id.ll_normal_price)
     LinearLayout ll_normal_price;
-
-    @BindView(R.id.tv_unit)
     TextView tv_unit;
-    @BindView(R.id.tv_return_integral)
     TextView tv_return_integral;
-    @BindView(R.id.view_space)
     View view_space;
-    @BindView(R.id.tv_no_vip_tip)
     TextView tv_no_vip_tip;
-    @BindView(R.id.tv_group_return)
     TextView tv_group_return;
-
-
-    @BindView(R.id.ll_address)
     LinearLayout ll_address;
-    @BindView(R.id.space_address)
     View space_address;
-    @BindView(R.id.tv_address)
     TextView tv_address;
 
 
@@ -126,20 +86,55 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     public void initView(Bundle savedInstanceState) {
-//        tvAdvancePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //下划线
+        super.initView(savedInstanceState);
+        initView();
+        LogUtil.e("fragment == initView"+(savedInstanceState != null));
+        setRetainInstance(true);
     }
 
-
-
+    private void initView(){
+        xbanner = mRootView.findViewById(R.id.xbanner);
+         indicator= mRootView.findViewById(R.id.indicator);
+         tvGoodsName= mRootView.findViewById(R.id.tv_goods_name);
+         tvPrice= mRootView.findViewById(R.id.tv_price);
+         tvAdvancePrice= mRootView.findViewById(R.id.tv_advance_price);
+         tv_ship= mRootView.findViewById(R.id.tv_ship);
+         tv_tax= mRootView.findViewById(R.id.tv_tax);
+         tv_intro= mRootView.findViewById(R.id.tv_intro);
+         tvCouponText= mRootView.findViewById(R.id.tv_coupon_text);
+         tv_promotion_text= mRootView.findViewById(R.id.tv_promotion_text);
+         merchantIcon= mRootView.findViewById(R.id.merchant_icon);
+         merchantName= mRootView.findViewById(R.id.merchant_name);
+         tvCommentNumber= mRootView.findViewById(R.id.tv_comment_number);
+         llRecommetCookbookSpace= mRootView.findViewById(R.id.ll_recommet_cookbook_space);
+         ll_merchant= mRootView.findViewById(R.id.ll_merchant);
+         rlComment= mRootView.findViewById(R.id.rl_comment);
+         rlRecommend= mRootView.findViewById(R.id.rl_recommend);
+         tvGroupOldPrice= mRootView.findViewById(R.id.tv_group_old_price);
+         timeView= mRootView.findViewById(R.id.time_view);
+         tvGroupPrice= mRootView.findViewById(R.id.tv_group_price);
+         tvGroupTip= mRootView.findViewById(R.id.tv_group_tip);
+         llGroup= mRootView.findViewById(R.id.ll_group);
+         llCoupon= mRootView.findViewById(R.id.ll_coupon);
+         llPromotion= mRootView.findViewById(R.id.ll_promotion);
+         ll_normal_price= mRootView.findViewById(R.id.ll_normal_price);
+         tv_unit= mRootView.findViewById(R.id.tv_unit);
+         tv_return_integral= mRootView.findViewById(R.id.tv_return_integral);
+         view_space= mRootView.findViewById(R.id.view_space);
+         tv_no_vip_tip= mRootView.findViewById(R.id.tv_no_vip_tip);
+         tv_group_return= mRootView.findViewById(R.id.tv_group_return);
+         ll_address= mRootView.findViewById(R.id.ll_address);
+         space_address= mRootView.findViewById(R.id.space_address);
+         tv_address= mRootView.findViewById(R.id.tv_address);
+    }
 
     //评价
-    CommentAdapter commentInAdapter;
+    private CommentAdapter commentInAdapter;
     //推荐
-    RecommentGoodsAdapter recommentInAdapter;
+    private RecommentGoodsAdapter recommentInAdapter;
 
     @Override
     public void loadData() {
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -160,6 +155,10 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
     private GoodsResult goodsResult;
 
     public void setData(GoodsResult goodsResult) {
+        if (!isAdded()){
+            new Handler().postDelayed(()->{setData(goodsResult);},500);
+            return;
+        }
         this.goodsResult = goodsResult;
         GoodsInfo productInfo = goodsResult.product_info;
         List<GoodsDetialBanner> bannerList = new ArrayList<>();
@@ -176,7 +175,8 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
         xbanner.setAdapter(bannerAdapter);
         indicator.bindViewPager(xbanner, bannerList.size());
         View childAt = xbanner.getChildAt(0);
-        mVideoView = childAt.findViewById(R.id.player);
+        if (mVideoView == null && childAt != null )
+            mVideoView = childAt.findViewById(R.id.player);
         xbanner.setOffscreenPageLimit(bannerList.size());
         xbanner.addOnPageChangeListener(this);
         tvGroupOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
@@ -240,14 +240,22 @@ public class GoodsDetailFragment extends BaseFragment implements ViewPager.OnPag
         List<CouponsBean> coupons = goodsResult.coupons;
         if (coupons == null || coupons.size() == 0) {
             tvCouponText.setText("暂无优惠券");
-            tvCouponText.setTextColor(getResources().getColor(R.color.grayText));
+            if (isAdded()){
+                //https://www.jianshu.com/p/7986206aa9d4
+                tvCouponText.setTextColor(getResources().getColor(R.color.grayText));
+            }
+
         } else {
             CouponsBean couponsBean = coupons.get(0);
             tvCouponText.setText(couponsBean.condition);
         }
         if (goodsResult.actives == null || goodsResult.actives.size() == 0) {
             tv_promotion_text.setText("暂无活动");
-            tv_promotion_text.setTextColor(getResources().getColor(R.color.grayText));
+            if (isAdded()){
+                //https://www.jianshu.com/p/7986206aa9d4
+                tv_promotion_text.setTextColor(getResources().getColor(R.color.grayText));
+            }
+
         } else {
 
         }

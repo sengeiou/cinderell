@@ -3,6 +3,7 @@ package com.cinderellavip.ui.activity.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class HomeCategoryListActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         getSearchHint();
+        tv_hint.setHint("");
 
     }
 
@@ -52,6 +54,7 @@ public class HomeCategoryListActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseResult<HotList<String>> result) {
                         HotList<String> data = result.data;
+                        if (data != null && !TextUtils.isEmpty(data.keyword))
                         tv_hint.setHint(data.keyword);
                     }
                 });
@@ -88,7 +91,12 @@ public class HomeCategoryListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_search:
-                SearchActivity.launch(mActivity,tv_hint.getHint().toString());
+                String s = tv_hint.getHint().toString();
+                if (TextUtils.isEmpty(s)){
+                    SearchActivity.launch(mActivity, "");
+                }else {
+                    SearchActivity.launch(mActivity, s);
+                }
                 break;
         }
     }
