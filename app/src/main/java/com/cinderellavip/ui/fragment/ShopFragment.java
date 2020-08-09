@@ -103,7 +103,8 @@ public class ShopFragment extends BaseFragment {
                     @Override
                     public void onSuccess(BaseResult<HotList<String>> result) {
                         HotList<String> data = result.data;
-                        if (data != null && TextUtils.isEmpty(data.keyword)){
+                        if (data != null && TextUtils.isEmpty(data.keyword) && isAdded() && tv_hint != null){
+                            //包里测试 tv_hint 空指针
                             tv_hint.setText(data.keyword);
                         }
                     }
@@ -131,7 +132,11 @@ public class ShopFragment extends BaseFragment {
                     @Override
                     public void onSuccess(BaseResult<HomeCategoryResult> result) {
                         showContent();
-                        setTabCategory(result.data.list);
+                        if (isAdded()){
+                            //包里测试返回 has not been attached yet.
+                            setTabCategory(result.data.list);
+                        }
+
                     }
                     @Override
                     public void onErrorShow(String s) {
@@ -206,7 +211,11 @@ public class ShopFragment extends BaseFragment {
             viewPager.setOffscreenPageLimit(myFragment.size());
             tabCategory.setupWithViewPager(viewPager);
             //有问题 可能空指针
-            new Handler().postDelayed(() -> viewPager.setCurrentItem(0),500);
+            new Handler().postDelayed(() -> {
+                if (viewPager != null && isAdded())
+                        viewPager.setCurrentItem(0);
+                    }
+            ,500);
             isLoad = true;
         }
     }
@@ -220,12 +229,14 @@ public class ShopFragment extends BaseFragment {
             String name = ((UpdateShopPage)o).name;
             if ("-1".equals(name)){
                 //回到首页
+                if (viewPager != null && isAdded())
                 viewPager.setCurrentItem(0);
                 return;
             }
             for (int i = 0;i<categoryItemList.size();i++){
                 HomeCategoryItem item = categoryItemList.get(i);
                 if (name.equals(item.id+"")){
+                    if (viewPager != null && isAdded())
                     viewPager.setCurrentItem(i);
                     break;
                 }

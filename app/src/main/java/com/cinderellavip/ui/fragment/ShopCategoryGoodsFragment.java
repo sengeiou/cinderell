@@ -138,6 +138,9 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
                 new Response<BaseResult<ShopHomeResult>>(mActivity,Response.BOTH) {
                     @Override
                     public void onSuccess(BaseResult<ShopHomeResult> result) {
+                        if (!isAdded()){
+                            return;
+                        }
                         ShopHomeResult homeResult = result.data;
                         if (homeResult.banners == null || homeResult.banners.size() == 0){
                             rl_banner.setVisibility(View.GONE);
