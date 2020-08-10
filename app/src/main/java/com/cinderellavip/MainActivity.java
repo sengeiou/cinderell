@@ -104,6 +104,7 @@ public class MainActivity extends CheckPermissionActivity {
     public static void launch(Activity context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
+        if (!context.isFinishing())
         context.finish();
     }
 
@@ -111,6 +112,7 @@ public class MainActivity extends CheckPermissionActivity {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("position",mPosition);
         context.startActivity(intent);
+        if (!context.isFinishing())
         context.finish();
 
     }

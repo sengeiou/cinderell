@@ -78,7 +78,6 @@ public class FastLoginActivity extends BaseActivity {
         activity.startActivityForResult(intent, 100);
     }
 
-    private  BindLogin bindLogin;
     public static void launch(Activity activity, BindLogin bindLogin) {
         if (!Utils.isFastClick()){
             return;
@@ -295,7 +294,7 @@ public class FastLoginActivity extends BaseActivity {
      * @param sms_code
      */
     private void bind(String mobile,String sms_code,String new_password){
-        BindLogin bindLogin = getIntent().getParcelableExtra("bindLogin");
+        BindLogin bindLogin = (BindLogin) getIntent().getSerializableExtra("bindLogin");
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("unionid", bindLogin.unionid);
         hashMap.put("nickname", bindLogin.nickname);

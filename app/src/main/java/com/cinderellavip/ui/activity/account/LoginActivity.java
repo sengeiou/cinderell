@@ -244,6 +244,7 @@ public class LoginActivity extends BaseActivity implements UMAuthListener {
      * @param type 2微信，3支付宝
      */
     private void isBind( BindLogin bindLogin ,String type){
+
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("unionid", bindLogin.unionid);
         hashMap.put("type", type);

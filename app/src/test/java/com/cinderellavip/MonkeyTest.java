@@ -19,7 +19,14 @@ public class MonkeyTest {
     @Test
     public void addition_isCorrect() {
         //切换到monkey下 adb shell monkey -p com.tencent.mm 250000
+        Student student = new Student() {
+        };
 
+    }
+
+
+    public class Student{
+        public String name;
     }
 
 }
