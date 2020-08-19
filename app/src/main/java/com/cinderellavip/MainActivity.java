@@ -130,7 +130,6 @@ public class MainActivity extends CheckPermissionActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         ZCSobotApi.checkIMConnected(getApplicationContext(), GlobalParam.getUserId());
-
         if (fragmentManager == null)
             fragmentManager = getSupportFragmentManager();
         if (savedInstanceState ==null){
@@ -138,22 +137,17 @@ public class MainActivity extends CheckPermissionActivity {
         }else {
             isLoad = savedInstanceState.getBoolean("isLoad");
         }
-
     }
-
     @Override
     public void loadData() {
         if (!isLoad){
             checkPermissions(needPermissions);
             startTime();
         }
-
     }
 
     @Override
     public void initListener() {
-
-
        new RxHttp<BaseResult<PhoneResult>>().send(ApiManager.getService().getPhone(),
                 new Response<BaseResult<PhoneResult>>(isLoad, mActivity) {
                     @Override
@@ -161,8 +155,6 @@ public class MainActivity extends CheckPermissionActivity {
                         GlobalParam.setPhoneBean(result.data);
                     }
                 });
-
-
         //https://github.com/xuexiangjys/XUpdate/wiki/%E6%BC%94%E7%A4%BADemo%E4%BB%8B%E7%BB%8D
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("type", 1 + "");
@@ -183,19 +175,10 @@ public class MainActivity extends CheckPermissionActivity {
                         }else {
                             sign();
                         }
-
                     }
                 });
-
         regReceiver();
     }
-
-
-
-
-
-
-
 
     private SobotNotificationClickReceiver nClickReceiver;//点击通知以后发出的广播接收者
     private SobotUnReadMsgReceiver unReadMsgReceiver;//获取未读消息数的广播接收者
@@ -255,7 +238,6 @@ public class MainActivity extends CheckPermissionActivity {
                 });
     }
 
-
     private void sign(){
         if (!GlobalParam.getUserLogin()){
             return;
@@ -271,7 +253,6 @@ public class MainActivity extends CheckPermissionActivity {
                 });
     }
 
-
     public static final int SHOP = 0;
     public static final int LIFE = 1;
     public static final int FIND = 2;
@@ -282,7 +263,6 @@ public class MainActivity extends CheckPermissionActivity {
     private static final String TAG_FIND = "tag_find";
     private static final String TAG_CART = "tag_cart";
     private static final String TAG_MINE = "tag_mine";
-
 
     private int mPosition;//当前选中的底部菜单
     private FragmentManager fragmentManager;

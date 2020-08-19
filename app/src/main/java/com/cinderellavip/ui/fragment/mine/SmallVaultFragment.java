@@ -50,6 +50,8 @@ public class SmallVaultFragment extends BaseFragment {
     TextView tvScoreMoonCrown;
     @BindView(R.id.tv_score_interest)
     TextView tvScoreInterest;
+    @BindView(R.id.tv_score_give)
+    TextView tvScoreGive;
     @BindView(R.id.tv_invite)
     TextView tvInvite;
 
@@ -66,10 +68,12 @@ public class SmallVaultFragment extends BaseFragment {
 
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(1));
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(2));
+        fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(4));
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(3));
         List<String> list = new ArrayList<>();
         list.add("消费积分");
         list.add("推荐积分");
+        list.add("赠送积分");
         list.add("积分排行");
         adapter = new GoodsDetailPagerAdapter(getChildFragmentManager(), fragmentList, list);
         viewpager.setAdapter(adapter);
@@ -101,6 +105,8 @@ public class SmallVaultFragment extends BaseFragment {
                         tvScoreMoonCrown.setText(data.month_best);
                         tvScoreInterest.setText(data.total);
                         mineCode.setText(data.with_int);
+                        //赠送积分
+                        tvScoreGive.setText("0");
                     }
                 });
     }

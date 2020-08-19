@@ -39,11 +39,13 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
         helper.setText(R.id.tv_title,item.title)
                 .setText(R.id.tv_number,item.integral);
         if (type == 1){
+            //消费积分
             tv_id.setVisibility(View.VISIBLE);
             tv_time.setVisibility(View.VISIBLE);
             tv_id.setText(item.desc);
             tv_time.setText(item.create_at);
         }else if (type == 2){
+            //推荐积分
             iv_image.setVisibility(View.VISIBLE);
             ImageUtil.loadNet(getContext(),iv_image,item.avatar);
             tv_time.setVisibility(View.VISIBLE);
@@ -51,6 +53,7 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
             tv_id.setVisibility(View.VISIBLE);
             tv_id.setText(item.desc);
         }else if (type == 3){
+            //积分排行
             iv_image.setVisibility(View.VISIBLE);
             ImageUtil.loadNet(getContext(),iv_image,item.avatar);
             rl_rank.setVisibility(View.VISIBLE);
@@ -74,6 +77,10 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
                 tv_rank_text.setVisibility(View.VISIBLE);
             }
         }else if (type == 4){
+            //赠送积分
+            //消费积分
+            tv_time.setVisibility(View.VISIBLE);
+            tv_time.setText(item.create_at);
 
         }
         helper.getView(R.id.ll_root).setOnClickListener(v -> {

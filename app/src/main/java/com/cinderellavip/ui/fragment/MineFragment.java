@@ -390,6 +390,7 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                 RecommentListActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service2:
+                //小金库
                 if (GlobalParam.getUserLogin(mActivity))
                 SmallVaultActivity.launch(mActivity);
                 break;
@@ -442,18 +443,22 @@ public class MineFragment extends BaseListFragment<HomeGoods> {
                     AgreementWebViewActivity.launch(mActivity, Constant.H19+GlobalParam.getUserToken());
                 break;
             case R.id.rl_mine_service10:
+                //我的收藏
                 if (GlobalParam.getUserLogin(mActivity))
                 MineCollectActivity.launch(mActivity);
                 break;
             case R.id.rl_mine_service11:
+                //客服
                 if (GlobalParam.getUserLogin(mActivity))
                     SobotUtils.start(mActivity);
                 break;
             case R.id.iv_message:
+                //消息
                 if (GlobalParam.getUserLogin(mActivity))
                 MessageActivity.launch(mActivity);
                 break;
             case R.id.iv_setting:
+                //设置
                 SettingActivity.launch(mActivity);
                 break;
         }

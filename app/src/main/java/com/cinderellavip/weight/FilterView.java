@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.listener.OnFilterListener;
+import com.cinderellavip.listener.OnFilterShopClickListener;
 import com.cinderellavip.listener.OnSureClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 public class FilterView extends FrameLayout implements View.OnClickListener {
 
@@ -29,10 +31,20 @@ public class FilterView extends FrameLayout implements View.OnClickListener {
         this.onDialogClickListener = onDialogClickListener;
     }
 
+    public OnFilterShopClickListener getOnFilterShopClickListener() {
+        return onFilterShopClickListener;
+    }
+
+    public void setOnFilterShopClickListener(OnFilterShopClickListener onFilterShopClickListener) {
+        this.onFilterShopClickListener = onFilterShopClickListener;
+    }
+
     private OnFilterListener onFilterListener;
     private OnSureClickListener onDialogClickListener;
+    private OnFilterShopClickListener onFilterShopClickListener;
     private Context mContext;
     private TextView tv_complex;
+    private TextView tv_shop;
     private TextView tv_sale_volume;
     private TextView tv_price;
     private TextView tv_comment;
@@ -72,6 +84,7 @@ public class FilterView extends FrameLayout implements View.OnClickListener {
         View view = View.inflate(context, R.layout.view_filter, null);
         this.mContext = context;
         tv_complex = view.findViewById(R.id.tv_complex);
+        tv_shop = view.findViewById(R.id.tv_shop);
         tv_sale_volume = view.findViewById(R.id.tv_sale_volume);
         tv_price = view.findViewById(R.id.tv_price);
         tv_comment = view.findViewById(R.id.tv_comment);
@@ -88,6 +101,7 @@ public class FilterView extends FrameLayout implements View.OnClickListener {
 
     private void initListener() {
         tv_complex.setOnClickListener(this);
+        tv_shop.setOnClickListener(this);
         ll_comment.setOnClickListener(this);
         ll_price.setOnClickListener(this);
         ll_sale_volume.setOnClickListener(this);
@@ -173,14 +187,25 @@ public class FilterView extends FrameLayout implements View.OnClickListener {
             if (onDialogClickListener != null) {
                 onDialogClickListener.onSure();
             }
+        } else if (id == R.id.tv_shop) {
+            clean();
+            isComplex = false;
+            isSale = false;
+            isPrice = false;
+            tv_shop.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+            if (onFilterShopClickListener != null){
+                onFilterShopClickListener.onClickShop();
+            }
+
         }
     }
 
     private void clean() {
-        tv_complex.setTextColor(getResources().getColor(R.color.black_title_color));
-        tv_sale_volume.setTextColor(getResources().getColor(R.color.black_title_color));
-        tv_price.setTextColor(getResources().getColor(R.color.black_title_color));
-        tv_comment.setTextColor(getResources().getColor(R.color.black_title_color));
+        tv_complex.setTextColor(ContextCompat.getColor(mContext, R.color.black_title_color));
+        tv_shop.setTextColor(ContextCompat.getColor(mContext, R.color.black_title_color));
+        tv_sale_volume.setTextColor(ContextCompat.getColor(mContext, R.color.black_title_color));
+        tv_price.setTextColor(ContextCompat.getColor(mContext, R.color.black_title_color));
+        tv_comment.setTextColor(ContextCompat.getColor(mContext, R.color.black_title_color));
         iv_price.setImageResource(R.mipmap.icon_condition_default);
         iv_sale_volume.setImageResource(R.mipmap.icon_condition_default);
         iv_comment.setImageResource(R.mipmap.icon_condition_default);

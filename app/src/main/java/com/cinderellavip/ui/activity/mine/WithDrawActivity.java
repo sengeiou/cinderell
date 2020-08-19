@@ -53,6 +53,9 @@ public class WithDrawActivity extends BaseActivity {
     @BindView(R.id.tv_explain)
     TextView tv_explain;
 
+    @BindView(R.id.tv_score_withdraw_explain)
+    TextView tv_score_withdraw_explain;
+
     public static void launch(Context from) {
         if (!Utils.isFastClick()){
             return;
@@ -84,6 +87,7 @@ public class WithDrawActivity extends BaseActivity {
             setBackTitle("积分提现");
             setRightText("提现记录");
             tv_explain.setVisibility(View.VISIBLE);
+            tv_score_withdraw_explain.setVisibility(View.VISIBLE);
         }
     }
 

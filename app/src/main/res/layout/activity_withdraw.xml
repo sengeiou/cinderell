@@ -106,6 +106,17 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/tv_score_withdraw_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingTop="8dp"
+        android:visibility="gone"
+        android:text="说明：赠送积分不可提现"
+        android:textColor="@color/black_title_color"
+        android:textSize="12sp" />
+
+    <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
