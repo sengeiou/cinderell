@@ -67,7 +67,7 @@ public class SearchResultActivity extends BaseActivity implements OnSureClickLis
     public void initView(Bundle savedInstanceState) {
         keyword = getIntent().getStringExtra("keyword");
         etSearch.setText(keyword);
-
+        filter_view.setShopFilterVisible(View.VISIBLE);
         if (fragmentManager == null)
             fragmentManager = getSupportFragmentManager();
         if (savedInstanceState ==null){
