@@ -87,7 +87,7 @@ public class WithDrawActivity extends BaseActivity {
             setBackTitle("积分提现");
             setRightText("提现记录");
             tv_explain.setVisibility(View.VISIBLE);
-            tv_score_withdraw_explain.setVisibility(View.VISIBLE);
+            tv_score_withdraw_explain.setVisibility(View.GONE);
         }
     }
 
