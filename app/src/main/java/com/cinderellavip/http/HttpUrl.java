@@ -29,6 +29,7 @@ public interface HttpUrl {
     String home_more_goods = "api/store/cate-products";//根据三级分类获取商品
     String search_words = "api/store/search/hot-words";//热搜词汇
     String search_goods = "api/store/search-products";//搜索商品
+    String search_store = "api/store/store/search";//搜索店铺
     String goods_detail = "api/store/product/info/";//商品详情
     String goods_comment = "api/store/product/comments";//商品评价
     String goods_coupons = "api/store/product/coupons";//商品优惠券

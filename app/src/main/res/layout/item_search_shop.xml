@@ -7,9 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="2dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:paddingLeft="12dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
         android:paddingRight="12dp"
         android:id="@+id/ll_root"
         android:gravity="center_vertical"
@@ -24,7 +24,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@mipmap/demo_product_banner"/>
+            tools:src="@mipmap/demo_product_banner"/>
 
 
 
@@ -43,7 +43,7 @@
             android:ellipsize="end"
             android:lineSpacingExtra="1dp"
             android:layout_height="wrap_content"
-            android:text="BLNMAX/邦玛仕手电专营"
+            tools:text="BLNMAX/邦玛仕手电专营"
             android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@color/black_title_color"/>

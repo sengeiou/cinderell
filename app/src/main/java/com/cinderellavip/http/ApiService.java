@@ -8,6 +8,7 @@ import com.cinderellavip.bean.ListData;
 import com.cinderellavip.bean.ListOrders;
 import com.cinderellavip.bean.OrderResult;
 import com.cinderellavip.bean.SearchListResult;
+import com.cinderellavip.bean.SearchStore;
 import com.cinderellavip.bean.ServiceType;
 import com.cinderellavip.bean.SignResult;
 import com.cinderellavip.bean.UploadImageResult;
@@ -187,6 +188,10 @@ public interface ApiService {
     @GET(HttpUrl.search_goods)
     Observable<BaseResult<SearchListResult<HomeGoods>>>
     getSearchGoods(@QueryMap TreeMap<String, String> map);
+
+     @GET(HttpUrl.search_store)
+    Observable<BaseResult<SearchListResult<SearchStore>>>
+    getSearchStore(@QueryMap TreeMap<String, String> map);
 
     @GET(HttpUrl.search_words)
     Observable<BaseResult<HotList<String>>>

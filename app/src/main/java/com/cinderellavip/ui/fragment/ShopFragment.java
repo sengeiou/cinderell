@@ -103,9 +103,13 @@ public class ShopFragment extends BaseFragment {
                     @Override
                     public void onSuccess(BaseResult<HotList<String>> result) {
                         HotList<String> data = result.data;
-                        if (data != null && TextUtils.isEmpty(data.keyword) && isAdded() && tv_hint != null){
-                            //包里测试 tv_hint 空指针
-                            tv_hint.setText(data.keyword);
+                        if (data != null && isAdded() && tv_hint != null){
+                            //monkey测试 tv_hint 空指针
+                            if (TextUtils.isEmpty(data.keyword)){
+                                tv_hint.setHint("搜索关键字");
+                            }else {
+                                tv_hint.setText(data.keyword);
+                            }
                         }
                     }
                 });
@@ -115,7 +119,8 @@ public class ShopFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_search:
-                SearchActivity.launch(mActivity,tv_hint.getText().toString());
+                String hint = tv_hint.getText().toString();
+                SearchActivity.launch(mActivity, hint);
                 break;
             case R.id.iv_category:
                 HomeCategoryListActivity.launch(mActivity);

@@ -54,8 +54,13 @@ public class HomeCategoryListActivity extends BaseActivity {
                     @Override
                     public void onSuccess(BaseResult<HotList<String>> result) {
                         HotList<String> data = result.data;
-                        if (data != null && !TextUtils.isEmpty(data.keyword))
-                        tv_hint.setHint(data.keyword);
+                        if (data != null ) {
+                            if (TextUtils.isEmpty(data.keyword)) {
+                                tv_hint.setHint("搜索关键字");
+                            } else {
+                                tv_hint.setHint(data.keyword);
+                            }
+                        }
                     }
                 });
     }
