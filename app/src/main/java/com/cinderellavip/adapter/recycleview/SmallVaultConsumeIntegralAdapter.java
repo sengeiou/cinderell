@@ -76,7 +76,7 @@ public class SmallVaultConsumeIntegralAdapter extends BaseQuickAdapter<IntegralI
                 iv_rank_image.setVisibility(View.GONE);
                 tv_rank_text.setVisibility(View.VISIBLE);
             }
-        }else if (type == 4){
+        }else if (type == 6){
             //赠送积分
             //消费积分
             tv_time.setVisibility(View.VISIBLE);

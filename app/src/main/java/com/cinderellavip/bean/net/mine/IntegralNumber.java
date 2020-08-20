@@ -11,6 +11,7 @@ public class IntegralNumber extends ListResult<IntegralItem> {
     public String invite;
     public String month_best;
     public String with_int;
+    public String give_int;
 
 
 }

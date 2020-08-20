@@ -68,7 +68,7 @@ public class SmallVaultFragment extends BaseFragment {
 
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(1));
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(2));
-        fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(4));
+        fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(6));
         fragmentList.add(SmallVaultConsumeIntegralFragment.newInstance(3));
         List<String> list = new ArrayList<>();
         list.add("消费积分");
@@ -106,7 +106,7 @@ public class SmallVaultFragment extends BaseFragment {
                         tvScoreInterest.setText(data.total);
                         mineCode.setText(data.with_int);
                         //赠送积分
-                        tvScoreGive.setText("0");
+                        tvScoreGive.setText(data.give_int);
                     }
                 });
     }
