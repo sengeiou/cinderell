@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.sobot.chat.SobotApi;
 import com.sobot.chat.ZCSobotApi;
 import com.sobot.chat.api.apiUtils.SobotBaseUrl;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 import com.tozzais.baselibrary.weight.loadmore.CustomLoadMoreView;
 import com.umeng.commonsdk.UMConfigure;
@@ -48,13 +49,7 @@ public class CinderellaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-//        LocalBroadcastManager
-
-
-
-
-
+        CrashReport.initCrashReport(getApplicationContext(), "80891e9b9a", true);
 
         SobotBaseUrl.setApi_Host("");
         ZCSobotApi.initSobotSDK(this,Constant.KEY_SERVICE,"");
