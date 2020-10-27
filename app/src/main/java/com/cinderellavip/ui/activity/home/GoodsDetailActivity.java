@@ -121,9 +121,15 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-//        LogUtil.e("Detail == initView"+(savedInstanceState != null));
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        LogUtil.e("创建了"+(savedInstanceState != null));
         if (fragmentManager == null)
             fragmentManager = getSupportFragmentManager();
+        if (savedInstanceState != null){
+            goodsDetailGoodsFragment = (GoodsDetailFragment) fragmentManager.getFragment(savedInstanceState,TAG_DETAIL);
+            graphicFragment = (GraphicFragment) fragmentManager.getFragment(savedInstanceState,TAG_GRAPHIC);
+            commentFragment = (CommentFragment) fragmentManager.getFragment(savedInstanceState,TAG_COMMENT);
+        }
         toolbar.setNavigationIcon(R.mipmap.back);
         toolbar.setNavigationOnClickListener(view -> back());
         id = getIntent().getStringExtra("id");
@@ -131,12 +137,15 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
         fragmentList = new ArrayList<>();
         list_Title = new ArrayList<>();
         //加入详情
+        if (goodsDetailGoodsFragment == null )
         goodsDetailGoodsFragment = new GoodsDetailFragment();
         fragmentList.add(goodsDetailGoodsFragment);
         //图文
+        if (graphicFragment == null )
         graphicFragment = new GraphicFragment();
         fragmentList.add(graphicFragment);
         //评价
+        if (commentFragment == null )
         commentFragment = new CommentFragment();
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
@@ -215,14 +224,14 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        goodsDetailGoodsFragment = (GoodsDetailFragment) fragmentManager.getFragment(savedInstanceState,TAG_DETAIL);
-        graphicFragment = (GraphicFragment) fragmentManager.getFragment(savedInstanceState,TAG_GRAPHIC);
-        commentFragment = (CommentFragment) fragmentManager.getFragment(savedInstanceState,TAG_COMMENT);
+        LogUtil.e("恢复了onRestoreInstanceState");
+
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        LogUtil.e("保存了");
         if (goodsDetailGoodsFragment != null && goodsDetailGoodsFragment.isAdded()){
             fragmentManager.putFragment(outState,TAG_DETAIL,goodsDetailGoodsFragment);
         }
