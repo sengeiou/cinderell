@@ -74,6 +74,9 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
         //必须使用这样 否则无法还原fragment
         if (fragmentManager == null)
             fragmentManager = getSupportFragmentManager();
+        if (savedInstanceState != null){
+            fragment = (GoodsListFragment) fragmentManager.getFragment(savedInstanceState,"TAG_DETAIL");
+        }
 
     }
     private FragmentManager fragmentManager;
@@ -86,11 +89,11 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
     @Override
     public void loadData() {
         LogUtil.e("创建了"+(fragment == null));
-        if (fragment == null)
+        if (fragment == null){
             fragment = GoodsListFragment.newInstance(third_category_id);
-        fragmentManager.beginTransaction().add(R.id.fl_container, fragment).commit();
-
-
+            //添加必须是第一次添加 每次都添加报 “Fragment already added” 一次
+            fragmentManager.beginTransaction().add(R.id.fl_container, fragment).commit();
+        }
     }
 
     @Override
@@ -123,8 +126,8 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        LogUtil.e("恢复了");
-        fragment = (GoodsListFragment) fragmentManager.getFragment(savedInstanceState,"TAG_DETAIL");
+        LogUtil.e("恢复了onRestoreInstanceState");
+
     }
 
     @Override
