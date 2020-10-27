@@ -219,7 +219,6 @@
             android:name=".ui.activity.VideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
             android:screenOrientation="portrait" />
-        />
 
         <activity
             android:name=".wxapi.WXEntryActivity"
