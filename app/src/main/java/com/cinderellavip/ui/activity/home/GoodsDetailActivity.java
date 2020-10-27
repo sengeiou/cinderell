@@ -2,6 +2,7 @@ package com.cinderellavip.ui.activity.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -120,7 +121,7 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        LogUtil.e("Detail == initView"+(savedInstanceState != null));
+//        LogUtil.e("Detail == initView"+(savedInstanceState != null));
         if (fragmentManager == null)
             fragmentManager = getSupportFragmentManager();
         toolbar.setNavigationIcon(R.mipmap.back);
@@ -129,18 +130,19 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
         fragmentList = new ArrayList<>();
         list_Title = new ArrayList<>();
+        //加入详情
         goodsDetailGoodsFragment = new GoodsDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", id);
-        goodsDetailGoodsFragment.setArguments(bundle);
         fragmentList.add(goodsDetailGoodsFragment);
+        //图文
         graphicFragment = new GraphicFragment();
         fragmentList.add(graphicFragment);
-        CommentFragment commentFragment = new CommentFragment();
-        Bundle bundle1 = new Bundle();
-        bundle1.putString("id", id);
-        commentFragment.setArguments(bundle1);
+        //评价
+        commentFragment = new CommentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        commentFragment.setArguments(bundle);
         fragmentList.add(commentFragment);
+
         list_Title.add("商品");
         list_Title.add("详情");
         list_Title.add("评价");
@@ -156,9 +158,11 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
 
     private static final String TAG_DETAIL = "tag_detail";
     private static final String TAG_GRAPHIC = "tag_graphic";
+    private static final String TAG_COMMENT = "tag_comment";
     private FragmentManager fragmentManager;
     private GoodsDetailFragment goodsDetailGoodsFragment;
     private GraphicFragment graphicFragment;
+    private CommentFragment commentFragment;
 
 
     @Override
@@ -211,23 +215,23 @@ public class GoodsDetailActivity extends CheckPermissionActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        LogUtil.e("onRestoreInstanceState"+(savedInstanceState != null));
-        if (savedInstanceState != null){
-            goodsDetailGoodsFragment = (GoodsDetailFragment) fragmentManager.getFragment(savedInstanceState,TAG_DETAIL);
-            graphicFragment = (GraphicFragment) fragmentManager.getFragment(savedInstanceState,TAG_GRAPHIC);
-        }
+        goodsDetailGoodsFragment = (GoodsDetailFragment) fragmentManager.getFragment(savedInstanceState,TAG_DETAIL);
+        graphicFragment = (GraphicFragment) fragmentManager.getFragment(savedInstanceState,TAG_GRAPHIC);
+        commentFragment = (CommentFragment) fragmentManager.getFragment(savedInstanceState,TAG_COMMENT);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-        LogUtil.e("onSaveInstanceState"+(goodsDetailGoodsFragment != null )+(goodsDetailGoodsFragment.isAdded()));
-//        if (goodsDetailGoodsFragment != null && goodsDetailGoodsFragment.isAdded()){
-//            fragmentManager.putFragment(outState,TAG_DETAIL,goodsDetailGoodsFragment);
-//        }
-//        if (graphicFragment != null && goodsDetailGoodsFragment.isAdded()){
-//            fragmentManager.putFragment(outState,TAG_GRAPHIC,graphicFragment);
-//        }
+        super.onSaveInstanceState(outState);
+        if (goodsDetailGoodsFragment != null && goodsDetailGoodsFragment.isAdded()){
+            fragmentManager.putFragment(outState,TAG_DETAIL,goodsDetailGoodsFragment);
+        }
+        if (graphicFragment != null && goodsDetailGoodsFragment.isAdded()){
+            fragmentManager.putFragment(outState,TAG_GRAPHIC,graphicFragment);
+        }
+        if (commentFragment != null && commentFragment.isAdded()){
+            fragmentManager.putFragment(outState,TAG_COMMENT,commentFragment);
+        }
 
 
     }

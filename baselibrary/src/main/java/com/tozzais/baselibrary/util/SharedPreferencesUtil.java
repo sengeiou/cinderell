@@ -1,5 +1,6 @@
 package com.tozzais.baselibrary.util;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -13,7 +14,7 @@ public class SharedPreferencesUtil {
 		if (sharedPreferences == null) {
 			sharedPreferences = context.getSharedPreferences(CONFIG, Context.MODE_PRIVATE);
 		}
-		sharedPreferences.edit().putString(key, value).commit();
+		sharedPreferences.edit().putString(key, value).apply();
 	}
 
 	// 写入
@@ -21,7 +22,7 @@ public class SharedPreferencesUtil {
 		if (sharedPreferences == null) {
 			sharedPreferences = context.getSharedPreferences(CONFIG, Context.MODE_PRIVATE);
 		}
-		sharedPreferences.edit().putInt(key, value).commit();
+		sharedPreferences.edit().putInt(key, value).apply();
 	}
 
 	// 写入
@@ -29,7 +30,7 @@ public class SharedPreferencesUtil {
 		if (sharedPreferences == null) {
 			sharedPreferences = context.getSharedPreferences(CONFIG, Context.MODE_PRIVATE);
 		}
-		sharedPreferences.edit().putBoolean(key, value).commit();
+		sharedPreferences.edit().putBoolean(key, value).apply();
 	}
 
 	// 读出

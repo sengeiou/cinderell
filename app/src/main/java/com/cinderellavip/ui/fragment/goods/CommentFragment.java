@@ -36,9 +36,10 @@ public class CommentFragment extends BaseListFragment<GoodsCommentItem> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        id = getArguments().getString("id");
+        Bundle bundle = getArguments();
+        assert bundle != null;
+        id = bundle.getString("id");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-//        mRecyclerView.addItemDecoration(new LineItemDecoration(2, R.color.line));
         mAdapter = new CommentAdapter(true);
         mRecyclerView.setAdapter(mAdapter);
         setEmptyView("暂无评价");

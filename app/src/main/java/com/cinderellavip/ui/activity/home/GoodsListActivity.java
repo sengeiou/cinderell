@@ -6,12 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+
 import com.cinderellavip.R;
 import com.cinderellavip.listener.OnSureClickListener;
+import com.cinderellavip.ui.fragment.goods.CommentFragment;
+import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
+import com.cinderellavip.ui.fragment.goods.GraphicFragment;
 import com.cinderellavip.ui.fragment.home.GoodsListFragment;
 import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.FilterView;
 import com.tozzais.baselibrary.ui.BaseActivity;
+import com.tozzais.baselibrary.util.log.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,9 +52,10 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
         }
         Intent intent = new Intent(from, GoodsListActivity.class);
         intent.putExtra("name", name);
-        intent.putExtra("third_category_id",third_category_id);
+        intent.putExtra("id",third_category_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         from.startActivity(intent);
+
     }
 
 
@@ -61,10 +69,14 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
     @Override
     public void initView(Bundle savedInstanceState) {
         name = getIntent().getStringExtra("name");
-        third_category_id = getIntent().getIntExtra("third_category_id",0);
+        third_category_id = getIntent().getIntExtra("id",0);
         tv_title_name.setText(name);
+        //必须使用这样 否则无法还原fragment
+        if (fragmentManager == null)
+            fragmentManager = getSupportFragmentManager();
 
     }
+    private FragmentManager fragmentManager;
 
     @Override
     protected int getToolbarLayout() {
@@ -73,10 +85,10 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
 
     @Override
     public void loadData() {
-
-        fragment = GoodsListFragment.newInstance(third_category_id);
-
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, fragment).commit();
+        LogUtil.e("创建了"+(fragment == null));
+        if (fragment == null)
+            fragment = GoodsListFragment.newInstance(third_category_id);
+        fragmentManager.beginTransaction().add(R.id.fl_container, fragment).commit();
 
 
     }
@@ -106,6 +118,22 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
     @Override
     public void onSure() {
         fragment.setSortAndArea(filter_view.getSort()+"",filter_view.getSort_type()+"");
+
+    }
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        LogUtil.e("恢复了");
+        fragment = (GoodsListFragment) fragmentManager.getFragment(savedInstanceState,"TAG_DETAIL");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (fragment != null && fragment.isAdded()){
+            LogUtil.e("保存了");
+            fragmentManager.putFragment(outState,"TAG_DETAIL",fragment);
+        }
 
     }
 }
