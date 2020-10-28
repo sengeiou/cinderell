@@ -6,14 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
 import com.cinderellavip.R;
 import com.cinderellavip.listener.OnSureClickListener;
-import com.cinderellavip.ui.fragment.goods.CommentFragment;
-import com.cinderellavip.ui.fragment.goods.GoodsDetailFragment;
-import com.cinderellavip.ui.fragment.goods.GraphicFragment;
 import com.cinderellavip.ui.fragment.home.GoodsListFragment;
 import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.FilterView;
@@ -68,8 +64,9 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        name = getIntent().getStringExtra("name");
-        third_category_id = getIntent().getIntExtra("id",0);
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        third_category_id = intent.getIntExtra("id",0);
         tv_title_name.setText(name);
         //必须使用这样 否则无法还原fragment
         if (fragmentManager == null)
@@ -121,12 +118,6 @@ public class GoodsListActivity extends BaseActivity implements OnSureClickListen
     @Override
     public void onSure() {
         fragment.setSortAndArea(filter_view.getSort()+"",filter_view.getSort_type()+"");
-
-    }
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        LogUtil.e("恢复了onRestoreInstanceState");
 
     }
 
