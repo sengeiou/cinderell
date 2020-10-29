@@ -33,6 +33,7 @@ import com.cinderellavip.weight.GirdSpace;
 import com.cinderellavip.weight.HomeTabLayout;
 import com.cinderellavip.weight.HorSpace;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.gson.Gson;
 import com.lishide.recyclerview.scroll.ScrollRecyclerView;
 import com.stx.xhb.xbanner.XBanner;
 import com.tozzais.baselibrary.http.RxHttp;
@@ -97,9 +98,9 @@ public class ShopMainGoodsFragment extends LazyListFragment<HomeGoods> {
 
     public static ShopMainGoodsFragment newInstance(HomeCategoryItem homeCategoryItem){
         ShopMainGoodsFragment cartFragment = new ShopMainGoodsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("homeCategoryItem",homeCategoryItem);
-        cartFragment.setArguments(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("homeCategoryItem",new Gson().toJson(homeCategoryItem));
+//        cartFragment.setArguments(bundle);
         return cartFragment;
 
     }

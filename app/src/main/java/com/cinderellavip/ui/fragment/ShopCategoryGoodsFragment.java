@@ -13,6 +13,7 @@ import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.home.Ad;
 import com.cinderellavip.bean.net.home.HomeGoodsResult;
 import com.cinderellavip.bean.net.home.ShopHomeResult;
+import com.cinderellavip.bean.net.order.CreateOrderBean;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -22,6 +23,7 @@ import com.cinderellavip.util.banner.LinkUtil;
 import com.cinderellavip.weight.GirdSpace;
 import com.cinderellavip.weight.HomeTabLayout;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.gson.Gson;
 import com.stx.xhb.xbanner.XBanner;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.LazyListFragment;
@@ -68,7 +70,7 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
     public static ShopCategoryGoodsFragment newInstance(HomeCategoryItem homeCategoryItem){
         ShopCategoryGoodsFragment cartFragment = new ShopCategoryGoodsFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("homeCategoryItem",homeCategoryItem);
+        bundle.putString("homeCategoryItem",new Gson().toJson(homeCategoryItem));
         cartFragment.setArguments(bundle);
         return cartFragment;
 
@@ -81,7 +83,9 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        homeCategoryItem = getArguments().getParcelable("homeCategoryItem");
+        assert getArguments() != null;
+        String string = getArguments().getString("homeCategoryItem");
+        this.homeCategoryItem = new Gson().fromJson(string, HomeCategoryItem.class);
         //设置商品
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 2));
         GirdSpace girdSpace = new GirdSpace(DpUtil.dip2px(mActivity, 10), 2);
@@ -91,7 +95,7 @@ public class ShopCategoryGoodsFragment extends LazyListFragment<HomeGoods> {
 
         scrollRecyclerView.setItemAnimator(new DefaultItemAnimator());
         scrollRecyclerView.setLayoutManager(new GridLayoutManager(mActivity,5));
-        homeCategoryAdapter = new HomeCategoryAdapter(homeCategoryItem);
+        homeCategoryAdapter = new HomeCategoryAdapter(this.homeCategoryItem);
         scrollRecyclerView.setAdapter(homeCategoryAdapter);
 
         List<String> data1 = new ArrayList<>();

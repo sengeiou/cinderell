@@ -11,10 +11,12 @@ import com.cinderellavip.adapter.recycleview.SeleteCoupondapter;
 import com.cinderellavip.bean.ListCoupons;
 import com.cinderellavip.bean.local.CouponsBean;
 import com.cinderellavip.bean.local.SelectCouponsBean;
+import com.cinderellavip.bean.net.HomeCategoryItem;
 import com.cinderellavip.bean.net.order.RequestSelectCoupons;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListFragment;
 
@@ -32,7 +34,7 @@ public class SelectCouponFragment extends BaseListFragment<SelectCouponsBean> {
     public static SelectCouponFragment newInstance(RequestSelectCoupons requestSelectCoupons ) {
         SelectCouponFragment cartFragment = new SelectCouponFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("requestSelectCoupons",requestSelectCoupons);
+        bundle.putString("requestSelectCoupons",new Gson().toJson(requestSelectCoupons));
         cartFragment.setArguments(bundle);
         return cartFragment;
 
@@ -50,7 +52,9 @@ public class SelectCouponFragment extends BaseListFragment<SelectCouponsBean> {
         super.initView(savedInstanceState);
 
         assert getArguments() != null;
-        requestSelectCoupons = getArguments().getParcelable("requestSelectCoupons");
+        String string = getArguments().getString("requestSelectCoupons");
+        requestSelectCoupons = new Gson().fromJson(string, RequestSelectCoupons.class);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mAdapter = new SeleteCoupondapter();
         mRecyclerView.setAdapter(mAdapter);
