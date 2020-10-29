@@ -23,6 +23,7 @@ import com.cinderellavip.bean.local.PublishImageBean;
 import com.cinderellavip.bean.net.PhoneResult;
 import com.cinderellavip.bean.net.mine.MessageItem;
 import com.cinderellavip.bean.net.order.OrderGoodsInfo;
+import com.cinderellavip.bean.net.order.RequestSelectCoupons;
 import com.cinderellavip.global.Constant;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
@@ -39,6 +40,7 @@ import com.cinderellavip.util.PartMapUtils;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.GirdSpaceRight;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
@@ -103,7 +105,7 @@ public class ApplyReturnActivity extends CheckPermissionActivity  implements OnP
             return;
         }
         Intent intent = new Intent(activity, ApplyReturnActivity.class);
-        intent.putExtra("orderGoodsInfo", orderGoodsInfo);
+        intent.putExtra("orderGoodsInfo", new Gson().toJson(orderGoodsInfo));
         activity.startActivity(intent);
     }
 
@@ -126,8 +128,10 @@ public class ApplyReturnActivity extends CheckPermissionActivity  implements OnP
         PhoneResult phoneBean = GlobalParam.getPhoneBean();
         if(phoneBean != null)
             tv_phone.setText(phoneBean.products_tel_phone);
+        //还原数据
+        String para = getIntent().getStringExtra("orderGoodsInfo");
+        orderGoodsInfo = new Gson().fromJson(para, OrderGoodsInfo.class);
 
-        orderGoodsInfo = getIntent().getParcelableExtra("orderGoodsInfo");
         LogUtil.e("orderGoodsInfo+"+orderGoodsInfo.order_id);
         setBackTitle("申请退款");
 

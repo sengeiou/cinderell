@@ -14,6 +14,7 @@ import com.cinderellavip.bean.eventbus.OrderPaySuccess;
 import com.cinderellavip.bean.eventbus.ReceiveOrder;
 import com.cinderellavip.bean.local.HomeGoods;
 import com.cinderellavip.bean.net.order.CreateOrderBean;
+import com.cinderellavip.bean.net.order.OrderGoodsInfo;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.ListResult;
@@ -23,6 +24,7 @@ import com.cinderellavip.ui.activity.mine.MineOrderActivity;
 import com.cinderellavip.ui.fragment.mine.OrderFragment;
 import com.cinderellavip.util.Utils;
 import com.cinderellavip.weight.GirdSpace;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseListActivity;
 import com.tozzais.baselibrary.util.DpUtil;
@@ -54,7 +56,7 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
         }
         EventBus.getDefault().post(new OrderPaySuccess());
         Intent intent = new Intent(activity, PayResultActivity.class);
-        intent.putExtra("createOrderBean", createOrderBean);
+        intent.putExtra("createOrderBean", new Gson().toJson(createOrderBean));
         intent.putExtra("success", success);
         activity.startActivity(intent);
         activity.finish();
@@ -70,8 +72,9 @@ public class PayResultActivity extends BaseListActivity implements View.OnClickL
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         setBackTitle("支付结果");
-        createOrderBean = getIntent().getParcelableExtra("createOrderBean");
-        success = getIntent().getBooleanExtra("success",false);
+        Intent intent = getIntent();
+        createOrderBean = new Gson().fromJson(intent.getStringExtra("createOrderBean"), CreateOrderBean.class);
+        success = intent.getBooleanExtra("success",false);
 
 
 

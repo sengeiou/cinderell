@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cinderellavip.R;
 import com.cinderellavip.bean.eventbus.AddAddress;
+import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.http.ApiManager;
 import com.cinderellavip.http.BaseResult;
@@ -19,6 +20,7 @@ import com.cinderellavip.toast.CenterDialogUtil;
 import com.cinderellavip.util.PhotoUtils;
 import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.address.LocalCityUtil3s;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.CheckPermissionActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
@@ -67,7 +69,7 @@ public class EditAddressActivity extends CheckPermissionActivity {
         }
         Intent intent = new Intent(activity, EditAddressActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("item", item);
+        intent.putExtra("item", new Gson().toJson(item));
         activity.startActivityForResult(intent, REQUESTCODE);
     }
 
@@ -80,7 +82,8 @@ public class EditAddressActivity extends CheckPermissionActivity {
             setBackTitle("新增收货地址");
         } else {
             tvSava.setText("保存");
-            item = getIntent().getParcelableExtra("item");
+            String para = getIntent().getStringExtra("item");
+            item = new Gson().fromJson(para, NetCityBean.class);
             setBackTitle("修改收货地址");
             setRightText("删除");
             setData();

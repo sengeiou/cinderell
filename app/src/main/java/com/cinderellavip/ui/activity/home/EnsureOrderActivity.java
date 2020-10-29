@@ -96,7 +96,8 @@ public class EnsureOrderActivity extends BaseActivity {
             return;
         }
         Intent intent = new Intent(activity, EnsureOrderActivity.class);
-        intent.putExtra("requestSettlePara", requestSettlePara);
+        String json = new Gson().toJson(requestSettlePara);
+        intent.putExtra("requestSettlePara", json);
         activity.startActivity(intent);
     }
 
@@ -111,7 +112,10 @@ public class EnsureOrderActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         setBackTitle("确认订单");
-        requestSettlePara = getIntent().getParcelableExtra("requestSettlePara");
+        Intent intent = getIntent();
+        String para = intent.getStringExtra("requestSettlePara");
+        this.requestSettlePara = new Gson().fromJson(para, RequestSettlePara.class);
+
         rv_goods.setLayoutManager(new LinearLayoutManager(mActivity));
         ensureOrderAdapter = new EnsureOrderAdapter();
         rv_goods.setAdapter(ensureOrderAdapter);

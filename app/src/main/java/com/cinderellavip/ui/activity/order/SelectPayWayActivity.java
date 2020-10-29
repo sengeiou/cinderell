@@ -17,6 +17,7 @@ import com.cinderellavip.http.Response;
 import com.cinderellavip.util.Utils;
 import com.cinderellavip.util.pay.PayResultEvent;
 import com.cinderellavip.util.pay.PayUtil;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
@@ -56,7 +57,7 @@ public class SelectPayWayActivity extends BaseActivity {
             return;
         }
         Intent intent = new Intent(activity, SelectPayWayActivity.class);
-        intent.putExtra("createOrderBean", createOrderBean);
+        intent.putExtra("createOrderBean",  new Gson().toJson(createOrderBean));
         activity.startActivity(intent);
     }
 
@@ -79,7 +80,7 @@ public class SelectPayWayActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         setBackTitle("支付方式");
         llPayBalance.setVisibility(View.VISIBLE);
-        createOrderBean = getIntent().getParcelableExtra("createOrderBean");
+        createOrderBean = new Gson().fromJson(getIntent().getStringExtra("createOrderBean"), CreateOrderBean.class);
 
 //        payMoney = getIntent().getStringExtra("payMoney");
 //        order_id = getIntent().getIntExtra("order_id", 0);

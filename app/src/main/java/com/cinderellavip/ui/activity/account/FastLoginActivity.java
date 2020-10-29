@@ -16,6 +16,7 @@ import com.cinderellavip.bean.BindLogin;
 import com.cinderellavip.bean.eventbus.LoginFinishSuccess;
 import com.cinderellavip.bean.eventbus.LoginSuccess;
 import com.cinderellavip.bean.eventbus.UpdateMineInfo;
+import com.cinderellavip.bean.local.RequestSettlePara;
 import com.cinderellavip.bean.net.UserInfo;
 import com.cinderellavip.global.GlobalParam;
 import com.cinderellavip.http.ApiManager;
@@ -23,6 +24,7 @@ import com.cinderellavip.http.BaseResult;
 import com.cinderellavip.http.Response;
 import com.cinderellavip.util.KeyboardUtils;
 import com.cinderellavip.util.Utils;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.http.RxHttp;
 import com.tozzais.baselibrary.ui.BaseActivity;
 import com.tozzais.baselibrary.util.CommonUtils;
@@ -84,7 +86,9 @@ public class FastLoginActivity extends BaseActivity {
         }
         Intent intent = new Intent(activity, FastLoginActivity.class);
         intent.putExtra("type", BIND_PHONE);
-        intent.putExtra("bindLogin",bindLogin);
+        String json = new Gson().toJson(bindLogin);
+        intent.putExtra("bindLogin", json);
+//        intent.putExtra("bindLogin",bindLogin);
         activity.startActivityForResult(intent, 100);
     }
 
@@ -294,7 +298,9 @@ public class FastLoginActivity extends BaseActivity {
      * @param sms_code
      */
     private void bind(String mobile,String sms_code,String new_password){
-        BindLogin bindLogin = (BindLogin) getIntent().getSerializableExtra("bindLogin");
+        String para = getIntent().getStringExtra("bindLogin");
+        BindLogin bindLogin = new Gson().fromJson(para, BindLogin.class);
+
         TreeMap<String, String> hashMap = new TreeMap<>();
         hashMap.put("unionid", bindLogin.unionid);
         hashMap.put("nickname", bindLogin.nickname);

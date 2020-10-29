@@ -1,5 +1,6 @@
 package com.cinderellavip.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,10 +71,12 @@ public class WebViewActivity extends BaseActivity {
 
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void loadData() {
-        url = getIntent().getStringExtra("url");
-        status = getIntent().getIntExtra("status", 1);
+        Intent intent = getIntent();
+        url = intent.getStringExtra("url");
+        status = intent.getIntExtra("status", 1);
 
 
         WebSettings webSettings = web_view.getSettings();

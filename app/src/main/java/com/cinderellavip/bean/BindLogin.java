@@ -1,9 +1,6 @@
 package com.cinderellavip.bean;
 
 
-
-import android.app.Instrumentation;
-
 import java.io.Serializable;
 
 public class BindLogin implements Serializable {

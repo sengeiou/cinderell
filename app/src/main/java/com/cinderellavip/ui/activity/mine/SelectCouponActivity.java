@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cinderellavip.R;
+import com.cinderellavip.bean.net.NetCityBean;
 import com.cinderellavip.bean.net.order.RequestSelectCoupons;
 import com.cinderellavip.ui.fragment.mine.SelectCouponFragment;
 import com.cinderellavip.util.Utils;
+import com.google.gson.Gson;
 import com.tozzais.baselibrary.ui.BaseActivity;
 
 
@@ -19,7 +21,7 @@ public class SelectCouponActivity extends BaseActivity {
             return;
         }
         Intent intent = new Intent(activity, SelectCouponActivity.class);
-        intent.putExtra("requestSelectCoupons",requestSelectCoupons);
+        intent.putExtra("requestSelectCoupons",new Gson().toJson(requestSelectCoupons));
         activity.startActivityForResult(intent,11);
     }
 
@@ -36,7 +38,8 @@ public class SelectCouponActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        RequestSelectCoupons requestSelectCoupons = getIntent().getParcelableExtra("requestSelectCoupons");
+        String para = getIntent().getStringExtra("requestSelectCoupons");
+        RequestSelectCoupons requestSelectCoupons = new Gson().fromJson(para, RequestSelectCoupons.class);
         SelectCouponFragment fragment = SelectCouponFragment.newInstance(requestSelectCoupons);
         getSupportFragmentManager().beginTransaction().add(R.id.content_container, fragment).commit();
 
