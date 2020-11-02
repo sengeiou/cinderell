@@ -6,13 +6,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.cinderellavip.R;
-import com.cinderellavip.bean.local.GoodsDetialBanner;
 import com.cinderellavip.global.ImageUtil;
 import com.cinderellavip.ui.BigImageActivity;
-import com.cinderellavip.ui.BigImageActivity1;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ImagePostAdapter extends BaseQuickAdapter<String, BaseViewHolder> implements LoadMoreModule {

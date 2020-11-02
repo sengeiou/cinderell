@@ -94,7 +94,7 @@
             android:windowSoftInputMode="stateVisible|adjustResize"
             />
         <activity android:name=".ui.BigImageActivity"/>
-        <activity android:name=".ui.BigImageActivity1"/>
+<!--        <activity android:name=".ui.BigImageActivity1"/>-->
         <activity android:name=".ui.activity.order.CartActivity"/>
         <activity android:name=".ui.activity.home.ShareActivity"/>
         <activity android:name=".ui.activity.home.HomeCategoryListActivity"/>
