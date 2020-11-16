@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.cinderellavip.R;
 import com.cinderellavip.global.ImageUtil;
-import com.cinderellavip.weight.scaleimage.PhotoView;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +63,7 @@ public class BigImageAdapter extends PagerAdapter {
             ImageUtil.loadLocal(mContext,photoView,mList[position]);
         }
 
-        photoView.setClickListener(()->{
-            ((Activity)mContext).finish();
-        });
+        photoView.setOnClickListener(v ->  ((Activity)mContext).finish());
         container.addView(view);
         return view;
     }

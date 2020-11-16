@@ -1,17 +1,25 @@
 package com.cinderellavip.util;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
+import com.cinderellavip.global.CinderellaApplication;
+import com.tozzais.baselibrary.util.log.LogUtil;
 import com.tozzais.baselibrary.util.toast.ToastCommom;
 
 import java.io.BufferedOutputStream;
@@ -31,6 +39,7 @@ public class DonwloadSaveImg {
     private static ProgressDialog mSaveDialog = null;
 
     public static void donwloadImg(Context contexts, String filePaths) {
+        LogUtil.e("地址:"+filePaths);
         context = contexts;
         filePath = filePaths;
         mSaveDialog = ProgressDialog.show(context, "保存图片", "图片正在保存中，请稍等...", true);
@@ -75,21 +84,67 @@ public class DonwloadSaveImg {
      * @throws IOException
      */
     public static void saveFile(Bitmap bm ) throws IOException {
-        File dirFile = new File(Environment.getExternalStorageDirectory().getPath());
-        if (!dirFile.exists()) {
-            dirFile.mkdir();
-        }
+        /**
+         *  android 10.0 getExternalStorageDirectory 方法不推荐使用了
+         */
+//       context.getExternalFilesDir()
+//        File dirFile = new File(Environment.getExternalStorageDirectory().getPath());
+//        if (!dirFile.exists()) {
+//            dirFile.mkdir();
+//        }
         String fileName = UUID.randomUUID().toString() + ".jpg";
-        File myCaptureFile = new File(Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/" + fileName);
+        String path = "";
+        File myCaptureFile;
+        if (Build.VERSION.SDK_INT>=29){
+            path = ContextCompat.getExternalFilesDirs(context, null)[0].getAbsolutePath();
+            myCaptureFile = new File(path + "/" + fileName);
+        }else {
+            path = Environment.getExternalStorageDirectory().getPath();
+            myCaptureFile = new File(path + "/DCIM/Camera/" + fileName);
+        }
+        //open failed: ENOENT (No such file or directory)
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
         bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
         bos.flush();
         bos.close();
         //把图片保存后声明这个广播事件通知系统相册有新图片到来
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri uri = Uri.fromFile(myCaptureFile);
+        Uri uri ;
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            uri = getImageContentUri(context, myCaptureFile);
+        } else {
+            uri = Uri.fromFile(myCaptureFile);
+        }
+
         intent.setData(uri);
         context.sendBroadcast(intent);
+    }
+
+    //解决7.0以上生成uri 无法通过系统分享微信和无法刷新相册的bug
+    public static Uri getImageContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
+                new String[] { filePath }, null);
+        Uri uri = null;
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+                Uri baseUri = Uri.parse("content://media/external/images/media");
+                uri = Uri.withAppendedPath(baseUri, "" + id);
+            }
+            cursor.close();
+        }
+
+        if (uri == null) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATA, filePath);
+            uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        }
+
+        return uri;
     }
 
 }

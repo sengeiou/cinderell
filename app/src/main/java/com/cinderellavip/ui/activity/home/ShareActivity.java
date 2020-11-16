@@ -334,7 +334,6 @@ public class ShareActivity extends BaseActivity {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri uri;
         if (Build.VERSION.SDK_INT >= 24) {
-//            uri = FileProvider.getUriForFile(this,"com.cinderellavip.provider", myCaptureFile);
             uri = getImageContentUri(this, myCaptureFile);
         } else {
             uri = Uri.fromFile(myCaptureFile);
