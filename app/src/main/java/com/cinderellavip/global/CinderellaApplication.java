@@ -1,10 +1,13 @@
 package com.cinderellavip.global;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.DisplayMetrics;
+import android.webkit.WebView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -81,7 +84,35 @@ public class CinderellaApplication extends Application {
 
         initUpdate();
 
+        initWebView();
 
+
+    }
+
+    public  String getProcessName(Context context) {
+        if (context == null) return null;
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
+            if (processInfo.pid == android.os.Process.myPid()) {
+                return processInfo.processName;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * java.lang.RuntimeException:
+     * Using WebView from more than one process at once with the same data directory is not supported
+     *
+     * 异常出现情景:因为Android P行为变更，不可多进程使用同一个目录webView，需要为不同进程webView设置不同目录
+     */
+    private void initWebView() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            String processName = getProcessName(mContext);
+            if (!"com.cinderellavip".equals(processName)){//判断不等于默认进程名称
+                WebView.setDataDirectorySuffix(processName);}
+        }
     }
 
     private void initUpdate() {
