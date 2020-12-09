@@ -101,6 +101,7 @@ public abstract class BaseFragment<T> extends DialogFragment {
     }
 
     protected void tsg(String str){
+        if (isAdded())
         ToastCommom.createToastConfig().ToastShow(getContext(),str);
     }
 

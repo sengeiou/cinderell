@@ -10,7 +10,7 @@ android {
 
 dependencies {
      api fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly 'com.squareup.okhttp3:okhttp:3.12.0'
+    compileOnly 'com.squareup.okhttp3:okhttp:4.4.1'
     api 'com.android.support:support-v4:28.0.0'
     compileOnly 'com.android.support:recyclerview-v7:28.0.0'
     compileOnly 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'

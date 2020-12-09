@@ -55,8 +55,8 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.6.1'
     api 'io.reactivex:rxandroid:1.2.1'
     api 'io.reactivex:rxjava:1.2.9'
-    api 'com.squareup.okhttp3:okhttp:4.0.1'
-    api 'com.squareup.okhttp3:logging-interceptor:4.0.1'
+    api 'com.squareup.okhttp3:okhttp:4.4.1'
+    api 'com.squareup.okhttp3:logging-interceptor:4.4.1'
     //购物车数量组件
     api 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     //下拉刷新

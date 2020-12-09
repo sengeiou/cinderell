@@ -33,16 +33,16 @@ public class ToastCommom {
     }
 
     public void ToastShow(Context context, String tvString) {
+        //bugly上的错误
+        if (context == null) return;
         View layout = LayoutInflater.from(context).inflate(R.layout.base_toast_dialog, null);
         TextView text = layout.findViewById(R.id.toast_des);
         text.setText(tvString);
-        if (toast == null){
-            toast = new Toast(context.getApplicationContext());
-        }else {
+        if (toast != null) {
             //解决连续点击不显示bug
             toast.cancel();
-            toast = new Toast(context.getApplicationContext());
         }
+        toast = new Toast(context.getApplicationContext());
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
