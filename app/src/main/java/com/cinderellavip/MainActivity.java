@@ -75,7 +75,6 @@ public class MainActivity extends CheckPermissionActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
-
     @BindView(R.id.iv_shop)
     ImageView ivShop;
     @BindView(R.id.tv_shop)

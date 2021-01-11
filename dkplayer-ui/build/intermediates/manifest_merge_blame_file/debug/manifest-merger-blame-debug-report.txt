@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->D:\android\project\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
+6-->D:\android\hanyuProject\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="29" />
-7-->D:\android\project\hanyu\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
+7-->D:\android\hanyuProject\cinderell\dkplayer-ui\src\main\AndroidManifest.xml
 8
 9</manifest>
