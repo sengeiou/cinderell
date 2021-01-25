@@ -164,43 +164,11 @@ public class LoginActivity extends BaseActivity implements UMAuthListener {
                 UMShareAPI.get(mContext).getPlatformInfo(mActivity, SHARE_MEDIA.WEIXIN, this);
                 break;
             case R.id.tv_aLiPay_login:
-                boolean rsa2 = (RSA2PrivateKey.length() > 0);
-                Map<String, String> authInfoMap = OrderInfoUtil2_0.buildAuthInfoMap(PID, APPID, TARGET_ID, rsa2);
-                String info = OrderInfoUtil2_0.buildOrderParam(authInfoMap);
-                String privateKey = rsa2 ? RSA2PrivateKey : RSA2PrivateKey;
-                String sign = OrderInfoUtil2_0.getSign(authInfoMap, privateKey, rsa2);
-                final String authInfo = info + "&" + sign;
-                AliUtil.login(mActivity, authInfo, new AliUtil.Back() {
-                    @Override
-                    public void success(String result) {
-//                        2088022241563498
-                        //success=true&result_code=200&app_id=2021001152637888&auth_code=1046f4e0ae8e487f907e43c8fdcfVX49&scope=kuaijie&alipay_open_id=20880083545185129361052871719249&user_id=2088022241563498&target_id=1587824101
-                        String[] split = result.split("&");
-                        String id = "";
-                        for (String s:split){
-                            if (s.contains("alipay_open_id=")){
-                                id = s.replace("alipay_open_id=","");
-                                break;
-                            }
-                        }
-                        BindLogin bindLogin = new BindLogin();
-                        bindLogin.unionid = id;
-                        bindLogin.nickname = "";
-                        bindLogin.sex = "";
-                        bindLogin.avatar = "";
-                        runOnUiThread(() -> {
-                            isBind(bindLogin,"3");
-                            LogUtil.e(bindLogin.toString());
-                        });
-
-                    }
-
-                    @Override
-                    public void failed() {
-                        LogUtil.e("授权失败");
-                    }
-                });
-//                UMShareAPI.get(mContext).getPlatformInfo(mActivity, SHARE_MEDIA.ALIPAY, this);
+                try {
+                    aliLogin();
+                }catch (Exception e){
+                    tsg(e.getMessage());
+                }
                 break;
         }
     }
@@ -211,6 +179,41 @@ public class LoginActivity extends BaseActivity implements UMAuthListener {
         if (o instanceof LoginFinishSuccess){
             finish();
         }
+    }
+
+    private void aliLogin(){
+        boolean rsa2 = (RSA2PrivateKey.length() > 0);
+        Map<String, String> authInfoMap = OrderInfoUtil2_0.buildAuthInfoMap(PID, APPID, TARGET_ID, rsa2);
+        String info = OrderInfoUtil2_0.buildOrderParam(authInfoMap);
+        String privateKey = rsa2 ? RSA2PrivateKey : RSA2PrivateKey;
+        String sign = OrderInfoUtil2_0.getSign(authInfoMap, privateKey, rsa2);
+        final String authInfo = info + "&" + sign;
+        AliUtil.login(mActivity, authInfo, new AliUtil.Back() {
+            @Override
+            public void success(String result) {
+                String[] split = result.split("&");
+                String id = "";
+                for (String s:split){
+                    if (s.contains("alipay_open_id=")){
+                        id = s.replace("alipay_open_id=","");
+                        break;
+                    }
+                }
+                BindLogin bindLogin = new BindLogin();
+                bindLogin.unionid = id;
+                bindLogin.nickname = "";
+                bindLogin.sex = "";
+                bindLogin.avatar = "";
+                runOnUiThread(() -> {
+                    isBind(bindLogin,"3");
+                    LogUtil.e(bindLogin.toString());
+                });
+            }
+            @Override
+            public void failed() {
+                LogUtil.e("授权失败");
+            }
+        });
     }
 
     @Override
