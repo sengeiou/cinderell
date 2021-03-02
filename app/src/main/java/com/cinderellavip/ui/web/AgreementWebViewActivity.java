@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cinderellavip.AppJs;
 import com.cinderellavip.R;
@@ -20,7 +19,6 @@ import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tozzais.baselibrary.ui.BaseActivity;
-import com.tozzais.baselibrary.util.log.LogUtil;
 import com.ycbjie.webviewlib.X5WebView;
 
 import butterknife.BindView;
@@ -129,14 +127,14 @@ public class AgreementWebViewActivity extends BaseActivity {
 
         @Override
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, FileChooserParams fileChooserParams) {
-            uploadMessageAboveL = valueCallback;
+            AgreementWebViewActivity.this.valueCallback = valueCallback;
             selectImage();
             return true;
         }
     }
     //全局声明，用于记录选择图片返回的地址值
     private ValueCallback<Uri> uploadMessage;
-    private ValueCallback<Uri[]> uploadMessageAboveL;
+    private ValueCallback<Uri[]> valueCallback;
     private void selectImage() {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -187,9 +185,9 @@ public class AgreementWebViewActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 15) {
-            if (null == uploadMessage && null == uploadMessageAboveL) return;
+            if (null == uploadMessage && null == valueCallback) return;
             Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
-            if (uploadMessageAboveL != null) {
+            if (valueCallback != null) {
                 onActivityResultAboveL(requestCode, resultCode, data);
             } else if (uploadMessage != null) {
                 uploadMessage.onReceiveValue(result);
@@ -200,7 +198,7 @@ public class AgreementWebViewActivity extends BaseActivity {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void onActivityResultAboveL(int requestCode, int resultCode, Intent intent) {
-        if (requestCode != 15 || uploadMessageAboveL == null)
+        if (requestCode != 15 || valueCallback == null)
             return;
         Uri[] results = null;
         if (resultCode == Activity.RESULT_OK) {
@@ -218,7 +216,7 @@ public class AgreementWebViewActivity extends BaseActivity {
                     results = new Uri[]{Uri.parse(dataString)};
             }
         }
-        uploadMessageAboveL.onReceiveValue(results);
-        uploadMessageAboveL = null;
+        valueCallback.onReceiveValue(results);
+        valueCallback = null;
     }
 }
